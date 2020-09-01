@@ -1,0 +1,43 @@
+{
+  "Interval": {
+    "level1Questions": [
+      {
+        "Question": "What is the distance between C and D?",
+        "Answer": "Major 2nd"
+      },
+      {
+        "Question": "What is the distance between C and E?",
+        "Answer": "Major 3rd"
+      },
+      {
+        "Question": "What is the distance between C and F?",
+        "Answer": "Perfect 4th"
+      },
+      {
+        "Question": "What is the distance between C and G?",
+        "Answer": "Perfect 5th"
+      },
+      {
+        "Question": "What is the distance between C and A?",
+        "Answer": "Major 6th"
+      },
+      {
+        "Question": "What is the distance between C and B?",
+        "Answer": "Major 7th"
+      },
+      {
+        "Question": "What is the distance between C and C?",
+        "Answer": "Octave"
+      }
+    ],
+    "level1Answers": [
+      "Major 2nd",
+      "Major 3rd",
+      "Perfect 4th",
+      "Perfect 5th",
+      "Major 6th",
+      "Major 7th",
+      "Octave"
+    ]
+  }
+}
