@@ -12,7 +12,8 @@ import menuIcon from '../../images/menu-icon.png';
 const Header = () => {
   return (
     <View style={{height: 100}}>
-      <ImageBackground style={{flex: 1}} source={activeImg} />
+      <ImageBackground style={{flex: 1, zIndex: -1}} source={activeImg} />
+      <View style={styles.overlay} />
       <View
         style={{
           position: 'absolute',
@@ -22,12 +23,11 @@ const Header = () => {
           bottom: 0,
           justifyContent: 'center',
           alignItems: 'center',
-          zIndex: 3,
         }}>
         <Image
           source={headerLogo}
           style={{
-            zIndex: 3,
+            zIndex: 5,
             width: 94,
             height: 55,
           }}
@@ -43,10 +43,8 @@ const Header = () => {
           left: 20,
           top: 35,
         }}>
-        <Image source={menuIcon} />
+        <Image source={menuIcon} style={{zIndex: 3}} />
       </TouchableOpacity>
-
-      <View style={styles.overlay} />
     </View>
   );
 };

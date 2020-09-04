@@ -41,6 +41,8 @@ const store = createStore(reducers, enhancer);
 
 //https://www.npmjs.com/package/react-native-check-box
 
+//cant update git
+
 class App extends Component<Props> {
   constructor(props: Props) {
     super(props);
