@@ -16,7 +16,7 @@ const ResultsView = ({
 }) => {
   const [showStuff, setResults] = useState({show: false});
 
-  viewResults = () => {
+  const viewResults = () => {
     console.log('go');
     setResults({show: true});
   };

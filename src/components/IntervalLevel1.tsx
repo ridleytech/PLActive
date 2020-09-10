@@ -29,7 +29,7 @@ import enabledImg from '../../images/checkbox-enabled.png';
 import disabledImg from '../../images/checkbox-disabled.png';
 import Header from './Header';
 import ResultsView from './ResultsView';
-import Instructions from './Instructions';
+import Interval1Instructions from './Interval1Instructions';
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -43,7 +43,7 @@ const store = createStore(reducers, enhancer);
 
 //cant update git
 
-class App extends Component<Props> {
+class IntervalLevel1 extends Component<Props> {
   constructor(props: Props) {
     super(props);
 
@@ -72,16 +72,16 @@ class App extends Component<Props> {
     //this.debugAnswers();
   }
 
-  debugAnswers = () => {
-    var answers = this.shuffle(data.Interval.level1Answers);
-    var questions = this.shuffle(data.Interval.level1Questions);
+  // debugAnswers = () => {
+  //   var answers = this.shuffle(data.Interval.level1Answers);
+  //   var questions = this.shuffle(data.Interval.level1Questions);
 
-    this.setState({
-      answers: answers,
-      questions: questions,
-      currentQuestion: questions[0],
-    });
-  };
+  //   this.setState({
+  //     answers: answers,
+  //     questions: questions,
+  //     currentQuestion: questions[0],
+  //   });
+  // };
 
   componentDidUpdate(prevProps, nextState) {
     //console.log("update1: " + JSON.stringify(prevState) )
@@ -208,7 +208,6 @@ class App extends Component<Props> {
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
     }
-
     return array;
   }
 
@@ -322,130 +321,122 @@ class App extends Component<Props> {
   render() {
     return (
       <>
-        <Provider store={store}>
-          <SafeAreaView></SafeAreaView>
-          <Header />
+        {/* <SafeAreaView></SafeAreaView>
+          <Header /> */}
 
-          {this.state.restarted ? (
-            <Instructions startQuiz={() => this.startQuiz()} />
-          ) : this.state.quizStarted ? (
-            <>
-              <View
+        {this.state.restarted ? (
+          <Interval1Instructions startQuiz={() => this.startQuiz()} />
+        ) : this.state.quizStarted ? (
+          <>
+            <View
+              style={{
+                padding: 20,
+                // backgroundColor: 'yellow',
+              }}>
+              <Text
                 style={{
-                  padding: 20,
-                  // backgroundColor: 'yellow',
+                  fontFamily: 'Helvetica Neue',
+                  fontSize: 20,
+                  fontWeight: 'bold',
                 }}>
-                <Text
-                  style={{
-                    fontFamily: 'Helvetica Neue',
-                    fontSize: 20,
-                    fontWeight: 'bold',
-                  }}>
-                  Quiz - Interval Training
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'Helvetica Neue',
-                    fontSize: 15,
-                    marginTop: 15,
-                  }}>
-                  Question {this.state.currentIndex + 1} of{' '}
-                  {this.state.questions.length}
-                </Text>
-                <Text
-                  style={{
-                    marginTop: 30,
-                    marginBottom: 20,
-                    fontFamily: 'Helvetica Neue',
-                  }}>
-                  {this.state.currentQuestion
-                    ? this.state.currentQuestion.Question
-                    : null}
-                </Text>
-
-                {this.state.answers
-                  ? this.state.answers.map((ob, index) => {
-                      return (
-                        <View
-                          style={{
-                            height: 65,
-                            backgroundColor: '#EFEFEF',
-                            marginBottom: 15,
-                            borderRadius: 8,
-                            overflow: 'hidden',
-                            alignContent: 'center',
-                            paddingLeft: 18,
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
-                          <CheckBox
-                            style={{paddingRight: 10}}
-                            onClick={() => {
-                              this.setChecked(ob);
-                            }}
-                            isChecked={this.state.currentAnswer === ob}
-                            checkedImage={
-                              <Image
-                                source={enabledImg}
-                                style={styles.enabled}
-                              />
-                            }
-                            unCheckedImage={
-                              <Image
-                                source={disabledImg}
-                                style={styles.disabled}
-                              />
-                            }
-                          />
-
-                          <Text key={ob}>{ob}</Text>
-                        </View>
-                      );
-                    })
+                Quiz - Interval Training
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Helvetica Neue',
+                  fontSize: 15,
+                  marginTop: 15,
+                }}>
+                Question {this.state.currentIndex + 1} of{' '}
+                {this.state.questions.length}
+              </Text>
+              <Text
+                style={{
+                  marginTop: 30,
+                  marginBottom: 20,
+                  fontFamily: 'Helvetica Neue',
+                }}>
+                {this.state.currentQuestion
+                  ? this.state.currentQuestion.Question
                   : null}
-              </View>
-              <TouchableOpacity
-                onPress={() => this.selectAnswer2()}
-                disabled={!this.state.currentAnswer}
+              </Text>
+
+              {this.state.answers
+                ? this.state.answers.map((ob, index) => {
+                    return (
+                      <View
+                        style={{
+                          height: 65,
+                          backgroundColor: '#EFEFEF',
+                          marginBottom: 15,
+                          borderRadius: 8,
+                          overflow: 'hidden',
+                          alignContent: 'center',
+                          paddingLeft: 18,
+                          display: 'flex',
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        <CheckBox
+                          style={{paddingRight: 10}}
+                          onClick={() => {
+                            this.setChecked(ob);
+                          }}
+                          isChecked={this.state.currentAnswer === ob}
+                          checkedImage={
+                            <Image source={enabledImg} style={styles.enabled} />
+                          }
+                          unCheckedImage={
+                            <Image
+                              source={disabledImg}
+                              style={styles.disabled}
+                            />
+                          }
+                        />
+                        <Text key={ob}>{ob}</Text>
+                      </View>
+                    );
+                  })
+                : null}
+            </View>
+            <TouchableOpacity
+              onPress={() => this.selectAnswer2()}
+              disabled={!this.state.currentAnswer}
+              style={{
+                height: 60,
+                backgroundColor: this.state.currentAnswer ? '#3AB24A' : 'gray',
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+              }}>
+              <Text
                 style={{
-                  height: 60,
-                  backgroundColor: this.state.currentAnswer
-                    ? '#3AB24A'
-                    : 'gray',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  position: 'absolute',
-                  bottom: 0,
-                  width: '100%',
+                  fontSize: 25,
+                  fontFamily: 'Helvetica Neue',
+                  fontWeight: 'bold',
+                  color: 'white',
                 }}>
-                <Text
-                  style={{
-                    fontSize: 25,
-                    fontFamily: 'Helvetica Neue',
-                    fontWeight: 'bold',
-                    color: 'white',
-                  }}>
-                  SUBMIT
-                </Text>
-              </TouchableOpacity>
-            </>
-          ) : this.state.quizFinished ? (
-            <ResultsView
-              avgScore={80}
-              answerList={this.state.answerList}
-              correctAnswers={this.state.correctAnswers}
-              total={this.state.questions.length}
-              mainMenu={() => this.mainMenu()}
-            />
-          ) : null}
-        </Provider>
+                SUBMIT
+              </Text>
+            </TouchableOpacity>
+          </>
+        ) : this.state.quizFinished ? (
+          <ResultsView
+            avgScore={80}
+            answerList={this.state.answerList}
+            correctAnswers={this.state.correctAnswers}
+            total={this.state.questions.length}
+            mainMenu={() => this.mainMenu()}
+          />
+        ) : null}
       </>
     );
   }
 }
 
-export default App;
+export default IntervalLevel1;
 
 let offset = 100;
 

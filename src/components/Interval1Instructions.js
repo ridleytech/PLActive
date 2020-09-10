@@ -3,8 +3,9 @@ import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
 
 import videoImg from '../../images/instructions-placeholder.png';
 import check from '../../images/check.png';
+import TestMidi from './TestMidi';
 
-const Instructions = ({correctAnswers, total, startQuiz}) => {
+const Interval1Instructions = ({correctAnswers, total, startQuiz}) => {
   return (
     <>
       <View style={{padding: 20}}>
@@ -97,4 +98,4 @@ const styles = StyleSheet.create({
   check: {marginRight: 8},
 });
 
-export default Instructions;
+export default Interval1Instructions;

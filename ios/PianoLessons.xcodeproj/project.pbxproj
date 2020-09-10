@@ -32,6 +32,7 @@
 		3F11330C24FABC8F00835A30 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132FC24FABC8F00835A30 /* EvilIcons.ttf */; };
 		3F11330D24FABC8F00835A30 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132FD24FABC8F00835A30 /* SimpleLineIcons.ttf */; };
 		3F11330E24FABC8F00835A30 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132FE24FABC8F00835A30 /* MaterialIcons.ttf */; };
+		3F62FD522502BBF800FECC8E /* Chateau Grand-v1.8.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 3F62FD512502BBF800FECC8E /* Chateau Grand-v1.8.sf2 */; };
 		3FBC9C8A2502B0D6002A045A /* PlayKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC9C882502B0D6002A045A /* PlayKey.m */; };
 		3FF25A8924FE5CAD00CCF67A /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FF25A8824FE5CAD00CCF67A /* AppCenter-Config.plist */; };
 		56D9570F73A185A5F3114E39 /* libPods-PianoLessons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F542E6C8708EDF47AA8CE71 /* libPods-PianoLessons-tvOS.a */; };
@@ -64,7 +65,7 @@
 		00E356F21AD99517003FC87E /* PianoLessonsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PianoLessonsTests.m; sourceTree = "<group>"; };
 		03A4615CCD0BD9F0D97BC88E /* Pods-PianoLessons-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-tvOS.release.xcconfig"; path = "Target Support Files/Pods-PianoLessons-tvOS/Pods-PianoLessons-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		1038C95A289CB6D63DE7D079 /* Pods-PianoLessons-PianoLessonsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-PianoLessonsTests.debug.xcconfig"; path = "Target Support Files/Pods-PianoLessons-PianoLessonsTests/Pods-PianoLessons-PianoLessonsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Piano Lesson.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Piano Lesson.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Active Ear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Active Ear.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PianoLessons/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = PianoLessons/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PianoLessons/Images.xcassets; sourceTree = "<group>"; };
@@ -91,6 +92,7 @@
 		3F1132FC24FABC8F00835A30 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		3F1132FD24FABC8F00835A30 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		3F1132FE24FABC8F00835A30 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		3F62FD512502BBF800FECC8E /* Chateau Grand-v1.8.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chateau Grand-v1.8.sf2"; sourceTree = "<group>"; };
 		3FBC9C882502B0D6002A045A /* PlayKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayKey.m; sourceTree = "<group>"; };
 		3FBC9C892502B0D6002A045A /* PlayKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayKey.h; sourceTree = "<group>"; };
 		3FF25A8824FE5CAD00CCF67A /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "PianoLessons/AppCenter-Config.plist"; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				3FBC9C892502B0D6002A045A /* PlayKey.h */,
 				3FBC9C882502B0D6002A045A /* PlayKey.m */,
+				3F62FD512502BBF800FECC8E /* Chateau Grand-v1.8.sf2 */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				3FF25A8824FE5CAD00CCF67A /* AppCenter-Config.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -253,7 +256,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Piano Lesson.app */,
+				13B07F961A680F5B00A75B9A /* Active Ear.app */,
 				00E356EE1AD99517003FC87E /* PianoLessonsTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* PianoLessons-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* PianoLessons-tvOSTests.xctest */,
@@ -302,7 +305,7 @@
 			);
 			name = PianoLessons;
 			productName = PianoLessons;
-			productReference = 13B07F961A680F5B00A75B9A /* Piano Lesson.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Active Ear.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* PianoLessons-tvOS */ = {
@@ -416,6 +419,7 @@
 				3F11330B24FABC8F00835A30 /* Zocial.ttf in Resources */,
 				3F11330D24FABC8F00835A30 /* SimpleLineIcons.ttf in Resources */,
 				3F11330124FABC8F00835A30 /* Feather.ttf in Resources */,
+				3F62FD522502BBF800FECC8E /* Chateau Grand-v1.8.sf2 in Resources */,
 				3F11330024FABC8F00835A30 /* Octicons.ttf in Resources */,
 				3F11330324FABC8F00835A30 /* FontAwesome5_Brands.ttf in Resources */,
 				3F11330524FABC8F00835A30 /* AntDesign.ttf in Resources */,
@@ -756,7 +760,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ridleytech.PianoLessons;
-				PRODUCT_NAME = "Piano Lesson";
+				PRODUCT_NAME = "Active Ear";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -780,7 +784,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ridleytech.PianoLessons;
-				PRODUCT_NAME = "Piano Lesson";
+				PRODUCT_NAME = "Active Ear";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

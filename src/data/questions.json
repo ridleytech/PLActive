@@ -38,6 +38,49 @@
       "Major 6th",
       "Major 7th",
       "Octave"
-    ]
+    ],
+    "level2Questions": [
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 2nd",
+        "file": "major2ndC"
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 3rd",
+        "file": "major3rdC"
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Perfect 4th",
+        "file": "perfect4thC"
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Perfect 5th",
+        "file": "perfect5thC"
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 2nd",
+        "file": "major2ndC"
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 3rd",
+        "file": "major3rdC"
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Perfect 4th",
+        "file": "perfect4thC"
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Perfect 5th",
+        "file": "perfect5thC"
+      }
+    ],
+    "level2Answers": ["Major 2nd", "Major 3rd", "Perfect 4th", "Perfect 5th"]
   }
 }
