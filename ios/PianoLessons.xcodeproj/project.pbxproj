@@ -34,6 +34,7 @@
 		3F11330E24FABC8F00835A30 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132FE24FABC8F00835A30 /* MaterialIcons.ttf */; };
 		3F62FD522502BBF800FECC8E /* Chateau Grand-v1.8.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 3F62FD512502BBF800FECC8E /* Chateau Grand-v1.8.sf2 */; };
 		3FBC9C8A2502B0D6002A045A /* PlayKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC9C882502B0D6002A045A /* PlayKey.m */; };
+		3FBCE33E25145A9C007DE842 /* PlayKey2.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBCE33D25145A9C007DE842 /* PlayKey2.m */; };
 		3FF25A8924FE5CAD00CCF67A /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FF25A8824FE5CAD00CCF67A /* AppCenter-Config.plist */; };
 		56D9570F73A185A5F3114E39 /* libPods-PianoLessons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F542E6C8708EDF47AA8CE71 /* libPods-PianoLessons-tvOS.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -95,6 +96,8 @@
 		3F62FD512502BBF800FECC8E /* Chateau Grand-v1.8.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chateau Grand-v1.8.sf2"; sourceTree = "<group>"; };
 		3FBC9C882502B0D6002A045A /* PlayKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayKey.m; sourceTree = "<group>"; };
 		3FBC9C892502B0D6002A045A /* PlayKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayKey.h; sourceTree = "<group>"; };
+		3FBCE33C25145A9C007DE842 /* PlayKey2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayKey2.h; sourceTree = "<group>"; };
+		3FBCE33D25145A9C007DE842 /* PlayKey2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayKey2.m; sourceTree = "<group>"; };
 		3FF25A8824FE5CAD00CCF67A /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "PianoLessons/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		486A37CA4831D160B682E847 /* Pods-PianoLessons-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-PianoLessons-tvOSTests/Pods-PianoLessons-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5F542E6C8708EDF47AA8CE71 /* libPods-PianoLessons-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PianoLessons-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +172,8 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				3FBC9C892502B0D6002A045A /* PlayKey.h */,
 				3FBC9C882502B0D6002A045A /* PlayKey.m */,
+				3FBCE33C25145A9C007DE842 /* PlayKey2.h */,
+				3FBCE33D25145A9C007DE842 /* PlayKey2.m */,
 				3F62FD512502BBF800FECC8E /* Chateau Grand-v1.8.sf2 */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				3FF25A8824FE5CAD00CCF67A /* AppCenter-Config.plist */,
@@ -663,6 +668,7 @@
 			files = (
 				3FBC9C8A2502B0D6002A045A /* PlayKey.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				3FBCE33E25145A9C007DE842 /* PlayKey2.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

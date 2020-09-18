@@ -28,6 +28,7 @@ import Header from './Header';
 import IntervalLevel1 from './IntervalLevel1';
 import IntervalLevel2 from './IntervalLevel2';
 import Player3 from './Player3';
+import TestMidi from './TestMidi';
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
@@ -57,8 +58,8 @@ class Home extends Component<Props> {
         <Provider store={store}>
           <SafeAreaView></SafeAreaView>
           {/* <Header /> */}
-
-          <Player3 />
+          <TestMidi />
+          {/* <Player3 /> */}
           {/* <Player2 tracks={TRACKS} /> */}
           {/* {this.state.level == 1 ? (
             <IntervalLevel1 />

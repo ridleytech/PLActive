@@ -19,11 +19,11 @@ enum {
 };
 
 typedef struct {
-    
-    AudioStreamBasicDescription asbd;
-    AudioSampleType *data;
+  
+  AudioStreamBasicDescription asbd;
+  AudioSampleType *data;
   UInt32 numFrames;
-    
+  
 } SoundBuffer, *SoundBufferPtr;
 
 
@@ -31,11 +31,11 @@ typedef struct {
 #define NUMFILES 12
 
 typedef struct {
-    
+  
   UInt32 frameNum;
-    UInt32 maxNumFrames;
-    SoundBuffer soundBuffer[MAXBUFS];
-    
+  UInt32 maxNumFrames;
+  SoundBuffer soundBuffer[MAXBUFS];
+  
 } SourceAudioBufferData, *SourceAudioBufferDataPtr;
 
 

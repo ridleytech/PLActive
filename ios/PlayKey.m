@@ -10,6 +10,9 @@
 
 @implementation PlayKey
 
+//https://www.indiegamemusic.com/help.php?id=3
+//https://rollout.io/blog/building-a-midi-music-app-for-ios-in-swift/
+
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(initGraph:(NSString *)url
@@ -53,7 +56,7 @@ RCT_EXPORT_METHOD(playKey:(int)key
   //OSStatus status = 0;
   
   //val = 3;
-  currentOctave = 3;
+  currentOctave = 4;
   sustainValue = 0;
   
   MIDINoteMessage thisMessage;
@@ -168,122 +171,117 @@ RCT_EXPORT_METHOD(releaseKey:(int)key
 #pragma mark - AUGraph
 
 - (void)initGraph {
-    
-    NewAUGraph (&_processingGraph);
-    
-    AudioComponentDescription cd = {};
-    cd.componentManufacturer     = kAudioUnitManufacturer_Apple;
-    
-    //----------------------------------------
-    // Add 3 Sampler unit nodes to the graph
-    //----------------------------------------
-    
-    cd.componentType = kAudioUnitType_MusicDevice;
-    cd.componentSubType = kAudioUnitSubType_Sampler;
-    
-    AUGraphAddNode (_processingGraph, &cd, &samplerNode);
-    
-    //-----------------------------------
-    // 2. Add a Mixer unit node to the graph
-    //-----------------------------------
-    
-    cd.componentType          = kAudioUnitType_Mixer;
-    cd.componentSubType       = kAudioUnitSubType_MultiChannelMixer;
-    
-    AUGraphAddNode (_processingGraph, &cd, &mixerNode);
-    
-    cd.componentType          = kAudioUnitType_Generator;
-    cd.componentSubType       = kAudioUnitSubType_AudioFilePlayer;
-        
-    OSStatus status = 0;
-    OSStatus result = noErr;
-    
-    cd.componentType = kAudioUnitType_Output;
-    cd.componentSubType = kAudioUnitSubType_RemoteIO;  // Output to speakers
-    
-    AUGraphAddNode (_processingGraph, &cd, &ioNode);
-    
-    AUGraphOpen (_processingGraph);
-    
-    //--------------------------------
-    // Set the bus count for the mixer
-    //--------------------------------
-    
-    const Float64 kGraphSampleRate = 44100.0;
-    
-    bool interleaved = true;
-    int nChannels = 2;
-    
-    AudioStreamBasicDescription mClientFormat;
-    
-    //mClientFormat.SetCanonical(2, true);
-    mClientFormat.mSampleRate = kGraphSampleRate;
-    //mClientFormat.Print();
-    
-    mClientFormat.mFormatID = kAudioFormatLinearPCM;
+  
+  OSStatus status = 0;
+  OSStatus result = noErr;
+  
+  NewAUGraph (&_processingGraph);
+  
+  AudioComponentDescription cd = {};
+  cd.componentManufacturer     = kAudioUnitManufacturer_Apple;
+  
+  //----------------------------------------
+  // Add 3 Sampler unit nodes to the graph
+  //----------------------------------------
+  
+  cd.componentType = kAudioUnitType_MusicDevice;
+  cd.componentSubType = kAudioUnitSubType_Sampler;
+  
+  AUGraphAddNode (_processingGraph, &cd, &samplerNode);
+  
+  cd.componentType = kAudioUnitType_Mixer;
+  cd.componentSubType = kAudioUnitSubType_MultiChannelMixer;
+  result = AUGraphAddNode (_processingGraph, &cd, &mixerNode);
+  NSCAssert (result == noErr, @"Unable to add the Output unit to the audio processing graph. Error code: %d '%.4s'", (int) result, (const char *)&result);
+  
+  
+  
+  cd.componentType = kAudioUnitType_Output;
+  cd.componentSubType = kAudioUnitSubType_RemoteIO;  // Output to speakers
+  
+  AUGraphAddNode (_processingGraph, &cd, &ioNode);
+  
+  AUGraphOpen (_processingGraph);
+  
+  //--------------------------------
+  // Set the bus count for the mixer
+  //--------------------------------
+  
+  const Float64 kGraphSampleRate = 44100.0;
+  
+  bool interleaved = true;
+  int nChannels = 2;
+  
+  AudioStreamBasicDescription mClientFormat;
+  
+  //mClientFormat.SetCanonical(2, true);
+  mClientFormat.mSampleRate = kGraphSampleRate;
+  //mClientFormat.Print();
+  
+  mClientFormat.mFormatID = kAudioFormatLinearPCM;
 #if CA_ENV_MACOSX
-    int sampleSize = sizeof(Float32);
-    mClientFormat.mFormatFlags = kAudioFormatFlagsNativeFloatPacked;
+  int sampleSize = sizeof(Float32);
+  mClientFormat.mFormatFlags = kAudioFormatFlagsNativeFloatPacked;
 #else
-    int sampleSize = sizeof(AudioSampleType);
-    mClientFormat.mFormatFlags = kAudioFormatFlagsCanonical;
+  int sampleSize = sizeof(AudioSampleType);
+  mClientFormat.mFormatFlags = kAudioFormatFlagsCanonical;
 #endif
-    mClientFormat.mBitsPerChannel = 8 * sampleSize;
-    mClientFormat.mChannelsPerFrame = nChannels;
-    mClientFormat.mFramesPerPacket = 1;
-    if (interleaved)
-        mClientFormat.mBytesPerPacket = mClientFormat.mBytesPerFrame = nChannels * sampleSize;
-    else {
-        mClientFormat.mBytesPerPacket = mClientFormat.mBytesPerFrame = sampleSize;
-        mClientFormat.mFormatFlags |= kAudioFormatFlagIsNonInterleaved;
-    }
-    
-    numBuses = 3;
-    
-    AudioUnitSetProperty(_mixerUnit,
-                         kAudioUnitProperty_ElementCount,
-                         kAudioUnitScope_Input,
-                         0,
-                         &numBuses,
-                         sizeof(numBuses));
-    
-    UInt32 prop1;
-    UInt32 propSize1 = sizeof(prop1);
-
-    AudioUnitGetProperty(_mixerUnit, kAudioUnitProperty_ElementCount, kAudioUnitScope_Input, 0, &prop1, &propSize1);
-
-    NSLog(@"mixer bus count: %i",(unsigned int)prop1);
-    
-    AURenderCallbackStruct rcbs;
-    rcbs.inputProc = &renderInput;
-    rcbs.inputProcRefCon = &mUserData;
-    
-    
-    result = AUGraphSetNodeInputCallback(_processingGraph, mixerNode, 2, &rcbs);
-    
-    AUGraphNodeInfo (_processingGraph, samplerNode, 0, &_samplerUnit);
-    AUGraphNodeInfo (_processingGraph, ioNode, 0, &_ioUnit);
-    AUGraphNodeInfo (_processingGraph, mixerNode, 0, &_mixerUnit);
-    
-    AUGraphConnectNodeInput (_processingGraph, samplerNode, 0, mixerNode, 1);
-    
-    
-    result = AudioUnitSetParameter(_mixerUnit, kMultiChannelMixerParam_Volume, kAudioUnitScope_Input, 0, 1, 0);
-    result = AudioUnitSetParameter(_mixerUnit, kMultiChannelMixerParam_Pan, kAudioUnitScope_Input, 0, 0, 0);
-    
-    result = AUGraphAddRenderNotify(_processingGraph, renderNotification, &mUserData);
-    
-    //[self initDefaultTracks];
-    
-    // Connect the mixer unit to the output unit
-    
-    AUGraphConnectNodeInput (_processingGraph, mixerNode, 0, ioNode, 0);
-    
-    AUGraphInitialize (_processingGraph);
-    
-    AUGraphStart(_processingGraph);
-    
-    [self initDefaultSounds];
+  mClientFormat.mBitsPerChannel = 8 * sampleSize;
+  mClientFormat.mChannelsPerFrame = nChannels;
+  mClientFormat.mFramesPerPacket = 1;
+  if (interleaved)
+    mClientFormat.mBytesPerPacket = mClientFormat.mBytesPerFrame = nChannels * sampleSize;
+  else {
+    mClientFormat.mBytesPerPacket = mClientFormat.mBytesPerFrame = sampleSize;
+    mClientFormat.mFormatFlags |= kAudioFormatFlagIsNonInterleaved;
+  }
+  
+  numBuses = 3;
+  
+  AudioUnitSetProperty(_mixerUnit,
+                       kAudioUnitProperty_ElementCount,
+                       kAudioUnitScope_Input,
+                       0,
+                       &numBuses,
+                       sizeof(numBuses));
+  
+  UInt32 prop1;
+  UInt32 propSize1 = sizeof(prop1);
+  
+  AudioUnitGetProperty(_mixerUnit, kAudioUnitProperty_ElementCount, kAudioUnitScope_Input, 0, &prop1, &propSize1);
+  
+  NSLog(@"mixer bus count: %i",(unsigned int)prop1);
+  
+  AURenderCallbackStruct rcbs;
+  rcbs.inputProc = &renderInput;
+  rcbs.inputProcRefCon = &mUserData;
+  
+  
+  result = AUGraphSetNodeInputCallback(_processingGraph, mixerNode, 2, &rcbs);
+  
+  AUGraphNodeInfo (_processingGraph, samplerNode, 0, &_samplerUnit);
+  AUGraphNodeInfo (_processingGraph, ioNode, 0, &_ioUnit);
+  AUGraphNodeInfo (_processingGraph, mixerNode, 0, &_mixerUnit);
+  
+  AUGraphConnectNodeInput (_processingGraph, samplerNode, 0, mixerNode, 1);
+  
+  
+  result = AudioUnitSetParameter(_mixerUnit, kMultiChannelMixerParam_Volume, kAudioUnitScope_Input, 0, 1, 0);
+  result = AudioUnitSetParameter(_mixerUnit, kMultiChannelMixerParam_Pan, kAudioUnitScope_Input, 0, 0, 0);
+  
+  result = AUGraphAddRenderNotify(_processingGraph, renderNotification, &mUserData);
+  
+  //[self initDefaultTracks];
+  
+  // Connect the mixer unit to the output unit
+  
+  AUGraphConnectNodeInput (_processingGraph, mixerNode, 0, ioNode, 0);
+  
+  AUGraphInitialize (_processingGraph);
+  
+  AUGraphStart(_processingGraph);
+  
+  [self initDefaultSounds];
 }
 
 - (void)initDefaultSounds {

@@ -20,7 +20,7 @@ class TestMidi extends Component<Props> {
   }
 
   pressKey(key: number): void {
-    console.log('pressKey');
+    //console.log('pressKey');
 
     //testView.playKey(key);
 
@@ -40,7 +40,7 @@ class TestMidi extends Component<Props> {
   }
 
   releaseKey(key: number): void {
-    console.log('releaseKey');
+    //console.log('releaseKey');
 
     //testView.releaseKey(key);
 

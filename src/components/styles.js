@@ -19,6 +19,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     marginLeft: 'auto',
     marginRight: 'auto',
+    flexDirection: 'row',
+    display: 'flex',
   },
   albumImage: {
     width: 250,
