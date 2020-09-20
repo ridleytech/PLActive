@@ -44,49 +44,57 @@
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Major 2nd",
         "file": "major2ndC",
-        "id": 1
+        "id": 1,
+        "keys": [0, 1]
       },
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Major 3rd",
         "file": "major3rdC",
-        "id": 2
+        "id": 2,
+        "keys": [0, 2]
       },
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Perfect 4th",
         "file": "perfect4thC",
-        "id": 3
+        "id": 3,
+        "keys": [0, 3]
       },
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Perfect 5th",
         "file": "perfect5thC",
-        "id": 4
+        "id": 4,
+        "keys": [0, 4]
       },
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Major 2nd",
         "file": "major2ndC",
-        "id": 5
+        "id": 5,
+        "keys": [0, 1]
       },
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Major 3rd",
         "file": "major3rdC",
-        "id": 6
+        "id": 6,
+        "keys": [0, 2]
       },
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Perfect 4th",
         "file": "perfect4thC",
-        "id": 7
+        "id": 7,
+        "keys": [0, 3]
       },
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Perfect 5th",
         "file": "perfect5thC",
-        "id": 8
+        "id": 8,
+        "keys": [0, 4]
       }
     ],
     "level2Answers": ["Major 2nd", "Major 3rd", "Perfect 4th", "Perfect 5th"]

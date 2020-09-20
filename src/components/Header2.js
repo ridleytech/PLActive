@@ -9,17 +9,8 @@ import {
 import activeImg from '../../images/active-listening.png';
 import headerLogo from '../../images/header-logo.png';
 import menuIcon from '../../images/menu-icon.png';
-import {useSelector, useDispatch} from 'react-redux';
-
-const Header = (props) => {
-  //console.log('header props: ' + JSON.stringify(props));
-
-  const dispatch = useDispatch();
-
-  const goHome = () => {
-    dispatch({type: 'SET_LEVEL', level: 0});
-  };
-
+const Header = (props, goBack) => {
+  //console.log('header2 props: ' + JSON.stringify(props));
   return (
     <View style={{height: 100}}>
       <ImageBackground style={{flex: 1, zIndex: -1}} source={activeImg} />
@@ -53,8 +44,7 @@ const Header = (props) => {
           left: 20,
           top: 35,
         }}
-        // onPress={() => props.props.navigation.toggleDrawer()}
-        onPress={() => goHome()}>
+        onPress={() => goBack()}>
         <Image source={menuIcon} style={{zIndex: 3}} />
       </TouchableOpacity>
     </View>

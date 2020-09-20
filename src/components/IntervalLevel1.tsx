@@ -20,7 +20,6 @@ var testView = NativeModules.PlayKey;
 
 import data from '../data/questions.json';
 
-import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import {createStore, applyMiddleware, compose} from 'redux';
 import reducers from '../reducers';
@@ -30,14 +29,7 @@ import disabledImg from '../../images/checkbox-disabled.png';
 import Header from './Header';
 import ResultsView from './ResultsView';
 import Interval1Instructions from './Interval1Instructions';
-
-const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
-
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-const store = createStore(reducers, enhancer);
+import Header2 from './Header2';
 
 //https://www.npmjs.com/package/react-native-check-box
 
@@ -323,7 +315,7 @@ class IntervalLevel1 extends Component<Props> {
       <>
         {/* <SafeAreaView></SafeAreaView>
           <Header /> */}
-
+        {/* <Header2 goBack= /> */}
         {this.state.restarted ? (
           <Interval1Instructions startQuiz={() => this.startQuiz()} />
         ) : this.state.quizStarted ? (
@@ -331,6 +323,8 @@ class IntervalLevel1 extends Component<Props> {
             <View
               style={{
                 padding: 20,
+                backgroundColor: 'white',
+                height: 1000,
                 // backgroundColor: 'yellow',
               }}>
               <Text

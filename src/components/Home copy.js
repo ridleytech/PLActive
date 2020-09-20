@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 var testView = NativeModules.PlayKey;
-import {connect} from 'react-redux';
 
 // import WhiteIcon from '../../images/blank.jpg';
 // import BlackIcon from '../../images/black.png';
@@ -21,6 +20,7 @@ import {connect} from 'react-redux';
 
 import data from '../data/questions.json';
 
+import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import {createStore, applyMiddleware, compose} from 'redux';
 import reducers from '../reducers';
@@ -31,7 +31,14 @@ import IntervalLevel2 from './IntervalLevel2';
 import PlayerAudio from './PlayerAudio';
 import TestMidi from './TestMidi';
 import Menu from './Menu';
-import {setLevel} from '../actions/';
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+const enhancer = composeEnhancers(applyMiddleware(thunk));
+const store = createStore(reducers, enhancer);
+
 //https://www.npmjs.com/package/react-native-check-box
 
 //cant update git
@@ -42,62 +49,49 @@ class Home extends Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    //console.log('home props: ' + JSON.stringify(props));
-
-    // this.state = {
-    //   level: 0,
-    // };
+    this.state = {
+      level: 0,
+    };
   }
 
   componentDidMount() {
-    // testView.initGraph('url').then((result) => {
-    //   console.log('show', result);
-    // });
+    testView.initGraph('url').then((result) => {
+      console.log('show', result);
+    });
   }
 
   showLevel = (level) => {
-    console.log('showLevel2: ' + level);
+    console.log('showLevel: ' + level);
 
-    //this.setState({level: level});
-
-    this.props.setLevel(level);
+    this.setState({level: level});
   };
 
   showMenu = () => {
     console.log('showMenu');
   };
 
-  goBack = () => {
-    console.log('go back');
-  };
-
   render() {
     return (
       <>
-        <SafeAreaView />
-
-        <Header props={this.props} />
-        {/* <TestMidi /> */}
-        {/* <Player2 tracks={TRACKS} /> */}
-        {this.props.level == 0 ? (
-          <Menu showLevel={this.showLevel} />
-        ) : this.props.level == 1 ? (
-          <IntervalLevel1 />
-        ) : this.props.level == 2 ? (
-          <PlayerAudio />
-        ) : null}
+        <Provider store={store}>
+          <SafeAreaView></SafeAreaView>
+          <Header />
+          {/* <TestMidi /> */}
+          {/* <Player2 tracks={TRACKS} /> */}
+          {this.state.level == 0 ? (
+            <Menu showLevel={this.showLevel} />
+          ) : this.state.level == 1 ? (
+            <IntervalLevel1 />
+          ) : this.state.level == 2 ? (
+            <PlayerAudio />
+          ) : null}
+        </Provider>
       </>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    level: state.level,
-  };
-};
-
-export default connect(mapStateToProps, {setLevel})(Home);
+export default Home;
 
 let offset = 100;
 

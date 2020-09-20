@@ -41,7 +41,7 @@ const ResultsView = ({
   if (per > 85) {
     results = 'Great job! You passed.';
   } else {
-    results = 'You need to score 6 out 7 to pass.';
+    results = `You need to score ${total - 1} out ${total} to pass.`;
   }
   return (
     <>

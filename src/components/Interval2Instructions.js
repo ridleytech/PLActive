@@ -8,7 +8,7 @@ import TestMidi from './TestMidi';
 const Interval2Instructions = ({correctAnswers, total, startQuiz}) => {
   return (
     <>
-      <View style={{padding: 20}}>
+      <View style={{padding: 20, backgroundColor: 'white', height: 1000}}>
         <Text
           style={{
             fontFamily: 'Helvetica Neue',

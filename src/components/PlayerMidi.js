@@ -1,4 +1,4 @@
-import React, {useEffect, useState, lazy} from 'react';
+import React, {useEffect, useState, lazy, useRef} from 'react';
 import {
   Text,
   Button,
@@ -6,16 +6,11 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  NativeModules,
+  Dimensions,
+  Animated,
 } from 'react-native';
-import TrackPlayer, {
-  TrackPlayerEvents,
-  STATE_PLAYING,
-  STATE_PAUSED,
-} from 'react-native-track-player';
-import {
-  useTrackPlayerProgress,
-  useTrackPlayerEvents,
-} from 'react-native-track-player/lib/hooks';
+
 import Slider from '@react-native-community/slider';
 //import styles from './styles';
 import CheckBox from 'react-native-check-box';
@@ -27,53 +22,7 @@ import playImg from '../../images/play-btn.png';
 import pauseImg from '../../images/pause-btn.png';
 
 //https://therohanbhatia.com/blog/music-player-app-using-react-native-hooks/
-
-const songDetails = {
-  id: '1',
-  url: require('../audio/major2ndC.mp3'),
-  title: 'Major 2nd',
-  album: 'Piano Lesson with Warren',
-  artist: 'Randall Ridley',
-  artwork: 'https://picsum.photos/300',
-};
-
-const tracks = {
-  major2ndC: require('../audio/major2ndC.mp3'),
-  major3rdC: require('../audio/major3rdC.mp3'),
-  perfect4thC: require('../audio/perfect4thC.mp3'),
-  perfect5thC: require('../audio/perfect5thC.mp3'),
-};
-
-const trackSelect = (track) => {
-  if (track === null) {
-    return tracks.major2ndC;
-  }
-
-  const tracksArray = {
-    major2ndC: tracks.major2ndC,
-    major3rdC: tracks.major3rdC,
-    perfect4thC: tracks.perfect4thC,
-    perfect5thC: tracks.perfect5thC,
-  };
-
-  return tracksArray[track];
-};
-
-const trackPlayerInit = async () => {
-  await TrackPlayer.setupPlayer();
-  TrackPlayer.updateOptions({
-    stopWithApp: true,
-    capabilities: [
-      TrackPlayer.CAPABILITY_PLAY,
-      TrackPlayer.CAPABILITY_PAUSE,
-      TrackPlayer.CAPABILITY_JUMP_FORWARD,
-      TrackPlayer.CAPABILITY_JUMP_BACKWARD,
-    ],
-  });
-
-  return true;
-};
-
+//https://www.inspiredacoustics.com/en/MIDI_note_numbers_and_center_frequencies
 //console.log('data: ' + JSON.stringify(data));
 
 const shuffle = (array) => {
@@ -105,7 +54,7 @@ var question = questions[0];
 
 console.log('question: ' + JSON.stringify(question));
 
-const Player3 = () => {
+const PlayerMidi = () => {
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
@@ -114,25 +63,93 @@ const Player3 = () => {
   const [addingTrack, setAddingTrack] = useState(false);
   const [quizFinished, setQuizFinished] = useState(false);
   const [quizStarted, setQuizStarted] = useState(false);
+  const [canPlay, setCanPlay] = useState(true);
   const [currentQuestionInd, setCurrentQuestionInd] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState('');
   const [correctAnswers, setCorrectAnswers] = useState(0);
 
-  // const [questionList] = useState([
-  //   'major2ndC',
-  //   'major3rdC',
-  //   'perfect4thC',
-  //   'perfect5thC',
-  // ]);
   const [questionList] = useState(questions);
   const [answerList, setAnswerList] = useState([]);
   const [answers, setAnswers] = useState(answersData);
+  const [keyIndex, setKeyIndex] = useState(0);
+  const [currentKeys, setCurrentKeys] = useState(null);
+  const [currentKey, setCurrentKey] = useState(null);
+  const [screenWidth, setScreenWidth] = useState(
+    Dimensions.get('screen').width,
+  );
+
+  const [position, setPosition] = useState(0);
+  const xPos = useState(new Animated.Value(0))[0];
+
+  //console.log('position: ' + position);
 
   const [currentTrack, setCurrentTrack] = useState({
     name: questions[0].file,
     id: questions[0].id,
+    keys: questions[0].keys,
   });
-  const {position, duration} = useTrackPlayerProgress(150);
+
+  const duration = 4;
+
+  //const [currentTrack, setCurrentTrack] = useState(null);
+
+  var testView = NativeModules.PlayKey;
+  const playTimer = useRef(null);
+  const playTimer2 = useRef(null);
+  const progressTimer = useRef(null);
+  const progressBar1 = useRef(null);
+
+  const moveView = () => {
+    // console.log('move');
+
+    console.log('progressBar1: ' + progressBar1.current);
+
+    Animated.timing(xPos, {
+      toValue: screenWidth * 0.9,
+      duration: 6000,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  //console.log('screenWidth: ' + screenWidth);
+
+  // clearInterval(progressTimer.current);
+
+  // progressTimer.current = setInterval(() => {
+  //   console.log('update progress');
+
+  //   if (position <= screenWidth - 80) {
+  //     var pos = position + screenWidth / 8;
+
+  //     setPosition(pos);
+  //   } else {
+  //     clearInterval(progressTimer.current);
+  //   }
+  // }, 250);
+
+  const pressKey = (key) => {
+    //console.log('pressKey');
+
+    testView.playKey(key).then((result) => {
+      //console.log('show', result);
+    });
+
+    setTimeout(() => {
+      releaseKey(key);
+    }, 1000);
+  };
+
+  const releaseKey = (key) => {
+    //console.log('releaseKey');
+
+    testView.releaseKey(key).then((result) => {
+      //console.log('show', result);
+    });
+
+    var ki = keyIndex + 1;
+
+    setKeyIndex(ki);
+  };
 
   const nextQuestion = () => {
     var currentQuestion1 = currentQuestionInd;
@@ -141,14 +158,6 @@ const Player3 = () => {
       setAddingTrack(true);
 
       currentQuestion1 += 1;
-
-      TrackPlayer.reset();
-
-      setCurrentTrack({
-        name: questionList[currentQuestion1].file,
-        id: currentQuestion1.toString(),
-      });
-
       setCurrentQuestionInd(currentQuestion1);
 
       var answersData = shuffle(data.Interval.level2Answers);
@@ -157,121 +166,125 @@ const Player3 = () => {
       setQuizFinished(true);
       setQuizStarted(false);
     }
-
-    // setAddingTrack(true);
-
-    // var currentQuestion1 = currentQuestionInd;
-    // currentQuestion1 += 1;
-
-    // TrackPlayer.reset();
-
-    // setCurrentTrack({
-    //   name: questionList[currentQuestion1].file,
-    //   id: currentQuestion1.toString(),
-    // });
-
-    // setCurrentQuestionInd(currentQuestion1);
   };
 
-  useEffect(() => {
-    const startPlayer = async () => {
-      let isInit = await trackPlayerInit();
-      setIsTrackPlayerInit(isInit);
-    };
-    startPlayer();
+  //slider
 
-    console.log('on load');
-    console.log('loadCount: ' + loadCount);
-
-    var lc = loadCount;
-    lc++;
-    setLoadCount(lc);
-  }, []);
-
-  useEffect(() => {
-    if (loadCount === 0) {
-      setAddingTrack(true);
-    } else {
-      setAddingTrack(false);
-    }
-  }, [loadCount]);
-
-  useEffect(() => {
-    console.log('currentQuestion changed: ' + currentTrack.name);
-  }, [currentQuestionInd]);
-
-  useEffect(() => {
-    console.log('addingTrack changed: ' + addingTrack);
-
-    if (addingTrack === true) {
-      console.log('track added');
-      TrackPlayer.add({
-        id: currentQuestionInd.toString(),
-        url: trackSelect(currentTrack.name),
-        type: 'default',
-        title: songDetails.title,
-        album: songDetails.album,
-        artist: songDetails.artist,
-        artwork: songDetails.artwork,
-      });
-
-      setAddingTrack(false);
-    }
-  }, [addingTrack]);
-
-  useEffect(() => {
-    console.log('currentTrack changed');
-
-    // console.log('add track: ' + currentTrack.name);
-  }, [currentTrack]);
-
-  //default code below this line
-
-  //this hook updates the value of the slider whenever the current position of the song changes
   useEffect(() => {
     if (!isSeeking && position && duration) {
+      //console.log('update slider');
+
       setSliderValue(position / duration);
 
       //console.log('position: ' + position + ' duration: ' + duration);
     }
   }, [position, duration]);
 
-  //setTimeout(addTrack, 1000);
+  //current question
 
-  //setup 1st track
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     TrackPlayer.seekTo(0);
-  //     setSliderValue(0);
-  //   }, 1000);
-  // }, [currentTrack]);
+  useEffect(() => {
+    console.log('currentQuestionInd changed: ' + currentQuestionInd);
 
-  useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], (event) => {
-    //console.log(event);
-    if (event.state === STATE_PLAYING) {
-      setIsPlaying(true);
-    }
-    // else if (event.state === STATE_PAUSED) {
-    //   TrackPlayer.stop();
-    // }
-    else {
-      console.log('paused');
-      setIsPlaying(false);
-      if (position / duration > 0.9) {
-        console.log('reset track ' + currentTrack.name);
-        TrackPlayer.seekTo(0);
-        setSliderValue(0);
+    setCurrentTrack({
+      name: questions[currentQuestionInd].file,
+      id: questions[currentQuestionInd].id,
+      keys: questions[currentQuestionInd].keys,
+    });
+  }, [currentQuestionInd]);
+
+  //keyIndex
+
+  useEffect(() => {
+    // console.log(`keyIndex: ${keyIndex} key len: ${currentTrack.keys.length}`);
+    // //if another note, play it
+
+    console.log('keyIndex changed');
+
+    if (currentKeys && isPlaying === true) {
+      //console.log('play next note');
+      if (keyIndex < currentTrack.keys.length) {
+        var ck = currentKeys[keyIndex];
+        setCurrentKey(ck);
+
+        playTimer2.current = setTimeout(() => {
+          pressKey(currentKeys[keyIndex]);
+        }, 2000);
+      } else {
+        setCanPlay(false);
       }
+    } else {
+      //console.log('restarted key index: ' + keyIndex);
+      //console.log('reset key index');
+      //setKeyIndex(0);
+      setCanPlay(true);
     }
-  });
+  }, [keyIndex]);
+
+  //canPlay
+
+  useEffect(() => {
+    if (canPlay) {
+    } else {
+      console.log('reset key index');
+      setKeyIndex(0);
+      setIsPlaying(false);
+    }
+  }, [canPlay]);
+
+  //currentKeys
+
+  useEffect(() => {
+    //console.log('current keys changed: ' + JSON.stringify(currentKeys));
+    // if (currentKeys) {
+    //   playSequence();
+    // }
+  }, [currentKeys]);
+
+  //currentTrack
+
+  useEffect(() => {
+    setPosition(0);
+    console.log('currentTrack changed: ' + JSON.stringify(currentTrack));
+
+    setCurrentKeys(currentTrack.keys);
+
+    console.log(`name: ${currentTrack.name} keys: ${currentTrack.keys}`);
+
+    // console.log('add track: ' + currentTrack.name);
+  }, [currentTrack]);
+
+  const playSequence = () => {
+    if (isPlaying) {
+      console.log('stop: ' + playTimer);
+      clearTimeout(playTimer.current);
+      clearTimeout(playTimer2.current);
+      //releaseKey(currentKey);
+      setIsPlaying(false);
+      //setCanPlay(false);
+
+      xPos.stopAnimation(({value}) => console.log('Final Value: ' + value));
+    } else {
+      console.log('playSequence');
+
+      var ck = currentKeys[keyIndex];
+      setCurrentKey(ck);
+      setIsPlaying(true);
+
+      moveView();
+
+      playTimer.current = setTimeout(() => {
+        pressKey(currentKeys[keyIndex]);
+      }, 1000);
+    }
+  };
+
+  //default code below this line
 
   const onButtonPressed = () => {
     if (!isPlaying) {
-      TrackPlayer.play();
-      //setIsPlaying(true);
+      //TrackPlayer.play();
     } else {
-      TrackPlayer.pause();
-      //setIsPlaying(false);
+      //TrackPlayer.pause();
     }
   };
 
@@ -280,7 +293,7 @@ const Player3 = () => {
   };
 
   const slidingCompleted = async (value) => {
-    await TrackPlayer.seekTo(value * duration);
+    //await TrackPlayer.seekTo(value * duration);
     setSliderValue(value);
     setIsSeeking(false);
   };
@@ -288,24 +301,14 @@ const Player3 = () => {
   const setChecked = (ob) => {
     if (ob === currentAnswer) {
       setCurrentAnswer(null);
-
-      // this.setState({
-      //   currentAnswer: null,
-      // });
     } else {
-      // this.setState({
-      //   currentAnswer: ob,
-      // });
       setCurrentAnswer(ob);
     }
 
     console.log('ob: ' + JSON.stringify(ob));
-    // console.log(
-    //   'current answer: ' + JSON.stringify(currentQuestion.Answer),
-    // );
   };
 
-  const selectAnswer2 = () => {
+  const selectAnswer = () => {
     var al = answerList.slice();
 
     console.log('al: ' + JSON.stringify(al));
@@ -328,30 +331,6 @@ const Player3 = () => {
     setAnswerList(al);
 
     nextQuestion();
-  };
-
-  const getQuestion = () => {
-    var ci = currentQuestionInd;
-
-    if (ci < questionList.length - 1) {
-      ci++;
-
-      console.log('ci: ' + ci);
-
-      var question = questionList[ci];
-
-      this.setState({
-        currentQuestion: question,
-        currentQuestionInd: ci,
-      });
-    } else {
-      this.setState({
-        quizFinished: true,
-        quizStarted: false,
-      });
-    }
-
-    //this.createAnswers();
   };
 
   return (
@@ -385,17 +364,41 @@ const Player3 = () => {
           </View>
         </View>
 
+        {/* <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginTop: 20,
+            height: 20,
+            alignItems: 'center',
+          }}>
+          <View
+            ref={progressBar1}
+            style={{
+              flex: 1,
+              backgroundColor: 'gray',
+              marginLeft: 20,
+              marginRight: 20,
+            }}>
+
+            <Animated.View
+              style={{
+                width: xPos,
+                height: 20,
+                backgroundColor: 'red',
+              }}></Animated.View>
+          </View>
+        </View> */}
+
         <Button
           title={isPlaying ? 'Pause' : 'Play'}
-          onPress={onButtonPressed}
+          onPress={playSequence}
           style={styles.playButton}
-          disabled={!isTrackPlayerInit}
           color="#000000"
         />
         <View
           style={{
             padding: 20,
-            // backgroundColor: 'yellow',
           }}>
           <Text
             style={{
@@ -423,7 +426,6 @@ const Player3 = () => {
               ? questionList[currentQuestionInd].Question
               : null}
           </Text>
-
           <View>
             {answers
               ? answers.map((ob, index) => {
@@ -440,7 +442,8 @@ const Player3 = () => {
                         display: 'flex',
                         flexDirection: 'row',
                         alignItems: 'center',
-                      }}>
+                      }}
+                      key={index}>
                       <CheckBox
                         style={{paddingRight: 10}}
                         onClick={() => {
@@ -461,16 +464,9 @@ const Player3 = () => {
               : null}
           </View>
         </View>
-        {/* <Button
-        title={'Remove Track'}
-        onPress={removeTrack}
-        style={styles.playButton}
-        disabled={!isTrackPlayerInit}
-        color="#000000"
-      /> */}
       </View>
       <TouchableOpacity
-        onPress={() => selectAnswer2()}
+        onPress={() => selectAnswer()}
         disabled={!currentAnswer}
         style={{
           height: 60,
@@ -495,7 +491,7 @@ const Player3 = () => {
   );
 };
 
-export default Player3;
+export default PlayerMidi;
 
 let offset = 100;
 

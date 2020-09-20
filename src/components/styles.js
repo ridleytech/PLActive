@@ -14,14 +14,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  controlsContainer: {
-    width: '80%',
-    justifyContent: 'flex-start',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    flexDirection: 'row',
-    display: 'flex',
-  },
   albumImage: {
     width: 250,
     height: 250,
