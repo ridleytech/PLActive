@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  Animated,
 } from 'react-native';
 import TrackPlayer, {
   TrackPlayerEvents,
@@ -24,39 +25,64 @@ import CheckBox from 'react-native-check-box';
 import data from '../data/questions.json';
 import enabledImg from '../../images/checkbox-enabled.png';
 import disabledImg from '../../images/checkbox-disabled.png';
-
 import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
-//https://therohanbhatia.com/blog/music-player-app-using-react-native-hooks/
 import ResultsView from './ResultsView';
 
 const songDetails = {
   id: '1',
-  url: require('../audio/major2ndC.mp3'),
-  title: 'Major 2nd',
+  url: require('../audio/minor2ndC.mp3'),
+  title: 'Minor 2nd',
   album: 'Piano Lesson with Warren',
   artist: 'Randall Ridley',
   artwork: 'https://picsum.photos/300',
 };
 
 const tracks = {
+  minor2ndC: require('../audio/minor2ndC.mp3'),
   major2ndC: require('../audio/major2ndC.mp3'),
+  minor3rdC: require('../audio/minor3rdC.mp3'),
   major3rdC: require('../audio/major3rdC.mp3'),
   perfect4thC: require('../audio/perfect4thC.mp3'),
+  augmented4thC: require('../audio/augmented4thC.mp3'),
   perfect5thC: require('../audio/perfect5thC.mp3'),
+  minor6thC: require('../audio/minor6thC.mp3'),
+  major6thC: require('../audio/major6thC.mp3'),
+  minor7thC: require('../audio/minor7thC.mp3'),
+  major7thC: require('../audio/major7thC.mp3'),
+  octaveC: require('../audio/octaveC.mp3'),
+  minor9thC: require('../audio/minor9thC.mp3'),
+  major9thC: require('../audio/major9thC.mp3'),
+  minor11thC: require('../audio/minor11thC.mp3'),
+  major11thC: require('../audio/major11thC.mp3'),
+  minor13thC: require('../audio/minor13thC.mp3'),
+  major13thC: require('../audio/major13thC.mp3'),
 };
 
 const trackSelect = (track) => {
   if (track === null) {
-    return tracks.major2ndC;
+    return tracks.minor3rdC;
   }
 
   const tracksArray = {
+    minor2ndC: tracks.minor2ndC,
     major2ndC: tracks.major2ndC,
+    minor3rdC: tracks.minor3rdC,
     major3rdC: tracks.major3rdC,
+    augmented4thC: tracks.augmented4thC,
     perfect4thC: tracks.perfect4thC,
     perfect5thC: tracks.perfect5thC,
+    minor6thC: tracks.minor6thC,
+    minor7thC: tracks.minor7thC,
+    major6thC: tracks.major6thC,
+    major7thC: tracks.major7thC,
+    minor9thC: tracks.minor9thC,
+    major9thC: tracks.major9thC,
+    minor11thC: tracks.minor11thC,
+    major11thC: tracks.major11thC,
+    minor13thC: tracks.minor13thC,
+    major13thC: tracks.major13thC,
   };
 
   return tracksArray[track];
@@ -98,17 +124,29 @@ const shuffle = (array) => {
   return array;
 };
 
-var questions = shuffle(data.Interval.level2Questions);
-var answersData = shuffle(data.Interval.level2Answers);
-var instructions = data.Interval.level2Instructions;
+//console.log('instructions level 3: ' + JSON.stringify(instructions));
 
-//console.log('questions: ' + JSON.stringify(questions));
-
-var question = questions[0];
+//var question = questions[0];
 
 // console.log('question: ' + JSON.stringify(question));
 
-const PlayerAudio = () => {
+const IntervalLevels = ({level}) => {
+  console.log('selectedLevel: ' + level);
+
+  var instructions; // = data.Interval.level3Instructions;
+
+  if (level == 1) {
+    instructions = shuffle(data.Interval.level1Instructions);
+  } else if (level == 2) {
+    instructions = shuffle(data.Interval.level2Instructions);
+  } else if (level == 3) {
+    instructions = shuffle(data.Interval.level3Instructions);
+  } else if (level == 4) {
+    instructions = shuffle(data.Interval.level4Instructions);
+  } else if (level == 5) {
+    instructions = shuffle(data.Interval.level5Instructions);
+  }
+
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
@@ -117,13 +155,6 @@ const PlayerAudio = () => {
   const [addingTrack, setAddingTrack] = useState(false);
   const [quizFinished, setQuizFinished] = useState(false);
   const [quizStarted, setQuizStarted] = useState(false);
-  // const [currentQuestionInd, setCurrentQuestionInd] = useState(0);
-  // const [currentAnswer, setCurrentAnswer] = useState('');
-  // const [correctAnswers, setCorrectAnswers] = useState(0);
-  // const [questionList] = useState(questions);
-  // const [answerList, setAnswerList] = useState([]);
-  // const [answers, setAnswers] = useState(answersData);
-
   const [currentQuestionInd, setCurrentQuestionInd] = useState(null);
   const [currentAnswer, setCurrentAnswer] = useState(null);
   const [correctAnswers, setCorrectAnswers] = useState(null);
@@ -131,11 +162,6 @@ const PlayerAudio = () => {
   const [answerList, setAnswerList] = useState(null);
   const [answers, setAnswers] = useState(null);
   const [height, setHeight] = useState(60);
-
-  // const [currentTrack, setCurrentTrack] = useState({
-  //   name: questions[0].file,
-  //   id: questions[0].id,
-  // });
 
   const [currentTrack, setCurrentTrack] = useState(null);
 
@@ -159,26 +185,11 @@ const PlayerAudio = () => {
 
       setCurrentQuestionInd(currentQuestion1);
 
-      var answersData = shuffle(data.Interval.level2Answers);
-      setAnswers(answersData);
+      populateAnswers(questionList, currentQuestion1);
     } else {
       setQuizFinished(true);
       setQuizStarted(false);
     }
-
-    // setAddingTrack(true);
-
-    // var currentQuestion1 = currentQuestionInd;
-    // currentQuestion1 += 1;
-
-    // TrackPlayer.reset();
-
-    // setCurrentTrack({
-    //   name: questionList[currentQuestion1].file,
-    //   id: currentQuestion1.toString(),
-    // });
-
-    // setCurrentQuestionInd(currentQuestion1);
   };
 
   useEffect(() => {
@@ -198,13 +209,13 @@ const PlayerAudio = () => {
 
   //console.log('height: ' + Dimensions.get('screen').height);
 
-  useEffect(() => {
-    if (loadCount === 0) {
-      setAddingTrack(true);
-    } else {
-      setAddingTrack(false);
-    }
-  }, [loadCount]);
+  // useEffect(() => {
+  //   if (loadCount === 0) {
+  //     setAddingTrack(true);
+  //   } else {
+  //     setAddingTrack(false);
+  //   }
+  // }, [loadCount]);
 
   useEffect(() => {
     if (currentTrack) {
@@ -248,16 +259,6 @@ const PlayerAudio = () => {
     }
   }, [position, duration]);
 
-  //setTimeout(addTrack, 1000);
-
-  //setup 1st track
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     TrackPlayer.seekTo(0);
-  //     setSliderValue(0);
-  //   }, 1000);
-  // }, [currentTrack]);
-
   useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], (event) => {
     //console.log(event);
     if (event.state === STATE_PLAYING) {
@@ -280,10 +281,8 @@ const PlayerAudio = () => {
   const onButtonPressed = () => {
     if (!isPlaying) {
       TrackPlayer.play();
-      //setIsPlaying(true);
     } else {
       TrackPlayer.pause();
-      //setIsPlaying(false);
     }
   };
 
@@ -300,36 +299,19 @@ const PlayerAudio = () => {
   const setChecked = (ob) => {
     if (ob === currentAnswer) {
       setCurrentAnswer(null);
-
-      // this.setState({
-      //   currentAnswer: null,
-      // });
     } else {
-      // this.setState({
-      //   currentAnswer: ob,
-      // });
       setCurrentAnswer(ob);
     }
 
-    console.log('ob: ' + JSON.stringify(ob));
-    // console.log(
-    //   'current answer: ' + JSON.stringify(currentQuestion.Answer),
-    // );
+    //console.log('ob: ' + JSON.stringify(ob));
   };
 
   const selectAnswer2 = () => {
     var al = answerList.slice();
 
-    console.log('al: ' + JSON.stringify(al));
+    console.log('answerList: ' + JSON.stringify(al));
 
     var currentQuestion = questionList[currentQuestionInd];
-
-    // if (ca) {
-    //   console.log('debug answer: ' + ca);
-    //   currentQuestion.userAnswer = ca;
-    // } else {
-    //   currentQuestion.userAnswer = currentAnswer;
-    // }
 
     currentQuestion.userAnswer = currentAnswer;
 
@@ -356,56 +338,76 @@ const PlayerAudio = () => {
     setRestarted(true);
     setCurrentAnswer(null);
     setCorrectAnswers(0);
-    //setCorrectAnswers([])
+  };
 
-    // this.setState({
-    //   restarted: true,
-    //   currentAnswer: null,
-    //   correctAnswersList: [],
-    //   inCorrectAnswersList: [],
-    // });
-    //this.startQuiz();
+  const populateAnswers = (questions, ind) => {
+    //console.log('populateAnswers');
+    var answersData; // = shuffle(data.Interval.level3Answers);
+
+    if (level == 1) {
+      answersData = shuffle(data.Interval.level1Answers);
+    } else if (level == 2) {
+      answersData = shuffle(data.Interval.level2Answers);
+    } else if (level == 3) {
+      answersData = shuffle(data.Interval.level3Answers);
+    } else if (level == 4) {
+      answersData = shuffle(data.Interval.level4Answers);
+    } else if (level == 5) {
+      answersData = shuffle(data.Interval.level5Answers);
+    }
+
+    //console.log('answersData: ' + answersData);
+
+    var answer = questions[ind].Answer;
+
+    //console.log('question answer: ' + answer);
+
+    var answerInd = answersData.indexOf(answer);
+
+    //console.log('answerInd: ' + answerInd);
+
+    var answers = [];
+    var answerTxt = answersData[answerInd];
+    answers.push(answerTxt);
+
+    var ind = 0;
+
+    for (var i = 0; i < answersData.length; i++) {
+      if (ind > 2) {
+        break;
+      }
+
+      if (answersData[i] != answer) {
+        answers.push(answersData[i]);
+        ind++;
+      }
+    }
+
+    var shuffledAnswers = shuffle(answers);
+
+    //console.log(`shuffledAnswers: ${shuffledAnswers}`);
+
+    setAnswers(shuffledAnswers);
   };
 
   const startQuiz = () => {
     console.log('startQuiz');
-    // this.setState({
-    //   currentQuestion: null,
-    //   currentIndex: 0,
-    //   questions: [],
-    //   quizFinished: false,
-    //   correctAnswers: 0,
-    //   isSelected: false,
-    //   currentAnswer: null,
-    //   quizStarted: true,
-    //   restarted: false,
-    //   answerList: [],
-    // });
 
-    // var questions = this.shuffle(data.Interval.level2Questions);
+    var questions;
 
-    // //console.log('questions: ' + JSON.stringify(questions));
+    if (level == 1) {
+      questions = shuffle(data.Interval.level1Questions);
+    } else if (level == 2) {
+      questions = shuffle(data.Interval.level2Questions);
+    } else if (level == 3) {
+      questions = shuffle(data.Interval.level3Questions);
+    } else if (level == 4) {
+      questions = shuffle(data.Interval.level4Questions);
+    } else if (level == 5) {
+      questions = shuffle(data.Interval.level5Questions);
+    }
 
-    // var question = questions[0];
-
-    // //console.log('question: ' + JSON.stringify(question));
-
-    // this.setState({
-    //   currentQuestion: question,
-    //   questions: questions,
-    // });
-
-    //console.log('state: ' + JSON.stringify(this.state));
-
-    // const [currentQuestionInd, setCurrentQuestionInd] = useState(0);
-    // const [currentAnswer, setCurrentAnswer] = useState('');
-    // const [correctAnswers, setCorrectAnswers] = useState(0);
-    // const [questionList] = useState(questions);
-    // const [answerList, setAnswerList] = useState([]);
-    // const [answers, setAnswers] = useState(answersData);
-
-    var questions = shuffle(data.Interval.level2Questions);
-    var answersData = shuffle(data.Interval.level2Answers);
+    //console.log('theAnswer: ' + answerInd);
 
     setAddingTrack(true);
     setCurrentQuestionInd(0);
@@ -413,7 +415,7 @@ const PlayerAudio = () => {
     setCorrectAnswers(0);
     setQuestionList(questions);
     setAnswerList([]);
-    setAnswers(answersData);
+    populateAnswers(questions, 0);
 
     setQuizStarted(true);
     setRestarted(false);
@@ -583,7 +585,7 @@ const PlayerAudio = () => {
           avgScore={80}
           answerList={answerList}
           correctAnswers={correctAnswers}
-          total={questions.length}
+          total={questionList.length}
           mainMenu={() => mainMenu()}
         />
       ) : null}
@@ -591,7 +593,7 @@ const PlayerAudio = () => {
   );
 };
 
-export default PlayerAudio;
+export default IntervalLevels;
 
 let offset = 100;
 

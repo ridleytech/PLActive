@@ -1,52 +1,26 @@
 import React, {Component, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  NativeModules,
-  Image,
-  ImageBackground,
-  SafeAreaView,
-  Dimensions,
-  Button,
-} from 'react-native';
-import CheckBox from 'react-native-check-box';
+import {StyleSheet, NativeModules, SafeAreaView} from 'react-native';
 var testView = NativeModules.PlayKey;
 import {connect} from 'react-redux';
-
-// import WhiteIcon from '../../images/blank.jpg';
-// import BlackIcon from '../../images/black.png';
-// import RB from '../../RoundButtonPart';
-
-import data from '../data/questions.json';
-
-import thunk from 'redux-thunk';
-import {createStore, applyMiddleware, compose} from 'redux';
-import reducers from '../reducers';
 import Header from './Header';
 import IntervalLevel1 from './IntervalLevel1';
-import IntervalLevel2 from './IntervalLevel2';
 //import PlayerMidi from './PlayerMidi';
-import PlayerAudio from './PlayerAudio';
 import TestMidi from './TestMidi';
 import Menu from './Menu';
 import {setLevel} from '../actions/';
+
+import IntervalLevels from './IntervalLevels';
 //https://www.npmjs.com/package/react-native-check-box
 
 //cant update git
 
-var testView = NativeModules.PlayKey;
+//var testView = NativeModules.PlayKey;
 
 class Home extends Component<Props> {
   constructor(props: Props) {
     super(props);
 
     //console.log('home props: ' + JSON.stringify(props));
-
-    // this.state = {
-    //   level: 0,
-    // };
   }
 
   componentDidMount() {
@@ -56,9 +30,7 @@ class Home extends Component<Props> {
   }
 
   showLevel = (level) => {
-    console.log('showLevel2: ' + level);
-
-    //this.setState({level: level});
+    //console.log('showLevel2: ' + level);
 
     this.props.setLevel(level);
   };
@@ -83,8 +55,8 @@ class Home extends Component<Props> {
           <Menu showLevel={this.showLevel} />
         ) : this.props.level == 1 ? (
           <IntervalLevel1 />
-        ) : this.props.level == 2 ? (
-          <PlayerAudio />
+        ) : this.props.level > 1 ? (
+          <IntervalLevels level={this.props.level} />
         ) : null}
       </>
     );

@@ -3,21 +3,29 @@ import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
 import Header from './Header';
 
 import videoImg from '../../images/instructions-placeholder.png';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Menu = ({showLevel}) => {
+  var levels = [1, 2, 3, 4, 5];
   return (
     <>
-      {/* <Header /> */}
       <View
         style={{
-          paddingLeft: 20,
-          paddingRight: 20,
+          padding: 20,
           backgroundColor: 'white',
           height: 1000,
         }}>
+        <Text
+          style={{
+            fontFamily: 'Helvetica Neue',
+            fontSize: 20,
+            fontWeight: 'bold',
+          }}>
+          Interval Training
+        </Text>
         <Image source={videoImg} style={styles.video} />
 
-        <View style={{marginTop: 25}}>
+        <View style={{marginTop: 20}}>
           <View
             style={{
               backgroundColor: '#3AB24A',
@@ -33,52 +41,37 @@ const Menu = ({showLevel}) => {
                 padding: 20,
                 textAlign: 'center',
               }}>
-              Interval Training
+              Choose Level
             </Text>
           </View>
-
-          <TouchableOpacity
-            onPress={() => {
-              showLevel(1);
-            }}>
-            <View
-              style={{
-                backgroundColor: '#F6FA43',
-                height: 65,
-              }}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  padding: 20,
-                  textAlign: 'center',
-                }}>
-                Level 1
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              showLevel(2);
-            }}>
-            <View
-              style={{
-                backgroundColor: '#F6FA43',
-                height: 65,
-
-                marginTop: 3,
-              }}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  padding: 20,
-                  textAlign: 'center',
-                }}>
-                Level 2
-              </Text>
-            </View>
-          </TouchableOpacity>
+          <ScrollView style={{height: 280}}>
+            {levels.map((level, index) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    showLevel(level);
+                  }}
+                  key={index}>
+                  <View
+                    style={{
+                      backgroundColor: '#F6FA43',
+                      height: 65,
+                      marginBottom: 2,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        padding: 20,
+                        textAlign: 'center',
+                      }}>
+                      Level {level}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
         </View>
       </View>
     </>

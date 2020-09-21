@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import reducers from '../reducers/';
 import Navigation from './Navigation';
+import SplashScreen from 'react-native-splash-screen';
 
 //const store = createStore(reducers, applyMiddleware(thunk));
 
@@ -27,7 +28,13 @@ const enhancer = composeEnhancers(
 );
 const store = createStore(reducers, enhancer);
 
+//https://www.netguru.com/codestories/react-native-splash-screen
+
 export default () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
     <Provider store={store}>
       <Navigation />

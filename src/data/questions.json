@@ -39,6 +39,12 @@
       "Major 7th",
       "Octave"
     ],
+    "level1Instructions": [
+      "For this quiz, find the interval distance between 2 notes.",
+      "This level will consist of 7 multiple choice questions.",
+      "You need to score a 6/7 to past the quiz.",
+      "This quiz should be completed using ONLY your ear. No keyboard."
+    ],
     "level2Questions": [
       {
         "Question": "Listen to the audio, what interval is being played?",
@@ -97,6 +103,386 @@
         "keys": [0, 4]
       }
     ],
-    "level2Answers": ["Major 2nd", "Major 3rd", "Perfect 4th", "Perfect 5th"]
+    "level2Answers": ["Major 2nd", "Major 3rd", "Perfect 4th", "Perfect 5th"],
+    "level2Instructions": [
+      "For this quiz, find the interval distance between 2 notes.",
+      "This level will consist of 8 multiple choice questions.",
+      "You need to score a 7/8 to past the quiz.",
+      "This quiz should be completed using ONLY your ear. No keyboard."
+    ],
+    "level3Questions": [
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 2nd",
+        "file": "minor2ndC",
+        "id": 1,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 2nd",
+        "file": "major2ndC",
+        "id": 2,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 3rd",
+        "file": "minor3rdC",
+        "id": 3,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 3rd",
+        "file": "major3rdC",
+        "id": 4,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Perfect 4th",
+        "file": "perfect4thC",
+        "id": 5,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Perfect 5th",
+        "file": "perfect5thC",
+        "id": 6,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 6th",
+        "file": "major6thC",
+        "id": 7,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 7th",
+        "file": "major7thC",
+        "id": 8,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Perfect 5th",
+        "file": "perfect5thC",
+        "id": 9,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 6th",
+        "file": "major6thC",
+        "id": 10,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 7th",
+        "file": "major7thC",
+        "id": 11,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Octave",
+        "file": "octaveC",
+        "id": 12,
+        "keys": [0, 1]
+      }
+    ],
+    "level3Answers": [
+      "Minor 2nd",
+      "Major 2nd",
+      "Minor 3rd",
+      "Major 3rd",
+      "Perfect 4th",
+      "Perfect 5th",
+      "Major 6th",
+      "Major 7th",
+      "Octave"
+    ],
+    "level3Instructions": [
+      "For this quiz, find the interval distance between 2 notes.",
+      "This level will consist of 12 multiple choice questions.",
+      "You need to score a 10/12 to past the quiz.",
+      "This quiz should be completed using ONLY your ear. No keyboard."
+    ],
+    "level4Questions": [
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 3rd",
+        "file": "minor3rdC",
+        "id": 1,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 3rd",
+        "file": "major3rdC",
+        "id": 2,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Perfect 4th",
+        "file": "perfect4thC",
+        "id": 3,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Augmented 4th",
+        "file": "augmented4thC",
+        "id": 4,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Perfect 5th",
+        "file": "perfect5thC",
+        "id": 5,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 6th",
+        "file": "major6thC",
+        "id": 6,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 6th",
+        "file": "minor6thC",
+        "id": 7,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 7th",
+        "file": "major7thC",
+        "id": 8,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 7th",
+        "file": "minor7thC",
+        "id": 9,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Augmented 4th",
+        "file": "augmented4thC",
+        "id": 10,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 6th",
+        "file": "minor6thC",
+        "id": 11,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 7th",
+        "file": "minor7thC",
+        "id": 12,
+        "keys": [0, 4]
+      }
+    ],
+    "level4Answers": [
+      "Minor 3rd",
+      "Major 3rd",
+      "Augmented 4th",
+      "Perfect 4th",
+      "Perfect 5th",
+      "Major 6th",
+      "Minor 6th",
+      "Major 7th",
+      "Minor 7th"
+    ],
+    "level4Instructions": [
+      "For this quiz, find the interval distance between 2 notes.",
+      "This level will consist of 12 multiple choice questions.",
+      "You need to score a 10/12 to past the quiz.",
+      "This quiz should be completed using ONLY your ear. No keyboard."
+    ],
+    "level5Questions": [
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 2nd",
+        "file": "minor2ndC",
+        "id": 1,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 2nd",
+        "file": "major2ndC",
+        "id": 2,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 3rd",
+        "file": "minor3rdC",
+        "id": 1,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 3rd",
+        "file": "major3rdC",
+        "id": 2,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Perfect 4th",
+        "file": "perfect4thC",
+        "id": 3,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Augmented 4th",
+        "file": "augmented4thC",
+        "id": 4,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Perfect 5th",
+        "file": "perfect5thC",
+        "id": 5,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 6th",
+        "file": "major6thC",
+        "id": 6,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 6th",
+        "file": "minor6thC",
+        "id": 7,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 7th",
+        "file": "minor7thC",
+        "id": 9,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 7th",
+        "file": "major7thC",
+        "id": 8,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 9th",
+        "file": "minor9thC",
+        "id": 10,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 9th",
+        "file": "major9thC",
+        "id": 10,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 11th",
+        "file": "major11thC",
+        "id": 11,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Augmented 11th",
+        "file": "augmented11thC",
+        "id": 11,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 13th",
+        "file": "minor13thC",
+        "id": 12,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Major 13th",
+        "file": "major13thC",
+        "id": 12,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 9th",
+        "file": "minor9thC",
+        "id": 10,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Augmented 11th",
+        "file": "augmented11thC",
+        "id": 11,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Listen to the audio, what interval is being played?",
+        "Answer": "Minor 13th",
+        "file": "minor13thC",
+        "id": 12,
+        "keys": [0, 4]
+      }
+    ],
+    "level5Answers": [
+      "Minor 2nd",
+      "Major 2nd",
+      "Minor 3rd",
+      "Major 3rd",
+      "Perfect 4th",
+      "Augmented 4th",
+      "Perfect 5th",
+      "Minor 6th",
+      "Major 6th",
+      "Minor 7th",
+      "Major 7th",
+      "Octave",
+      "Minor 9th",
+      "Major 9th",
+      "Minor 11th",
+      "Major 11th",
+      "Minor 13th",
+      "Major 13th"
+    ],
+    "level5Instructions": [
+      "For this quiz, find the interval distance between 2 notes.",
+      "This level will consist of 20 multiple choice questions.",
+      "You need to score a 17/20 to past the quiz.",
+      "This quiz should be completed using ONLY your ear. No keyboard."
+    ]
   }
 }

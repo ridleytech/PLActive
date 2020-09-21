@@ -6,34 +6,20 @@ import {
   TouchableOpacity,
   NativeModules,
   Image,
-  ImageBackground,
-  SafeAreaView,
-  Dimensions,
-  Button,
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
-var testView = NativeModules.PlayKey;
-
-// import WhiteIcon from '../../images/blank.jpg';
-// import BlackIcon from '../../images/black.png';
-// import RB from '../../RoundButtonPart';
 
 import data from '../data/questions.json';
-
-import thunk from 'redux-thunk';
-import {createStore, applyMiddleware, compose} from 'redux';
-import reducers from '../reducers';
-
 import enabledImg from '../../images/checkbox-enabled.png';
 import disabledImg from '../../images/checkbox-disabled.png';
-import Header from './Header';
 import ResultsView from './ResultsView';
-import Interval1Instructions from './Interval1Instructions';
-import Header2 from './Header2';
+import Instructions from './Instructions';
 
 //https://www.npmjs.com/package/react-native-check-box
 
 //cant update git
+
+var instructions = data.Interval.level1Instructions;
 
 class IntervalLevel1 extends Component<Props> {
   constructor(props: Props) {
@@ -315,9 +301,11 @@ class IntervalLevel1 extends Component<Props> {
       <>
         {/* <SafeAreaView></SafeAreaView>
           <Header /> */}
-        {/* <Header2 goBack= /> */}
         {this.state.restarted ? (
-          <Interval1Instructions startQuiz={() => this.startQuiz()} />
+          <Instructions
+            instructions={instructions}
+            startQuiz={() => this.startQuiz()}
+          />
         ) : this.state.quizStarted ? (
           <>
             <View
@@ -370,7 +358,8 @@ class IntervalLevel1 extends Component<Props> {
                           display: 'flex',
                           flexDirection: 'row',
                           alignItems: 'center',
-                        }}>
+                        }}
+                        key={index}>
                         <CheckBox
                           style={{paddingRight: 10}}
                           onClick={() => {

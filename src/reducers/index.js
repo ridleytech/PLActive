@@ -12,7 +12,6 @@ export default (state = inititalState, action) => {
       };
 
     case 'SET_LEVEL':
-      console.log('set level: ' + action.level);
       return {
         ...state,
         level: action.level,

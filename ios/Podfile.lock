@@ -305,6 +305,8 @@ PODS:
     - React
   - react-native-slider (3.0.3):
     - React
+  - react-native-splash-screen (3.2.0):
+    - React
   - react-native-track-player (1.2.3):
     - React
   - react-native-video (5.1.0-alpha8):
@@ -433,6 +435,7 @@ DEPENDENCIES:
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
+  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-track-player (from `../node_modules/react-native-track-player`)
   - react-native-video (from `../node_modules/react-native-video`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -522,6 +525,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-slider:
     :path: "../node_modules/@react-native-community/slider"
+  react-native-splash-screen:
+    :path: "../node_modules/react-native-splash-screen"
   react-native-track-player:
     :path: "../node_modules/react-native-track-player"
   react-native-video:
@@ -604,6 +609,7 @@ SPEC CHECKSUMS:
   react-native-fbsdk: 00c15d138bba6d4efa628670886fc58cec858c19
   react-native-safe-area-context: fcece23844742b6f7f0627c3715b806a7deff946
   react-native-slider: b733e17fdd31186707146debf1f04b5d94aa1a93
+  react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-track-player: 84552605df7d90e199ff8b5deceddff58d658523
   react-native-video: 8d97379f3c2322a569f1e27542ad1a646cad9444
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5

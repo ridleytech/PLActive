@@ -1,11 +1,25 @@
-import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Image,
+  Animated,
+} from 'react-native';
 
 import videoImg from '../../images/instructions-placeholder.png';
 import check from '../../images/check.png';
-import TestMidi from './TestMidi';
 
-const Interval1Instructions = ({correctAnswers, total, startQuiz}) => {
+const Instructions = ({correctAnswers, total, startQuiz, instructions}) => {
+  const opacity = useState(new Animated.Value(0))[0];
+
+  Animated.timing(opacity, {
+    toValue: 1,
+    duration: 500,
+    useNativeDriver: false,
+  }).start();
+
   return (
     <>
       <View style={{padding: 20, backgroundColor: 'white', height: 1000}}>
@@ -28,39 +42,36 @@ const Interval1Instructions = ({correctAnswers, total, startQuiz}) => {
             fontWeight: 'bold',
             color: '#3AB24A',
           }}>
-          {' '}
           Instructions
         </Text>
 
-        <View style={{paddingLeft: 5, marginTop: 15, paddingRight: 25}}>
-          <View style={styles.listItem}>
-            <Image source={check} style={styles.check} />
-            <Text style={styles.list}>
-              For this quiz, find the interval distance between 2 notes.
-            </Text>
-          </View>
-
-          <View style={styles.listItem}>
-            <Image source={check} style={styles.check} />
-            <Text style={styles.list}>
-              This level will consist of 7 multiple choice questions.
-            </Text>
-          </View>
-
-          <View style={styles.listItem}>
-            <Image source={check} style={styles.check} />
-            <Text style={styles.list}>
-              You need to score a 6/7 to past the quiz.
-            </Text>
-          </View>
-
-          <View style={styles.listItem}>
-            <Image source={check} style={styles.check} />
-            <Text style={[styles.list, {fontWeight: 'bold'}]}>
-              This quiz should be completed using ONLY your ear. No keyboard.
-            </Text>
-          </View>
-        </View>
+        <Animated.View
+          style={{
+            paddingLeft: 5,
+            marginTop: 15,
+            paddingRight: 25,
+            opacity: opacity,
+          }}>
+          {instructions.map((text, index) => {
+            if (index < 3) {
+              return (
+                <View style={styles.listItem} key={index}>
+                  <Image source={check} style={styles.check} />
+                  <Text style={[styles.list]}>{instructions[index]}</Text>
+                </View>
+              );
+            } else {
+              return (
+                <View style={styles.listItem} key={index}>
+                  <Image source={check} style={styles.check} />
+                  <Text style={[styles.list, {fontWeight: 'bold'}]}>
+                    {instructions[index]}
+                  </Text>
+                </View>
+              );
+            }
+          })}
+        </Animated.View>
       </View>
       <TouchableOpacity
         onPress={() => startQuiz()}
@@ -98,4 +109,4 @@ const styles = StyleSheet.create({
   check: {marginRight: 8},
 });
 
-export default Interval1Instructions;
+export default Instructions;
