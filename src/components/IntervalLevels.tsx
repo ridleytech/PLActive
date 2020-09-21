@@ -439,6 +439,7 @@ const IntervalLevels = ({level}) => {
       {restarted ? (
         <Instructions
           instructions={instructions}
+          level={level}
           startQuiz={() => startQuiz()}
         />
       ) : quizStarted ? (
@@ -454,7 +455,7 @@ const IntervalLevels = ({level}) => {
                   fontSize: 20,
                   fontWeight: 'bold',
                 }}>
-                Quiz - Interval Training Level 2
+                Quiz - Interval Training Level {level}
               </Text>
               <Text
                 style={{
@@ -613,66 +614,14 @@ let offset = 100;
 const styles = StyleSheet.create({
   mainContainer: {
     //backgroundColor: 'yellow',
-    position: 'absolute',
+    //position: 'absolute',
     bottom: 0,
     left: 0,
     width: '100%',
     backgroundColor: 'white',
-  },
-  controlsContainer: {
-    width: '80%',
-    justifyContent: 'flex-start',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    display: 'flex',
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.7)',
+    flex: 1,
   },
   checkbox: {
     alignSelf: 'center',
-  },
-  previewBtn: {
-    marginTop: 50,
-  },
-  whiteKeys: {
-    marginTop: 140,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  blackKeys: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  icon2: {
-    position: 'absolute',
-    left: 30 + offset,
-    zIndex: 1,
-  },
-  icon3: {
-    position: 'absolute',
-    left: 78 + offset,
-    zIndex: 1,
-  },
-  icon4: {
-    position: 'absolute',
-    left: 173 + offset,
-    zIndex: 1,
-  },
-  icon5: {
-    position: 'absolute',
-    left: 222 + offset,
-    zIndex: 1,
-  },
-  icon6: {
-    position: 'absolute',
-    left: 270 + offset,
-    zIndex: 1,
-  },
-  above: {
-    position: 'absolute',
-    left: 320,
-    zIndex: 3,
   },
 });

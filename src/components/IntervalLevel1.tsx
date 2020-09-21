@@ -304,6 +304,7 @@ class IntervalLevel1 extends Component<Props> {
         {this.state.restarted ? (
           <Instructions
             instructions={instructions}
+            level={this.props.level}
             startQuiz={() => this.startQuiz()}
           />
         ) : this.state.quizStarted ? (
@@ -321,7 +322,7 @@ class IntervalLevel1 extends Component<Props> {
                   fontSize: 20,
                   fontWeight: 'bold',
                 }}>
-                Quiz - Interval Training
+                Quiz - Interval Training Level {this.props.level}
               </Text>
               <Text
                 style={{

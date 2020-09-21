@@ -11,7 +11,14 @@ import {
 import videoImg from '../../images/instructions-placeholder.png';
 import check from '../../images/check.png';
 
-const Instructions = ({correctAnswers, total, startQuiz, instructions}) => {
+const Instructions = ({
+  correctAnswers,
+  total,
+  startQuiz,
+  instructions,
+  level,
+}) => {
+  //console.log('instructions level: ' + level);
   const opacity = useState(new Animated.Value(0))[0];
 
   Animated.timing(opacity, {
@@ -29,7 +36,7 @@ const Instructions = ({correctAnswers, total, startQuiz, instructions}) => {
             fontSize: 20,
             fontWeight: 'bold',
           }}>
-          Quiz - Interval Training
+          Quiz - Interval Training Level {level}
         </Text>
 
         <Image source={videoImg} style={styles.video} />

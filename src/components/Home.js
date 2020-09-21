@@ -8,8 +8,8 @@ import IntervalLevel1 from './IntervalLevel1';
 import TestMidi from './TestMidi';
 import Menu from './Menu';
 import {setLevel} from '../actions/';
-
 import IntervalLevels from './IntervalLevels';
+
 //https://www.npmjs.com/package/react-native-check-box
 
 //cant update git
@@ -30,7 +30,7 @@ class Home extends Component<Props> {
   }
 
   showLevel = (level) => {
-    //console.log('showLevel2: ' + level);
+    //console.log('showLevel: ' + level);
 
     this.props.setLevel(level);
   };
@@ -47,14 +47,12 @@ class Home extends Component<Props> {
     return (
       <>
         <SafeAreaView />
-
         <Header props={this.props} />
         {/* <TestMidi /> */}
-        {/* <Player2 tracks={TRACKS} /> */}
         {this.props.level == 0 ? (
           <Menu showLevel={this.showLevel} />
         ) : this.props.level == 1 ? (
-          <IntervalLevel1 />
+          <IntervalLevel1 level={this.props.level} />
         ) : this.props.level > 1 ? (
           <IntervalLevels level={this.props.level} />
         ) : null}

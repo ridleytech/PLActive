@@ -1,19 +1,57 @@
-import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Image,
+  Animated,
+} from 'react-native';
 import Header from './Header';
 
 import videoImg from '../../images/instructions-placeholder.png';
-import {ScrollView} from 'react-native-gesture-handler';
+import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
 const Menu = ({showLevel}) => {
   var levels = [1, 2, 3, 4, 5];
+
+  const opacity = useState(new Animated.Value(0))[0];
+
+  Animated.timing(opacity, {
+    toValue: 1,
+    duration: 500,
+    useNativeDriver: false,
+  }).start();
+
+  const listItem = (level) => {
+    console.log('level: ' + JSON.stringify(level.item));
+    return (
+      <View
+        style={{
+          backgroundColor: '#F6FA43',
+          height: 65,
+          marginBottom: 2,
+        }}>
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: 'bold',
+            padding: 20,
+            textAlign: 'center',
+          }}>
+          Level {level.item}
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <>
       <View
         style={{
           padding: 20,
           backgroundColor: 'white',
-          height: 1000,
+          flex: 1,
         }}>
         <Text
           style={{
@@ -24,8 +62,7 @@ const Menu = ({showLevel}) => {
           Interval Training
         </Text>
         <Image source={videoImg} style={styles.video} />
-
-        <View style={{marginTop: 20}}>
+        <Animated.View style={{marginTop: 20, opacity: opacity}}>
           <View
             style={{
               backgroundColor: '#3AB24A',
@@ -44,7 +81,15 @@ const Menu = ({showLevel}) => {
               Choose Level
             </Text>
           </View>
-          <ScrollView style={{height: 280}}>
+
+          {/* <FlatList
+            style={styles.list}
+            data={levels}
+            renderItem={listItem}
+            keyExtractor={(item, index) => index.toString()}
+          /> */}
+
+          <ScrollView style={{maxHeight: 290}}>
             {levels.map((level, index) => {
               return (
                 <TouchableOpacity
@@ -72,7 +117,7 @@ const Menu = ({showLevel}) => {
               );
             })}
           </ScrollView>
-        </View>
+        </Animated.View>
       </View>
     </>
   );
