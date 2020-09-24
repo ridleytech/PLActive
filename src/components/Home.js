@@ -3,7 +3,6 @@ import {StyleSheet, NativeModules, SafeAreaView} from 'react-native';
 var testView = NativeModules.PlayKey;
 import {connect} from 'react-redux';
 import Header from './Header';
-import IntervalLevel1 from './IntervalLevel1';
 //import PlayerMidi from './PlayerMidi';
 import TestMidi from './TestMidi';
 import MainMenu from './MainMenu';
@@ -62,14 +61,12 @@ class Home extends Component<Props> {
           <MainMenu setMode={this.setMode} />
         ) : this.props.mode == 1 && this.props.level == 0 ? (
           <PitchMenu showLevel={this.showLevel} />
-        ) : this.props.mode == 2 && this.props.level == 0 ? (
-          <IntervalMenu showLevel={this.showLevel} />
-        ) : this.props.mode == 2 && this.props.level == 1 ? (
-          <IntervalLevel1 level={this.props.level} mode={this.props.mode} />
-        ) : this.props.mode == 2 && this.props.level > 1 ? (
-          <IntervalLevels level={this.props.level} mode={this.props.mode} />
         ) : this.props.mode == 1 && this.props.level > 0 ? (
           <PitchLevels level={this.props.level} mode={this.props.mode} />
+        ) : this.props.mode == 2 && this.props.level == 0 ? (
+          <IntervalMenu showLevel={this.showLevel} />
+        ) : this.props.mode == 2 && this.props.level > 0 ? (
+          <IntervalLevels level={this.props.level} mode={this.props.mode} />
         ) : null}
       </>
     );

@@ -12,7 +12,6 @@ import {authUser} from '../actions';
 import menuIcon from '../../images/menu-icon.png';
 // import HeaderBackButton from './HeaderBackButton';
 import Home from './Home';
-import IntervalLevel1 from './IntervalLevel1';
 
 const menuBtn = (props) => {
   return (
@@ -45,25 +44,6 @@ const GameStackScreen = (props) => (
       component={Home}
       options={{
         headerTitle: 'Home',
-        headerTitleStyle: {
-          color: 'white',
-          fontFamily: 'HelveticaNeue-Medium',
-          fontSize: 21,
-          letterSpacing: 0.93,
-          marginBottom: -13,
-        },
-        headerStyle: {
-          height: 90,
-          backgroundColor: 'rgb(255,114,0)',
-        },
-        headerLeft: () => menuBtn(props),
-      }}
-    />
-    <GamesStack.Screen
-      name="IntervalLevel1"
-      component={IntervalLevel1}
-      options={{
-        headerTitle: 'Test',
         headerTitleStyle: {
           color: 'white',
           fontFamily: 'HelveticaNeue-Medium',

@@ -30,15 +30,6 @@ import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
 import ResultsView from './ResultsView';
 
-const songDetails = {
-  id: '1',
-  url: require('../audio/minor2ndC.mp3'),
-  title: 'Minor 2nd',
-  album: 'Piano Lesson with Warren',
-  artist: 'Randall Ridley',
-  artwork: 'https://picsum.photos/300',
-};
-
 const tracks = {
   minor2ndC: require('../audio/minor2ndC.mp3'),
   major2ndC: require('../audio/major2ndC.mp3'),
@@ -152,7 +143,7 @@ const IntervalLevels = ({level, mode}) => {
   const [sliderValue, setSliderValue] = useState(0);
   const [loadCount, setLoadCount] = useState(0);
   const [isSeeking, setIsSeeking] = useState(false);
-  const [addingTrack, setAddingTrack] = useState(false);
+  //const [addingTrack, setAddingTrack] = useState(false);
   const [quizFinished, setQuizFinished] = useState(false);
   const [quizStarted, setQuizStarted] = useState(false);
   const [currentQuestionInd, setCurrentQuestionInd] = useState(null);
@@ -184,17 +175,18 @@ const IntervalLevels = ({level, mode}) => {
     setSelectionColors(['#EFEFEF', '#EFEFEF', '#EFEFEF', '#EFEFEF']);
 
     if (currentQuestion1 < questionList.length - 1) {
-      setAddingTrack(true);
+      //setAddingTrack(true);
 
       currentQuestion1 += 1;
 
-      TrackPlayer.reset();
+      if (level > 1) {
+        //TrackPlayer.reset();
 
-      setCurrentTrack({
-        name: questionList[currentQuestion1].file,
-        id: currentQuestion1.toString(),
-      });
-
+        setCurrentTrack({
+          name: questionList[currentQuestion1].file,
+          id: currentQuestion1.toString(),
+        });
+      }
       setCurrentQuestionInd(currentQuestion1);
 
       populateAnswers(questionList, currentQuestion1);
@@ -205,19 +197,31 @@ const IntervalLevels = ({level, mode}) => {
   };
 
   useEffect(() => {
-    const startPlayer = async () => {
-      let isInit = await trackPlayerInit();
-      setIsTrackPlayerInit(isInit);
-    };
-    startPlayer();
+    if (level > 1) {
+      const startPlayer = async () => {
+        let isInit = await trackPlayerInit();
+        setIsTrackPlayerInit(isInit);
+      };
+      startPlayer();
 
-    console.log('on load');
-    console.log('loadCount: ' + loadCount);
+      TrackPlayer.reset();
 
-    var lc = loadCount;
-    lc++;
-    setLoadCount(lc);
+      console.log('on load int');
+      console.log('loadCount int: ' + loadCount);
+
+      var lc = loadCount;
+      lc++;
+      setLoadCount(lc);
+    }
   }, []);
+
+  useEffect(
+    () => () => {
+      console.log('unmount');
+      TrackPlayer.destroy();
+    },
+    [],
+  );
 
   //console.log('height: ' + Dimensions.get('screen').height);
 
@@ -235,24 +239,16 @@ const IntervalLevels = ({level, mode}) => {
     }
   }, [currentQuestionInd]);
 
-  useEffect(() => {
-    console.log('addingTrack changed: ' + addingTrack);
+  const addSongData = async (list) => {
+    console.log('song data length interval: ' + list.length);
 
-    if (currentTrack && addingTrack === true) {
-      console.log('track added');
-      TrackPlayer.add({
-        id: currentQuestionInd.toString(),
-        url: trackSelect(currentTrack.name),
-        type: 'default',
-        title: songDetails.title,
-        album: songDetails.album,
-        artist: songDetails.artist,
-        artwork: songDetails.artwork,
-      });
+    await TrackPlayer.add(list);
+  };
 
-      setAddingTrack(false);
-    }
-  }, [addingTrack]);
+  const nextTrack = async () => {
+    await TrackPlayer.skipToNext();
+    TrackPlayer.pause();
+  };
 
   useEffect(() => {
     console.log('currentTrack changed');
@@ -268,6 +264,13 @@ const IntervalLevels = ({level, mode}) => {
       setSliderValue(position / duration);
 
       //console.log('position: ' + position + ' duration: ' + duration);
+
+      //console.log('prog: ' + position / duration);
+
+      if (position / duration > 0.95) {
+        TrackPlayer.seekTo(0);
+        TrackPlayer.pause();
+      }
     }
   }, [position, duration]);
 
@@ -354,6 +357,8 @@ const IntervalLevels = ({level, mode}) => {
     setCanAnswer(false);
     setCanCheck(false);
 
+    nextTrack();
+
     setTimeout(() => {
       setCurrentAnswer(null);
       setCanCheck(true);
@@ -439,7 +444,8 @@ const IntervalLevels = ({level, mode}) => {
 
     //console.log('theAnswer: ' + answerInd);
 
-    setAddingTrack(true);
+    console.log('interval questions: ' + JSON.stringify(questions));
+
     setCurrentQuestionInd(0);
     setCurrentAnswer('');
     setCorrectAnswers(0);
@@ -450,7 +456,26 @@ const IntervalLevels = ({level, mode}) => {
     setQuizStarted(true);
     setRestarted(false);
 
-    TrackPlayer.reset();
+    if (level > 1) {
+      var newTracks = [];
+
+      questions.map((question) => {
+        var ob = {
+          id: question.id.toString(),
+          url: trackSelect(question.file),
+          title: question.file,
+          album: 'Piano Lesson with Warren',
+          artist: 'Randall Ridley',
+          artwork: 'https://picsum.photos/300',
+        };
+
+        newTracks.push(ob);
+      });
+
+      console.log('newTracks length interval: ' + newTracks.length);
+
+      addSongData(newTracks);
+    }
 
     setCurrentTrack({
       name: questions[0].file,
@@ -519,46 +544,49 @@ const IntervalLevels = ({level, mode}) => {
                   : null}
               </Text>
 
-              <View
-                style={{
-                  backgroundColor: '#222222',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                  paddingLeft: 20,
-                  paddingRight: 20,
-                  marginTop: 10,
-                }}>
+              {level > 1 ? (
                 <View
                   style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                    backgroundColor: '#222222',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    paddingLeft: 20,
+                    paddingRight: 20,
+                    marginTop: 10,
                   }}>
-                  <TouchableOpacity
-                    onPress={onButtonPressed}
-                    style={{marginRight: 20}}>
-                    {isPlaying ? (
-                      <Image source={pauseImg} />
-                    ) : (
-                      <Image source={playImg} />
-                    )}
-                  </TouchableOpacity>
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <TouchableOpacity
+                      onPress={onButtonPressed}
+                      style={{marginRight: 20}}>
+                      {isPlaying ? (
+                        <Image source={pauseImg} />
+                      ) : (
+                        <Image source={playImg} />
+                      )}
+                    </TouchableOpacity>
 
-                  <Slider
-                    width="85%"
-                    minimumValue={0}
-                    maximumValue={1}
-                    value={sliderValue}
-                    minimumTrackTintColor="#16ADE5"
-                    maximumTrackTintColor="#707070"
-                    onSlidingStart={slidingStarted}
-                    onSlidingComplete={slidingCompleted}
-                    thumbTintColor="#00000000"
-                    //trackImage={track}
-                  />
+                    <Slider
+                      width="85%"
+                      minimumValue={0}
+                      maximumValue={1}
+                      value={sliderValue}
+                      minimumTrackTintColor="#16ADE5"
+                      maximumTrackTintColor="#707070"
+                      onSlidingStart={slidingStarted}
+                      onSlidingComplete={slidingCompleted}
+                      thumbTintColor="#00000000"
+                      //trackImage={track}
+                    />
+                  </View>
                 </View>
-              </View>
+              ) : null}
             </View>
+
             <ScrollView style={{paddingLeft: 20, paddingRight: 20}}>
               {answers
                 ? answers.map((ob, index) => {

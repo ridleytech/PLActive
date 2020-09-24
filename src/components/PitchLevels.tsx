@@ -23,29 +23,16 @@ import {
 } from 'react-native-track-player/lib/hooks';
 import Slider from '@react-native-community/slider';
 //import styles from './styles';
-import CheckBox from 'react-native-check-box';
 import data from '../data/questions.json';
-import enabledImg from '../../images/checkbox-enabled.png';
-import disabledImg from '../../images/checkbox-disabled.png';
 import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
 import ResultsView from './ResultsView';
 import {TextInput} from 'react-native-gesture-handler';
-import TestMidi3 from './TestMidi3';
 import WhiteIcon from '../../images/blank.jpg';
 import BlackIcon from '../../images/black.png';
 
 var testView = NativeModules.PlayKey;
-
-const songDetails = {
-  id: '1',
-  url: require('../audio/A.mp3'),
-  title: 'A',
-  album: 'Piano Lesson with Warren',
-  artist: 'Randall Ridley',
-  artwork: 'https://picsum.photos/300',
-};
 
 const tracks = {
   A: require('../audio/A.mp3'),
@@ -127,7 +114,7 @@ const shuffle = (array) => {
 
 // console.log('question: ' + JSON.stringify(question));
 
-const IntervalLevels = ({level, mode}) => {
+const PitchLevels = ({level, mode}) => {
   //console.log('selectedLevel: ' + level);
 
   var instructions; // = data.Pitch.level3Instructions;
@@ -149,7 +136,6 @@ const IntervalLevels = ({level, mode}) => {
   const [sliderValue, setSliderValue] = useState(0);
   const [loadCount, setLoadCount] = useState(0);
   const [isSeeking, setIsSeeking] = useState(false);
-  const [addingTrack, setAddingTrack] = useState(false);
   const [quizFinished, setQuizFinished] = useState(false);
   const [quizStarted, setQuizStarted] = useState(false);
   const [currentQuestionInd, setCurrentQuestionInd] = useState(null);
@@ -158,7 +144,6 @@ const IntervalLevels = ({level, mode}) => {
   const [questionList, setQuestionList] = useState(null);
   const [answerList, setAnswerList] = useState(null);
   const [answers, setAnswers] = useState(null);
-  const [height, setHeight] = useState(60);
 
   const [currentTrack, setCurrentTrack] = useState(null);
 
@@ -167,6 +152,7 @@ const IntervalLevels = ({level, mode}) => {
   const opacity = useState(new Animated.Value(0))[0];
 
   const [answerState, setAnswerState] = useState('#E2E7ED');
+  const [canAnswer, setCanAnswer] = useState(false);
 
   Animated.timing(opacity, {
     toValue: 1,
@@ -178,11 +164,9 @@ const IntervalLevels = ({level, mode}) => {
     var currentQuestion1 = currentQuestionInd;
 
     if (currentQuestion1 < questionList.length - 1) {
-      setAddingTrack(true);
-
       currentQuestion1 += 1;
 
-      TrackPlayer.reset();
+      //TrackPlayer.reset();
 
       setCurrentTrack({
         name: questionList[currentQuestion1].file,
@@ -205,8 +189,10 @@ const IntervalLevels = ({level, mode}) => {
     };
     startPlayer();
 
-    console.log('on load');
-    console.log('loadCount: ' + loadCount);
+    TrackPlayer.reset();
+
+    console.log('on load pitch');
+    console.log('loadCount pitch: ' + loadCount);
 
     var lc = loadCount;
     lc++;
@@ -215,38 +201,35 @@ const IntervalLevels = ({level, mode}) => {
 
   //console.log('height: ' + Dimensions.get('screen').height);
 
-  // useEffect(() => {
-  //   if (loadCount === 0) {
-  //     setAddingTrack(true);
-  //   } else {
-  //     setAddingTrack(false);
-  //   }
-  // }, [loadCount]);
-
   useEffect(() => {
     if (currentTrack) {
       console.log('currentQuestion changed: ' + currentTrack.name);
+
+      const startPlayer = async () => {
+        let isInit = await trackPlayerInit();
+        setIsTrackPlayerInit(isInit);
+      };
+      startPlayer();
     }
   }, [currentQuestionInd]);
 
-  useEffect(() => {
-    console.log('addingTrack changed: ' + addingTrack);
+  useEffect(
+    () => () => {
+      console.log('unmount');
+      TrackPlayer.destroy();
+    },
+    [],
+  );
 
-    if (currentTrack && addingTrack === true) {
-      console.log('track added');
-      TrackPlayer.add({
-        id: currentQuestionInd.toString(),
-        url: trackSelect(currentTrack.name),
-        type: 'default',
-        title: songDetails.title,
-        album: songDetails.album,
-        artist: songDetails.artist,
-        artwork: songDetails.artwork,
-      });
+  const addSongData = async (list) => {
+    console.log('song data length pitch: ' + list.length);
+    await TrackPlayer.add(list);
+  };
 
-      setAddingTrack(false);
-    }
-  }, [addingTrack]);
+  const nextTrack = async () => {
+    await TrackPlayer.skipToNext();
+    TrackPlayer.pause();
+  };
 
   useEffect(() => {
     console.log('currentTrack changed');
@@ -262,11 +245,18 @@ const IntervalLevels = ({level, mode}) => {
       setSliderValue(position / duration);
 
       //console.log('position: ' + position + ' duration: ' + duration);
+
+      //console.log('prog: ' + position / duration);
+
+      if (position / duration > 0.95) {
+        TrackPlayer.seekTo(0);
+        TrackPlayer.pause();
+      }
     }
   }, [position, duration]);
 
   useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], (event) => {
-    //console.log(event);
+    console.log(event);
     if (event.state === STATE_PLAYING) {
       setIsPlaying(true);
     }
@@ -274,7 +264,7 @@ const IntervalLevels = ({level, mode}) => {
     //   TrackPlayer.stop();
     // }
     else {
-      console.log('paused');
+      //console.log('paused');
       setIsPlaying(false);
       if (position / duration > 0.9) {
         console.log('reset track ' + currentTrack.name);
@@ -300,16 +290,6 @@ const IntervalLevels = ({level, mode}) => {
     await TrackPlayer.seekTo(value * duration);
     setSliderValue(value);
     setIsSeeking(false);
-  };
-
-  const setChecked = (ob) => {
-    if (ob === currentAnswer) {
-      setCurrentAnswer(null);
-    } else {
-      setCurrentAnswer(ob);
-    }
-
-    //console.log('ob: ' + JSON.stringify(ob));
   };
 
   const selectAnswer2 = () => {
@@ -350,8 +330,11 @@ const IntervalLevels = ({level, mode}) => {
     al.push(questionList[currentQuestionInd]);
 
     setAnswerList(al);
-
+    setCanAnswer(false);
     Keyboard.dismiss();
+    //TrackPlayer.destroy();
+
+    nextTrack();
 
     setTimeout(() => {
       setCurrentAnswer(null);
@@ -438,11 +421,28 @@ const IntervalLevels = ({level, mode}) => {
 
     questions = questions.slice(0, 12);
 
+    var newTracks = [];
+
     console.log('questions: ' + JSON.stringify(questions));
 
-    //console.log('theAnswer: ' + answerInd);
+    questions.map((question) => {
+      var ob = {
+        id: question.id.toString(),
+        url: trackSelect(question.file),
+        title: question.file,
+        album: 'Piano Lesson with Warren',
+        artist: 'Randall Ridley',
+        artwork: 'https://picsum.photos/300',
+      };
 
-    setAddingTrack(true);
+      newTracks.push(ob);
+    });
+
+    addSongData(newTracks);
+
+    console.log('newTracks: ' + JSON.stringify(newTracks));
+    console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
+
     setCurrentQuestionInd(0);
     setCurrentAnswer('');
     setCorrectAnswers(0);
@@ -453,7 +453,7 @@ const IntervalLevels = ({level, mode}) => {
     setQuizStarted(true);
     setRestarted(false);
 
-    TrackPlayer.reset();
+    //TrackPlayer.reset();
 
     setCurrentTrack({
       name: questions[0].file,
@@ -470,16 +470,18 @@ const IntervalLevels = ({level, mode}) => {
   const changeVal = (val) => {
     if (val) {
       setCurrentAnswer(val);
+      setCanAnswer(true);
     } else {
       setCurrentAnswer(null);
+      setCanAnswer(false);
     }
   };
 
   const pressKey = (key: number) => {
-    console.log('key: ' + key);
+    //console.log('key: ' + key);
 
     testView.playKey(key).then((result) => {
-      console.log('show', result);
+      //console.log('show', result);
     });
   };
 
@@ -692,10 +694,10 @@ const IntervalLevels = ({level, mode}) => {
 
               <TouchableOpacity
                 onPress={() => selectAnswer2()}
-                disabled={!currentAnswer}
+                disabled={!canAnswer}
                 style={{
                   height: 60,
-                  backgroundColor: currentAnswer ? '#3AB24A' : 'gray',
+                  backgroundColor: canAnswer ? '#3AB24A' : 'gray',
                   justifyContent: 'center',
                   alignItems: 'center',
                   width: '100%',
@@ -726,7 +728,7 @@ const IntervalLevels = ({level, mode}) => {
   );
 };
 
-export default IntervalLevels;
+export default PitchLevels;
 
 // var sh = Dimensions.get('screen').height;
 // var h;
