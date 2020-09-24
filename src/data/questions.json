@@ -1,4 +1,331 @@
 {
+  "Pitch": {
+    "level1Questions": [
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["A"],
+        "file": "A",
+        "id": 1,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["B"],
+        "file": "B",
+        "id": 2,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["C"],
+        "file": "C",
+        "id": 3,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["D"],
+        "file": "D",
+        "id": 4,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["E"],
+        "file": "E",
+        "id": 5,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["F"],
+        "file": "F",
+        "id": 6,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["G"],
+        "file": "G",
+        "id": 7,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["C"],
+        "file": "C",
+        "id": 3,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["D"],
+        "file": "D",
+        "id": 4,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["E"],
+        "file": "E",
+        "id": 5,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["F"],
+        "file": "F",
+        "id": 6,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["G"],
+        "file": "G",
+        "id": 7,
+        "keys": [0, 3]
+      }
+    ],
+    "level1Answers": ["Major 2nd", "Major 3rd", "Perfect 4th", "Perfect 5th"],
+    "level1Instructions": [
+      "Using your keyboard, listen to the audio and write the correct note letter name in the provided boxes.",
+      " This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level2Questions": [
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["A"],
+        "file": "A",
+        "id": 1,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["B"],
+        "file": "B",
+        "id": 2,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["C"],
+        "file": "C",
+        "id": 3,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["D"],
+        "file": "D",
+        "id": 4,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["E"],
+        "file": "E",
+        "id": 5,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["F"],
+        "file": "F",
+        "id": 6,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["G"],
+        "file": "G",
+        "id": 7,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["Db", "C#"],
+        "file": "Db",
+        "id": 3,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["Eb", "D#"],
+        "file": "Eb",
+        "id": 4,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["Gb", "F#"],
+        "file": "Gb",
+        "id": 5,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["Ab", "G#"],
+        "file": "Ab",
+        "id": 6,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["Bb", "A#"],
+        "file": "Bb",
+        "id": 7,
+        "keys": [0, 3]
+      }
+    ],
+    "level2Answers": ["Major 2nd", "Major 3rd", "Perfect 4th", "Perfect 5th"],
+    "level2Instructions": [
+      "Using your keyboard, listen to the audio and write the correct note letter name in the provided boxes.",
+      " This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level3Questions": [
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["A"],
+        "file": "A",
+        "id": 1,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["B"],
+        "file": "B",
+        "id": 2,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["C"],
+        "file": "C",
+        "id": 3,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["D"],
+        "file": "D",
+        "id": 4,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["E"],
+        "file": "E",
+        "id": 5,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["F"],
+        "file": "F",
+        "id": 6,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["G"],
+        "file": "G",
+        "id": 7,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["Db", "C#"],
+        "file": "Db",
+        "id": 3,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["Eb", "D#"],
+        "file": "Eb",
+        "id": 4,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["Gb", "F#"],
+        "file": "Gb",
+        "id": 5,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["Ab", "G#"],
+        "file": "Ab",
+        "id": 6,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["Bb", "A#"],
+        "file": "Bb",
+        "id": 7,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["A"],
+        "file": "A2",
+        "id": 1,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["B"],
+        "file": "B2",
+        "id": 2,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["C"],
+        "file": "C2",
+        "id": 3,
+        "keys": [0, 3]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["D"],
+        "file": "D2",
+        "id": 4,
+        "keys": [0, 4]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["E"],
+        "file": "E2",
+        "id": 5,
+        "keys": [0, 1]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["F"],
+        "file": "F2",
+        "id": 6,
+        "keys": [0, 2]
+      },
+      {
+        "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
+        "Answers": ["G"],
+        "file": "G2",
+        "id": 7,
+        "keys": [0, 3]
+      }
+    ],
+    "level3Answers": ["Major 2nd", "Major 3rd", "Perfect 4th", "Perfect 5th"],
+    "level3Instructions": [
+      "Using your keyboard, listen to the audio and write the correct note letter name in the provided boxes.",
+      " This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ]
+  },
   "Interval": {
     "level1Questions": [
       {

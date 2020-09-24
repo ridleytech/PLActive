@@ -9,6 +9,7 @@ import {
   ScrollView,
   Dimensions,
   Animated,
+  NativeModules,
 } from 'react-native';
 import TrackPlayer, {
   TrackPlayerEvents,
@@ -29,6 +30,12 @@ import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
 import ResultsView from './ResultsView';
+import {TextInput} from 'react-native-gesture-handler';
+import TestMidi3 from './TestMidi3';
+import WhiteIcon from '../../images/blank.jpg';
+import BlackIcon from '../../images/black.png';
+
+var testView = NativeModules.PlayKey;
 
 const songDetails = {
   id: '1',
@@ -133,18 +140,18 @@ const shuffle = (array) => {
 const IntervalLevels = ({level, mode}) => {
   //console.log('selectedLevel: ' + level);
 
-  var instructions; // = data.Interval.level3Instructions;
+  var instructions; // = data.Pitch.level3Instructions;
 
   if (level == 1) {
-    instructions = shuffle(data.Interval.level1Instructions);
+    instructions = shuffle(data.Pitch.level1Instructions);
   } else if (level == 2) {
-    instructions = shuffle(data.Interval.level2Instructions);
+    instructions = shuffle(data.Pitch.level2Instructions);
   } else if (level == 3) {
-    instructions = shuffle(data.Interval.level3Instructions);
+    instructions = shuffle(data.Pitch.level3Instructions);
   } else if (level == 4) {
-    instructions = shuffle(data.Interval.level4Instructions);
+    instructions = shuffle(data.Pitch.level4Instructions);
   } else if (level == 5) {
-    instructions = shuffle(data.Interval.level5Instructions);
+    instructions = shuffle(data.Pitch.level5Instructions);
   }
 
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
@@ -161,27 +168,15 @@ const IntervalLevels = ({level, mode}) => {
   const [questionList, setQuestionList] = useState(null);
   const [answerList, setAnswerList] = useState(null);
   const [answers, setAnswers] = useState(null);
-  const [selectionColors, setSelectionColors] = useState([
-    '#EFEFEF',
-    '#EFEFEF',
-    '#EFEFEF',
-    '#EFEFEF',
-  ]);
   const [height, setHeight] = useState(60);
 
   const [currentTrack, setCurrentTrack] = useState(null);
 
   const {position, duration} = useTrackPlayerProgress(150);
   const [restarted, setRestarted] = useState(true);
-  const [canAnswer, setCanAnswer] = useState(false);
-  const [canCheck, setCanCheck] = useState(true);
-
-  const [answerState, setAnswerState] = useState('#E2E7ED');
 
   const nextQuestion = () => {
     var currentQuestion1 = currentQuestionInd;
-
-    setSelectionColors(['#EFEFEF', '#EFEFEF', '#EFEFEF', '#EFEFEF']);
 
     if (currentQuestion1 < questionList.length - 1) {
       setAddingTrack(true);
@@ -311,10 +306,8 @@ const IntervalLevels = ({level, mode}) => {
   const setChecked = (ob) => {
     if (ob === currentAnswer) {
       setCurrentAnswer(null);
-      setCanAnswer(false);
     } else {
       setCurrentAnswer(ob);
-      setCanAnswer(true);
     }
 
     //console.log('ob: ' + JSON.stringify(ob));
@@ -329,37 +322,20 @@ const IntervalLevels = ({level, mode}) => {
 
     currentQuestion.userAnswer = currentAnswer;
 
-    var sc = selectionColors.slice();
-    var answerInd = answers.indexOf(currentAnswer);
-
     if (currentAnswer === questionList[currentQuestionInd].Answer) {
       var ca = correctAnswers;
       ca++;
       setCorrectAnswers(ca);
-
-      sc[answerInd] = 'rgb( 114,255,133)';
-
       console.log('correct');
     } else {
       console.log('not');
-      sc[answerInd] = 'rgb(255,93,93)';
     }
-
-    setSelectionColors(sc);
 
     al.push(questionList[currentQuestionInd]);
 
+    setCurrentAnswer(null);
     setAnswerList(al);
-
-    setCanAnswer(false);
-    setCanCheck(false);
-
-    setTimeout(() => {
-      setCurrentAnswer(null);
-      setCanCheck(true);
-      nextQuestion();
-      setAnswerState('#E2E7ED');
-    }, 2000);
+    nextQuestion();
   };
 
   const mainMenu = () => {
@@ -372,18 +348,18 @@ const IntervalLevels = ({level, mode}) => {
 
   const populateAnswers = (questions, ind) => {
     //console.log('populateAnswers');
-    var answersData; // = shuffle(data.Interval.level3Answers);
+    var answersData; // = shuffle(data.Pitch.level3Answers);
 
     if (level == 1) {
-      answersData = shuffle(data.Interval.level1Answers);
+      answersData = shuffle(data.Pitch.level1Answers);
     } else if (level == 2) {
-      answersData = shuffle(data.Interval.level2Answers);
+      answersData = shuffle(data.Pitch.level2Answers);
     } else if (level == 3) {
-      answersData = shuffle(data.Interval.level3Answers);
+      answersData = shuffle(data.Pitch.level3Answers);
     } else if (level == 4) {
-      answersData = shuffle(data.Interval.level4Answers);
+      answersData = shuffle(data.Pitch.level4Answers);
     } else if (level == 5) {
-      answersData = shuffle(data.Interval.level5Answers);
+      answersData = shuffle(data.Pitch.level5Answers);
     }
 
     //console.log('answersData: ' + answersData);
@@ -426,15 +402,15 @@ const IntervalLevels = ({level, mode}) => {
     var questions;
 
     if (level == 1) {
-      questions = shuffle(data.Interval.level1Questions);
+      questions = shuffle(data.Pitch.level1Questions);
     } else if (level == 2) {
-      questions = shuffle(data.Interval.level2Questions);
+      questions = shuffle(data.Pitch.level2Questions);
     } else if (level == 3) {
-      questions = shuffle(data.Interval.level3Questions);
+      questions = shuffle(data.Pitch.level3Questions);
     } else if (level == 4) {
-      questions = shuffle(data.Interval.level4Questions);
+      questions = shuffle(data.Pitch.level4Questions);
     } else if (level == 5) {
-      questions = shuffle(data.Interval.level5Questions);
+      questions = shuffle(data.Pitch.level5Questions);
     }
 
     //console.log('theAnswer: ' + answerInd);
@@ -464,9 +440,31 @@ const IntervalLevels = ({level, mode}) => {
     console.log('question: ' + JSON.stringify(question));
   };
 
+  const changeVal = (val) => {
+    if (val) {
+      setCurrentAnswer(val);
+    } else {
+      setCurrentAnswer(null);
+    }
+  };
+
+  const pressKey = (key: number) => {
+    console.log('key: ' + key);
+
+    testView.playKey(key).then((result) => {
+      console.log('show', result);
+    });
+  };
+
+  const releaseKey = (key: number) => {
+    testView.releaseKey(key).then((result) => {
+      //console.log('show', result);
+    });
+  };
+
   var modename;
 
-  //console.log('IL mode: ' + mode);
+  //console.log('PL mode: ' + mode);
 
   if (mode === 2) {
     modename = 'Interval Training';
@@ -474,7 +472,7 @@ const IntervalLevels = ({level, mode}) => {
     modename = 'Pitch Recognition';
   }
 
-  //console.log('IL modename: ' + modename);
+  //console.log('PL modename: ' + modename);
 
   return (
     <>
@@ -498,7 +496,7 @@ const IntervalLevels = ({level, mode}) => {
                   fontSize: 20,
                   fontWeight: 'bold',
                 }}>
-                Quiz - Interval Training Level {level}
+                Quiz - Pitch Recognition Level {level}
               </Text>
               <Text
                 style={{
@@ -559,7 +557,112 @@ const IntervalLevels = ({level, mode}) => {
                 </View>
               </View>
             </View>
-            <ScrollView style={{paddingLeft: 20, paddingRight: 20}}>
+            <TextInput
+              style={{
+                width: 70,
+                height: 50,
+                backgroundColor: '#E2E7ED',
+                marginTop: 10,
+                marginBottom: 30,
+                borderRadius: 3,
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                fontSize: 35,
+                textAlign: 'center',
+              }}
+              value={currentAnswer}
+              onChangeText={(text) => changeVal(text)}></TextInput>
+            <View
+              style={{
+                backgroundColor: 'black',
+                display: 'flex',
+                flex: 1,
+                flexDirection: 'row',
+              }}>
+              <View
+                onTouchStart={() => pressKey(0)}
+                onTouchEnd={() => releaseKey(0)}
+                style={styles.whiteKey}>
+                <Image source={WhiteIcon} style={styles.icon} />
+              </View>
+              <View
+                onTouchStart={() => pressKey(1)}
+                onTouchEnd={() => releaseKey(1)}
+                style={styles.blackKey}>
+                <Image source={BlackIcon} style={styles.icon2} />
+              </View>
+              <View
+                onTouchStart={() => pressKey(2)}
+                onTouchEnd={() => releaseKey(2)}
+                style={styles.whiteKey}>
+                <Image source={WhiteIcon} style={styles.icon} />
+              </View>
+              <View
+                onTouchStart={() => pressKey(3)}
+                onTouchEnd={() => releaseKey(3)}
+                style={styles.blackKey}>
+                <Image source={BlackIcon} style={styles.icon3} />
+              </View>
+              <View
+                onTouchStart={() => pressKey(4)}
+                onTouchEnd={() => releaseKey(4)}
+                style={styles.whiteKey}>
+                <Image source={WhiteIcon} style={styles.icon} />
+              </View>
+              <View
+                onTouchStart={() => pressKey(5)}
+                onTouchEnd={() => releaseKey(5)}
+                style={styles.whiteKey}>
+                <Image source={WhiteIcon} style={styles.icon} />
+              </View>
+              <View
+                onTouchStart={() => pressKey(6)}
+                onTouchEnd={() => releaseKey(6)}
+                style={styles.blackKey}>
+                <Image source={BlackIcon} style={styles.icon4} />
+              </View>
+              <View
+                onTouchStart={() => pressKey(7)}
+                onTouchEnd={() => releaseKey(7)}
+                style={styles.whiteKey}>
+                <Image source={WhiteIcon} style={styles.icon} />
+              </View>
+              <View
+                onTouchStart={() => pressKey(8)}
+                onTouchEnd={() => releaseKey(8)}
+                style={styles.blackKey}>
+                <Image source={BlackIcon} style={styles.icon5} />
+              </View>
+              <View
+                onTouchStart={() => pressKey(9)}
+                onTouchEnd={() => releaseKey(9)}
+                style={styles.whiteKey}>
+                <Image source={WhiteIcon} style={styles.icon} />
+              </View>
+              <View
+                onTouchStart={() => pressKey(10)}
+                onTouchEnd={() => releaseKey(10)}
+                style={styles.blackKey}>
+                <Image source={BlackIcon} style={styles.icon6} />
+              </View>
+              <View
+                onTouchStart={() => pressKey(11)}
+                onTouchEnd={() => releaseKey(11)}
+                style={styles.whiteKey}>
+                <Image source={WhiteIcon} style={styles.icon} />
+              </View>
+            </View>
+
+            {/* <TestMidi3
+              style={{
+                backgroundColor: 'green',
+                display: 'flex',
+                flex: 1,
+                paddingBottom: 50,
+              }}
+            /> */}
+
+            {/* <ScrollView style={{paddingLeft: 20, paddingRight: 20}}>
               {answers
                 ? answers.map((ob, index) => {
                     return (
@@ -569,7 +672,7 @@ const IntervalLevels = ({level, mode}) => {
                         key={index}
                         style={{
                           height: 65,
-                          backgroundColor: selectionColors[index],
+                          backgroundColor: '#EFEFEF',
                           marginBottom: 15,
                           borderRadius: 8,
                           overflow: 'hidden',
@@ -581,7 +684,6 @@ const IntervalLevels = ({level, mode}) => {
                         }}>
                         <CheckBox
                           style={{paddingRight: 10}}
-                          disabled={!canCheck}
                           onClick={() => {
                             setChecked(ob);
                           }}
@@ -602,13 +704,13 @@ const IntervalLevels = ({level, mode}) => {
                     );
                   })
                 : null}
-            </ScrollView>
+            </ScrollView> */}
             <TouchableOpacity
               onPress={() => selectAnswer2()}
-              disabled={!canAnswer}
+              disabled={!currentAnswer}
               style={{
                 height: 60,
-                backgroundColor: canAnswer === true ? '#3AB24A' : 'gray',
+                backgroundColor: currentAnswer ? '#3AB24A' : 'gray',
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: '100%',
@@ -640,8 +742,6 @@ const IntervalLevels = ({level, mode}) => {
 
 export default IntervalLevels;
 
-let offset = 100;
-
 // var sh = Dimensions.get('screen').height;
 // var h;
 
@@ -655,6 +755,10 @@ let offset = 100;
 //   h = sh - 120;
 // }
 
+let offset = Dimensions.get('screen').width / 9.2;
+let whiteKeyWidth = Dimensions.get('screen').width / 7;
+let blackKeyWidth = Dimensions.get('screen').width / 13;
+
 const styles = StyleSheet.create({
   mainContainer: {
     //backgroundColor: 'yellow',
@@ -667,5 +771,41 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     alignSelf: 'center',
+  },
+  icon: {
+    height: '100%',
+    maxHeight: 250,
+    width: whiteKeyWidth,
+  },
+  whiteKey: {
+    height: '100%',
+    maxHeight: 250,
+    marginRight: 0.5,
+  },
+  blackKey: {position: 'absolute', zIndex: 1, left: 0},
+  icon2: {
+    height: 135,
+    width: blackKeyWidth,
+    left: offset,
+  },
+  icon3: {
+    height: 135,
+    width: blackKeyWidth,
+    left: offset + whiteKeyWidth,
+  },
+  icon4: {
+    height: 135,
+    width: blackKeyWidth,
+    left: offset + whiteKeyWidth * 3,
+  },
+  icon5: {
+    height: 135,
+    width: blackKeyWidth,
+    left: offset + whiteKeyWidth * 4,
+  },
+  icon6: {
+    height: 135,
+    width: blackKeyWidth,
+    left: offset + whiteKeyWidth * 5,
   },
 });

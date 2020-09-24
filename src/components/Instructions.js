@@ -17,6 +17,7 @@ const Instructions = ({
   startQuiz,
   instructions,
   level,
+  modename,
 }) => {
   //console.log('instructions level: ' + level);
   const opacity = useState(new Animated.Value(0))[0];
@@ -36,7 +37,7 @@ const Instructions = ({
             fontSize: 20,
             fontWeight: 'bold',
           }}>
-          Quiz - Interval Training Level {level}
+          Quiz - {modename} {level}
         </Text>
 
         <Image source={videoImg} style={styles.video} />

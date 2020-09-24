@@ -4,3 +4,10 @@ export const setLevel = (level) => {
     level: level,
   };
 };
+
+export const setMode = (mode) => {
+  return {
+    type: 'SET_MODE',
+    mode: mode,
+  };
+};

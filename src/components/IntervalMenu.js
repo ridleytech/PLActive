@@ -12,7 +12,7 @@ import Header from './Header';
 import videoImg from '../../images/instructions-placeholder.png';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
-const Menu = ({showLevel}) => {
+const IntervalMenu = ({showLevel}) => {
   var levels = [1, 2, 3, 4, 5];
 
   const opacity = useState(new Animated.Value(0))[0];
@@ -134,4 +134,4 @@ const styles = StyleSheet.create({
   check: {marginRight: 8},
 });
 
-export default Menu;
+export default IntervalMenu;

@@ -297,6 +297,18 @@ class IntervalLevel1 extends Component<Props> {
   };
 
   render() {
+    var modename;
+
+    //console.log('IL1 mode: ' + this.props.mode);
+
+    if (this.props.mode === 2) {
+      modename = 'Interval Training';
+    } else {
+      modename = 'Pitch Recognition';
+    }
+
+    //console.log('IL1 modename: ' + modename);
+
     return (
       <>
         {/* <SafeAreaView></SafeAreaView>
@@ -304,6 +316,7 @@ class IntervalLevel1 extends Component<Props> {
         {this.state.restarted ? (
           <Instructions
             instructions={instructions}
+            modename={modename}
             level={this.props.level}
             startQuiz={() => this.startQuiz()}
           />

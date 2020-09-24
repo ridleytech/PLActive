@@ -56,7 +56,7 @@ RCT_EXPORT_METHOD(playKey:(int)key
   //OSStatus status = 0;
   
   //val = 3;
-  currentOctave = 4;
+  currentOctave = 3;
   sustainValue = 0;
   
   MIDINoteMessage thisMessage;

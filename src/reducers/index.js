@@ -1,6 +1,7 @@
 const inititalState = {
   a: 1,
   level: 0,
+  mode: 0,
 };
 
 export default (state = inititalState, action) => {
@@ -15,6 +16,12 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         level: action.level,
+      };
+
+    case 'SET_MODE':
+      return {
+        ...state,
+        mode: action.mode,
       };
 
     default:

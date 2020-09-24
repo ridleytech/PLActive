@@ -6,15 +6,18 @@ import Header from './Header';
 import IntervalLevel1 from './IntervalLevel1';
 //import PlayerMidi from './PlayerMidi';
 import TestMidi from './TestMidi';
-import Menu from './Menu';
-import {setLevel} from '../actions/';
+import MainMenu from './MainMenu';
+import PitchMenu from './PitchMenu';
+import IntervalMenu from './IntervalMenu';
+import {setLevel, setMode} from '../actions/';
 import IntervalLevels from './IntervalLevels';
+import PitchLevels from './PitchLevels';
 
 //https://www.npmjs.com/package/react-native-check-box
 
 //cant update git
 
-//var testView = NativeModules.PlayKey;
+var testView = NativeModules.PlayKey;
 
 class Home extends Component<Props> {
   constructor(props: Props) {
@@ -24,10 +27,16 @@ class Home extends Component<Props> {
   }
 
   componentDidMount() {
-    // testView.initGraph('url').then((result) => {
-    //   console.log('show', result);
-    // });
+    testView.initGraph('url').then((result) => {
+      console.log('show', result);
+    });
   }
+
+  setMode = (mode) => {
+    //console.log('showLevel: ' + level);
+
+    this.props.setMode(mode);
+  };
 
   showLevel = (level) => {
     //console.log('showLevel: ' + level);
@@ -49,12 +58,18 @@ class Home extends Component<Props> {
         <SafeAreaView />
         <Header props={this.props} />
         {/* <TestMidi /> */}
-        {this.props.level == 0 ? (
-          <Menu showLevel={this.showLevel} />
-        ) : this.props.level == 1 ? (
-          <IntervalLevel1 level={this.props.level} />
-        ) : this.props.level > 1 ? (
-          <IntervalLevels level={this.props.level} />
+        {this.props.mode == 0 ? (
+          <MainMenu setMode={this.setMode} />
+        ) : this.props.mode == 1 && this.props.level == 0 ? (
+          <PitchMenu showLevel={this.showLevel} />
+        ) : this.props.mode == 2 && this.props.level == 0 ? (
+          <IntervalMenu showLevel={this.showLevel} />
+        ) : this.props.mode == 2 && this.props.level == 1 ? (
+          <IntervalLevel1 level={this.props.level} mode={this.props.mode} />
+        ) : this.props.mode == 2 && this.props.level > 1 ? (
+          <IntervalLevels level={this.props.level} mode={this.props.mode} />
+        ) : this.props.mode == 1 && this.props.level > 0 ? (
+          <PitchLevels level={this.props.level} mode={this.props.mode} />
         ) : null}
       </>
     );
@@ -64,10 +79,11 @@ class Home extends Component<Props> {
 const mapStateToProps = (state) => {
   return {
     level: state.level,
+    mode: state.mode,
   };
 };
 
-export default connect(mapStateToProps, {setLevel})(Home);
+export default connect(mapStateToProps, {setLevel, setMode})(Home);
 
 let offset = 100;
 

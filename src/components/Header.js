@@ -17,6 +17,7 @@ const Header = (props) => {
   const dispatch = useDispatch();
 
   const goHome = () => {
+    dispatch({type: 'SET_MODE', mode: 0});
     dispatch({type: 'SET_LEVEL', level: 0});
   };
 
