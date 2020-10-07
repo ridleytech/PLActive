@@ -1,4 +1,4 @@
-import React, {useEffect, useState, lazy, useRef, useReducer} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   Button,
@@ -139,20 +139,6 @@ const PitchLevels = ({level, mode}) => {
 
   //console.log('selectedLevel: ' + level);
 
-  // var instructions; // = data.Pitch.level3Instructions;
-
-  // if (level == 1) {
-  //   instructions = shuffle(data.Pitch.level1Instructions);
-  // } else if (level == 2) {
-  //   instructions = shuffle(data.Pitch.level2Instructions);
-  // } else if (level == 3) {
-  //   instructions = shuffle(data.Pitch.level3Instructions);
-  // } else if (level == 4) {
-  //   instructions = shuffle(data.Pitch.level4Instructions);
-  // } else if (level == 5) {
-  //   instructions = shuffle(data.Pitch.level5Instructions);
-  // }
-
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
@@ -258,11 +244,11 @@ const PitchLevels = ({level, mode}) => {
     if (currentTrack) {
       console.log('currentQuestion changed: ' + currentTrack.name);
 
-      const startPlayer = async () => {
-        let isInit = await trackPlayerInit();
-        setIsTrackPlayerInit(isInit);
-      };
-      startPlayer();
+      // const startPlayer = async () => {
+      //   let isInit = await trackPlayerInit();
+      //   setIsTrackPlayerInit(isInit);
+      // };
+      // startPlayer();
     }
   }, [currentQuestionInd]);
 

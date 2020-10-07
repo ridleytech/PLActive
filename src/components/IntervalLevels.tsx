@@ -1,4 +1,4 @@
-import React, {useEffect, useState, lazy} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   Button,
@@ -133,26 +133,11 @@ const IntervalLevels = ({level, mode}) => {
 
   //console.log('selectedLevel: ' + level);
 
-  // var instructions; // = data.Interval.level3Instructions;
-
-  // if (level == 1) {
-  //   instructions = shuffle(data.Interval.level1Instructions);
-  // } else if (level == 2) {
-  //   instructions = shuffle(data.Interval.level2Instructions);
-  // } else if (level == 3) {
-  //   instructions = shuffle(data.Interval.level3Instructions);
-  // } else if (level == 4) {
-  //   instructions = shuffle(data.Interval.level4Instructions);
-  // } else if (level == 5) {
-  //   instructions = shuffle(data.Interval.level5Instructions);
-  // }
-
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
   const [loadCount, setLoadCount] = useState(0);
   const [isSeeking, setIsSeeking] = useState(false);
-  //const [addingTrack, setAddingTrack] = useState(false);
   const [quizFinished, setQuizFinished] = useState(false);
   const [quizStarted, setQuizStarted] = useState(false);
   const [currentQuestionInd, setCurrentQuestionInd] = useState(null);
@@ -242,6 +227,14 @@ const IntervalLevels = ({level, mode}) => {
     setInstructions(instructions);
   }, []);
 
+  //console.log('height: ' + Dimensions.get('screen').height);
+
+  useEffect(() => {
+    if (currentTrack) {
+      console.log('currentQuestion changed: ' + currentTrack.name);
+    }
+  }, [currentQuestionInd]);
+
   useEffect(
     () => () => {
       console.log('unmount');
@@ -249,22 +242,6 @@ const IntervalLevels = ({level, mode}) => {
     },
     [],
   );
-
-  //console.log('height: ' + Dimensions.get('screen').height);
-
-  // useEffect(() => {
-  //   if (loadCount === 0) {
-  //     setAddingTrack(true);
-  //   } else {
-  //     setAddingTrack(false);
-  //   }
-  // }, [loadCount]);
-
-  useEffect(() => {
-    if (currentTrack) {
-      console.log('currentQuestion changed: ' + currentTrack.name);
-    }
-  }, [currentQuestionInd]);
 
   const addSongData = async (list) => {
     console.log('song data length interval: ' + list.length);
