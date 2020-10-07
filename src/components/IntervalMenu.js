@@ -20,8 +20,8 @@ const IntervalMenu = ({showLevel}) => {
   var levels = [1, 2, 3, 4, 5];
 
   const isTrial = useSelector((state) => state.isTrial);
-  const completedIntervalLevels = useSelector(
-    (state) => state.completedIntervalLevels,
+  const lastCompletedIntervalLevel = useSelector(
+    (state) => state.lastCompletedIntervalLevel,
   );
 
   const opacity = useState(new Animated.Value(0))[0];
@@ -131,9 +131,7 @@ const IntervalMenu = ({showLevel}) => {
                   ) : (
                     <Image
                       source={
-                        completedIntervalLevels.indexOf(index + 1) != -1
-                          ? checkIcon
-                          : null
+                        index < lastCompletedIntervalLevel ? checkIcon : null
                       }
                       style={{position: 'absolute', right: 12, top: 12}}
                     />

@@ -1,5 +1,10 @@
 import React, {Component, useState} from 'react';
-import {StyleSheet, NativeModules, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  NativeModules,
+  SafeAreaView,
+  AsyncStorage,
+} from 'react-native';
 var testView = NativeModules.PlayKey;
 import {connect} from 'react-redux';
 import Header from './Header';
@@ -8,9 +13,11 @@ import TestMidi from './TestMidi';
 import MainMenu from './MainMenu';
 import PitchMenu from './PitchMenu';
 import IntervalMenu from './IntervalMenu';
-import {setLevel, setMode} from '../actions/';
+import {setLevel, setMode, setProgress} from '../actions/';
+import {getProgressData} from '../thunks/';
 import IntervalLevels from './IntervalLevels';
 import PitchLevels from './PitchLevels';
+//import {AsyncStorage} from 'react-native-community/async-storage';
 
 //https://www.npmjs.com/package/react-native-check-box
 
@@ -22,13 +29,55 @@ class Home extends Component<Props> {
   constructor(props: Props) {
     super(props);
 
+    this.retrieveData();
     //console.log('home props: ' + JSON.stringify(props));
   }
 
+  retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('lastCompletedPitchLevel');
+      const value2 = await AsyncStorage.getItem('lastCompletedIntervalLevel');
+
+      if (value !== null) {
+        // We have data!!
+        console.log(`lastCompletedPitchLevel: ${value}`);
+
+        this.props.setProgress({
+          lastCompletedPitchLevel: value,
+          lastCompletedIntervalLevel: value2,
+        });
+      } else {
+        console.log('save data');
+
+        this.storeData();
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+
+    //reset progress data
+    //this.storeData();
+  };
+
+  storeData = async () => {
+    try {
+      await AsyncStorage.setItem('lastCompletedPitchLevel', '0');
+    } catch (error) {
+      // Error saving data
+    }
+
+    try {
+      await AsyncStorage.setItem('lastCompletedIntervalLevel', '0');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
   componentDidMount() {
-    // testView.initGraph('url').then((result) => {
-    //   console.log('show', result);
-    // });
+    //this.props.getProgressData();
+    testView.initGraph('url').then((result) => {
+      console.log('show', result);
+    });
   }
 
   setMode = (mode) => {
@@ -80,7 +129,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {setLevel, setMode})(Home);
+export default connect(mapStateToProps, {
+  setLevel,
+  setMode,
+  setProgress,
+  getProgressData,
+})(Home);
 
 let offset = 100;
 

@@ -9,6 +9,7 @@ import {
   ScrollView,
   Dimensions,
   Animated,
+  AsyncStorage,
 } from 'react-native';
 import TrackPlayer, {
   TrackPlayerEvents,
@@ -31,7 +32,7 @@ import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
 import ResultsView from './ResultsView';
-
+//import {AsyncStorage} from 'react-native-community/async-storage';
 import {saveProgress} from '../thunks/';
 
 const tracks = {
@@ -379,12 +380,22 @@ const IntervalLevels = ({level, mode}) => {
       dispatch({type: 'SET_MODE', mode: 2});
       dispatch({type: 'SET_LEVEL', level: level + 1});
       dispatch(saveProgress(level));
+
+      storeData(level + 1);
     } else {
       console.log('main menu');
 
       setRestarted(true);
       setCurrentAnswer(null);
       setCorrectAnswers(0);
+    }
+  };
+
+  const storeData = async (level) => {
+    try {
+      await AsyncStorage.setItem('lastCompletedIntervalLevel', level);
+    } catch (error) {
+      // Error saving data
     }
   };
 

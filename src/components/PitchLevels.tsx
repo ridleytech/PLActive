@@ -11,6 +11,7 @@ import {
   Animated,
   NativeModules,
   Keyboard,
+  AsyncStorage,
 } from 'react-native';
 import TrackPlayer, {
   TrackPlayerEvents,
@@ -35,7 +36,7 @@ import WhiteIcon from '../../images/blank.jpg';
 import GreenIcon from '../../images/blank-green.png';
 import BlackIcon from '../../images/black.png';
 import BlackGreenIcon from '../../images/black-green.png';
-
+//import {AsyncStorage} from 'react-native-community/async-storage';
 import {saveProgress} from '../thunks/';
 
 var testView = NativeModules.PlayKey;
@@ -391,12 +392,22 @@ const PitchLevels = ({level, mode}) => {
       dispatch({type: 'SET_MODE', mode: 1});
       dispatch({type: 'SET_LEVEL', level: level + 1});
       dispatch(saveProgress(level));
+
+      storeData(level + 1);
     } else {
       console.log('main menu');
 
       setRestarted(true);
       setCurrentAnswer(null);
       setCorrectAnswers(0);
+    }
+  };
+
+  const storeData = async (level) => {
+    try {
+      await AsyncStorage.setItem('lastCompletedPitchLevel', level + 1);
+    } catch (error) {
+      // Error saving data
     }
   };
 

@@ -20,8 +20,8 @@ const PitchMenu = ({showLevel}) => {
   var levels = [1, 2, 3];
 
   const isTrial = useSelector((state) => state.isTrial);
-  const completedPitchLevels = useSelector(
-    (state) => state.completedPitchLevels,
+  const lastCompletedPitchLevel = useSelector(
+    (state) => state.lastCompletedPitchLevel,
   );
 
   const opacity = useState(new Animated.Value(0))[0];
@@ -131,7 +131,9 @@ const PitchMenu = ({showLevel}) => {
                   ) : (
                     <Image
                       source={
-                        completedPitchLevels.indexOf(index + 1) != -1
+                        index < lastCompletedPitchLevel
+                          ? checkIcon
+                          : null
                           ? checkIcon
                           : null
                       }

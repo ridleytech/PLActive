@@ -11,3 +11,10 @@ export const setMode = (mode) => {
     mode: mode,
   };
 };
+
+export const setProgress = (obj) => {
+  return {
+    type: 'SET_PROGRESS',
+    levels: obj,
+  };
+};

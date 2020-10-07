@@ -13,6 +13,21 @@ const getQuestions = () => {
   };
 };
 
+export const getProgressData = () => (dispatch, getState) => {
+  console.log('get progress');
+  fetch('http://localhost:8888/ridleytech/pianolessons/get-progress.php')
+    .then((data) => {
+      return data.json();
+    })
+    .then((data) => {
+      console.log(`data: ${data}`);
+      dispatch({type: 'PROGRESS_INFO', payload: data});
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 export const saveProgress = (level1) => (dispatch, getState) => {
   console.log('saveProgress');
 
