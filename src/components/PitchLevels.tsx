@@ -42,12 +42,19 @@ var testView = NativeModules.PlayKey;
 
 const tracks = {
   A: require('../audio/A.mp3'),
+  A2: require('../audio/A2.mp3'),
   B: require('../audio/B.mp3'),
+  B2: require('../audio/B2.mp3'),
   C: require('../audio/C.mp3'),
+  C2: require('../audio/C2.mp3'),
   D: require('../audio/D.mp3'),
+  D2: require('../audio/D2.mp3'),
   E: require('../audio/E.mp3'),
+  E2: require('../audio/E2.mp3'),
   F: require('../audio/F.mp3'),
+  F2: require('../audio/F2.mp3'),
   G: require('../audio/G.mp3'),
+  G2: require('../audio/G2.mp3'),
   Db: require('../audio/Db.mp3'),
   Eb: require('../audio/Eb.mp3'),
   Gb: require('../audio/Gb.mp3'),
@@ -57,17 +64,24 @@ const tracks = {
 
 const trackSelect = (track) => {
   if (track === null) {
-    return tracks.minor3rdC;
+    return tracks.A;
   }
 
   const tracksArray = {
     A: tracks.A,
+    A2: tracks.A2,
     B: tracks.B,
+    B2: tracks.B2,
     C: tracks.C,
+    C2: tracks.C2,
     D: tracks.D,
+    D2: tracks.D2,
     E: tracks.E,
+    E2: tracks.E2,
     F: tracks.F,
+    F2: tracks.F2,
     G: tracks.G,
+    G2: tracks.G2,
     Db: tracks.Db,
     Eb: tracks.Eb,
     Gb: tracks.Gb,

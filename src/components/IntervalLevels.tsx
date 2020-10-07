@@ -51,6 +51,7 @@ const tracks = {
   major9thC: require('../audio/major9thC.mp3'),
   minor11thC: require('../audio/minor11thC.mp3'),
   major11thC: require('../audio/major11thC.mp3'),
+  augmented11thC: require('../audio/augmented11thC.mp3'),
   minor13thC: require('../audio/minor13thC.mp3'),
   major13thC: require('../audio/major13thC.mp3'),
 };
@@ -65,17 +66,19 @@ const trackSelect = (track) => {
     major2ndC: tracks.major2ndC,
     minor3rdC: tracks.minor3rdC,
     major3rdC: tracks.major3rdC,
-    augmented4thC: tracks.augmented4thC,
     perfect4thC: tracks.perfect4thC,
+    augmented4thC: tracks.augmented4thC,
     perfect5thC: tracks.perfect5thC,
     minor6thC: tracks.minor6thC,
-    minor7thC: tracks.minor7thC,
     major6thC: tracks.major6thC,
+    minor7thC: tracks.minor7thC,
     major7thC: tracks.major7thC,
+    octaveC: tracks.octaveC,
     minor9thC: tracks.minor9thC,
     major9thC: tracks.major9thC,
     minor11thC: tracks.minor11thC,
     major11thC: tracks.major11thC,
+    augmented11thC: tracks.augmented11thC,
     minor13thC: tracks.minor13thC,
     major13thC: tracks.major13thC,
   };
@@ -521,6 +524,8 @@ const IntervalLevels = ({level, mode}) => {
     var question = questions[0];
 
     console.log('question: ' + JSON.stringify(question));
+    console.log('newTracks: ' + JSON.stringify(newTracks));
+    console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
   };
 
   var modename;
