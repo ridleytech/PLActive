@@ -16,7 +16,7 @@ import PitchLevels from './PitchLevels';
 
 //cant update git
 
-var testView = NativeModules.PlayKey;
+//var testView = NativeModules.PlayKey;
 
 class Home extends Component<Props> {
   constructor(props: Props) {
@@ -26,9 +26,9 @@ class Home extends Component<Props> {
   }
 
   componentDidMount() {
-    testView.initGraph('url').then((result) => {
-      console.log('show', result);
-    });
+    // testView.initGraph('url').then((result) => {
+    //   console.log('show', result);
+    // });
   }
 
   setMode = (mode) => {
@@ -56,8 +56,9 @@ class Home extends Component<Props> {
       <>
         <SafeAreaView />
         <Header props={this.props} />
+        <MainMenu setMode={this.setMode} />
         {/* <TestMidi /> */}
-        {this.props.mode == 0 ? (
+        {/* {this.props.mode == 0 ? (
           <MainMenu setMode={this.setMode} />
         ) : this.props.mode == 1 && this.props.level == 0 ? (
           <PitchMenu showLevel={this.showLevel} />
@@ -67,7 +68,7 @@ class Home extends Component<Props> {
           <IntervalMenu showLevel={this.showLevel} />
         ) : this.props.mode == 2 && this.props.level > 0 ? (
           <IntervalLevels level={this.props.level} mode={this.props.mode} />
-        ) : null}
+        ) : null} */}
       </>
     );
   }

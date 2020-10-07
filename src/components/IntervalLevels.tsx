@@ -499,6 +499,7 @@ const IntervalLevels = ({level, mode}) => {
           title: question.file,
           album: 'Piano Lesson with Warren',
           artist: 'Randall Ridley',
+          genre: 'R&B',
           artwork: 'https://picsum.photos/300',
         };
 

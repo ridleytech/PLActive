@@ -12,6 +12,8 @@ import {useSelector} from 'react-redux';
 
 import videoImg from '../../images/instructions-placeholder.png';
 import lockIcon from '../../images/lock-icon.png';
+import checkIcon from '../../images/check2.png';
+
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
 const IntervalMenu = ({showLevel}) => {
@@ -130,7 +132,7 @@ const IntervalMenu = ({showLevel}) => {
                     <Image
                       source={
                         completedIntervalLevels.indexOf(index + 1) != -1
-                          ? lockIcon
+                          ? checkIcon
                           : null
                       }
                       style={{position: 'absolute', right: 12, top: 12}}
