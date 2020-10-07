@@ -8,12 +8,20 @@ import {
   Animated,
 } from 'react-native';
 import Header from './Header';
+import {useSelector} from 'react-redux';
 
 import videoImg from '../../images/instructions-placeholder.png';
+import lockIcon from '../../images/lock-icon.png';
+
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
 const PitchMenu = ({showLevel}) => {
   var levels = [1, 2, 3];
+
+  const isTrial = useSelector((state) => state.isTrial);
+  const completedPitchLevels = useSelector(
+    (state) => state.completedPitchLevels,
+  );
 
   const opacity = useState(new Animated.Value(0))[0];
 
@@ -113,6 +121,22 @@ const PitchMenu = ({showLevel}) => {
                       Level {level}
                     </Text>
                   </View>
+
+                  {isTrial ? (
+                    <Image
+                      source={lockIcon}
+                      style={{position: 'absolute', right: 12, top: 12}}
+                    />
+                  ) : (
+                    <Image
+                      source={
+                        completedPitchLevels.indexOf(index + 1) != -1
+                          ? lockIcon
+                          : null
+                      }
+                      style={{position: 'absolute', right: 12, top: 12}}
+                    />
+                  )}
                 </TouchableOpacity>
               );
             })}

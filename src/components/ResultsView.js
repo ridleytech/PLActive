@@ -7,14 +7,18 @@ import {
   ScrollView,
 } from 'react-native';
 
+import {useDispatch} from 'react-redux';
+
 const ResultsView = ({
   correctAnswers,
   total,
   mainMenu,
   answerList,
   avgScore,
+  level,
 }) => {
   const [showStuff, setResults] = useState({show: false});
+  const [passed, setPassed] = useState(false);
 
   const viewResults = () => {
     console.log('go');
@@ -38,11 +42,15 @@ const ResultsView = ({
 
   var results;
 
-  if (per > 85) {
-    results = 'Great job! You passed.';
-  } else {
-    results = `You need to score ${total - 1} out ${total} to pass.`;
-  }
+  useEffect(() => {
+    if (per > 85) {
+      results = 'Great job! You passed.';
+      setPassed(true);
+    } else {
+      results = `You need to score ${total - 1} out ${total} to pass.`;
+      setPassed(false);
+    }
+  }, []);
   return (
     <>
       <ScrollView>
@@ -149,6 +157,9 @@ const ResultsView = ({
               justifyContent: 'center',
               alignItems: 'center',
               marginTop: 30,
+              width: 300,
+              marginLeft: 'auto',
+              marginRight: 'auto',
             }}>
             <Text
               style={{
@@ -227,7 +238,7 @@ const ResultsView = ({
       </ScrollView>
 
       <TouchableOpacity
-        onPress={() => mainMenu()}
+        onPress={() => mainMenu(passed)}
         style={{
           height: 60,
           backgroundColor: '#3AB24A',
@@ -244,7 +255,7 @@ const ResultsView = ({
             fontWeight: 'bold',
             color: 'white',
           }}>
-          RESTART QUIZ
+          {passed ? ' START LEVEL ' + (level + 1) : 'RESTART QUIZ'}
         </Text>
       </TouchableOpacity>
     </>

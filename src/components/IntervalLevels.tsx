@@ -15,6 +15,8 @@ import TrackPlayer, {
   STATE_PLAYING,
   STATE_PAUSED,
 } from 'react-native-track-player';
+import {useDispatch} from 'react-redux';
+
 import {
   useTrackPlayerProgress,
   useTrackPlayerEvents,
@@ -29,6 +31,8 @@ import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
 import ResultsView from './ResultsView';
+
+import {saveProgress} from '../thunks/';
 
 const tracks = {
   minor2ndC: require('../audio/minor2ndC.mp3'),
@@ -122,21 +126,23 @@ const shuffle = (array) => {
 // console.log('question: ' + JSON.stringify(question));
 
 const IntervalLevels = ({level, mode}) => {
+  const dispatch = useDispatch();
+
   //console.log('selectedLevel: ' + level);
 
-  var instructions; // = data.Interval.level3Instructions;
+  // var instructions; // = data.Interval.level3Instructions;
 
-  if (level == 1) {
-    instructions = shuffle(data.Interval.level1Instructions);
-  } else if (level == 2) {
-    instructions = shuffle(data.Interval.level2Instructions);
-  } else if (level == 3) {
-    instructions = shuffle(data.Interval.level3Instructions);
-  } else if (level == 4) {
-    instructions = shuffle(data.Interval.level4Instructions);
-  } else if (level == 5) {
-    instructions = shuffle(data.Interval.level5Instructions);
-  }
+  // if (level == 1) {
+  //   instructions = shuffle(data.Interval.level1Instructions);
+  // } else if (level == 2) {
+  //   instructions = shuffle(data.Interval.level2Instructions);
+  // } else if (level == 3) {
+  //   instructions = shuffle(data.Interval.level3Instructions);
+  // } else if (level == 4) {
+  //   instructions = shuffle(data.Interval.level4Instructions);
+  // } else if (level == 5) {
+  //   instructions = shuffle(data.Interval.level5Instructions);
+  // }
 
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -152,6 +158,8 @@ const IntervalLevels = ({level, mode}) => {
   const [questionList, setQuestionList] = useState(null);
   const [answerList, setAnswerList] = useState(null);
   const [answers, setAnswers] = useState(null);
+  const [instructions, setInstructions] = useState(null);
+
   const [selectionColors, setSelectionColors] = useState([
     '#EFEFEF',
     '#EFEFEF',
@@ -213,6 +221,22 @@ const IntervalLevels = ({level, mode}) => {
       lc++;
       setLoadCount(lc);
     }
+
+    var instructions; // = data.Interval.level3Instructions;
+
+    if (level == 1) {
+      instructions = shuffle(data.Interval.level1Instructions);
+    } else if (level == 2) {
+      instructions = shuffle(data.Interval.level2Instructions);
+    } else if (level == 3) {
+      instructions = shuffle(data.Interval.level3Instructions);
+    } else if (level == 4) {
+      instructions = shuffle(data.Interval.level4Instructions);
+    } else if (level == 5) {
+      instructions = shuffle(data.Interval.level5Instructions);
+    }
+
+    setInstructions(instructions);
   }, []);
 
   useEffect(
@@ -367,12 +391,21 @@ const IntervalLevels = ({level, mode}) => {
     }, 2000);
   };
 
-  const mainMenu = () => {
-    console.log('main menu');
+  const mainMenu = (passed) => {
+    console.log(`mainMenu ${level + 1} ${passed}`);
+    //saveProgress();
 
-    setRestarted(true);
-    setCurrentAnswer(null);
-    setCorrectAnswers(0);
+    if (passed) {
+      dispatch({type: 'SET_MODE', mode: 2});
+      dispatch({type: 'SET_LEVEL', level: level + 1});
+      dispatch(saveProgress(level));
+    } else {
+      console.log('main menu');
+
+      setRestarted(true);
+      setCurrentAnswer(null);
+      setCorrectAnswers(0);
+    }
   };
 
   const populateAnswers = (questions, ind) => {
@@ -659,7 +692,8 @@ const IntervalLevels = ({level, mode}) => {
           answerList={answerList}
           correctAnswers={correctAnswers}
           total={questionList.length}
-          mainMenu={() => mainMenu()}
+          mainMenu={mainMenu}
+          level={level}
         />
       ) : null}
     </>

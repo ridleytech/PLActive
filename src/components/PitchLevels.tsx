@@ -1,4 +1,4 @@
-import React, {useEffect, useState, lazy} from 'react';
+import React, {useEffect, useState, lazy, useRef, useReducer} from 'react';
 import {
   Text,
   Button,
@@ -17,6 +17,8 @@ import TrackPlayer, {
   STATE_PLAYING,
   STATE_PAUSED,
 } from 'react-native-track-player';
+import {useDispatch} from 'react-redux';
+
 import {
   useTrackPlayerProgress,
   useTrackPlayerEvents,
@@ -30,7 +32,11 @@ import Instructions from './Instructions';
 import ResultsView from './ResultsView';
 import {TextInput} from 'react-native-gesture-handler';
 import WhiteIcon from '../../images/blank.jpg';
+import GreenIcon from '../../images/blank-green.png';
 import BlackIcon from '../../images/black.png';
+import BlackGreenIcon from '../../images/black-green.png';
+
+import {saveProgress} from '../thunks/';
 
 var testView = NativeModules.PlayKey;
 
@@ -115,21 +121,23 @@ const shuffle = (array) => {
 // console.log('question: ' + JSON.stringify(question));
 
 const PitchLevels = ({level, mode}) => {
+  const dispatch = useDispatch();
+
   //console.log('selectedLevel: ' + level);
 
-  var instructions; // = data.Pitch.level3Instructions;
+  // var instructions; // = data.Pitch.level3Instructions;
 
-  if (level == 1) {
-    instructions = shuffle(data.Pitch.level1Instructions);
-  } else if (level == 2) {
-    instructions = shuffle(data.Pitch.level2Instructions);
-  } else if (level == 3) {
-    instructions = shuffle(data.Pitch.level3Instructions);
-  } else if (level == 4) {
-    instructions = shuffle(data.Pitch.level4Instructions);
-  } else if (level == 5) {
-    instructions = shuffle(data.Pitch.level5Instructions);
-  }
+  // if (level == 1) {
+  //   instructions = shuffle(data.Pitch.level1Instructions);
+  // } else if (level == 2) {
+  //   instructions = shuffle(data.Pitch.level2Instructions);
+  // } else if (level == 3) {
+  //   instructions = shuffle(data.Pitch.level3Instructions);
+  // } else if (level == 4) {
+  //   instructions = shuffle(data.Pitch.level4Instructions);
+  // } else if (level == 5) {
+  //   instructions = shuffle(data.Pitch.level5Instructions);
+  // }
 
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -144,6 +152,7 @@ const PitchLevels = ({level, mode}) => {
   const [questionList, setQuestionList] = useState(null);
   const [answerList, setAnswerList] = useState(null);
   const [answers, setAnswers] = useState(null);
+  const [instructions, setInstructions] = useState(null);
 
   const [currentTrack, setCurrentTrack] = useState(null);
 
@@ -153,6 +162,20 @@ const PitchLevels = ({level, mode}) => {
 
   const [answerState, setAnswerState] = useState('#E2E7ED');
   const [canAnswer, setCanAnswer] = useState(false);
+  const [keyStates, setKeyStates] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   Animated.timing(opacity, {
     toValue: 1,
@@ -197,6 +220,22 @@ const PitchLevels = ({level, mode}) => {
     var lc = loadCount;
     lc++;
     setLoadCount(lc);
+
+    var instructions; // = data.Pitch.level3Instructions;
+
+    if (level == 1) {
+      instructions = shuffle(data.Pitch.level1Instructions);
+    } else if (level == 2) {
+      instructions = shuffle(data.Pitch.level2Instructions);
+    } else if (level == 3) {
+      instructions = shuffle(data.Pitch.level3Instructions);
+    } else if (level == 4) {
+      instructions = shuffle(data.Pitch.level4Instructions);
+    } else if (level == 5) {
+      instructions = shuffle(data.Pitch.level5Instructions);
+    }
+
+    setInstructions(instructions);
   }, []);
 
   //console.log('height: ' + Dimensions.get('screen').height);
@@ -344,12 +383,21 @@ const PitchLevels = ({level, mode}) => {
     }, 2000);
   };
 
-  const mainMenu = () => {
-    console.log('main menu');
+  const mainMenu = (passed) => {
+    console.log(`mainMenu ${level + 1} ${passed}`);
+    //saveProgress();
 
-    setRestarted(true);
-    setCurrentAnswer(null);
-    setCorrectAnswers(0);
+    if (passed) {
+      dispatch({type: 'SET_MODE', mode: 1});
+      dispatch({type: 'SET_LEVEL', level: level + 1});
+      dispatch(saveProgress(level));
+    } else {
+      console.log('main menu');
+
+      setRestarted(true);
+      setCurrentAnswer(null);
+      setCorrectAnswers(0);
+    }
   };
 
   const populateAnswers = (questions, ind) => {
@@ -480,12 +528,22 @@ const PitchLevels = ({level, mode}) => {
   const pressKey = (key: number) => {
     //console.log('key: ' + key);
 
+    var sc = keyStates.slice();
+
+    sc[key] = true;
+    setKeyStates(sc);
+
     testView.playKey(key).then((result) => {
       //console.log('show', result);
     });
   };
 
   const releaseKey = (key: number) => {
+    var sc = keyStates.slice();
+
+    sc[key] = false;
+    setKeyStates(sc);
+
     testView.releaseKey(key).then((result) => {
       //console.log('show', result);
     });
@@ -621,74 +679,110 @@ const PitchLevels = ({level, mode}) => {
                 <View
                   onTouchStart={() => pressKey(0)}
                   onTouchEnd={() => releaseKey(0)}
-                  style={styles.whiteKey}>
-                  <Image source={WhiteIcon} style={styles.icon} />
+                  style={[styles.whiteKey]}>
+                  <Image
+                    source={keyStates[0] ? GreenIcon : WhiteIcon}
+                    style={styles.icon}
+                  />
                 </View>
                 <View
                   onTouchStart={() => pressKey(1)}
                   onTouchEnd={() => releaseKey(1)}
                   style={styles.blackKey}>
-                  <Image source={BlackIcon} style={styles.icon2} />
+                  <Image
+                    source={keyStates[1] ? BlackGreenIcon : BlackIcon}
+                    style={styles.icon2}
+                  />
                 </View>
                 <View
                   onTouchStart={() => pressKey(2)}
                   onTouchEnd={() => releaseKey(2)}
                   style={styles.whiteKey}>
-                  <Image source={WhiteIcon} style={styles.icon} />
+                  <Image
+                    source={keyStates[2] ? GreenIcon : WhiteIcon}
+                    style={styles.icon}
+                  />
                 </View>
                 <View
                   onTouchStart={() => pressKey(3)}
                   onTouchEnd={() => releaseKey(3)}
                   style={styles.blackKey}>
-                  <Image source={BlackIcon} style={styles.icon3} />
+                  <Image
+                    source={keyStates[3] ? BlackGreenIcon : BlackIcon}
+                    style={styles.icon3}
+                  />
                 </View>
                 <View
                   onTouchStart={() => pressKey(4)}
                   onTouchEnd={() => releaseKey(4)}
                   style={styles.whiteKey}>
-                  <Image source={WhiteIcon} style={styles.icon} />
+                  <Image
+                    source={keyStates[4] ? GreenIcon : WhiteIcon}
+                    style={styles.icon}
+                  />
                 </View>
                 <View
                   onTouchStart={() => pressKey(5)}
                   onTouchEnd={() => releaseKey(5)}
                   style={styles.whiteKey}>
-                  <Image source={WhiteIcon} style={styles.icon} />
+                  <Image
+                    source={keyStates[5] ? GreenIcon : WhiteIcon}
+                    style={styles.icon}
+                  />
                 </View>
                 <View
                   onTouchStart={() => pressKey(6)}
                   onTouchEnd={() => releaseKey(6)}
                   style={styles.blackKey}>
-                  <Image source={BlackIcon} style={styles.icon4} />
+                  <Image
+                    source={keyStates[6] ? BlackGreenIcon : BlackIcon}
+                    style={styles.icon4}
+                  />
                 </View>
                 <View
                   onTouchStart={() => pressKey(7)}
                   onTouchEnd={() => releaseKey(7)}
                   style={styles.whiteKey}>
-                  <Image source={WhiteIcon} style={styles.icon} />
+                  <Image
+                    source={keyStates[7] ? GreenIcon : WhiteIcon}
+                    style={styles.icon}
+                  />
                 </View>
                 <View
                   onTouchStart={() => pressKey(8)}
                   onTouchEnd={() => releaseKey(8)}
                   style={styles.blackKey}>
-                  <Image source={BlackIcon} style={styles.icon5} />
+                  <Image
+                    source={keyStates[8] ? BlackGreenIcon : BlackIcon}
+                    style={styles.icon5}
+                  />
                 </View>
                 <View
                   onTouchStart={() => pressKey(9)}
                   onTouchEnd={() => releaseKey(9)}
                   style={styles.whiteKey}>
-                  <Image source={WhiteIcon} style={styles.icon} />
+                  <Image
+                    source={keyStates[9] ? GreenIcon : WhiteIcon}
+                    style={styles.icon}
+                  />
                 </View>
                 <View
                   onTouchStart={() => pressKey(10)}
                   onTouchEnd={() => releaseKey(10)}
                   style={styles.blackKey}>
-                  <Image source={BlackIcon} style={styles.icon6} />
+                  <Image
+                    source={keyStates[10] ? BlackGreenIcon : BlackIcon}
+                    style={styles.icon6}
+                  />
                 </View>
                 <View
                   onTouchStart={() => pressKey(11)}
                   onTouchEnd={() => releaseKey(11)}
                   style={styles.whiteKey}>
-                  <Image source={WhiteIcon} style={styles.icon} />
+                  <Image
+                    source={keyStates[11] ? GreenIcon : WhiteIcon}
+                    style={styles.icon}
+                  />
                 </View>
               </View>
 
@@ -721,7 +815,8 @@ const PitchLevels = ({level, mode}) => {
           answerList={answerList}
           correctAnswers={correctAnswers}
           total={questionList.length}
-          mainMenu={() => mainMenu()}
+          mainMenu={mainMenu}
+          level={level}
         />
       ) : null}
     </>

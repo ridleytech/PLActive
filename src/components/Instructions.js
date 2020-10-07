@@ -60,25 +60,27 @@ const Instructions = ({
             paddingRight: 25,
             opacity: opacity,
           }}>
-          {instructions.map((text, index) => {
-            if (index < 3) {
-              return (
-                <View style={styles.listItem} key={index}>
-                  <Image source={check} style={styles.check} />
-                  <Text style={[styles.list]}>{instructions[index]}</Text>
-                </View>
-              );
-            } else {
-              return (
-                <View style={styles.listItem} key={index}>
-                  <Image source={check} style={styles.check} />
-                  <Text style={[styles.list, {fontWeight: 'bold'}]}>
-                    {instructions[index]}
-                  </Text>
-                </View>
-              );
-            }
-          })}
+          {instructions
+            ? instructions.map((text, index) => {
+                if (index < 3) {
+                  return (
+                    <View style={styles.listItem} key={index}>
+                      <Image source={check} style={styles.check} />
+                      <Text style={[styles.list]}>{instructions[index]}</Text>
+                    </View>
+                  );
+                } else {
+                  return (
+                    <View style={styles.listItem} key={index}>
+                      <Image source={check} style={styles.check} />
+                      <Text style={[styles.list, {fontWeight: 'bold'}]}>
+                        {instructions[index]}
+                      </Text>
+                    </View>
+                  );
+                }
+              })
+            : null}
         </Animated.View>
       </View>
       <TouchableOpacity

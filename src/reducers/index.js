@@ -2,6 +2,10 @@ const inititalState = {
   a: 1,
   level: 0,
   mode: 0,
+  userid: 1,
+  completedIntervalLevels: [1, 2],
+  completedPitchLevels: [1],
+  isTrial: false,
 };
 
 export default (state = inititalState, action) => {
@@ -22,6 +26,11 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         mode: action.mode,
+      };
+
+    case 'PROGRESS_SAVED':
+      return {
+        ...state,
       };
 
     default:
