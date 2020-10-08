@@ -13,7 +13,12 @@ import TestMidi from './TestMidi';
 import MainMenu from './MainMenu';
 import PitchMenu from './PitchMenu';
 import IntervalMenu from './IntervalMenu';
-import {setLevel, setMode, setProgress} from '../actions/';
+import {
+  setLevel,
+  setMode,
+  setIntervalProgress,
+  setPitchProgress,
+} from '../actions/';
 import {getProgressData} from '../thunks/';
 import IntervalLevels from './IntervalLevels';
 import PitchLevels from './PitchLevels';
@@ -35,39 +40,61 @@ class Home extends Component<Props> {
 
   retrieveData = async () => {
     try {
-      const value = await AsyncStorage.getItem('lastCompletedPitchLevel');
-      const value2 = await AsyncStorage.getItem('lastCompletedIntervalLevel');
+      var value = await AsyncStorage.getItem('highestCompletedPitchLevel');
 
       if (value !== null) {
         // We have data!!
-        console.log(`lastCompletedPitchLevel: ${value}`);
-
-        this.props.setProgress({
-          lastCompletedPitchLevel: value,
-          lastCompletedIntervalLevel: value2,
-        });
+        console.log(`highestCompletedPitchLevel: ${value}`);
       } else {
-        console.log('save data');
+        console.log('save default pitch data');
 
-        this.storeData();
+        value = 0;
+        this.storePitchData();
       }
+
+      this.props.setPitchProgress({
+        highestCompletedPitchLevel: value,
+      });
+    } catch (error) {
+      // Error retrieving data
+    }
+
+    try {
+      var value2 = await AsyncStorage.getItem('highestCompletedIntervalLevel');
+
+      if (value2 !== null) {
+        // We have data!!
+        console.log(`highestCompletedIntervalLevel: ${value2}`);
+      } else {
+        console.log('save default interval data');
+
+        value2 = 0;
+        this.storeIntervalData();
+      }
+
+      this.props.setIntervalProgress({
+        highestCompletedIntervalLevel: value2,
+      });
     } catch (error) {
       // Error retrieving data
     }
 
     //reset progress data
-    //this.storeData();
+    // this.storePitchData();
+    // this.storeIntervalData();
   };
 
-  storeData = async () => {
+  storePitchData = async () => {
     try {
-      await AsyncStorage.setItem('lastCompletedPitchLevel', '0');
+      await AsyncStorage.setItem('highestCompletedPitchLevel', '0');
     } catch (error) {
       // Error saving data
     }
+  };
 
+  storeIntervalData = async () => {
     try {
-      await AsyncStorage.setItem('lastCompletedIntervalLevel', '0');
+      await AsyncStorage.setItem('highestCompletedIntervalLevel', '0');
     } catch (error) {
       // Error saving data
     }
@@ -132,7 +159,8 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   setLevel,
   setMode,
-  setProgress,
+  setPitchProgress,
+  setIntervalProgress,
   getProgressData,
 })(Home);
 

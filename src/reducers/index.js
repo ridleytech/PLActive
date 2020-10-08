@@ -3,8 +3,8 @@ const inititalState = {
   level: 0,
   mode: 0,
   userid: 1,
-  lastCompletedIntervalLevel: 2,
-  lastCompletedPitchLevel: 1,
+  highestCompletedIntervalLevel: 0,
+  highestCompletedPitchLevel: 0,
   isTrial: false,
 };
 
@@ -22,20 +22,42 @@ export default (state = inititalState, action) => {
 
       return {
         ...state,
-        lastCompletedIntervalLevel: progressData.lastCompletedIntervalLevel,
-        lastCompletedPitchLevel: progressData.lastCompletedPitchLevel,
+        highestCompletedIntervalLevel:
+          progressData.highestCompletedIntervalLevel,
+        highestCompletedPitchLevel: progressData.highestCompletedPitchLevel,
       };
 
-    case 'SET_PROGRESS':
+    case 'SET_PITCH_PROGRESS':
       console.log('action: ' + JSON.stringify(action));
+
+      var completedLevel = parseInt(action.level.highestCompletedPitchLevel);
+      var levelVal = state.highestCompletedPitchLevel;
+
+      // console.log(`sp completed: ${completedLevel}
+      // levelVal: ${levelVal}`);
+
+      if (completedLevel > state.highestCompletedPitchLevel) {
+        levelVal = completedLevel;
+      }
+
       return {
         ...state,
-        lastCompletedIntervalLevel: parseInt(
-          action.levels.lastCompletedIntervalLevel,
-        ),
-        lastCompletedPitchLevel: parseInt(
-          action.levels.lastCompletedPitchLevel,
-        ),
+        highestCompletedPitchLevel: levelVal,
+      };
+
+    case 'SET_INTERVAL_PROGRESS':
+      console.log('action: ' + JSON.stringify(action));
+
+      var completedLevel = parseInt(action.level.highestCompletedIntervalLevel);
+      var levelVal = state.highestCompletedIntervalLevel;
+
+      if (completedLevel > state.highestCompletedIntervalLevel) {
+        levelVal = completedLevel;
+      }
+
+      return {
+        ...state,
+        highestCompletedIntervalLevel: levelVal,
       };
 
     case 'SET_LEVEL':

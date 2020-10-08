@@ -201,6 +201,11 @@ const PitchLevels = ({level, mode}) => {
 
       populateAnswers(questionList, currentQuestion1);
     } else {
+      var per = parseInt((correctAnswers / total) * 100);
+      if (per > 85) {
+        storeData(level);
+      }
+
       setQuizFinished(true);
       setQuizStarted(false);
     }
@@ -384,28 +389,55 @@ const PitchLevels = ({level, mode}) => {
     }, 2000);
   };
 
+  const debugResults = () => {
+    console.log('debugResults');
+
+    storeData(level);
+
+    dispatch({
+      type: 'SET_PITCH_PROGRESS',
+      level: {highestCompletedPitchLevel: level.toString()},
+    });
+
+    setCorrectAnswers(12);
+    setQuizFinished(true);
+    setQuizStarted(false);
+  };
+
   const mainMenu = (passed) => {
-    console.log(`mainMenu ${level + 1} ${passed}`);
+    console.log(`mainMenu ${level} passed: ${passed}`);
     //saveProgress();
 
+    var currentLevel = level;
+
     if (passed) {
+      //storeData(currentLevel);
       dispatch({type: 'SET_MODE', mode: 1});
-      dispatch({type: 'SET_LEVEL', level: level + 1});
-      dispatch(saveProgress(level));
+      dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
 
-      storeData(level + 1);
+      dispatch({
+        type: 'SET_PITCH_PROGRESS',
+        level: {highestCompletedPitchLevel: level.toString()},
+      });
+
+      console.log(`set level: ${currentLevel + 1}`);
+      //dispatch(saveProgress(level));
     } else {
-      console.log('main menu');
-
-      setRestarted(true);
-      setCurrentAnswer(null);
-      setCorrectAnswers(0);
+      console.log('restart quiz');
     }
+
+    setRestarted(true);
+    setCurrentAnswer(null);
+    setCorrectAnswers(0);
   };
 
   const storeData = async (level) => {
     try {
-      await AsyncStorage.setItem('lastCompletedPitchLevel', level + 1);
+      console.log(`highestCompletedPitchLevel: ${level}`);
+      await AsyncStorage.setItem(
+        'highestCompletedPitchLevel',
+        level.toString(),
+      );
     } catch (error) {
       // Error saving data
     }
@@ -597,6 +629,20 @@ const PitchLevels = ({level, mode}) => {
                 }}>
                 Quiz - Pitch Recognition Level {level}
               </Text>
+
+              {/* <TouchableOpacity onPress={() => debugResults()}>
+                <Text
+                  style={{
+                    height: 35,
+                    width: 100,
+                    backgroundColor: 'green',
+                    color: 'white',
+                    textAlign: 'center',
+                    paddingTop: 7,
+                  }}>
+                  Debug
+                </Text>
+              </TouchableOpacity> */}
               <Text
                 style={{
                   fontFamily: 'Helvetica Neue',

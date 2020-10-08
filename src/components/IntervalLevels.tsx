@@ -188,6 +188,10 @@ const IntervalLevels = ({level, mode}) => {
 
       populateAnswers(questionList, currentQuestion1);
     } else {
+      var per = parseInt((correctAnswers / total) * 100);
+      if (per > 85) {
+        storeData(level);
+      }
       setQuizFinished(true);
       setQuizStarted(false);
     }
@@ -372,28 +376,53 @@ const IntervalLevels = ({level, mode}) => {
     }, 2000);
   };
 
+  const debugResults = () => {
+    console.log('debugResults');
+
+    dispatch({
+      type: 'SET_INTERVAL_PROGRESS',
+      level: {highestCompletedIntervalLevel: level.toString()},
+    });
+
+    setCorrectAnswers(12);
+    setQuizFinished(true);
+    setQuizStarted(false);
+  };
+
   const mainMenu = (passed) => {
     console.log(`mainMenu ${level + 1} ${passed}`);
     //saveProgress();
 
+    var currentLevel = level;
+
     if (passed) {
+      //storeData(currentLevel);
       dispatch({type: 'SET_MODE', mode: 2});
-      dispatch({type: 'SET_LEVEL', level: level + 1});
-      dispatch(saveProgress(level));
+      dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
 
-      storeData(level + 1);
+      dispatch({
+        type: 'SET_INTERVAL_PROGRESS',
+        level: {highestCompletedIntervalLevel: currentLevel.toString()},
+      });
+
+      console.log(`set level: ${currentLevel + 1}`);
+      //dispatch(saveProgress(level));
     } else {
-      console.log('main menu');
-
-      setRestarted(true);
-      setCurrentAnswer(null);
-      setCorrectAnswers(0);
+      console.log('restart quiz');
     }
+
+    setRestarted(true);
+    setCurrentAnswer(null);
+    setCorrectAnswers(0);
   };
 
   const storeData = async (level) => {
     try {
-      await AsyncStorage.setItem('lastCompletedIntervalLevel', level);
+      console.log(`highestCompletedIntervalLevel: ${level}`);
+      await AsyncStorage.setItem(
+        'highestCompletedIntervalLevel',
+        level.toString(),
+      );
     } catch (error) {
       // Error saving data
     }
@@ -552,6 +581,21 @@ const IntervalLevels = ({level, mode}) => {
                 }}>
                 Quiz - Interval Training Level {level}
               </Text>
+
+              {/* <TouchableOpacity onPress={() => debugResults()}>
+                <Text
+                  style={{
+                    height: 35,
+                    width: 100,
+                    backgroundColor: 'green',
+                    color: 'white',
+                    textAlign: 'center',
+                    paddingTop: 7,
+                  }}>
+                  Debug
+                </Text>
+              </TouchableOpacity> */}
+
               <Text
                 style={{
                   fontFamily: 'Helvetica Neue',

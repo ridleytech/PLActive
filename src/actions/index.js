@@ -12,9 +12,18 @@ export const setMode = (mode) => {
   };
 };
 
-export const setProgress = (obj) => {
+export const setPitchProgress = (level) => {
+  //console.log(`sp: ${JSON.stringify(level)}`);
   return {
-    type: 'SET_PROGRESS',
-    levels: obj,
+    type: 'SET_PITCH_PROGRESS',
+    level: level,
+  };
+};
+
+export const setIntervalProgress = (level) => {
+  //console.log(`si: ${JSON.stringify(level)}`);
+  return {
+    type: 'SET_INTERVAL_PROGRESS',
+    level: level,
   };
 };

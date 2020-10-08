@@ -37,7 +37,7 @@ const Instructions = ({
             fontSize: 20,
             fontWeight: 'bold',
           }}>
-          Quiz - {modename} {level}
+          Quiz - {modename} Level {level}
         </Text>
 
         <Image source={videoImg} style={styles.video} />
