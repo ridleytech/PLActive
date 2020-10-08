@@ -29,7 +29,7 @@ const ResultsView = ({
   //     setResults({show: true});
   //   }, []);
 
-  console.log('answerList results: ' + JSON.stringify(answerList));
+  // ' + JSON.stringify(answerList));
 
   var per = parseInt((correctAnswers / total) * 100);
 

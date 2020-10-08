@@ -172,8 +172,6 @@ const IntervalLevels = ({level, mode}) => {
     setSelectionColors(['#EFEFEF', '#EFEFEF', '#EFEFEF', '#EFEFEF']);
 
     if (currentQuestion1 < questionList.length - 1) {
-      //setAddingTrack(true);
-
       currentQuestion1 += 1;
 
       if (level > 1) {
@@ -185,13 +183,8 @@ const IntervalLevels = ({level, mode}) => {
         });
       }
       setCurrentQuestionInd(currentQuestion1);
-
       populateAnswers(questionList, currentQuestion1);
     } else {
-      var per = parseInt((correctAnswers / total) * 100);
-      if (per > 85) {
-        storeData(level);
-      }
       setQuizFinished(true);
       setQuizStarted(false);
     }
@@ -239,6 +232,29 @@ const IntervalLevels = ({level, mode}) => {
       console.log('currentQuestion changed: ' + currentTrack.name);
     }
   }, [currentQuestionInd]);
+
+  useEffect(() => {
+    if (quizFinished) {
+      console.log('quiz finished');
+
+      console.log(`ca: ${correctAnswers} total: ${questionList.length}`);
+
+      var per = parseInt((correctAnswers / questionList.length) * 100);
+
+      console.log(`per levels: ${per}`);
+
+      if (per >= 85) {
+        console.log('store data');
+
+        dispatch({
+          type: 'SET_INTERVAL_PROGRESS',
+          level: {highestCompletedIntervalLevel: level.toString()},
+        });
+
+        storeData(level);
+      }
+    }
+  }, [quizFinished]);
 
   useEffect(
     () => () => {
@@ -366,7 +382,9 @@ const IntervalLevels = ({level, mode}) => {
     setCanAnswer(false);
     setCanCheck(false);
 
-    nextTrack();
+    if (level > 1) {
+      nextTrack();
+    }
 
     setTimeout(() => {
       setCurrentAnswer(null);
@@ -396,14 +414,8 @@ const IntervalLevels = ({level, mode}) => {
     var currentLevel = level;
 
     if (passed) {
-      //storeData(currentLevel);
       dispatch({type: 'SET_MODE', mode: 2});
       dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
-
-      dispatch({
-        type: 'SET_INTERVAL_PROGRESS',
-        level: {highestCompletedIntervalLevel: currentLevel.toString()},
-      });
 
       console.log(`set level: ${currentLevel + 1}`);
       //dispatch(saveProgress(level));
@@ -417,8 +429,10 @@ const IntervalLevels = ({level, mode}) => {
   };
 
   const storeData = async (level) => {
+    console.log(`highestCompletedIntervalLevel: ${level}`);
+
     try {
-      console.log(`highestCompletedIntervalLevel: ${level}`);
+      console.log('try to save');
       await AsyncStorage.setItem(
         'highestCompletedIntervalLevel',
         level.toString(),

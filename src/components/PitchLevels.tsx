@@ -198,14 +198,8 @@ const PitchLevels = ({level, mode}) => {
       });
 
       setCurrentQuestionInd(currentQuestion1);
-
       populateAnswers(questionList, currentQuestion1);
     } else {
-      var per = parseInt((correctAnswers / total) * 100);
-      if (per > 85) {
-        storeData(level);
-      }
-
       setQuizFinished(true);
       setQuizStarted(false);
     }
@@ -257,6 +251,29 @@ const PitchLevels = ({level, mode}) => {
       // startPlayer();
     }
   }, [currentQuestionInd]);
+
+  useEffect(() => {
+    if (quizFinished) {
+      console.log('quiz finished');
+
+      console.log(`ca: ${correctAnswers} total: ${questionList.length}`);
+
+      var per = parseInt((correctAnswers / questionList.length) * 100);
+
+      console.log(`per levels: ${per}`);
+
+      if (per >= 85) {
+        console.log('store data');
+
+        dispatch({
+          type: 'SET_PITCH_PROGRESS',
+          level: {highestCompletedPitchLevel: level.toString()},
+        });
+
+        storeData(level);
+      }
+    }
+  }, [quizFinished]);
 
   useEffect(
     () => () => {
@@ -411,14 +428,8 @@ const PitchLevels = ({level, mode}) => {
     var currentLevel = level;
 
     if (passed) {
-      //storeData(currentLevel);
       dispatch({type: 'SET_MODE', mode: 1});
       dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
-
-      dispatch({
-        type: 'SET_PITCH_PROGRESS',
-        level: {highestCompletedPitchLevel: level.toString()},
-      });
 
       console.log(`set level: ${currentLevel + 1}`);
       //dispatch(saveProgress(level));
@@ -432,8 +443,10 @@ const PitchLevels = ({level, mode}) => {
   };
 
   const storeData = async (level) => {
+    console.log(`highestCompletedPitchLevel: ${level}`);
+
     try {
-      console.log(`highestCompletedPitchLevel: ${level}`);
+      console.log('try to save');
       await AsyncStorage.setItem(
         'highestCompletedPitchLevel',
         level.toString(),
