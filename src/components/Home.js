@@ -3,7 +3,7 @@ import {
   StyleSheet,
   NativeModules,
   SafeAreaView,
-  AsyncStorage,
+  AsyncStorage, Alert
 } from 'react-native';
 var testView = NativeModules.PlayKey;
 import {connect} from 'react-redux';
@@ -114,7 +114,53 @@ class Home extends Component<Props> {
   };
 
   showLevel = (level) => {
-    //console.log('showLevel: ' + level);
+    console.log('showLevel: ' + level);
+
+    if(this.props.isTrial && level > 1)
+    {
+      Alert.alert(
+        null,
+        `Please upgrade to Premium membership to unlock this level.`,
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ],
+        { cancelable: false })
+        
+      return
+    }
+    else
+    {
+      if(this.props.mode == 1)
+      {
+        if(level - 1 > this.props.highestCompletedPitchLevel)
+        {
+          Alert.alert(
+            null,
+            `Complete level ${this.props.highestCompletedPitchLevel+1} to proceed`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false })
+            
+          return
+        }
+      }
+      else
+      {
+        if(level - 1 > this.props.highestCompletedIntervalLevel)
+        {
+          Alert.alert(
+            null,
+            `Complete level ${this.props.highestCompletedIntervalLevel+1} to proceed`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false })
+            
+          return
+        }
+      }    
+    }    
 
     this.props.setLevel(level);
   };
@@ -151,8 +197,11 @@ class Home extends Component<Props> {
 
 const mapStateToProps = (state) => {
   return {
+    isTrial: state.isTrial,
     level: state.level,
     mode: state.mode,
+    highestCompletedPitchLevel: state.highestCompletedPitchLevel,
+    highestCompletedIntervalLevel: state.highestCompletedIntervalLevel
   };
 };
 

@@ -102,7 +102,7 @@ const PitchMenu = ({showLevel}) => {
             {levels.map((level, index) => {
               return (
                 <TouchableOpacity
-                  disabled={index > highestCompletedPitchLevel ? true : false}
+                  //disabled={index > highestCompletedPitchLevel ? true : false}
                   onPress={() => {
                     showLevel(level);
                   }}
@@ -125,21 +125,33 @@ const PitchMenu = ({showLevel}) => {
                   </View>
 
                   {isTrial ? (
-                    <Image
-                      source={lockIcon}
-                      style={{position: 'absolute', right: 12, top: 12}}
-                    />
+                     <Image
+                     source={index < highestCompletedPitchLevel
+                       ? checkIcon : index > 0
+                       ? lockIcon
+                       : null}
+                       style={{position: 'absolute', right: 12, top: 12}}
+                     />
                   ) : (
                     <Image
                       source={
                         index < highestCompletedPitchLevel
                           ? checkIcon
-                          : index > highestCompletedPitchLevel
-                          ? lockIcon
                           : null
                       }
                       style={{position: 'absolute', right: 12, top: 12}}
                     />
+
+                    // <Image
+                    //   source={
+                    //     index < highestCompletedPitchLevel
+                    //       ? checkIcon
+                    //       : index > highestCompletedPitchLevel
+                    //       ? lockIcon
+                    //       : null
+                    //   }
+                    //   style={{position: 'absolute', right: 12, top: 12}}
+                    // />
                   )}
                 </TouchableOpacity>
               );

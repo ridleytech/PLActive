@@ -102,9 +102,7 @@ const IntervalMenu = ({showLevel}) => {
             {levels.map((level, index) => {
               return (
                 <TouchableOpacity
-                  disabled={
-                    index > highestCompletedIntervalLevel ? true : false
-                  }
+                  //disabled={index > highestCompletedIntervalLevel ? true : false}
                   onPress={() => {
                     showLevel(level);
                   }}
@@ -128,20 +126,33 @@ const IntervalMenu = ({showLevel}) => {
 
                   {isTrial ? (
                     <Image
-                      source={lockIcon}
+                    source={index < highestCompletedIntervalLevel
+                      ? checkIcon : index > 0
+                      ? lockIcon
+                      : null}
                       style={{position: 'absolute', right: 12, top: 12}}
                     />
                   ) : (
+
                     <Image
                       source={
                         index < highestCompletedIntervalLevel
                           ? checkIcon
-                          : index > highestCompletedIntervalLevel
-                          ? lockIcon
                           : null
                       }
                       style={{position: 'absolute', right: 12, top: 12}}
                     />
+
+                    // <Image
+                    //   source={
+                    //     index < highestCompletedIntervalLevel
+                    //       ? checkIcon
+                    //       : index > highestCompletedIntervalLevel
+                    //       ? lockIcon
+                    //       : null
+                    //   }
+                    //   style={{position: 'absolute', right: 12, top: 12}}
+                    // />
                   )}
                 </TouchableOpacity>
               );

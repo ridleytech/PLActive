@@ -5,7 +5,7 @@ const inititalState = {
   userid: 1,
   highestCompletedIntervalLevel: 0,
   highestCompletedPitchLevel: 0,
-  isTrial: false,
+  isTrial: true,
 };
 
 export default (state = inititalState, action) => {

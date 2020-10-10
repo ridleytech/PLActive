@@ -18,7 +18,7 @@ import TrackPlayer, {
   STATE_PLAYING,
   STATE_PAUSED,
 } from 'react-native-track-player';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {
   useTrackPlayerProgress,
@@ -177,6 +177,9 @@ const PitchLevels = ({level, mode}) => {
     false,
     false,
   ]);
+
+  const isTrial = useSelector((state) => state.isTrial);
+
 
   Animated.timing(opacity, {
     toValue: 1,
@@ -425,21 +428,28 @@ const PitchLevels = ({level, mode}) => {
     console.log(`mainMenu ${level} passed: ${passed}`);
     //saveProgress();
 
-    var currentLevel = level;
-
-    if (passed) {
-      dispatch({type: 'SET_MODE', mode: 1});
-      dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
-
-      console.log(`set level: ${currentLevel + 1}`);
-      //dispatch(saveProgress(level));
-    } else {
-      console.log('restart quiz');
+    if(isTrial)
+    {
+      dispatch({type: 'SET_MODE', mode: 0});
     }
+    else
+    {
+      var currentLevel = level;
 
-    setRestarted(true);
-    setCurrentAnswer(null);
-    setCorrectAnswers(0);
+      if (passed) {
+        dispatch({type: 'SET_MODE', mode: 1});
+        dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
+
+        console.log(`set level: ${currentLevel + 1}`);
+        //dispatch(saveProgress(level));
+      } else {
+        console.log('restart quiz');
+      }
+
+      setRestarted(true);
+      setCurrentAnswer(null);
+      setCorrectAnswers(0);
+    }
   };
 
   const storeData = async (level) => {
@@ -887,7 +897,8 @@ const PitchLevels = ({level, mode}) => {
           correctAnswers={correctAnswers}
           total={questionList.length}
           mainMenu={mainMenu}
-          level={level}
+          level={level} 
+          isTrial={isTrial}
         />
       ) : null}
     </>

@@ -16,7 +16,7 @@ import TrackPlayer, {
   STATE_PLAYING,
   STATE_PAUSED,
 } from 'react-native-track-player';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {
   useTrackPlayerProgress,
@@ -165,6 +165,9 @@ const IntervalLevels = ({level, mode}) => {
   const [canCheck, setCanCheck] = useState(true);
 
   const [answerState, setAnswerState] = useState('#E2E7ED');
+
+  const isTrial = useSelector((state) => state.isTrial);
+
 
   const nextQuestion = () => {
     var currentQuestion1 = currentQuestionInd;
@@ -391,7 +394,7 @@ const IntervalLevels = ({level, mode}) => {
       setCanCheck(true);
       nextQuestion();
       setAnswerState('#E2E7ED');
-    }, 2000);
+    }, 500);
   };
 
   const debugResults = () => {
@@ -413,19 +416,26 @@ const IntervalLevels = ({level, mode}) => {
 
     var currentLevel = level;
 
-    if (passed) {
-      dispatch({type: 'SET_MODE', mode: 2});
-      dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
-
-      console.log(`set level: ${currentLevel + 1}`);
-      //dispatch(saveProgress(level));
-    } else {
-      console.log('restart quiz');
+    if(isTrial)
+    {
+      dispatch({type: 'SET_MODE', mode: 0});
     }
-
-    setRestarted(true);
-    setCurrentAnswer(null);
-    setCorrectAnswers(0);
+    else
+    {
+      if (passed) {
+        dispatch({type: 'SET_MODE', mode: 2});
+        dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
+  
+        console.log(`set level: ${currentLevel + 1}`);
+        //dispatch(saveProgress(level));
+      } else {
+        console.log('restart quiz');
+      }
+  
+      setRestarted(true);
+      setCurrentAnswer(null);
+      setCorrectAnswers(0);
+    }    
   };
 
   const storeData = async (level) => {
@@ -745,7 +755,7 @@ const IntervalLevels = ({level, mode}) => {
           correctAnswers={correctAnswers}
           total={questionList.length}
           mainMenu={mainMenu}
-          level={level}
+          level={level} isTrial={isTrial}
         />
       ) : null}
     </>
