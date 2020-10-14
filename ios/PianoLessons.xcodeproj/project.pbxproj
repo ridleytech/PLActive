@@ -100,6 +100,44 @@
 		3F62FD512502BBF800FECC8E /* Chateau Grand-v1.8.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chateau Grand-v1.8.sf2"; sourceTree = "<group>"; };
 		3FBC9C882502B0D6002A045A /* PlayKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayKey.m; sourceTree = "<group>"; };
 		3FBC9C892502B0D6002A045A /* PlayKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayKey.h; sourceTree = "<group>"; };
+		3FC5A064253745090099858D /* major13thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major13thC.mp3; path = ../assets/audio/major13thC.mp3; sourceTree = "<group>"; };
+		3FC5A0652537450A0099858D /* minor9thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor9thC.mp3; path = ../assets/audio/minor9thC.mp3; sourceTree = "<group>"; };
+		3FC5A0662537450A0099858D /* octaveC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = octaveC.mp3; path = ../assets/audio/octaveC.mp3; sourceTree = "<group>"; };
+		3FC5A0672537450A0099858D /* minor13thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor13thC.mp3; path = ../assets/audio/minor13thC.mp3; sourceTree = "<group>"; };
+		3FC5A0682537450A0099858D /* F.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = F.mp3; path = ../assets/audio/F.mp3; sourceTree = "<group>"; };
+		3FC5A0692537450A0099858D /* A2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = A2.mp3; path = ../assets/audio/A2.mp3; sourceTree = "<group>"; };
+		3FC5A06A2537450A0099858D /* augmented11thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = augmented11thC.mp3; path = ../assets/audio/augmented11thC.mp3; sourceTree = "<group>"; };
+		3FC5A06B2537450A0099858D /* Ab.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Ab.mp3; path = ../assets/audio/Ab.mp3; sourceTree = "<group>"; };
+		3FC5A06C2537450A0099858D /* G2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = G2.mp3; path = ../assets/audio/G2.mp3; sourceTree = "<group>"; };
+		3FC5A06D2537450A0099858D /* D2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = D2.mp3; path = ../assets/audio/D2.mp3; sourceTree = "<group>"; };
+		3FC5A06E2537450A0099858D /* augmented4thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = augmented4thC.mp3; path = ../assets/audio/augmented4thC.mp3; sourceTree = "<group>"; };
+		3FC5A06F2537450A0099858D /* B2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = B2.mp3; path = ../assets/audio/B2.mp3; sourceTree = "<group>"; };
+		3FC5A0702537450A0099858D /* Db.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Db.mp3; path = ../assets/audio/Db.mp3; sourceTree = "<group>"; };
+		3FC5A0712537450A0099858D /* A.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = A.mp3; path = ../assets/audio/A.mp3; sourceTree = "<group>"; };
+		3FC5A0722537450B0099858D /* minor3rdC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor3rdC.mp3; path = ../assets/audio/minor3rdC.mp3; sourceTree = "<group>"; };
+		3FC5A0732537450B0099858D /* E2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = E2.mp3; path = ../assets/audio/E2.mp3; sourceTree = "<group>"; };
+		3FC5A0742537450B0099858D /* perfect4thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = perfect4thC.mp3; path = ../assets/audio/perfect4thC.mp3; sourceTree = "<group>"; };
+		3FC5A0752537450B0099858D /* E.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = E.mp3; path = ../assets/audio/E.mp3; sourceTree = "<group>"; };
+		3FC5A0762537450B0099858D /* D.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = D.mp3; path = ../assets/audio/D.mp3; sourceTree = "<group>"; };
+		3FC5A0772537450B0099858D /* minor11thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor11thC.mp3; path = ../assets/audio/minor11thC.mp3; sourceTree = "<group>"; };
+		3FC5A0782537450B0099858D /* major11thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major11thC.mp3; path = ../assets/audio/major11thC.mp3; sourceTree = "<group>"; };
+		3FC5A0792537450B0099858D /* C2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = C2.mp3; path = ../assets/audio/C2.mp3; sourceTree = "<group>"; };
+		3FC5A07A2537450B0099858D /* major3rdC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major3rdC.mp3; path = ../assets/audio/major3rdC.mp3; sourceTree = "<group>"; };
+		3FC5A07B2537450B0099858D /* major9thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major9thC.mp3; path = ../assets/audio/major9thC.mp3; sourceTree = "<group>"; };
+		3FC5A07C2537450B0099858D /* C.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = C.mp3; path = ../assets/audio/C.mp3; sourceTree = "<group>"; };
+		3FC5A07D2537450B0099858D /* minor7thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor7thC.mp3; path = ../assets/audio/minor7thC.mp3; sourceTree = "<group>"; };
+		3FC5A07E2537450B0099858D /* perfect5thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = perfect5thC.mp3; path = ../assets/audio/perfect5thC.mp3; sourceTree = "<group>"; };
+		3FC5A07F2537450B0099858D /* Bb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Bb.mp3; path = ../assets/audio/Bb.mp3; sourceTree = "<group>"; };
+		3FC5A0802537450C0099858D /* major6thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major6thC.mp3; path = ../assets/audio/major6thC.mp3; sourceTree = "<group>"; };
+		3FC5A0812537450C0099858D /* minor2ndC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor2ndC.mp3; path = ../assets/audio/minor2ndC.mp3; sourceTree = "<group>"; };
+		3FC5A0822537450C0099858D /* Eb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Eb.mp3; path = ../assets/audio/Eb.mp3; sourceTree = "<group>"; };
+		3FC5A0832537450C0099858D /* major2ndC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major2ndC.mp3; path = ../assets/audio/major2ndC.mp3; sourceTree = "<group>"; };
+		3FC5A0842537450C0099858D /* Gb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Gb.mp3; path = ../assets/audio/Gb.mp3; sourceTree = "<group>"; };
+		3FC5A0852537450C0099858D /* F2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = F2.mp3; path = ../assets/audio/F2.mp3; sourceTree = "<group>"; };
+		3FC5A0862537450C0099858D /* B.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = B.mp3; path = ../assets/audio/B.mp3; sourceTree = "<group>"; };
+		3FC5A0872537450C0099858D /* G.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = G.mp3; path = ../assets/audio/G.mp3; sourceTree = "<group>"; };
+		3FC5A0882537450C0099858D /* major7thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major7thC.mp3; path = ../assets/audio/major7thC.mp3; sourceTree = "<group>"; };
+		3FC5A0892537450C0099858D /* minor6thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor6thC.mp3; path = ../assets/audio/minor6thC.mp3; sourceTree = "<group>"; };
 		3FF25A8824FE5CAD00CCF67A /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "PianoLessons/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		40653B80D12049408D1836EC /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		467D59CC3A2E4C8A9C4CC66E /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
@@ -183,18 +221,19 @@
 		13B07FAE1A68108700A75B9A /* PianoLessons */ = {
 			isa = PBXGroup;
 			children = (
+				3FC5A0B0253745E20099858D /* assets */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				3FBC9C892502B0D6002A045A /* PlayKey.h */,
 				3FBC9C882502B0D6002A045A /* PlayKey.m */,
+				13B07FB71A68108700A75B9A /* main.m */,
 				3F62FD512502BBF800FECC8E /* Chateau Grand-v1.8.sf2 */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				3FF25A8824FE5CAD00CCF67A /* AppCenter-Config.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				3F1132EE24FABC8F00835A30 /* Fonts */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
-				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = PianoLessons;
 			sourceTree = "<group>";
@@ -233,6 +272,90 @@
 				3F1132FE24FABC8F00835A30 /* MaterialIcons.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		3FC5A0B0253745E20099858D /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				3FC5A0B1253745E90099858D /* assets */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		3FC5A0B1253745E90099858D /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				3FC5A0B2253745EF0099858D /* audio */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		3FC5A0B2253745EF0099858D /* audio */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = audio;
+			sourceTree = "<group>";
+		};
+		3FC5A0FF2537468B0099858D /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				3FC5A100253746930099858D /* assets */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
+		3FC5A100253746930099858D /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				3FC5A101253746980099858D /* audio */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
+		3FC5A101253746980099858D /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				3FC5A0712537450A0099858D /* A.mp3 */,
+				3FC5A0692537450A0099858D /* A2.mp3 */,
+				3FC5A06B2537450A0099858D /* Ab.mp3 */,
+				3FC5A06E2537450A0099858D /* augmented4thC.mp3 */,
+				3FC5A06A2537450A0099858D /* augmented11thC.mp3 */,
+				3FC5A0862537450C0099858D /* B.mp3 */,
+				3FC5A06F2537450A0099858D /* B2.mp3 */,
+				3FC5A07F2537450B0099858D /* Bb.mp3 */,
+				3FC5A07C2537450B0099858D /* C.mp3 */,
+				3FC5A0792537450B0099858D /* C2.mp3 */,
+				3FC5A0762537450B0099858D /* D.mp3 */,
+				3FC5A06D2537450A0099858D /* D2.mp3 */,
+				3FC5A0702537450A0099858D /* Db.mp3 */,
+				3FC5A0752537450B0099858D /* E.mp3 */,
+				3FC5A0732537450B0099858D /* E2.mp3 */,
+				3FC5A0822537450C0099858D /* Eb.mp3 */,
+				3FC5A0682537450A0099858D /* F.mp3 */,
+				3FC5A0852537450C0099858D /* F2.mp3 */,
+				3FC5A0872537450C0099858D /* G.mp3 */,
+				3FC5A06C2537450A0099858D /* G2.mp3 */,
+				3FC5A0842537450C0099858D /* Gb.mp3 */,
+				3FC5A0832537450C0099858D /* major2ndC.mp3 */,
+				3FC5A07A2537450B0099858D /* major3rdC.mp3 */,
+				3FC5A0802537450C0099858D /* major6thC.mp3 */,
+				3FC5A0882537450C0099858D /* major7thC.mp3 */,
+				3FC5A07B2537450B0099858D /* major9thC.mp3 */,
+				3FC5A0782537450B0099858D /* major11thC.mp3 */,
+				3FC5A064253745090099858D /* major13thC.mp3 */,
+				3FC5A0812537450C0099858D /* minor2ndC.mp3 */,
+				3FC5A0722537450B0099858D /* minor3rdC.mp3 */,
+				3FC5A0892537450C0099858D /* minor6thC.mp3 */,
+				3FC5A07D2537450B0099858D /* minor7thC.mp3 */,
+				3FC5A0652537450A0099858D /* minor9thC.mp3 */,
+				3FC5A0772537450B0099858D /* minor11thC.mp3 */,
+				3FC5A0672537450A0099858D /* minor13thC.mp3 */,
+				3FC5A0662537450A0099858D /* octaveC.mp3 */,
+				3FC5A0742537450B0099858D /* perfect4thC.mp3 */,
+				3FC5A07E2537450B0099858D /* perfect5thC.mp3 */,
+			);
+			name = audio;
 			sourceTree = "<group>";
 		};
 		55355DF3754EB9CA32EDC06C /* Pods */ = {
@@ -287,6 +410,7 @@
 		D0C4CE3F9DEB40DDAD6523C9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3FC5A0FF2537468B0099858D /* assets */,
 				9C2F1316085E408A8675EFDE /* AntDesign.ttf */,
 				B4B98A8891494FEAA91C1979 /* Entypo.ttf */,
 				B8FE4CFDAFF04DB485F9F167 /* EvilIcons.ttf */,

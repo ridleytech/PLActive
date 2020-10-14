@@ -116,6 +116,15 @@ public class PianoModule extends ReactContextBaseJavaModule implements
         Toast.makeText(getReactApplicationContext(), Integer.toString(key), Toast.LENGTH_SHORT).show();
     }
 
+@ReactMethod
+    public void testGraph(Callback cb) {
+       try{
+           cb.invoke("test passed");
+       }catch (Exception e){
+           cb.invoke("test failed");
+       }
+   }
+
     @ReactMethod
     public void initGraph(
             Callback errorCallback,
@@ -133,7 +142,7 @@ public class PianoModule extends ReactContextBaseJavaModule implements
 
             successCallback.invoke("midi status: " + midiStatus);
         } catch (IllegalViewOperationException e) {
-            errorCallback.invoke(e.getMessage());
+            errorCallback.invoke("midi error status: " + e.getMessage());
         }
     }
 
@@ -141,9 +150,11 @@ public class PianoModule extends ReactContextBaseJavaModule implements
     public void releaseKey(int key) {
         //Toast.makeText(getReactApplicationContext(), message, duration).show();
 
-        sendMidi(MidiConstants.NOTE_OFF, 48, 0);
-        sendMidi(MidiConstants.NOTE_OFF, 52, 0);
-        sendMidi(MidiConstants.NOTE_OFF, 55, 0);
+        // sendMidi(MidiConstants.NOTE_OFF, 48, 0);
+        // sendMidi(MidiConstants.NOTE_OFF, 52, 0);
+        // sendMidi(MidiConstants.NOTE_OFF, 55, 0);
+
+        sendMidi(MidiConstants.NOTE_OFF, key, 90);
     }
 
     @ReactMethod
@@ -156,13 +167,47 @@ public class PianoModule extends ReactContextBaseJavaModule implements
 
         try {
 
-            Toast.makeText(getReactApplicationContext(), Integer.toString(key), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getReactApplicationContext(), Integer.toString(key), Toast.LENGTH_SHORT).show();
 
-            sendMidi(MidiConstants.NOTE_ON, 48, 63);
-            sendMidi(MidiConstants.NOTE_ON, 52, 63);
-            sendMidi(MidiConstants.NOTE_ON, 55, 63);
+            // sendMidi(MidiConstants.NOTE_ON, 48, 63);
+            // sendMidi(MidiConstants.NOTE_ON, 52, 63);
+            // sendMidi(MidiConstants.NOTE_ON, 55, 63);
 
-            successCallback.invoke("played " + 48 + " successfully");
+            int currentOctave = 3;
+            int sustainValue = 0;
+
+            if (currentOctave == 1)
+            {
+                key = key + 12;
+            }
+            else if (currentOctave == 2)
+            {
+                key = key + 36;
+            }
+            else if (currentOctave == 3)
+            {
+                key = key + 60;
+            }
+            else if (currentOctave == 4)
+            {
+                key = key + 84;
+            }
+            else if (currentOctave == 5)
+            {
+                key = key + 108;
+            }
+            else if (currentOctave == 6)
+            {
+                key = key + 132;
+            }
+            else
+            {
+                key = key + 156;
+            }
+
+            sendMidi(MidiConstants.NOTE_ON, key, 90);
+
+            successCallback.invoke("played " + key + " successfully");
         } catch (IllegalViewOperationException e) {
             errorCallback.invoke(e.getMessage());
         }

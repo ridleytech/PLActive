@@ -42,26 +42,48 @@ import {saveProgress} from '../thunks/';
 var testView = NativeModules.PlayKey;
 
 const tracks = {
-  A: require('../audio/A.mp3'),
-  A2: require('../audio/A2.mp3'),
-  B: require('../audio/B.mp3'),
-  B2: require('../audio/B2.mp3'),
-  C: require('../audio/C.mp3'),
-  C2: require('../audio/C2.mp3'),
-  D: require('../audio/D.mp3'),
-  D2: require('../audio/D2.mp3'),
-  E: require('../audio/E.mp3'),
-  E2: require('../audio/E2.mp3'),
-  F: require('../audio/F.mp3'),
-  F2: require('../audio/F2.mp3'),
-  G: require('../audio/G.mp3'),
-  G2: require('../audio/G2.mp3'),
-  Db: require('../audio/Db.mp3'),
-  Eb: require('../audio/Eb.mp3'),
-  Gb: require('../audio/Gb.mp3'),
-  Ab: require('../audio/Ab.mp3'),
-  Bb: require('../audio/Bb.mp3'),
+  A: require('../../assets/audio/A.mp3'),
+  A2: require('../../assets/audio/A2.mp3'),
+  B: require('../../assets/audio/B.mp3'),
+  B2: require('../../assets/audio/B2.mp3'),
+  C: require('../../assets/audio/C.mp3'),
+  C2: require('../../assets/audio/C2.mp3'),
+  D: require('../../assets/audio/D.mp3'),
+  D2: require('../../assets/audio/D2.mp3'),
+  E: require('../../assets/audio/E.mp3'),
+  E2: require('../../assets/audio/E2.mp3'),
+  F: require('../../assets/audio/F.mp3'),
+  F2: require('../../assets/audio/F2.mp3'),
+  G: require('../../assets/audio/G.mp3'),
+  G2: require('../../assets/audio/G2.mp3'),
+  Db: require('../../assets/audio/Db.mp3'),
+  Eb: require('../../assets/audio/Eb.mp3'),
+  Gb: require('../../assets/audio/Gb.mp3'),
+  Ab: require('../../assets/audio/Ab.mp3'),
+  Bb: require('../../assets/audio/Bb.mp3'),
 };
+
+// const tracks = {
+//   A: require('../../assets/audio/A.mp3'),
+//   A2: require('../../assets/audio/A2.mp3'),
+//   B: require('../../assets/audio/B.mp3'),
+//   B2: require('../../assets/audio/B2.mp3'),
+//   C: require('../../assets/audio/C.mp3'),
+//   C2: require('../../assets/audio/C2.mp3'),
+//   D: require('../../assets/audio/D.mp3'),
+//   D2: require('../../assets/audio/D2.mp3'),
+//   E: require('../../assets/audio/E.mp3'),
+//   E2: require('../../assets/audio/E2.mp3'),
+//   F: require('../../assets/audio/F.mp3'),
+//   F2: require('../../assets/audio/F2.mp3'),
+//   G: require('../../assets/audio/G.mp3'),
+//   G2: require('../../assets/audio/G2.mp3'),
+//   Db: require('../../assets/audio/Db.mp3'),
+//   Eb: require('../../assets/audio/Eb.mp3'),
+//   Gb: require('../../assets/audio/Gb.mp3'),
+//   Ab: require('../../assets/audio/Ab.mp3'),
+//   Bb: require('../../assets/audio/Bb.mp3'),
+// };
 
 const trackSelect = (track) => {
   if (track === null) {
@@ -156,6 +178,8 @@ const PitchLevels = ({level, mode}) => {
   const [instructions, setInstructions] = useState(null);
 
   const [currentTrack, setCurrentTrack] = useState(null);
+  const [trackFile, setTrackFile] = useState(null)
+
 
   const {position, duration} = useTrackPlayerProgress(150);
   const [restarted, setRestarted] = useState(true);
@@ -555,6 +579,10 @@ const PitchLevels = ({level, mode}) => {
 
     addSongData(newTracks);
 
+    setTrackFile(newTracks[0].url.uri)
+
+    console.log('url: ' + newTracks[0].url.uri);
+
     console.log('newTracks: ' + JSON.stringify(newTracks));
     console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
 
@@ -593,16 +621,37 @@ const PitchLevels = ({level, mode}) => {
   };
 
   const pressKey = (key: number) => {
-    //console.log('key: ' + key);
+    console.log('key: ' + key);
 
     var sc = keyStates.slice();
 
     sc[key] = true;
     setKeyStates(sc);
 
+    if(Platform.OS === 'ios')
+    {
+
     testView.playKey(key).then((result) => {
       //console.log('show', result);
     });
+
+  }
+  else
+  {
+    //console.log("android down")
+
+    //testView.playKey(key);
+
+    testView.playKeyCB(
+        key,
+        (msg) => {
+          console.log('error: ' + msg);
+        },
+        (response) => {
+          console.log('response: ' + response);
+        },
+      );
+    }
   };
 
   const releaseKey = (key: number) => {
@@ -611,9 +660,31 @@ const PitchLevels = ({level, mode}) => {
     sc[key] = false;
     setKeyStates(sc);
 
+    if(Platform.OS === 'ios')
+    {
+
     testView.releaseKey(key).then((result) => {
       //console.log('show', result);
     });
+  }
+  else
+  {
+    //testView.releaseKey(key);
+
+    //console.log("android up")
+
+    // testView.releaseKey(
+    //     key,
+    //     (msg) => {
+    //       console.log('error: ' + msg);
+    //     },
+    //     (response) => {
+    //       console.log('response: ' + response);
+    //     },
+    //   );
+
+    testView.releaseKey(key);
+  }
   };
 
   var modename;
@@ -652,6 +723,8 @@ const PitchLevels = ({level, mode}) => {
                 }}>
                 Quiz - Pitch Recognition Level {level}
               </Text>
+
+              <Text>File: {trackFile}</Text>
 
               {/* <TouchableOpacity onPress={() => debugResults()}>
                 <Text
@@ -699,10 +772,13 @@ const PitchLevels = ({level, mode}) => {
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
+                    
+                    paddingTop: Platform.OS === 'android' ? 10:0,
+                    paddingBottom: Platform.OS === 'android' ? 10:0
                   }}>
                   <TouchableOpacity
                     onPress={onButtonPressed}
-                    style={{marginRight: 20}}>
+                    style={{marginRight: Platform.OS === 'ios' ? 20:10}}>
                     {isPlaying ? (
                       <Image source={pauseImg} />
                     ) : (
@@ -746,8 +822,10 @@ const PitchLevels = ({level, mode}) => {
                 bottom: 0,
                 left: 0,
                 width: '100%',
-                backgroundColor: 'white',
+                backgroundColor: 'yellow',
                 flex: 1,
+                maxHeight: '55%',
+
               }}>
               <View
                 style={{
@@ -755,7 +833,6 @@ const PitchLevels = ({level, mode}) => {
                   display: 'flex',
                   flex: 1,
                   flexDirection: 'row',
-                  maxHeight: 250,
                 }}>
                 <View
                   onTouchStart={() => pressKey(0)}
@@ -769,10 +846,9 @@ const PitchLevels = ({level, mode}) => {
                 <View
                   onTouchStart={() => pressKey(1)}
                   onTouchEnd={() => releaseKey(1)}
-                  style={styles.blackKey}>
+                  style={styles.blackKey2}>
                   <Image
                     source={keyStates[1] ? BlackGreenIcon : BlackIcon}
-                    style={styles.icon2}
                   />
                 </View>
                 <View
@@ -787,10 +863,9 @@ const PitchLevels = ({level, mode}) => {
                 <View
                   onTouchStart={() => pressKey(3)}
                   onTouchEnd={() => releaseKey(3)}
-                  style={styles.blackKey}>
+                  style={styles.blackKey3}>
                   <Image
                     source={keyStates[3] ? BlackGreenIcon : BlackIcon}
-                    style={styles.icon3}
                   />
                 </View>
                 <View
@@ -814,10 +889,9 @@ const PitchLevels = ({level, mode}) => {
                 <View
                   onTouchStart={() => pressKey(6)}
                   onTouchEnd={() => releaseKey(6)}
-                  style={styles.blackKey}>
+                  style={styles.blackKey4}>
                   <Image
                     source={keyStates[6] ? BlackGreenIcon : BlackIcon}
-                    style={styles.icon4}
                   />
                 </View>
                 <View
@@ -832,10 +906,9 @@ const PitchLevels = ({level, mode}) => {
                 <View
                   onTouchStart={() => pressKey(8)}
                   onTouchEnd={() => releaseKey(8)}
-                  style={styles.blackKey}>
+                  style={styles.blackKey5}>
                   <Image
                     source={keyStates[8] ? BlackGreenIcon : BlackIcon}
-                    style={styles.icon5}
                   />
                 </View>
                 <View
@@ -850,10 +923,9 @@ const PitchLevels = ({level, mode}) => {
                 <View
                   onTouchStart={() => pressKey(10)}
                   onTouchEnd={() => releaseKey(10)}
-                  style={styles.blackKey}>
+                  style={styles.blackKey6}>
                   <Image
                     source={keyStates[10] ? BlackGreenIcon : BlackIcon}
-                    style={styles.icon6}
                   />
                 </View>
                 <View
@@ -921,6 +993,7 @@ export default PitchLevels;
 // }
 
 let offset = Dimensions.get('screen').width / 9.2;
+
 let whiteKeyWidth = Dimensions.get('screen').width / 7;
 let blackKeyWidth = Dimensions.get('screen').width / 13;
 
@@ -947,30 +1020,16 @@ const styles = StyleSheet.create({
     maxHeight: 250,
     marginRight: 0.5,
   },
-  blackKey: {position: 'absolute', zIndex: 1, left: 0},
-  icon2: {
-    height: 135,
-    width: blackKeyWidth,
-    left: offset,
-  },
-  icon3: {
-    height: 135,
-    width: blackKeyWidth,
-    left: offset + whiteKeyWidth,
-  },
-  icon4: {
-    height: 135,
-    width: blackKeyWidth,
-    left: offset + whiteKeyWidth * 3,
-  },
-  icon5: {
-    height: 135,
-    width: blackKeyWidth,
-    left: offset + whiteKeyWidth * 4,
-  },
-  icon6: {
-    height: 135,
-    width: blackKeyWidth,
-    left: offset + whiteKeyWidth * 5,
-  },
+  blackKey: {position: 'absolute', zIndex: 1},
+  blackKey2: {position: 'absolute', zIndex: 1, height: 135, 
+  width: blackKeyWidth,left: offset},
+  blackKey3: {position: 'absolute', zIndex: 1, height: 135,
+  width: blackKeyWidth,left: offset + whiteKeyWidth,},
+  blackKey4: {position: 'absolute', zIndex: 1, height: 135,
+  width: blackKeyWidth,left: offset + whiteKeyWidth * 3},
+  blackKey5: {position: 'absolute', zIndex: 1, height: 135,
+  width: blackKeyWidth,left: offset + whiteKeyWidth * 4},
+  blackKey6: {position: 'absolute', zIndex: 1, height: 135,
+  width: blackKeyWidth,left: offset + whiteKeyWidth * 5},
+
 });

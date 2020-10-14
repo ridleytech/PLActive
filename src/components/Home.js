@@ -3,9 +3,8 @@ import {
   StyleSheet,
   NativeModules,
   SafeAreaView,
-  AsyncStorage, Alert
+  AsyncStorage, Alert, Platform
 } from 'react-native';
-var testView = NativeModules.PlayKey;
 import {connect} from 'react-redux';
 import Header from './Header';
 //import PlayerMidi from './PlayerMidi';
@@ -28,7 +27,7 @@ import PitchLevels from './PitchLevels';
 
 //cant update git
 
-//var testView = NativeModules.PlayKey;
+var testView = NativeModules.PlayKey;
 
 class Home extends Component<Props> {
   constructor(props: Props) {
@@ -102,9 +101,29 @@ class Home extends Component<Props> {
 
   componentDidMount() {
     //this.props.getProgressData();
-    testView.initGraph('url').then((result) => {
-      console.log('show', result);
-    });
+
+    if(Platform.OS === 'ios')
+    {
+      testView.initGraph('url').then((result) => {
+        console.log('show', result);
+      });
+    }
+    else
+    {
+      console.log('initGraph android');
+      testView.initGraph(
+      (msg) => {
+        console.log('error: ' + msg);
+      },
+      (response) => {
+        console.log('response: ' + response);
+      },
+    );
+
+  //   NativeModules.PlayKey.testGraph((err ,name) => {
+  //     console.log(err, name);
+  //  });
+    }
   }
 
   setMode = (mode) => {

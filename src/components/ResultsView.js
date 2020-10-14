@@ -43,7 +43,7 @@ const ResultsView = ({
   var results;
 
   useEffect(() => {
-    if (per > 85) {
+    if (per >= 85) {
       results = 'Great job! You passed.';
       setPassed(true);
     } else {

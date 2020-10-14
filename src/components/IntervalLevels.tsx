@@ -36,25 +36,25 @@ import ResultsView from './ResultsView';
 import {saveProgress} from '../thunks/';
 
 const tracks = {
-  minor2ndC: require('../audio/minor2ndC.mp3'),
-  major2ndC: require('../audio/major2ndC.mp3'),
-  minor3rdC: require('../audio/minor3rdC.mp3'),
-  major3rdC: require('../audio/major3rdC.mp3'),
-  perfect4thC: require('../audio/perfect4thC.mp3'),
-  augmented4thC: require('../audio/augmented4thC.mp3'),
-  perfect5thC: require('../audio/perfect5thC.mp3'),
-  minor6thC: require('../audio/minor6thC.mp3'),
-  major6thC: require('../audio/major6thC.mp3'),
-  minor7thC: require('../audio/minor7thC.mp3'),
-  major7thC: require('../audio/major7thC.mp3'),
-  octaveC: require('../audio/octaveC.mp3'),
-  minor9thC: require('../audio/minor9thC.mp3'),
-  major9thC: require('../audio/major9thC.mp3'),
-  minor11thC: require('../audio/minor11thC.mp3'),
-  major11thC: require('../audio/major11thC.mp3'),
-  augmented11thC: require('../audio/augmented11thC.mp3'),
-  minor13thC: require('../audio/minor13thC.mp3'),
-  major13thC: require('../audio/major13thC.mp3'),
+  minor2ndC: require('../../assets/audio/minor2ndC.mp3'),
+  major2ndC: require('../../assets/audio/major2ndC.mp3'),
+  minor3rdC: require('../../assets/audio/minor3rdC.mp3'),
+  major3rdC: require('../../assets/audio/major3rdC.mp3'),
+  perfect4thC: require('../../assets/audio/perfect4thC.mp3'),
+  augmented4thC: require('../../assets/audio/augmented4thC.mp3'),
+  perfect5thC: require('../../assets/audio/perfect5thC.mp3'),
+  minor6thC: require('../../assets/audio/minor6thC.mp3'),
+  major6thC: require('../../assets/audio/major6thC.mp3'),
+  minor7thC: require('../../assets/audio/minor7thC.mp3'),
+  major7thC: require('../../assets/audio/major7thC.mp3'),
+  octaveC: require('../../assets/audio/octaveC.mp3'),
+  minor9thC: require('../../assets/audio/minor9thC.mp3'),
+  major9thC: require('../../assets/audio/major9thC.mp3'),
+  minor11thC: require('../../assets/audio/minor11thC.mp3'),
+  major11thC: require('../../assets/audio/major11thC.mp3'),
+  augmented11thC: require('../../assets/audio/augmented11thC.mp3'),
+  minor13thC: require('../../assets/audio/minor13thC.mp3'),
+  major13thC: require('../../assets/audio/major13thC.mp3'),
 };
 
 const trackSelect = (track) => {
@@ -394,7 +394,7 @@ const IntervalLevels = ({level, mode}) => {
       setCanCheck(true);
       nextQuestion();
       setAnswerState('#E2E7ED');
-    }, 500);
+    }, 2000);
   };
 
   const debugResults = () => {
