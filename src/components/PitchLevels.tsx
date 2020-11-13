@@ -13,17 +13,9 @@ import {
   Keyboard,
   AsyncStorage,
 } from 'react-native';
-import TrackPlayer, {
-  TrackPlayerEvents,
-  STATE_PLAYING,
-  STATE_PAUSED,
-} from 'react-native-track-player';
+
 import {useDispatch, useSelector} from 'react-redux';
 
-import {
-  useTrackPlayerProgress,
-  useTrackPlayerEvents,
-} from 'react-native-track-player/lib/hooks';
 import Slider from '@react-native-community/slider';
 //import styles from './styles';
 import data from '../data/questions.json';
@@ -40,95 +32,6 @@ import BlackGreenIcon from '../../images/black-green.png';
 import {saveProgress} from '../thunks/';
 
 var testView = NativeModules.PlayKey;
-
-const tracks = {
-  A: require('../../assets/audio/A.mp3'),
-  A2: require('../../assets/audio/A2.mp3'),
-  B: require('../../assets/audio/B.mp3'),
-  B2: require('../../assets/audio/B2.mp3'),
-  C: require('../../assets/audio/C.mp3'),
-  C2: require('../../assets/audio/C2.mp3'),
-  D: require('../../assets/audio/D.mp3'),
-  D2: require('../../assets/audio/D2.mp3'),
-  E: require('../../assets/audio/E.mp3'),
-  E2: require('../../assets/audio/E2.mp3'),
-  F: require('../../assets/audio/F.mp3'),
-  F2: require('../../assets/audio/F2.mp3'),
-  G: require('../../assets/audio/G.mp3'),
-  G2: require('../../assets/audio/G2.mp3'),
-  Db: require('../../assets/audio/Db.mp3'),
-  Eb: require('../../assets/audio/Eb.mp3'),
-  Gb: require('../../assets/audio/Gb.mp3'),
-  Ab: require('../../assets/audio/Ab.mp3'),
-  Bb: require('../../assets/audio/Bb.mp3'),
-};
-
-// const tracks = {
-//   A: require('../../assets/audio/A.mp3'),
-//   A2: require('../../assets/audio/A2.mp3'),
-//   B: require('../../assets/audio/B.mp3'),
-//   B2: require('../../assets/audio/B2.mp3'),
-//   C: require('../../assets/audio/C.mp3'),
-//   C2: require('../../assets/audio/C2.mp3'),
-//   D: require('../../assets/audio/D.mp3'),
-//   D2: require('../../assets/audio/D2.mp3'),
-//   E: require('../../assets/audio/E.mp3'),
-//   E2: require('../../assets/audio/E2.mp3'),
-//   F: require('../../assets/audio/F.mp3'),
-//   F2: require('../../assets/audio/F2.mp3'),
-//   G: require('../../assets/audio/G.mp3'),
-//   G2: require('../../assets/audio/G2.mp3'),
-//   Db: require('../../assets/audio/Db.mp3'),
-//   Eb: require('../../assets/audio/Eb.mp3'),
-//   Gb: require('../../assets/audio/Gb.mp3'),
-//   Ab: require('../../assets/audio/Ab.mp3'),
-//   Bb: require('../../assets/audio/Bb.mp3'),
-// };
-
-const trackSelect = (track) => {
-  if (track === null) {
-    return tracks.A;
-  }
-
-  const tracksArray = {
-    A: tracks.A,
-    A2: tracks.A2,
-    B: tracks.B,
-    B2: tracks.B2,
-    C: tracks.C,
-    C2: tracks.C2,
-    D: tracks.D,
-    D2: tracks.D2,
-    E: tracks.E,
-    E2: tracks.E2,
-    F: tracks.F,
-    F2: tracks.F2,
-    G: tracks.G,
-    G2: tracks.G2,
-    Db: tracks.Db,
-    Eb: tracks.Eb,
-    Gb: tracks.Gb,
-    Ab: tracks.Ab,
-    Bb: tracks.Bb,
-  };
-
-  return tracksArray[track];
-};
-
-const trackPlayerInit = async () => {
-  await TrackPlayer.setupPlayer();
-  TrackPlayer.updateOptions({
-    stopWithApp: true,
-    capabilities: [
-      TrackPlayer.CAPABILITY_PLAY,
-      TrackPlayer.CAPABILITY_PAUSE,
-      TrackPlayer.CAPABILITY_JUMP_FORWARD,
-      TrackPlayer.CAPABILITY_JUMP_BACKWARD,
-    ],
-  });
-
-  return true;
-};
 
 //console.log('data: ' + JSON.stringify(data));
 
@@ -157,12 +60,16 @@ const shuffle = (array) => {
 
 // console.log('question: ' + JSON.stringify(question));
 
+//https://github.com/zmxv/react-native-sound
+
+var Sound = require('react-native-sound');
+var currentNote;
+
 const PitchLevels = ({level, mode}) => {
   const dispatch = useDispatch();
 
   //console.log('selectedLevel: ' + level);
 
-  const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
   const [loadCount, setLoadCount] = useState(0);
@@ -178,15 +85,15 @@ const PitchLevels = ({level, mode}) => {
   const [instructions, setInstructions] = useState(null);
 
   const [currentTrack, setCurrentTrack] = useState(null);
-  const [trackFile, setTrackFile] = useState(null)
+  const [trackFile, setTrackFile] = useState(null);
 
-
-  const {position, duration} = useTrackPlayerProgress(150);
+  const [trackInfo, setTrackInfo] = useState({position: 0, duration: 0});
   const [restarted, setRestarted] = useState(true);
   const opacity = useState(new Animated.Value(0))[0];
 
   const [answerState, setAnswerState] = useState('#E2E7ED');
   const [canAnswer, setCanAnswer] = useState(false);
+
   const [keyStates, setKeyStates] = useState([
     false,
     false,
@@ -203,7 +110,50 @@ const PitchLevels = ({level, mode}) => {
   ]);
 
   const isTrial = useSelector((state) => state.isTrial);
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
 
+  useEffect(() => {
+    let interval = null;
+
+    if (isActive) {
+      interval = setInterval(() => {
+        //console.log('the seconds: ' + interval);
+
+        currentNote.getCurrentTime((seconds1) => {
+          console.log('at ' + seconds1);
+
+          setTrackInfo({
+            position: seconds1,
+            duration: currentNote.getDuration(),
+          });
+
+          if (seconds1 == 0) {
+            setIsActive(false);
+            setIsPlaying(false);
+            setSliderValue(0);
+          }
+        });
+        setSeconds((seconds) => seconds + 1);
+      }, 250);
+    } else if (!isActive && seconds !== 0) {
+      clearInterval(interval);
+      setIsPlaying(false);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, seconds]);
+
+  useEffect(() => {
+    console.log('track info changed: ' + JSON.stringify(trackInfo));
+
+    var pos = trackInfo.position / trackInfo.duration;
+
+    console.log('slider val: ' + pos);
+
+    if (pos > 0) {
+      setSliderValue(pos);
+    }
+  }, [trackInfo]);
 
   Animated.timing(opacity, {
     toValue: 1,
@@ -217,11 +167,22 @@ const PitchLevels = ({level, mode}) => {
     if (currentQuestion1 < questionList.length - 1) {
       currentQuestion1 += 1;
 
-      //TrackPlayer.reset();
-
       setCurrentTrack({
         name: questionList[currentQuestion1].file,
         id: currentQuestion1.toString(),
+      });
+
+      var filename = questionList[currentQuestion1].file.toLowerCase() + '.mp3';
+
+      currentNote = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+          console.log('failed to load the sound ' + filename, error);
+          return;
+        }
+        // loaded successfully
+        console.log('file ' + filename + ' loaded');
+
+        //currentNote.play();
       });
 
       setCurrentQuestionInd(currentQuestion1);
@@ -233,14 +194,6 @@ const PitchLevels = ({level, mode}) => {
   };
 
   useEffect(() => {
-    const startPlayer = async () => {
-      let isInit = await trackPlayerInit();
-      setIsTrackPlayerInit(isInit);
-    };
-    startPlayer();
-
-    TrackPlayer.reset();
-
     console.log('on load pitch');
     console.log('loadCount pitch: ' + loadCount);
 
@@ -270,12 +223,6 @@ const PitchLevels = ({level, mode}) => {
   useEffect(() => {
     if (currentTrack) {
       console.log('currentQuestion changed: ' + currentTrack.name);
-
-      // const startPlayer = async () => {
-      //   let isInit = await trackPlayerInit();
-      //   setIsTrackPlayerInit(isInit);
-      // };
-      // startPlayer();
     }
   }, [currentQuestionInd]);
 
@@ -305,20 +252,16 @@ const PitchLevels = ({level, mode}) => {
   useEffect(
     () => () => {
       console.log('unmount');
-      TrackPlayer.destroy();
+
+      setSeconds(0);
+      setIsActive(false);
+
+      if (currentNote) {
+        currentNote.release();
+      }
     },
     [],
   );
-
-  const addSongData = async (list) => {
-    console.log('song data length pitch: ' + list.length);
-    await TrackPlayer.add(list);
-  };
-
-  const nextTrack = async () => {
-    await TrackPlayer.skipToNext();
-    TrackPlayer.pause();
-  };
 
   useEffect(() => {
     console.log('currentTrack changed');
@@ -326,48 +269,15 @@ const PitchLevels = ({level, mode}) => {
     // console.log('add track: ' + currentTrack.name);
   }, [currentTrack]);
 
-  //default code below this line
-
-  //this hook updates the value of the slider whenever the current position of the song changes
-  useEffect(() => {
-    if (!isSeeking && position && duration) {
-      setSliderValue(position / duration);
-
-      //console.log('position: ' + position + ' duration: ' + duration);
-
-      //console.log('prog: ' + position / duration);
-
-      if (position / duration > 0.95) {
-        TrackPlayer.seekTo(0);
-        TrackPlayer.pause();
-      }
-    }
-  }, [position, duration]);
-
-  useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], (event) => {
-    console.log(event);
-    if (event.state === STATE_PLAYING) {
-      setIsPlaying(true);
-    }
-    // else if (event.state === STATE_PAUSED) {
-    //   TrackPlayer.stop();
-    // }
-    else {
-      //console.log('paused');
-      setIsPlaying(false);
-      if (position / duration > 0.9) {
-        console.log('reset track ' + currentTrack.name);
-        TrackPlayer.seekTo(0);
-        setSliderValue(0);
-      }
-    }
-  });
-
   const onButtonPressed = () => {
     if (!isPlaying) {
-      TrackPlayer.play();
+      currentNote.play();
+      setIsActive(true);
+      setIsPlaying(true);
     } else {
-      TrackPlayer.pause();
+      currentNote.pause();
+      setIsPlaying(false);
+      setIsActive(false);
     }
   };
 
@@ -376,7 +286,7 @@ const PitchLevels = ({level, mode}) => {
   };
 
   const slidingCompleted = async (value) => {
-    await TrackPlayer.seekTo(value * duration);
+    currentNote.setCurrentTime(value * trackInfo.duration);
     setSliderValue(value);
     setIsSeeking(false);
   };
@@ -421,9 +331,6 @@ const PitchLevels = ({level, mode}) => {
     setAnswerList(al);
     setCanAnswer(false);
     Keyboard.dismiss();
-    //TrackPlayer.destroy();
-
-    nextTrack();
 
     setTimeout(() => {
       setCurrentAnswer(null);
@@ -452,12 +359,9 @@ const PitchLevels = ({level, mode}) => {
     console.log(`mainMenu ${level} passed: ${passed}`);
     //saveProgress();
 
-    if(isTrial)
-    {
+    if (isTrial) {
       dispatch({type: 'SET_MODE', mode: 0});
-    }
-    else
-    {
+    } else {
       var currentLevel = level;
 
       if (passed) {
@@ -543,6 +447,10 @@ const PitchLevels = ({level, mode}) => {
   const startQuiz = () => {
     console.log('startQuiz');
 
+    //currentNote.play();
+
+    //setIsActive(true);
+
     var questions;
 
     if (level == 1) {
@@ -561,30 +469,40 @@ const PitchLevels = ({level, mode}) => {
 
     var newTracks = [];
 
-    console.log('questions: ' + JSON.stringify(questions));
+    //console.log('questions: ' + JSON.stringify(questions));
 
     questions.map((question) => {
       var ob = {
-        id: question.id.toString(),
-        url: trackSelect(question.file),
-        title: question.file,
-        album: 'Piano Lesson with Warren',
-        artist: 'Randall Ridley',
-        genre: 'R&B',
-        artwork: 'https://picsum.photos/300',
+        file: question.file.toLowerCase() + '.mp3',
       };
 
       newTracks.push(ob);
     });
 
-    addSongData(newTracks);
+    setTrackFile(newTracks[0].file);
 
-    setTrackFile(newTracks[0].url.uri)
-
-    console.log('url: ' + newTracks[0].url.uri);
+    console.log('file: ' + newTracks[0].file);
 
     console.log('newTracks: ' + JSON.stringify(newTracks));
     console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
+
+    currentNote = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound ' + newTracks[0].file, error);
+        return;
+      }
+      // loaded successfully
+      console.log(
+        'duration in seconds: ' +
+          currentNote.getDuration() +
+          'number of channels: ' +
+          currentNote.getNumberOfChannels(),
+      );
+
+      setTrackInfo({position: 0, duration: currentNote.getDuration()});
+
+      //currentNote.play();
+    });
 
     setCurrentQuestionInd(0);
     setCurrentAnswer('');
@@ -596,11 +514,8 @@ const PitchLevels = ({level, mode}) => {
     setQuizStarted(true);
     setRestarted(false);
 
-    //TrackPlayer.reset();
-
     setCurrentTrack({
       name: questions[0].file,
-      id: questions[0].id,
     });
 
     //console.log('questions: ' + JSON.stringify(questions));
@@ -628,21 +543,16 @@ const PitchLevels = ({level, mode}) => {
     sc[key] = true;
     setKeyStates(sc);
 
-    if(Platform.OS === 'ios')
-    {
+    if (Platform.OS === 'ios') {
+      testView.playKey(key).then((result) => {
+        //console.log('show', result);
+      });
+    } else {
+      //console.log("android down")
 
-    testView.playKey(key).then((result) => {
-      //console.log('show', result);
-    });
+      //testView.playKey(key);
 
-  }
-  else
-  {
-    //console.log("android down")
-
-    //testView.playKey(key);
-
-    testView.playKeyCB(
+      testView.playKeyCB(
         key,
         (msg) => {
           console.log('error: ' + msg);
@@ -660,31 +570,27 @@ const PitchLevels = ({level, mode}) => {
     sc[key] = false;
     setKeyStates(sc);
 
-    if(Platform.OS === 'ios')
-    {
+    if (Platform.OS === 'ios') {
+      testView.releaseKey(key).then((result) => {
+        //console.log('show', result);
+      });
+    } else {
+      //testView.releaseKey(key);
 
-    testView.releaseKey(key).then((result) => {
-      //console.log('show', result);
-    });
-  }
-  else
-  {
-    //testView.releaseKey(key);
+      //console.log("android up")
 
-    //console.log("android up")
+      // testView.releaseKey(
+      //     key,
+      //     (msg) => {
+      //       console.log('error: ' + msg);
+      //     },
+      //     (response) => {
+      //       console.log('response: ' + response);
+      //     },
+      //   );
 
-    // testView.releaseKey(
-    //     key,
-    //     (msg) => {
-    //       console.log('error: ' + msg);
-    //     },
-    //     (response) => {
-    //       console.log('response: ' + response);
-    //     },
-    //   );
-
-    testView.releaseKey(key);
-  }
+      testView.releaseKey(key);
+    }
   };
 
   var modename;
@@ -724,7 +630,7 @@ const PitchLevels = ({level, mode}) => {
                 Quiz - Pitch Recognition Level {level}
               </Text>
 
-              <Text>File: {trackFile}</Text>
+              {/* <Text>File: {trackFile}</Text> */}
 
               {/* <TouchableOpacity onPress={() => debugResults()}>
                 <Text
@@ -772,13 +678,13 @@ const PitchLevels = ({level, mode}) => {
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
-                    
-                    paddingTop: Platform.OS === 'android' ? 10:0,
-                    paddingBottom: Platform.OS === 'android' ? 10:0
+
+                    paddingTop: Platform.OS === 'android' ? 10 : 0,
+                    paddingBottom: Platform.OS === 'android' ? 10 : 0,
                   }}>
                   <TouchableOpacity
                     onPress={onButtonPressed}
-                    style={{marginRight: Platform.OS === 'ios' ? 20:10}}>
+                    style={{marginRight: Platform.OS === 'ios' ? 20 : 10}}>
                     {isPlaying ? (
                       <Image source={pauseImg} />
                     ) : (
@@ -825,7 +731,6 @@ const PitchLevels = ({level, mode}) => {
                 backgroundColor: 'yellow',
                 flex: 1,
                 maxHeight: '55%',
-
               }}>
               <View
                 style={{
@@ -833,6 +738,7 @@ const PitchLevels = ({level, mode}) => {
                   display: 'flex',
                   flex: 1,
                   flexDirection: 'row',
+                  bottom: 100,
                 }}>
                 <View
                   onTouchStart={() => pressKey(0)}
@@ -847,9 +753,7 @@ const PitchLevels = ({level, mode}) => {
                   onTouchStart={() => pressKey(1)}
                   onTouchEnd={() => releaseKey(1)}
                   style={styles.blackKey2}>
-                  <Image
-                    source={keyStates[1] ? BlackGreenIcon : BlackIcon}
-                  />
+                  <Image source={keyStates[1] ? BlackGreenIcon : BlackIcon} />
                 </View>
                 <View
                   onTouchStart={() => pressKey(2)}
@@ -864,9 +768,7 @@ const PitchLevels = ({level, mode}) => {
                   onTouchStart={() => pressKey(3)}
                   onTouchEnd={() => releaseKey(3)}
                   style={styles.blackKey3}>
-                  <Image
-                    source={keyStates[3] ? BlackGreenIcon : BlackIcon}
-                  />
+                  <Image source={keyStates[3] ? BlackGreenIcon : BlackIcon} />
                 </View>
                 <View
                   onTouchStart={() => pressKey(4)}
@@ -890,9 +792,7 @@ const PitchLevels = ({level, mode}) => {
                   onTouchStart={() => pressKey(6)}
                   onTouchEnd={() => releaseKey(6)}
                   style={styles.blackKey4}>
-                  <Image
-                    source={keyStates[6] ? BlackGreenIcon : BlackIcon}
-                  />
+                  <Image source={keyStates[6] ? BlackGreenIcon : BlackIcon} />
                 </View>
                 <View
                   onTouchStart={() => pressKey(7)}
@@ -907,9 +807,7 @@ const PitchLevels = ({level, mode}) => {
                   onTouchStart={() => pressKey(8)}
                   onTouchEnd={() => releaseKey(8)}
                   style={styles.blackKey5}>
-                  <Image
-                    source={keyStates[8] ? BlackGreenIcon : BlackIcon}
-                  />
+                  <Image source={keyStates[8] ? BlackGreenIcon : BlackIcon} />
                 </View>
                 <View
                   onTouchStart={() => pressKey(9)}
@@ -924,9 +822,7 @@ const PitchLevels = ({level, mode}) => {
                   onTouchStart={() => pressKey(10)}
                   onTouchEnd={() => releaseKey(10)}
                   style={styles.blackKey6}>
-                  <Image
-                    source={keyStates[10] ? BlackGreenIcon : BlackIcon}
-                  />
+                  <Image source={keyStates[10] ? BlackGreenIcon : BlackIcon} />
                 </View>
                 <View
                   onTouchStart={() => pressKey(11)}
@@ -943,6 +839,8 @@ const PitchLevels = ({level, mode}) => {
                 onPress={() => selectAnswer2()}
                 disabled={!canAnswer}
                 style={{
+                  position: 'absolute',
+                  bottom: 0,
                   height: 60,
                   backgroundColor: canAnswer ? '#3AB24A' : 'gray',
                   justifyContent: 'center',
@@ -969,7 +867,7 @@ const PitchLevels = ({level, mode}) => {
           correctAnswers={correctAnswers}
           total={questionList.length}
           mainMenu={mainMenu}
-          level={level} 
+          level={level}
           isTrial={isTrial}
         />
       ) : null}
@@ -1021,15 +919,39 @@ const styles = StyleSheet.create({
     marginRight: 0.5,
   },
   blackKey: {position: 'absolute', zIndex: 1},
-  blackKey2: {position: 'absolute', zIndex: 1, height: 135, 
-  width: blackKeyWidth,left: offset},
-  blackKey3: {position: 'absolute', zIndex: 1, height: 135,
-  width: blackKeyWidth,left: offset + whiteKeyWidth,},
-  blackKey4: {position: 'absolute', zIndex: 1, height: 135,
-  width: blackKeyWidth,left: offset + whiteKeyWidth * 3},
-  blackKey5: {position: 'absolute', zIndex: 1, height: 135,
-  width: blackKeyWidth,left: offset + whiteKeyWidth * 4},
-  blackKey6: {position: 'absolute', zIndex: 1, height: 135,
-  width: blackKeyWidth,left: offset + whiteKeyWidth * 5},
-
+  blackKey2: {
+    position: 'absolute',
+    zIndex: 1,
+    height: 135,
+    width: blackKeyWidth,
+    left: offset,
+  },
+  blackKey3: {
+    position: 'absolute',
+    zIndex: 1,
+    height: 135,
+    width: blackKeyWidth,
+    left: offset + whiteKeyWidth,
+  },
+  blackKey4: {
+    position: 'absolute',
+    zIndex: 1,
+    height: 135,
+    width: blackKeyWidth,
+    left: offset + whiteKeyWidth * 3,
+  },
+  blackKey5: {
+    position: 'absolute',
+    zIndex: 1,
+    height: 135,
+    width: blackKeyWidth,
+    left: offset + whiteKeyWidth * 4,
+  },
+  blackKey6: {
+    position: 'absolute',
+    zIndex: 1,
+    height: 135,
+    width: blackKeyWidth,
+    left: offset + whiteKeyWidth * 5,
+  },
 });

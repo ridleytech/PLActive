@@ -3,7 +3,11 @@ import {
   StyleSheet,
   NativeModules,
   SafeAreaView,
-  AsyncStorage, Alert, Platform
+  AsyncStorage,
+  Alert,
+  Platform,
+  TouchableOpacity,
+  Text,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Header from './Header';
@@ -17,6 +21,7 @@ import {
   setMode,
   setIntervalProgress,
   setPitchProgress,
+  manageGraph,
 } from '../actions/';
 import {getProgressData} from '../thunks/';
 import IntervalLevels from './IntervalLevels';
@@ -24,7 +29,6 @@ import PitchLevels from './PitchLevels';
 //import {AsyncStorage} from 'react-native-community/async-storage';
 
 //https://www.npmjs.com/package/react-native-check-box
-
 //cant update git
 
 var testView = NativeModules.PlayKey;
@@ -100,29 +104,29 @@ class Home extends Component<Props> {
   };
 
   componentDidMount() {
-    //this.props.getProgressData();
+    this.props.getProgressData();
 
-    if(Platform.OS === 'ios')
-    {
-      testView.initGraph('url').then((result) => {
-        console.log('show', result);
-      });
-    }
-    else
-    {
-      console.log('initGraph android');
-      testView.initGraph(
-      (msg) => {
-        console.log('error: ' + msg);
-      },
-      (response) => {
-        console.log('response: ' + response);
-      },
-    );
+    if (this.props.graphStarted == false) {
+      if (Platform.OS === 'ios') {
+        testView.initGraph('url').then((result) => {
+          console.log('show', result);
 
-  //   NativeModules.PlayKey.testGraph((err ,name) => {
-  //     console.log(err, name);
-  //  });
+          this.props.manageGraph(true);
+        });
+      } else {
+        console.log('initGraph android');
+        testView.initGraph(
+          (msg) => {
+            console.log('error: ' + msg);
+          },
+          (response) => {
+            console.log('response: ' + response);
+          },
+        );
+        //   NativeModules.PlayKey.testGraph((err ,name) => {
+        //     console.log(err, name);
+        //  });
+      }
     }
   }
 
@@ -135,51 +139,49 @@ class Home extends Component<Props> {
   showLevel = (level) => {
     console.log('showLevel: ' + level);
 
-    if(this.props.isTrial && level > 1)
-    {
+    // //debug
+    // this.props.setLevel(level);
+    // return;
+    // //end debug
+
+    if (this.props.isTrial && level > 1) {
       Alert.alert(
         null,
         `Please upgrade to Premium membership to unlock this level.`,
-        [
-          { text: "OK", onPress: () => console.log("OK Pressed") }
-        ],
-        { cancelable: false })
-        
-      return
-    }
-    else
-    {
-      if(this.props.mode == 1)
-      {
-        if(level - 1 > this.props.highestCompletedPitchLevel)
-        {
+        [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+        {cancelable: false},
+      );
+
+      return;
+    } else {
+      if (this.props.mode == 1) {
+        if (level - 1 > this.props.highestCompletedPitchLevel) {
           Alert.alert(
             null,
-            `Complete level ${this.props.highestCompletedPitchLevel+1} to proceed`,
-            [
-              { text: "OK", onPress: () => console.log("OK Pressed") }
-            ],
-            { cancelable: false })
-            
-          return
+            `Complete level ${
+              this.props.highestCompletedPitchLevel + 1
+            } to proceed`,
+            [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+            {cancelable: false},
+          );
+
+          return;
+        }
+      } else {
+        if (level - 1 > this.props.highestCompletedIntervalLevel) {
+          Alert.alert(
+            null,
+            `Complete level ${
+              this.props.highestCompletedIntervalLevel + 1
+            } to proceed`,
+            [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+            {cancelable: false},
+          );
+
+          return;
         }
       }
-      else
-      {
-        if(level - 1 > this.props.highestCompletedIntervalLevel)
-        {
-          Alert.alert(
-            null,
-            `Complete level ${this.props.highestCompletedIntervalLevel+1} to proceed`,
-            [
-              { text: "OK", onPress: () => console.log("OK Pressed") }
-            ],
-            { cancelable: false })
-            
-          return
-        }
-      }    
-    }    
+    }
 
     this.props.setLevel(level);
   };
@@ -192,12 +194,24 @@ class Home extends Component<Props> {
     console.log('go back');
   };
 
+  loadMusic = () => {
+    console.log('play');
+
+    currentNote.play();
+  };
+
   render() {
     return (
       <>
         <SafeAreaView />
         <Header props={this.props} />
+
+        {/* <TouchableOpacity onPress={this.loadMusic}>
+          <Text>Play</Text>
+        </TouchableOpacity> */}
+
         {/* <TestMidi /> */}
+
         {this.props.mode == 0 ? (
           <MainMenu setMode={this.setMode} />
         ) : this.props.mode == 1 && this.props.level == 0 ? (
@@ -220,7 +234,8 @@ const mapStateToProps = (state) => {
     level: state.level,
     mode: state.mode,
     highestCompletedPitchLevel: state.highestCompletedPitchLevel,
-    highestCompletedIntervalLevel: state.highestCompletedIntervalLevel
+    highestCompletedIntervalLevel: state.highestCompletedIntervalLevel,
+    graphStarted: state.graphStarted,
   };
 };
 
@@ -230,6 +245,7 @@ export default connect(mapStateToProps, {
   setPitchProgress,
   setIntervalProgress,
   getProgressData,
+  manageGraph,
 })(Home);
 
 let offset = 100;

@@ -15,7 +15,7 @@ const getQuestions = () => {
 
 export const getProgressData = () => (dispatch, getState) => {
   console.log('get progress');
-  fetch('http://localhost:8888/ridleytech/pianolessons/get-progress.php')
+  fetch('http://localhost:8888/ridleytech/PianoLessons/get-progress.php')
     .then((data) => {
       return data.json();
     })
@@ -54,6 +54,34 @@ export const saveProgress = (level1) => (dispatch, getState) => {
     })
     .then((data) => {
       dispatch({type: 'PROGRESS_SAVED', payload: data});
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const loginUser = (username, password) => (dispatch, getState) => {
+  console.log(`username: ${username} password: ${password}`);
+
+  fetch(
+    'https://pianolessonwithwarren.com/wp-json/ars/VerifyUser/?key=pk_017ddc497ab0d005eea8e2e2744f05f9e77a0ac4',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    },
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      dispatch({type: 'AUTH_DATA', payload: data});
     })
     .catch((error) => {
       console.log(error);

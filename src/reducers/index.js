@@ -6,6 +6,10 @@ const inititalState = {
   highestCompletedIntervalLevel: 0,
   highestCompletedPitchLevel: 0,
   isTrial: false,
+  loggedIn: false,
+  graphStarted: false,
+  loginEnabled: false,
+  loginError: false,
 };
 
 export default (state = inititalState, action) => {
@@ -15,6 +19,50 @@ export default (state = inititalState, action) => {
         ...state,
         stuff: 1,
       };
+    case 'AUTH_DATA':
+      let loginData = action.payload.data;
+
+      console.log(`loginData: ${JSON.stringify(loginData)}`);
+      var loginStatus = false;
+      var loginError1 = false;
+
+      if (loginData.hasAccount === true) {
+        loginStatus = true;
+        loginError1 = false;
+      } else {
+        loginError1 = true;
+      }
+
+      console.log(`status: ${loginStatus}`);
+
+      return {
+        ...state,
+        loggedIn: loginStatus,
+        loginEnabled: true,
+        loginError: loginError1,
+      };
+
+    case 'MANAGE_LOGIN':
+      return {
+        ...state,
+        loginEnabled: action.status,
+      };
+
+    case 'LOGOUT_USER':
+      console.log('logout redux');
+      return {
+        ...state,
+        loggedIn: false,
+      };
+
+    case 'MANAGE_GRAPH':
+      console.log('MANAGE_GRAPH: ' + JSON.stringify(action));
+
+      return {
+        ...state,
+        graphStarted: action.status,
+      };
+
     case 'PROGRESS_INFO':
       let progressData = action.payload.progressData;
 

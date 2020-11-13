@@ -125,19 +125,20 @@ const PitchMenu = ({showLevel}) => {
                   </View>
 
                   {isTrial ? (
-                     <Image
-                     source={index < highestCompletedPitchLevel
-                       ? checkIcon : index > 0
-                       ? lockIcon
-                       : null}
-                       style={{position: 'absolute', right: 12, top: 12}}
-                     />
-                  ) : (
                     <Image
                       source={
                         index < highestCompletedPitchLevel
                           ? checkIcon
+                          : index > 0
+                          ? lockIcon
                           : null
+                      }
+                      style={{position: 'absolute', right: 12, top: 12}}
+                    />
+                  ) : (
+                    <Image
+                      source={
+                        index < highestCompletedPitchLevel ? checkIcon : null
                       }
                       style={{position: 'absolute', right: 12, top: 12}}
                     />

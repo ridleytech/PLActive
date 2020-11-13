@@ -11,17 +11,9 @@ import {
   Animated,
   AsyncStorage,
 } from 'react-native';
-import TrackPlayer, {
-  TrackPlayerEvents,
-  STATE_PLAYING,
-  STATE_PAUSED,
-} from 'react-native-track-player';
+
 import {useDispatch, useSelector} from 'react-redux';
 
-import {
-  useTrackPlayerProgress,
-  useTrackPlayerEvents,
-} from 'react-native-track-player/lib/hooks';
 import Slider from '@react-native-community/slider';
 //import styles from './styles';
 import CheckBox from 'react-native-check-box';
@@ -34,73 +26,6 @@ import Instructions from './Instructions';
 import ResultsView from './ResultsView';
 //import {AsyncStorage} from 'react-native-community/async-storage';
 import {saveProgress} from '../thunks/';
-
-const tracks = {
-  minor2ndC: require('../../assets/audio/minor2ndC.mp3'),
-  major2ndC: require('../../assets/audio/major2ndC.mp3'),
-  minor3rdC: require('../../assets/audio/minor3rdC.mp3'),
-  major3rdC: require('../../assets/audio/major3rdC.mp3'),
-  perfect4thC: require('../../assets/audio/perfect4thC.mp3'),
-  augmented4thC: require('../../assets/audio/augmented4thC.mp3'),
-  perfect5thC: require('../../assets/audio/perfect5thC.mp3'),
-  minor6thC: require('../../assets/audio/minor6thC.mp3'),
-  major6thC: require('../../assets/audio/major6thC.mp3'),
-  minor7thC: require('../../assets/audio/minor7thC.mp3'),
-  major7thC: require('../../assets/audio/major7thC.mp3'),
-  octaveC: require('../../assets/audio/octaveC.mp3'),
-  minor9thC: require('../../assets/audio/minor9thC.mp3'),
-  major9thC: require('../../assets/audio/major9thC.mp3'),
-  minor11thC: require('../../assets/audio/minor11thC.mp3'),
-  major11thC: require('../../assets/audio/major11thC.mp3'),
-  augmented11thC: require('../../assets/audio/augmented11thC.mp3'),
-  minor13thC: require('../../assets/audio/minor13thC.mp3'),
-  major13thC: require('../../assets/audio/major13thC.mp3'),
-};
-
-const trackSelect = (track) => {
-  if (track === null) {
-    return tracks.minor3rdC;
-  }
-
-  const tracksArray = {
-    minor2ndC: tracks.minor2ndC,
-    major2ndC: tracks.major2ndC,
-    minor3rdC: tracks.minor3rdC,
-    major3rdC: tracks.major3rdC,
-    perfect4thC: tracks.perfect4thC,
-    augmented4thC: tracks.augmented4thC,
-    perfect5thC: tracks.perfect5thC,
-    minor6thC: tracks.minor6thC,
-    major6thC: tracks.major6thC,
-    minor7thC: tracks.minor7thC,
-    major7thC: tracks.major7thC,
-    octaveC: tracks.octaveC,
-    minor9thC: tracks.minor9thC,
-    major9thC: tracks.major9thC,
-    minor11thC: tracks.minor11thC,
-    major11thC: tracks.major11thC,
-    augmented11thC: tracks.augmented11thC,
-    minor13thC: tracks.minor13thC,
-    major13thC: tracks.major13thC,
-  };
-
-  return tracksArray[track];
-};
-
-const trackPlayerInit = async () => {
-  await TrackPlayer.setupPlayer();
-  TrackPlayer.updateOptions({
-    stopWithApp: true,
-    capabilities: [
-      TrackPlayer.CAPABILITY_PLAY,
-      TrackPlayer.CAPABILITY_PAUSE,
-      TrackPlayer.CAPABILITY_JUMP_FORWARD,
-      TrackPlayer.CAPABILITY_JUMP_BACKWARD,
-    ],
-  });
-
-  return true;
-};
 
 //console.log('data: ' + JSON.stringify(data));
 
@@ -129,12 +54,14 @@ const shuffle = (array) => {
 
 // console.log('question: ' + JSON.stringify(question));
 
+var Sound = require('react-native-sound');
+var currentNote;
+
 const IntervalLevels = ({level, mode}) => {
   const dispatch = useDispatch();
 
   //console.log('selectedLevel: ' + level);
 
-  const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
   const [loadCount, setLoadCount] = useState(0);
@@ -158,8 +85,9 @@ const IntervalLevels = ({level, mode}) => {
   const [height, setHeight] = useState(60);
 
   const [currentTrack, setCurrentTrack] = useState(null);
+  const [trackFile, setTrackFile] = useState(null);
 
-  const {position, duration} = useTrackPlayerProgress(150);
+  const [trackInfo, setTrackInfo] = useState({position: 0, duration: 0});
   const [restarted, setRestarted] = useState(true);
   const [canAnswer, setCanAnswer] = useState(false);
   const [canCheck, setCanCheck] = useState(true);
@@ -167,7 +95,50 @@ const IntervalLevels = ({level, mode}) => {
   const [answerState, setAnswerState] = useState('#E2E7ED');
 
   const isTrial = useSelector((state) => state.isTrial);
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
 
+  useEffect(() => {
+    let interval = null;
+
+    if (isActive) {
+      interval = setInterval(() => {
+        //console.log('the seconds: ' + interval);
+
+        currentNote.getCurrentTime((seconds1) => {
+          console.log('at ' + seconds1);
+
+          setTrackInfo({
+            position: seconds1,
+            duration: currentNote.getDuration(),
+          });
+
+          if (seconds1 == 0) {
+            setIsActive(false);
+            setIsPlaying(false);
+            setSliderValue(0);
+          }
+        });
+        setSeconds((seconds) => seconds + 1);
+      }, 250);
+    } else if (!isActive && seconds !== 0) {
+      clearInterval(interval);
+      setIsPlaying(false);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, seconds]);
+
+  useEffect(() => {
+    console.log('track info changed: ' + JSON.stringify(trackInfo));
+
+    var pos = trackInfo.position / trackInfo.duration;
+
+    console.log('slider val: ' + pos);
+
+    if (pos > 0) {
+      setSliderValue(pos);
+    }
+  }, [trackInfo]);
 
   const nextQuestion = () => {
     var currentQuestion1 = currentQuestionInd;
@@ -184,6 +155,20 @@ const IntervalLevels = ({level, mode}) => {
           name: questionList[currentQuestion1].file,
           id: currentQuestion1.toString(),
         });
+
+        var filename =
+          questionList[currentQuestion1].file.toLowerCase() + '.mp3';
+
+        currentNote = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+          if (error) {
+            console.log('failed to load the sound ' + filename, error);
+            return;
+          }
+          // loaded successfully
+          console.log('file ' + filename + ' loaded');
+
+          //currentNote.play();
+        });
       }
       setCurrentQuestionInd(currentQuestion1);
       populateAnswers(questionList, currentQuestion1);
@@ -195,14 +180,6 @@ const IntervalLevels = ({level, mode}) => {
 
   useEffect(() => {
     if (level > 1) {
-      const startPlayer = async () => {
-        let isInit = await trackPlayerInit();
-        setIsTrackPlayerInit(isInit);
-      };
-      startPlayer();
-
-      TrackPlayer.reset();
-
       console.log('on load int');
       console.log('loadCount int: ' + loadCount);
 
@@ -262,21 +239,12 @@ const IntervalLevels = ({level, mode}) => {
   useEffect(
     () => () => {
       console.log('unmount');
-      TrackPlayer.destroy();
+      if (currentNote) {
+        currentNote.release();
+      }
     },
     [],
   );
-
-  const addSongData = async (list) => {
-    console.log('song data length interval: ' + list.length);
-
-    await TrackPlayer.add(list);
-  };
-
-  const nextTrack = async () => {
-    await TrackPlayer.skipToNext();
-    TrackPlayer.pause();
-  };
 
   useEffect(() => {
     console.log('currentTrack changed');
@@ -284,48 +252,15 @@ const IntervalLevels = ({level, mode}) => {
     // console.log('add track: ' + currentTrack.name);
   }, [currentTrack]);
 
-  //default code below this line
-
-  //this hook updates the value of the slider whenever the current position of the song changes
-  useEffect(() => {
-    if (!isSeeking && position && duration) {
-      setSliderValue(position / duration);
-
-      //console.log('position: ' + position + ' duration: ' + duration);
-
-      //console.log('prog: ' + position / duration);
-
-      if (position / duration > 0.95) {
-        TrackPlayer.seekTo(0);
-        TrackPlayer.pause();
-      }
-    }
-  }, [position, duration]);
-
-  useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], (event) => {
-    //console.log(event);
-    if (event.state === STATE_PLAYING) {
-      setIsPlaying(true);
-    }
-    // else if (event.state === STATE_PAUSED) {
-    //   TrackPlayer.stop();
-    // }
-    else {
-      console.log('paused');
-      setIsPlaying(false);
-      if (position / duration > 0.9) {
-        console.log('reset track ' + currentTrack.name);
-        TrackPlayer.seekTo(0);
-        setSliderValue(0);
-      }
-    }
-  });
-
   const onButtonPressed = () => {
     if (!isPlaying) {
-      TrackPlayer.play();
+      currentNote.play();
+      setIsActive(true);
+      setIsPlaying(true);
     } else {
-      TrackPlayer.pause();
+      currentNote.pause();
+      setIsPlaying(false);
+      setIsActive(false);
     }
   };
 
@@ -334,7 +269,7 @@ const IntervalLevels = ({level, mode}) => {
   };
 
   const slidingCompleted = async (value) => {
-    await TrackPlayer.seekTo(value * duration);
+    currentNote.setCurrentTime(value * trackInfo.duration);
     setSliderValue(value);
     setIsSeeking(false);
   };
@@ -385,10 +320,6 @@ const IntervalLevels = ({level, mode}) => {
     setCanAnswer(false);
     setCanCheck(false);
 
-    if (level > 1) {
-      nextTrack();
-    }
-
     setTimeout(() => {
       setCurrentAnswer(null);
       setCanCheck(true);
@@ -416,26 +347,23 @@ const IntervalLevels = ({level, mode}) => {
 
     var currentLevel = level;
 
-    if(isTrial)
-    {
+    if (isTrial) {
       dispatch({type: 'SET_MODE', mode: 0});
-    }
-    else
-    {
+    } else {
       if (passed) {
         dispatch({type: 'SET_MODE', mode: 2});
         dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
-  
+
         console.log(`set level: ${currentLevel + 1}`);
         //dispatch(saveProgress(level));
       } else {
         console.log('restart quiz');
       }
-  
+
       setRestarted(true);
       setCurrentAnswer(null);
       setCorrectAnswers(0);
-    }    
+    }
   };
 
   const storeData = async (level) => {
@@ -538,26 +466,39 @@ const IntervalLevels = ({level, mode}) => {
 
       questions.map((question) => {
         var ob = {
-          id: question.id.toString(),
-          url: trackSelect(question.file),
-          title: question.file,
-          album: 'Piano Lesson with Warren',
-          artist: 'Randall Ridley',
-          genre: 'R&B',
-          artwork: 'https://picsum.photos/300',
+          file: question.file.toLowerCase() + '.mp3',
         };
 
         newTracks.push(ob);
       });
 
+      setTrackFile(newTracks[0].file);
+
+      console.log('file: ' + newTracks[0].file);
+
       console.log('newTracks length interval: ' + newTracks.length);
 
-      addSongData(newTracks);
+      currentNote = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+          console.log('failed to load the sound ' + newTracks[0].file, error);
+          return;
+        }
+        // loaded successfully
+        console.log(
+          'duration in seconds: ' +
+            currentNote.getDuration() +
+            'number of channels: ' +
+            currentNote.getNumberOfChannels(),
+        );
+
+        setTrackInfo({position: 0, duration: currentNote.getDuration()});
+
+        //currentNote.play();
+      });
     }
 
     setCurrentTrack({
       name: questions[0].file,
-      id: questions[0].id,
     });
 
     //console.log('questions: ' + JSON.stringify(questions));
@@ -755,7 +696,8 @@ const IntervalLevels = ({level, mode}) => {
           correctAnswers={correctAnswers}
           total={questionList.length}
           mainMenu={mainMenu}
-          level={level} isTrial={isTrial}
+          level={level}
+          isTrial={isTrial}
         />
       ) : null}
     </>

@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {View, Image, StyleSheet} from 'react-native';
+import Home from './Home';
 //import API from './debug/API';
+import SignIn from './Auth/SignIn';
+import SignUp from './Auth/SignUp';
 import Loading from './Loading';
+import Logout from './Auth/Logout';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {authUser} from '../actions';
 import menuIcon from '../../images/menu-icon.png';
-// import HeaderBackButton from './HeaderBackButton';
-import Home from './Home';
 
 const menuBtn = (props) => {
   return (
@@ -23,41 +24,12 @@ const menuBtn = (props) => {
   );
 };
 
-const BackBtn = (props, screen) => {
-  console.log('BackBtn');
-  return (
-    <View style={{marginLeft: 17, marginBottom: -13}}>
-      <TouchableOpacity onPress={() => props.navigation.navigate(screen)}>
-        <Image source={HeaderBack} style={styles.headerImg} />
-      </TouchableOpacity>
-    </View>
-  );
-};
-
 //Games screens
 
 const GamesStack = createStackNavigator();
 const GameStackScreen = (props) => (
-  <GamesStack.Navigator>
-    <GamesStack.Screen
-      name="AvailableGames"
-      component={Home}
-      options={{
-        headerTitle: 'Home',
-        headerTitleStyle: {
-          color: 'white',
-          fontFamily: 'HelveticaNeue-Medium',
-          fontSize: 21,
-          letterSpacing: 0.93,
-          marginBottom: -13,
-        },
-        headerStyle: {
-          height: 90,
-          backgroundColor: 'rgb(255,114,0)',
-        },
-        headerLeft: () => menuBtn(props),
-      }}
-    />
+  <GamesStack.Navigator headerMode="none">
+    <GamesStack.Screen name="Quizzes" component={Home} />
   </GamesStack.Navigator>
 );
 
@@ -69,11 +41,28 @@ const AppDrawerScreen = () => (
     drawerPosition="left"
     drawerType="back"
     drawerContentOptions={{
-      activeTintColor: 'rgb(255,114,0)',
+      activeTintColor: '#3AB24A',
     }}>
-    <AppDrawer.Screen name="Home" component={Home} />
+    <AppDrawer.Screen
+      name="Tabs"
+      component={GameStackScreen}
+      options={{drawerLabel: 'Home'}}
+    />
+    <AppDrawer.Screen name="Log Out" component={Logout} />
   </AppDrawer.Navigator>
 );
+
+//authentication screens
+
+const AuthStack = createStackNavigator();
+const AuthStackScreen = (props) => {
+  return (
+    <AuthStack.Navigator initialRouteName={SignIn} headerMode="none">
+      <AuthStack.Screen name="SignIn" component={SignIn} />
+      <AuthStack.Screen name="SignUp" component={SignUp} />
+    </AuthStack.Navigator>
+  );
+};
 
 class Navigation extends Component {
   constructor(props: Props) {
@@ -113,13 +102,18 @@ class Navigation extends Component {
 const RootStack = createStackNavigator();
 const RootStackScreen = ({userToken, props}) => (
   <RootStack.Navigator headerMode="none">
-    <RootStack.Screen name="App" component={AppDrawerScreen} />
+    {props.loggedIn ? (
+      <RootStack.Screen name="App" component={AppDrawerScreen} />
+    ) : (
+      <RootStack.Screen name="Auth" component={AuthStackScreen} />
+    )}
   </RootStack.Navigator>
 );
 
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    loggedIn: state.loggedIn,
   };
 };
 

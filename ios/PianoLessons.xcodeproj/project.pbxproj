@@ -8,37 +8,58 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* PianoLessonsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PianoLessonsTests.m */; };
-		01821F7450F8D28AEC9CD7AE /* libPods-PianoLessons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC85ACD407CC4BA7CC6B0CC1 /* libPods-PianoLessons.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		240AEC46BC63C00B98FBB0D0 /* libPods-PianoLessons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E3525B8E01DCEE8683AB5 /* libPods-PianoLessons.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* PianoLessonsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PianoLessonsTests.m */; };
-		3F1132FF24FABC8F00835A30 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132EF24FABC8F00835A30 /* Fontisto.ttf */; };
-		3F11330024FABC8F00835A30 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132F024FABC8F00835A30 /* Octicons.ttf */; };
-		3F11330124FABC8F00835A30 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132F124FABC8F00835A30 /* Feather.ttf */; };
-		3F11330224FABC8F00835A30 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132F224FABC8F00835A30 /* Entypo.ttf */; };
-		3F11330324FABC8F00835A30 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132F324FABC8F00835A30 /* FontAwesome5_Brands.ttf */; };
-		3F11330424FABC8F00835A30 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132F424FABC8F00835A30 /* MaterialCommunityIcons.ttf */; };
-		3F11330524FABC8F00835A30 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132F524FABC8F00835A30 /* AntDesign.ttf */; };
-		3F11330624FABC8F00835A30 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132F624FABC8F00835A30 /* Foundation.ttf */; };
-		3F11330724FABC8F00835A30 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132F724FABC8F00835A30 /* Ionicons.ttf */; };
-		3F11330824FABC8F00835A30 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132F824FABC8F00835A30 /* FontAwesome5_Solid.ttf */; };
-		3F11330924FABC8F00835A30 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132F924FABC8F00835A30 /* FontAwesome5_Regular.ttf */; };
-		3F11330A24FABC8F00835A30 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132FA24FABC8F00835A30 /* FontAwesome.ttf */; };
-		3F11330B24FABC8F00835A30 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132FB24FABC8F00835A30 /* Zocial.ttf */; };
-		3F11330C24FABC8F00835A30 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132FC24FABC8F00835A30 /* EvilIcons.ttf */; };
-		3F11330D24FABC8F00835A30 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132FD24FABC8F00835A30 /* SimpleLineIcons.ttf */; };
-		3F11330E24FABC8F00835A30 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F1132FE24FABC8F00835A30 /* MaterialIcons.ttf */; };
-		3F62FD522502BBF800FECC8E /* Chateau Grand-v1.8.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 3F62FD512502BBF800FECC8E /* Chateau Grand-v1.8.sf2 */; };
-		3FBC9C8A2502B0D6002A045A /* PlayKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC9C882502B0D6002A045A /* PlayKey.m */; };
-		3FF25A8924FE5CAD00CCF67A /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FF25A8824FE5CAD00CCF67A /* AppCenter-Config.plist */; };
-		56D9570F73A185A5F3114E39 /* libPods-PianoLessons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F542E6C8708EDF47AA8CE71 /* libPods-PianoLessons-tvOS.a */; };
+		323A2259DF36A17A6016409B /* libPods-PianoLessons-PianoLessonsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 791300522FC634095A300B9D /* libPods-PianoLessons-PianoLessonsTests.a */; };
+		3F174983254FC41000398DB8 /* a.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17495D254FC3F600398DB8 /* a.mp3 */; };
+		3F174984254FC41000398DB8 /* f.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17495E254FC3F700398DB8 /* f.mp3 */; };
+		3F174985254FC41000398DB8 /* g.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17495F254FC3F700398DB8 /* g.mp3 */; };
+		3F174986254FC41000398DB8 /* gb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174960254FC3F800398DB8 /* gb.mp3 */; };
+		3F174987254FC41000398DB8 /* minor9thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174961254FC3F900398DB8 /* minor9thc.mp3 */; };
+		3F174988254FC41000398DB8 /* b2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174962254FC3F900398DB8 /* b2.mp3 */; };
+		3F174989254FC41000398DB8 /* ab.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174963254FC3FA00398DB8 /* ab.mp3 */; };
+		3F17498A254FC41000398DB8 /* perfect5thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174964254FC3FB00398DB8 /* perfect5thc.mp3 */; };
+		3F17498B254FC41000398DB8 /* c.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174965254FC3FB00398DB8 /* c.mp3 */; };
+		3F17498C254FC41000398DB8 /* g2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174966254FC3FC00398DB8 /* g2.mp3 */; };
+		3F17498D254FC41000398DB8 /* bb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174967254FC3FD00398DB8 /* bb.mp3 */; };
+		3F17498E254FC41000398DB8 /* minor13thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174968254FC3FD00398DB8 /* minor13thc.mp3 */; };
+		3F17498F254FC41000398DB8 /* major3rdc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174969254FC3FE00398DB8 /* major3rdc.mp3 */; };
+		3F174990254FC41000398DB8 /* d2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17496A254FC3FF00398DB8 /* d2.mp3 */; };
+		3F174991254FC41000398DB8 /* minor6thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17496B254FC40000398DB8 /* minor6thc.mp3 */; };
+		3F174992254FC41000398DB8 /* c2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17496C254FC40000398DB8 /* c2.mp3 */; };
+		3F174993254FC41000398DB8 /* octavec.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17496D254FC40200398DB8 /* octavec.mp3 */; };
+		3F174994254FC41000398DB8 /* minor11thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17496E254FC40200398DB8 /* minor11thc.mp3 */; };
+		3F174995254FC41000398DB8 /* f2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17496F254FC40300398DB8 /* f2.mp3 */; };
+		3F174996254FC41000398DB8 /* major13thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174970254FC40300398DB8 /* major13thc.mp3 */; };
+		3F174997254FC41000398DB8 /* minor2ndc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174971254FC40400398DB8 /* minor2ndc.mp3 */; };
+		3F174998254FC41000398DB8 /* major9thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174972254FC40500398DB8 /* major9thc.mp3 */; };
+		3F174999254FC41000398DB8 /* perfect4thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174973254FC40500398DB8 /* perfect4thc.mp3 */; };
+		3F17499A254FC41000398DB8 /* e.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174974254FC40600398DB8 /* e.mp3 */; };
+		3F17499B254FC41000398DB8 /* major11thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174975254FC40600398DB8 /* major11thc.mp3 */; };
+		3F17499C254FC41000398DB8 /* major2ndc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174976254FC40700398DB8 /* major2ndc.mp3 */; };
+		3F17499D254FC41000398DB8 /* eb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174977254FC40800398DB8 /* eb.mp3 */; };
+		3F17499E254FC41000398DB8 /* minor7thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174978254FC40900398DB8 /* minor7thc.mp3 */; };
+		3F17499F254FC41000398DB8 /* e2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174979254FC40900398DB8 /* e2.mp3 */; };
+		3F1749A0254FC41000398DB8 /* minor3rdc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17497A254FC40A00398DB8 /* minor3rdc.mp3 */; };
+		3F1749A1254FC41000398DB8 /* a2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17497B254FC40B00398DB8 /* a2.mp3 */; };
+		3F1749A2254FC41000398DB8 /* augmented11thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17497C254FC40C00398DB8 /* augmented11thc.mp3 */; };
+		3F1749A3254FC41000398DB8 /* major7thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17497D254FC40C00398DB8 /* major7thc.mp3 */; };
+		3F1749A4254FC41000398DB8 /* major6thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17497E254FC40D00398DB8 /* major6thc.mp3 */; };
+		3F1749A5254FC41000398DB8 /* db.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F17497F254FC40E00398DB8 /* db.mp3 */; };
+		3F1749A6254FC41000398DB8 /* b.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174980254FC40E00398DB8 /* b.mp3 */; };
+		3F1749A7254FC41000398DB8 /* d.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174981254FC40F00398DB8 /* d.mp3 */; };
+		3F1749A8254FC41000398DB8 /* augmented4thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F174982254FC41000398DB8 /* augmented4thc.mp3 */; };
+		3F1749AC254FC41B00398DB8 /* PlayKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F1749A9254FC41A00398DB8 /* PlayKey.m */; };
+		3F1749AD254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 3F1749AA254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 */; };
+		690CC6AE648799370EFBDDD2 /* libPods-PianoLessons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A1370B77D8C1D5DE3346D2 /* libPods-PianoLessons-tvOS.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		ABFD46352C771A14EC2734D5 /* libPods-PianoLessons-PianoLessonsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 333831A55968EEA727694AF9 /* libPods-PianoLessons-PianoLessonsTests.a */; };
-		BCE64EDE0420F818E75D4A97 /* libPods-PianoLessons-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FD092D05C404EFC9785368 /* libPods-PianoLessons-tvOSTests.a */; };
+		FB554B9EAA3433D4A5BA0E31 /* libPods-PianoLessons-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 779C8EF765E8A0A970A8F583 /* libPods-PianoLessons-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,106 +84,70 @@
 		00E356EE1AD99517003FC87E /* PianoLessonsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PianoLessonsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* PianoLessonsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PianoLessonsTests.m; sourceTree = "<group>"; };
-		03A4615CCD0BD9F0D97BC88E /* Pods-PianoLessons-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-tvOS.release.xcconfig"; path = "Target Support Files/Pods-PianoLessons-tvOS/Pods-PianoLessons-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		07EF0F70907243AEB041577A /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		1038C95A289CB6D63DE7D079 /* Pods-PianoLessons-PianoLessonsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-PianoLessonsTests.debug.xcconfig"; path = "Target Support Files/Pods-PianoLessons-PianoLessonsTests/Pods-PianoLessons-PianoLessonsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Active Ear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Active Ear.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* ActiveEar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActiveEar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PianoLessons/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = PianoLessons/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PianoLessons/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PianoLessons/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PianoLessons/main.m; sourceTree = "<group>"; };
-		19FD092D05C404EFC9785368 /* libPods-PianoLessons-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PianoLessons-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1B7B1C3636BA4C6EA80E0340 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		1CED2DDA11D34D8C9F396302 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		2B86A70FA85227DED81D5B98 /* Pods-PianoLessons.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons.release.xcconfig"; path = "Target Support Files/Pods-PianoLessons/Pods-PianoLessons.release.xcconfig"; sourceTree = "<group>"; };
+		2C3E3525B8E01DCEE8683AB5 /* libPods-PianoLessons.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PianoLessons.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* PianoLessons-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PianoLessons-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* PianoLessons-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PianoLessons-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		333831A55968EEA727694AF9 /* libPods-PianoLessons-PianoLessonsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PianoLessons-PianoLessonsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		34DE3E98BC3B418CB6B6A9EB /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
-		3D804A0090CE4C91B06B64FE /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		3F1132EF24FABC8F00835A30 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
-		3F1132F024FABC8F00835A30 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
-		3F1132F124FABC8F00835A30 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
-		3F1132F224FABC8F00835A30 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
-		3F1132F324FABC8F00835A30 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
-		3F1132F424FABC8F00835A30 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
-		3F1132F524FABC8F00835A30 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
-		3F1132F624FABC8F00835A30 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
-		3F1132F724FABC8F00835A30 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
-		3F1132F824FABC8F00835A30 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
-		3F1132F924FABC8F00835A30 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
-		3F1132FA24FABC8F00835A30 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
-		3F1132FB24FABC8F00835A30 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
-		3F1132FC24FABC8F00835A30 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
-		3F1132FD24FABC8F00835A30 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
-		3F1132FE24FABC8F00835A30 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
-		3F62FD512502BBF800FECC8E /* Chateau Grand-v1.8.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chateau Grand-v1.8.sf2"; sourceTree = "<group>"; };
-		3FBC9C882502B0D6002A045A /* PlayKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayKey.m; sourceTree = "<group>"; };
-		3FBC9C892502B0D6002A045A /* PlayKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayKey.h; sourceTree = "<group>"; };
-		3FC5A064253745090099858D /* major13thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major13thC.mp3; path = ../assets/audio/major13thC.mp3; sourceTree = "<group>"; };
-		3FC5A0652537450A0099858D /* minor9thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor9thC.mp3; path = ../assets/audio/minor9thC.mp3; sourceTree = "<group>"; };
-		3FC5A0662537450A0099858D /* octaveC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = octaveC.mp3; path = ../assets/audio/octaveC.mp3; sourceTree = "<group>"; };
-		3FC5A0672537450A0099858D /* minor13thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor13thC.mp3; path = ../assets/audio/minor13thC.mp3; sourceTree = "<group>"; };
-		3FC5A0682537450A0099858D /* F.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = F.mp3; path = ../assets/audio/F.mp3; sourceTree = "<group>"; };
-		3FC5A0692537450A0099858D /* A2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = A2.mp3; path = ../assets/audio/A2.mp3; sourceTree = "<group>"; };
-		3FC5A06A2537450A0099858D /* augmented11thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = augmented11thC.mp3; path = ../assets/audio/augmented11thC.mp3; sourceTree = "<group>"; };
-		3FC5A06B2537450A0099858D /* Ab.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Ab.mp3; path = ../assets/audio/Ab.mp3; sourceTree = "<group>"; };
-		3FC5A06C2537450A0099858D /* G2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = G2.mp3; path = ../assets/audio/G2.mp3; sourceTree = "<group>"; };
-		3FC5A06D2537450A0099858D /* D2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = D2.mp3; path = ../assets/audio/D2.mp3; sourceTree = "<group>"; };
-		3FC5A06E2537450A0099858D /* augmented4thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = augmented4thC.mp3; path = ../assets/audio/augmented4thC.mp3; sourceTree = "<group>"; };
-		3FC5A06F2537450A0099858D /* B2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = B2.mp3; path = ../assets/audio/B2.mp3; sourceTree = "<group>"; };
-		3FC5A0702537450A0099858D /* Db.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Db.mp3; path = ../assets/audio/Db.mp3; sourceTree = "<group>"; };
-		3FC5A0712537450A0099858D /* A.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = A.mp3; path = ../assets/audio/A.mp3; sourceTree = "<group>"; };
-		3FC5A0722537450B0099858D /* minor3rdC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor3rdC.mp3; path = ../assets/audio/minor3rdC.mp3; sourceTree = "<group>"; };
-		3FC5A0732537450B0099858D /* E2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = E2.mp3; path = ../assets/audio/E2.mp3; sourceTree = "<group>"; };
-		3FC5A0742537450B0099858D /* perfect4thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = perfect4thC.mp3; path = ../assets/audio/perfect4thC.mp3; sourceTree = "<group>"; };
-		3FC5A0752537450B0099858D /* E.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = E.mp3; path = ../assets/audio/E.mp3; sourceTree = "<group>"; };
-		3FC5A0762537450B0099858D /* D.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = D.mp3; path = ../assets/audio/D.mp3; sourceTree = "<group>"; };
-		3FC5A0772537450B0099858D /* minor11thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor11thC.mp3; path = ../assets/audio/minor11thC.mp3; sourceTree = "<group>"; };
-		3FC5A0782537450B0099858D /* major11thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major11thC.mp3; path = ../assets/audio/major11thC.mp3; sourceTree = "<group>"; };
-		3FC5A0792537450B0099858D /* C2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = C2.mp3; path = ../assets/audio/C2.mp3; sourceTree = "<group>"; };
-		3FC5A07A2537450B0099858D /* major3rdC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major3rdC.mp3; path = ../assets/audio/major3rdC.mp3; sourceTree = "<group>"; };
-		3FC5A07B2537450B0099858D /* major9thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major9thC.mp3; path = ../assets/audio/major9thC.mp3; sourceTree = "<group>"; };
-		3FC5A07C2537450B0099858D /* C.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = C.mp3; path = ../assets/audio/C.mp3; sourceTree = "<group>"; };
-		3FC5A07D2537450B0099858D /* minor7thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor7thC.mp3; path = ../assets/audio/minor7thC.mp3; sourceTree = "<group>"; };
-		3FC5A07E2537450B0099858D /* perfect5thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = perfect5thC.mp3; path = ../assets/audio/perfect5thC.mp3; sourceTree = "<group>"; };
-		3FC5A07F2537450B0099858D /* Bb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Bb.mp3; path = ../assets/audio/Bb.mp3; sourceTree = "<group>"; };
-		3FC5A0802537450C0099858D /* major6thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major6thC.mp3; path = ../assets/audio/major6thC.mp3; sourceTree = "<group>"; };
-		3FC5A0812537450C0099858D /* minor2ndC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor2ndC.mp3; path = ../assets/audio/minor2ndC.mp3; sourceTree = "<group>"; };
-		3FC5A0822537450C0099858D /* Eb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Eb.mp3; path = ../assets/audio/Eb.mp3; sourceTree = "<group>"; };
-		3FC5A0832537450C0099858D /* major2ndC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major2ndC.mp3; path = ../assets/audio/major2ndC.mp3; sourceTree = "<group>"; };
-		3FC5A0842537450C0099858D /* Gb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Gb.mp3; path = ../assets/audio/Gb.mp3; sourceTree = "<group>"; };
-		3FC5A0852537450C0099858D /* F2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = F2.mp3; path = ../assets/audio/F2.mp3; sourceTree = "<group>"; };
-		3FC5A0862537450C0099858D /* B.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = B.mp3; path = ../assets/audio/B.mp3; sourceTree = "<group>"; };
-		3FC5A0872537450C0099858D /* G.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = G.mp3; path = ../assets/audio/G.mp3; sourceTree = "<group>"; };
-		3FC5A0882537450C0099858D /* major7thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major7thC.mp3; path = ../assets/audio/major7thC.mp3; sourceTree = "<group>"; };
-		3FC5A0892537450C0099858D /* minor6thC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = minor6thC.mp3; path = ../assets/audio/minor6thC.mp3; sourceTree = "<group>"; };
-		3FF25A8824FE5CAD00CCF67A /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "PianoLessons/AppCenter-Config.plist"; sourceTree = "<group>"; };
-		40653B80D12049408D1836EC /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		467D59CC3A2E4C8A9C4CC66E /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		486A37CA4831D160B682E847 /* Pods-PianoLessons-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-PianoLessons-tvOSTests/Pods-PianoLessons-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5F542E6C8708EDF47AA8CE71 /* libPods-PianoLessons-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PianoLessons-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		64569A42404F593265A1DC26 /* Pods-PianoLessons-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-PianoLessons-tvOS/Pods-PianoLessons-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		6D980BE887C545F3993D5312 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		6E2DB95E740148D7B8A77277 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		3DB4FB6253EB366EFE6AA330 /* Pods-PianoLessons.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons.debug.xcconfig"; path = "Target Support Files/Pods-PianoLessons/Pods-PianoLessons.debug.xcconfig"; sourceTree = "<group>"; };
+		3F17495D254FC3F600398DB8 /* a.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = a.mp3; sourceTree = "<group>"; };
+		3F17495E254FC3F700398DB8 /* f.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = f.mp3; sourceTree = "<group>"; };
+		3F17495F254FC3F700398DB8 /* g.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = g.mp3; sourceTree = "<group>"; };
+		3F174960254FC3F800398DB8 /* gb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gb.mp3; sourceTree = "<group>"; };
+		3F174961254FC3F900398DB8 /* minor9thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minor9thc.mp3; sourceTree = "<group>"; };
+		3F174962254FC3F900398DB8 /* b2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = b2.mp3; sourceTree = "<group>"; };
+		3F174963254FC3FA00398DB8 /* ab.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ab.mp3; sourceTree = "<group>"; };
+		3F174964254FC3FB00398DB8 /* perfect5thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = perfect5thc.mp3; sourceTree = "<group>"; };
+		3F174965254FC3FB00398DB8 /* c.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = c.mp3; sourceTree = "<group>"; };
+		3F174966254FC3FC00398DB8 /* g2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = g2.mp3; sourceTree = "<group>"; };
+		3F174967254FC3FD00398DB8 /* bb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bb.mp3; sourceTree = "<group>"; };
+		3F174968254FC3FD00398DB8 /* minor13thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minor13thc.mp3; sourceTree = "<group>"; };
+		3F174969254FC3FE00398DB8 /* major3rdc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = major3rdc.mp3; sourceTree = "<group>"; };
+		3F17496A254FC3FF00398DB8 /* d2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = d2.mp3; sourceTree = "<group>"; };
+		3F17496B254FC40000398DB8 /* minor6thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minor6thc.mp3; sourceTree = "<group>"; };
+		3F17496C254FC40000398DB8 /* c2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = c2.mp3; sourceTree = "<group>"; };
+		3F17496D254FC40200398DB8 /* octavec.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = octavec.mp3; sourceTree = "<group>"; };
+		3F17496E254FC40200398DB8 /* minor11thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minor11thc.mp3; sourceTree = "<group>"; };
+		3F17496F254FC40300398DB8 /* f2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = f2.mp3; sourceTree = "<group>"; };
+		3F174970254FC40300398DB8 /* major13thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = major13thc.mp3; sourceTree = "<group>"; };
+		3F174971254FC40400398DB8 /* minor2ndc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minor2ndc.mp3; sourceTree = "<group>"; };
+		3F174972254FC40500398DB8 /* major9thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = major9thc.mp3; sourceTree = "<group>"; };
+		3F174973254FC40500398DB8 /* perfect4thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = perfect4thc.mp3; sourceTree = "<group>"; };
+		3F174974254FC40600398DB8 /* e.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = e.mp3; sourceTree = "<group>"; };
+		3F174975254FC40600398DB8 /* major11thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = major11thc.mp3; sourceTree = "<group>"; };
+		3F174976254FC40700398DB8 /* major2ndc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = major2ndc.mp3; sourceTree = "<group>"; };
+		3F174977254FC40800398DB8 /* eb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = eb.mp3; sourceTree = "<group>"; };
+		3F174978254FC40900398DB8 /* minor7thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minor7thc.mp3; sourceTree = "<group>"; };
+		3F174979254FC40900398DB8 /* e2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = e2.mp3; sourceTree = "<group>"; };
+		3F17497A254FC40A00398DB8 /* minor3rdc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minor3rdc.mp3; sourceTree = "<group>"; };
+		3F17497B254FC40B00398DB8 /* a2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = a2.mp3; sourceTree = "<group>"; };
+		3F17497C254FC40C00398DB8 /* augmented11thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = augmented11thc.mp3; sourceTree = "<group>"; };
+		3F17497D254FC40C00398DB8 /* major7thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = major7thc.mp3; sourceTree = "<group>"; };
+		3F17497E254FC40D00398DB8 /* major6thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = major6thc.mp3; sourceTree = "<group>"; };
+		3F17497F254FC40E00398DB8 /* db.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = db.mp3; sourceTree = "<group>"; };
+		3F174980254FC40E00398DB8 /* b.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = b.mp3; sourceTree = "<group>"; };
+		3F174981254FC40F00398DB8 /* d.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = d.mp3; sourceTree = "<group>"; };
+		3F174982254FC41000398DB8 /* augmented4thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = augmented4thc.mp3; sourceTree = "<group>"; };
+		3F1749A9254FC41A00398DB8 /* PlayKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayKey.m; sourceTree = "<group>"; };
+		3F1749AA254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chateau Grand-v1.8.sf2"; sourceTree = "<group>"; };
+		3F1749AB254FC41B00398DB8 /* PlayKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayKey.h; sourceTree = "<group>"; };
+		4BB9DA7342199582CE5AB1AA /* Pods-PianoLessons.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons.release.xcconfig"; path = "Target Support Files/Pods-PianoLessons/Pods-PianoLessons.release.xcconfig"; sourceTree = "<group>"; };
+		502DD4B115B07F011A162B01 /* Pods-PianoLessons-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-tvOS.release.xcconfig"; path = "Target Support Files/Pods-PianoLessons-tvOS/Pods-PianoLessons-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		779C8EF765E8A0A970A8F583 /* libPods-PianoLessons-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PianoLessons-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		791300522FC634095A300B9D /* libPods-PianoLessons-PianoLessonsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PianoLessons-PianoLessonsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PianoLessons/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8E6DCE0F2ADE441790D4EF41 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		98CF022A97484762AAAEB126 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
-		9A67089EF3F99C2CA785EE93 /* Pods-PianoLessons-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-PianoLessons-tvOSTests/Pods-PianoLessons-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		9C2F1316085E408A8675EFDE /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
-		B4B98A8891494FEAA91C1979 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		B58C88E5C0B1574B371B3B1F /* Pods-PianoLessons.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons.debug.xcconfig"; path = "Target Support Files/Pods-PianoLessons/Pods-PianoLessons.debug.xcconfig"; sourceTree = "<group>"; };
-		B8FE4CFDAFF04DB485F9F167 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		BE1549CEFC7F4D8D8BFEAF56 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		C026436E40417E796ACEBDFA /* Pods-PianoLessons-PianoLessonsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-PianoLessonsTests.release.xcconfig"; path = "Target Support Files/Pods-PianoLessons-PianoLessonsTests/Pods-PianoLessons-PianoLessonsTests.release.xcconfig"; sourceTree = "<group>"; };
-		C8650386032646B29DEBC093 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
-		CC85ACD407CC4BA7CC6B0CC1 /* libPods-PianoLessons.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PianoLessons.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D6ED4919FB6444469AF5B8DB /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		E8BAFE9B05064FBD9DC304E7 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
+		8DF4157A0A31A1AA15D27129 /* Pods-PianoLessons-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-PianoLessons-tvOSTests/Pods-PianoLessons-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		9F710B61C2E0D72764B96660 /* Pods-PianoLessons-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-PianoLessons-tvOS/Pods-PianoLessons-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		EBC61833826E420550BAFE63 /* Pods-PianoLessons-PianoLessonsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-PianoLessonsTests.release.xcconfig"; path = "Target Support Files/Pods-PianoLessons-PianoLessonsTests/Pods-PianoLessons-PianoLessonsTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		F944DE07B4234C7CAE6D6CB4 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		ED68F004F4706CD4B9BAA88D /* Pods-PianoLessons-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-PianoLessons-tvOSTests/Pods-PianoLessons-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F9A1370B77D8C1D5DE3346D2 /* libPods-PianoLessons-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PianoLessons-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAA265697F0290FA25B2B8F9 /* Pods-PianoLessons-PianoLessonsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoLessons-PianoLessonsTests.debug.xcconfig"; path = "Target Support Files/Pods-PianoLessons-PianoLessonsTests/Pods-PianoLessons-PianoLessonsTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,7 +155,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABFD46352C771A14EC2734D5 /* libPods-PianoLessons-PianoLessonsTests.a in Frameworks */,
+				323A2259DF36A17A6016409B /* libPods-PianoLessons-PianoLessonsTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,7 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01821F7450F8D28AEC9CD7AE /* libPods-PianoLessons.a in Frameworks */,
+				240AEC46BC63C00B98FBB0D0 /* libPods-PianoLessons.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,7 +171,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56D9570F73A185A5F3114E39 /* libPods-PianoLessons-tvOS.a in Frameworks */,
+				690CC6AE648799370EFBDDD2 /* libPods-PianoLessons-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,7 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCE64EDE0420F818E75D4A97 /* libPods-PianoLessons-tvOSTests.a in Frameworks */,
+				FB554B9EAA3433D4A5BA0E31 /* libPods-PianoLessons-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,19 +206,17 @@
 		13B07FAE1A68108700A75B9A /* PianoLessons */ = {
 			isa = PBXGroup;
 			children = (
-				3FC5A0B0253745E20099858D /* assets */,
+				3F17495C254FC3DC00398DB8 /* audio */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				3FBC9C892502B0D6002A045A /* PlayKey.h */,
-				3FBC9C882502B0D6002A045A /* PlayKey.m */,
-				13B07FB71A68108700A75B9A /* main.m */,
-				3F62FD512502BBF800FECC8E /* Chateau Grand-v1.8.sf2 */,
+				3F1749AA254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 */,
+				3F1749AB254FC41B00398DB8 /* PlayKey.h */,
+				3F1749A9254FC41A00398DB8 /* PlayKey.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				3FF25A8824FE5CAD00CCF67A /* AppCenter-Config.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				3F1132EE24FABC8F00835A30 /* Fonts */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = PianoLessons;
 			sourceTree = "<group>";
@@ -243,134 +226,57 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				CC85ACD407CC4BA7CC6B0CC1 /* libPods-PianoLessons.a */,
-				333831A55968EEA727694AF9 /* libPods-PianoLessons-PianoLessonsTests.a */,
-				5F542E6C8708EDF47AA8CE71 /* libPods-PianoLessons-tvOS.a */,
-				19FD092D05C404EFC9785368 /* libPods-PianoLessons-tvOSTests.a */,
+				2C3E3525B8E01DCEE8683AB5 /* libPods-PianoLessons.a */,
+				791300522FC634095A300B9D /* libPods-PianoLessons-PianoLessonsTests.a */,
+				F9A1370B77D8C1D5DE3346D2 /* libPods-PianoLessons-tvOS.a */,
+				779C8EF765E8A0A970A8F583 /* libPods-PianoLessons-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3F1132EE24FABC8F00835A30 /* Fonts */ = {
+		3F17495C254FC3DC00398DB8 /* audio */ = {
 			isa = PBXGroup;
 			children = (
-				3F1132EF24FABC8F00835A30 /* Fontisto.ttf */,
-				3F1132F024FABC8F00835A30 /* Octicons.ttf */,
-				3F1132F124FABC8F00835A30 /* Feather.ttf */,
-				3F1132F224FABC8F00835A30 /* Entypo.ttf */,
-				3F1132F324FABC8F00835A30 /* FontAwesome5_Brands.ttf */,
-				3F1132F424FABC8F00835A30 /* MaterialCommunityIcons.ttf */,
-				3F1132F524FABC8F00835A30 /* AntDesign.ttf */,
-				3F1132F624FABC8F00835A30 /* Foundation.ttf */,
-				3F1132F724FABC8F00835A30 /* Ionicons.ttf */,
-				3F1132F824FABC8F00835A30 /* FontAwesome5_Solid.ttf */,
-				3F1132F924FABC8F00835A30 /* FontAwesome5_Regular.ttf */,
-				3F1132FA24FABC8F00835A30 /* FontAwesome.ttf */,
-				3F1132FB24FABC8F00835A30 /* Zocial.ttf */,
-				3F1132FC24FABC8F00835A30 /* EvilIcons.ttf */,
-				3F1132FD24FABC8F00835A30 /* SimpleLineIcons.ttf */,
-				3F1132FE24FABC8F00835A30 /* MaterialIcons.ttf */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
-		3FC5A0B0253745E20099858D /* assets */ = {
-			isa = PBXGroup;
-			children = (
-				3FC5A0B1253745E90099858D /* assets */,
-			);
-			path = assets;
-			sourceTree = "<group>";
-		};
-		3FC5A0B1253745E90099858D /* assets */ = {
-			isa = PBXGroup;
-			children = (
-				3FC5A0B2253745EF0099858D /* audio */,
-			);
-			path = assets;
-			sourceTree = "<group>";
-		};
-		3FC5A0B2253745EF0099858D /* audio */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = audio;
-			sourceTree = "<group>";
-		};
-		3FC5A0FF2537468B0099858D /* assets */ = {
-			isa = PBXGroup;
-			children = (
-				3FC5A100253746930099858D /* assets */,
-			);
-			name = assets;
-			sourceTree = "<group>";
-		};
-		3FC5A100253746930099858D /* assets */ = {
-			isa = PBXGroup;
-			children = (
-				3FC5A101253746980099858D /* audio */,
-			);
-			name = assets;
-			sourceTree = "<group>";
-		};
-		3FC5A101253746980099858D /* audio */ = {
-			isa = PBXGroup;
-			children = (
-				3FC5A0712537450A0099858D /* A.mp3 */,
-				3FC5A0692537450A0099858D /* A2.mp3 */,
-				3FC5A06B2537450A0099858D /* Ab.mp3 */,
-				3FC5A06E2537450A0099858D /* augmented4thC.mp3 */,
-				3FC5A06A2537450A0099858D /* augmented11thC.mp3 */,
-				3FC5A0862537450C0099858D /* B.mp3 */,
-				3FC5A06F2537450A0099858D /* B2.mp3 */,
-				3FC5A07F2537450B0099858D /* Bb.mp3 */,
-				3FC5A07C2537450B0099858D /* C.mp3 */,
-				3FC5A0792537450B0099858D /* C2.mp3 */,
-				3FC5A0762537450B0099858D /* D.mp3 */,
-				3FC5A06D2537450A0099858D /* D2.mp3 */,
-				3FC5A0702537450A0099858D /* Db.mp3 */,
-				3FC5A0752537450B0099858D /* E.mp3 */,
-				3FC5A0732537450B0099858D /* E2.mp3 */,
-				3FC5A0822537450C0099858D /* Eb.mp3 */,
-				3FC5A0682537450A0099858D /* F.mp3 */,
-				3FC5A0852537450C0099858D /* F2.mp3 */,
-				3FC5A0872537450C0099858D /* G.mp3 */,
-				3FC5A06C2537450A0099858D /* G2.mp3 */,
-				3FC5A0842537450C0099858D /* Gb.mp3 */,
-				3FC5A0832537450C0099858D /* major2ndC.mp3 */,
-				3FC5A07A2537450B0099858D /* major3rdC.mp3 */,
-				3FC5A0802537450C0099858D /* major6thC.mp3 */,
-				3FC5A0882537450C0099858D /* major7thC.mp3 */,
-				3FC5A07B2537450B0099858D /* major9thC.mp3 */,
-				3FC5A0782537450B0099858D /* major11thC.mp3 */,
-				3FC5A064253745090099858D /* major13thC.mp3 */,
-				3FC5A0812537450C0099858D /* minor2ndC.mp3 */,
-				3FC5A0722537450B0099858D /* minor3rdC.mp3 */,
-				3FC5A0892537450C0099858D /* minor6thC.mp3 */,
-				3FC5A07D2537450B0099858D /* minor7thC.mp3 */,
-				3FC5A0652537450A0099858D /* minor9thC.mp3 */,
-				3FC5A0772537450B0099858D /* minor11thC.mp3 */,
-				3FC5A0672537450A0099858D /* minor13thC.mp3 */,
-				3FC5A0662537450A0099858D /* octaveC.mp3 */,
-				3FC5A0742537450B0099858D /* perfect4thC.mp3 */,
-				3FC5A07E2537450B0099858D /* perfect5thC.mp3 */,
+				3F17495D254FC3F600398DB8 /* a.mp3 */,
+				3F17497B254FC40B00398DB8 /* a2.mp3 */,
+				3F174963254FC3FA00398DB8 /* ab.mp3 */,
+				3F174982254FC41000398DB8 /* augmented4thc.mp3 */,
+				3F17497C254FC40C00398DB8 /* augmented11thc.mp3 */,
+				3F174980254FC40E00398DB8 /* b.mp3 */,
+				3F174962254FC3F900398DB8 /* b2.mp3 */,
+				3F174967254FC3FD00398DB8 /* bb.mp3 */,
+				3F174965254FC3FB00398DB8 /* c.mp3 */,
+				3F17496C254FC40000398DB8 /* c2.mp3 */,
+				3F174981254FC40F00398DB8 /* d.mp3 */,
+				3F17496A254FC3FF00398DB8 /* d2.mp3 */,
+				3F17497F254FC40E00398DB8 /* db.mp3 */,
+				3F174974254FC40600398DB8 /* e.mp3 */,
+				3F174979254FC40900398DB8 /* e2.mp3 */,
+				3F174977254FC40800398DB8 /* eb.mp3 */,
+				3F17495E254FC3F700398DB8 /* f.mp3 */,
+				3F17496F254FC40300398DB8 /* f2.mp3 */,
+				3F17495F254FC3F700398DB8 /* g.mp3 */,
+				3F174966254FC3FC00398DB8 /* g2.mp3 */,
+				3F174960254FC3F800398DB8 /* gb.mp3 */,
+				3F174976254FC40700398DB8 /* major2ndc.mp3 */,
+				3F174969254FC3FE00398DB8 /* major3rdc.mp3 */,
+				3F17497E254FC40D00398DB8 /* major6thc.mp3 */,
+				3F17497D254FC40C00398DB8 /* major7thc.mp3 */,
+				3F174972254FC40500398DB8 /* major9thc.mp3 */,
+				3F174975254FC40600398DB8 /* major11thc.mp3 */,
+				3F174970254FC40300398DB8 /* major13thc.mp3 */,
+				3F174971254FC40400398DB8 /* minor2ndc.mp3 */,
+				3F17497A254FC40A00398DB8 /* minor3rdc.mp3 */,
+				3F17496B254FC40000398DB8 /* minor6thc.mp3 */,
+				3F174978254FC40900398DB8 /* minor7thc.mp3 */,
+				3F174961254FC3F900398DB8 /* minor9thc.mp3 */,
+				3F17496E254FC40200398DB8 /* minor11thc.mp3 */,
+				3F174968254FC3FD00398DB8 /* minor13thc.mp3 */,
+				3F17496D254FC40200398DB8 /* octavec.mp3 */,
+				3F174973254FC40500398DB8 /* perfect4thc.mp3 */,
+				3F174964254FC3FB00398DB8 /* perfect5thc.mp3 */,
 			);
 			name = audio;
-			sourceTree = "<group>";
-		};
-		55355DF3754EB9CA32EDC06C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				B58C88E5C0B1574B371B3B1F /* Pods-PianoLessons.debug.xcconfig */,
-				2B86A70FA85227DED81D5B98 /* Pods-PianoLessons.release.xcconfig */,
-				1038C95A289CB6D63DE7D079 /* Pods-PianoLessons-PianoLessonsTests.debug.xcconfig */,
-				C026436E40417E796ACEBDFA /* Pods-PianoLessons-PianoLessonsTests.release.xcconfig */,
-				64569A42404F593265A1DC26 /* Pods-PianoLessons-tvOS.debug.xcconfig */,
-				03A4615CCD0BD9F0D97BC88E /* Pods-PianoLessons-tvOS.release.xcconfig */,
-				486A37CA4831D160B682E847 /* Pods-PianoLessons-tvOSTests.debug.xcconfig */,
-				9A67089EF3F99C2CA785EE93 /* Pods-PianoLessons-tvOSTests.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -388,8 +294,7 @@
 				00E356EF1AD99517003FC87E /* PianoLessonsTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				55355DF3754EB9CA32EDC06C /* Pods */,
-				D0C4CE3F9DEB40DDAD6523C9 /* Resources */,
+				E7B7F4C467C97C080F6B8990 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -399,7 +304,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Active Ear.app */,
+				13B07F961A680F5B00A75B9A /* ActiveEar.app */,
 				00E356EE1AD99517003FC87E /* PianoLessonsTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* PianoLessons-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* PianoLessons-tvOSTests.xctest */,
@@ -407,31 +312,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D0C4CE3F9DEB40DDAD6523C9 /* Resources */ = {
+		E7B7F4C467C97C080F6B8990 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3FC5A0FF2537468B0099858D /* assets */,
-				9C2F1316085E408A8675EFDE /* AntDesign.ttf */,
-				B4B98A8891494FEAA91C1979 /* Entypo.ttf */,
-				B8FE4CFDAFF04DB485F9F167 /* EvilIcons.ttf */,
-				1B7B1C3636BA4C6EA80E0340 /* Feather.ttf */,
-				98CF022A97484762AAAEB126 /* FontAwesome.ttf */,
-				467D59CC3A2E4C8A9C4CC66E /* FontAwesome5_Brands.ttf */,
-				6E2DB95E740148D7B8A77277 /* FontAwesome5_Regular.ttf */,
-				3D804A0090CE4C91B06B64FE /* FontAwesome5_Solid.ttf */,
-				40653B80D12049408D1836EC /* Fontisto.ttf */,
-				BE1549CEFC7F4D8D8BFEAF56 /* Foundation.ttf */,
-				1CED2DDA11D34D8C9F396302 /* Ionicons.ttf */,
-				F944DE07B4234C7CAE6D6CB4 /* MaterialCommunityIcons.ttf */,
-				07EF0F70907243AEB041577A /* MaterialIcons.ttf */,
-				8E6DCE0F2ADE441790D4EF41 /* Octicons.ttf */,
-				E8BAFE9B05064FBD9DC304E7 /* Roboto_medium.ttf */,
-				34DE3E98BC3B418CB6B6A9EB /* Roboto.ttf */,
-				C8650386032646B29DEBC093 /* rubicon-icon-font.ttf */,
-				D6ED4919FB6444469AF5B8DB /* SimpleLineIcons.ttf */,
-				6D980BE887C545F3993D5312 /* Zocial.ttf */,
+				3DB4FB6253EB366EFE6AA330 /* Pods-PianoLessons.debug.xcconfig */,
+				4BB9DA7342199582CE5AB1AA /* Pods-PianoLessons.release.xcconfig */,
+				FAA265697F0290FA25B2B8F9 /* Pods-PianoLessons-PianoLessonsTests.debug.xcconfig */,
+				EBC61833826E420550BAFE63 /* Pods-PianoLessons-PianoLessonsTests.release.xcconfig */,
+				9F710B61C2E0D72764B96660 /* Pods-PianoLessons-tvOS.debug.xcconfig */,
+				502DD4B115B07F011A162B01 /* Pods-PianoLessons-tvOS.release.xcconfig */,
+				ED68F004F4706CD4B9BAA88D /* Pods-PianoLessons-tvOSTests.debug.xcconfig */,
+				8DF4157A0A31A1AA15D27129 /* Pods-PianoLessons-tvOSTests.release.xcconfig */,
 			);
-			name = Resources;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -441,11 +334,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PianoLessonsTests" */;
 			buildPhases = (
-				D35DAFC5CD21A422FD979CD4 /* [CP] Check Pods Manifest.lock */,
+				FE92365B4337580B3D2D96F8 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				12DAF206390C2E5037D6A740 /* [CP] Copy Pods Resources */,
+				4E9B1D02660466B71B22AB54 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -461,13 +354,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PianoLessons" */;
 			buildPhases = (
-				18C9DF004A23AA943732B72B /* [CP] Check Pods Manifest.lock */,
+				0B621E7ADF5FD115084C2C06 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				2640178E7602684FB1AB6948 /* [CP] Copy Pods Resources */,
+				DC06007D054788500AB79CAF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -475,14 +368,14 @@
 			);
 			name = PianoLessons;
 			productName = PianoLessons;
-			productReference = 13B07F961A680F5B00A75B9A /* Active Ear.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* ActiveEar.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* PianoLessons-tvOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "PianoLessons-tvOS" */;
 			buildPhases = (
-				8F09E8FF84594E6ABAFB1C85 /* [CP] Check Pods Manifest.lock */,
+				C61BDF43EEBE3A8498DB5A56 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -502,7 +395,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "PianoLessons-tvOSTests" */;
 			buildPhases = (
-				5C0396FE1E8AECF24059C36C /* [CP] Check Pods Manifest.lock */,
+				8EFB1B156910C431F6CC9BA8 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -530,7 +423,6 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = RR25B7NB9X;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -577,26 +469,47 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F1132FF24FABC8F00835A30 /* Fontisto.ttf in Resources */,
-				3F11330A24FABC8F00835A30 /* FontAwesome.ttf in Resources */,
-				3F11330624FABC8F00835A30 /* Foundation.ttf in Resources */,
-				3F11330924FABC8F00835A30 /* FontAwesome5_Regular.ttf in Resources */,
-				3F11330724FABC8F00835A30 /* Ionicons.ttf in Resources */,
-				3F11330C24FABC8F00835A30 /* EvilIcons.ttf in Resources */,
-				3FF25A8924FE5CAD00CCF67A /* AppCenter-Config.plist in Resources */,
-				3F11330224FABC8F00835A30 /* Entypo.ttf in Resources */,
+				3F1749A7254FC41000398DB8 /* d.mp3 in Resources */,
+				3F174996254FC41000398DB8 /* major13thc.mp3 in Resources */,
+				3F17498D254FC41000398DB8 /* bb.mp3 in Resources */,
+				3F17498B254FC41000398DB8 /* c.mp3 in Resources */,
+				3F1749A8254FC41000398DB8 /* augmented4thc.mp3 in Resources */,
+				3F174995254FC41000398DB8 /* f2.mp3 in Resources */,
+				3F174998254FC41000398DB8 /* major9thc.mp3 in Resources */,
+				3F1749A2254FC41000398DB8 /* augmented11thc.mp3 in Resources */,
+				3F174988254FC41000398DB8 /* b2.mp3 in Resources */,
+				3F17499D254FC41000398DB8 /* eb.mp3 in Resources */,
+				3F174983254FC41000398DB8 /* a.mp3 in Resources */,
+				3F174985254FC41000398DB8 /* g.mp3 in Resources */,
+				3F17499A254FC41000398DB8 /* e.mp3 in Resources */,
+				3F174992254FC41000398DB8 /* c2.mp3 in Resources */,
+				3F174994254FC41000398DB8 /* minor11thc.mp3 in Resources */,
+				3F17499C254FC41000398DB8 /* major2ndc.mp3 in Resources */,
+				3F1749AD254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 in Resources */,
+				3F174989254FC41000398DB8 /* ab.mp3 in Resources */,
+				3F17499B254FC41000398DB8 /* major11thc.mp3 in Resources */,
+				3F174984254FC41000398DB8 /* f.mp3 in Resources */,
+				3F174993254FC41000398DB8 /* octavec.mp3 in Resources */,
+				3F174997254FC41000398DB8 /* minor2ndc.mp3 in Resources */,
+				3F17498F254FC41000398DB8 /* major3rdc.mp3 in Resources */,
+				3F174999254FC41000398DB8 /* perfect4thc.mp3 in Resources */,
+				3F1749A4254FC41000398DB8 /* major6thc.mp3 in Resources */,
+				3F174986254FC41000398DB8 /* gb.mp3 in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				3F11330B24FABC8F00835A30 /* Zocial.ttf in Resources */,
-				3F11330D24FABC8F00835A30 /* SimpleLineIcons.ttf in Resources */,
-				3F11330124FABC8F00835A30 /* Feather.ttf in Resources */,
-				3F62FD522502BBF800FECC8E /* Chateau Grand-v1.8.sf2 in Resources */,
-				3F11330024FABC8F00835A30 /* Octicons.ttf in Resources */,
-				3F11330324FABC8F00835A30 /* FontAwesome5_Brands.ttf in Resources */,
-				3F11330524FABC8F00835A30 /* AntDesign.ttf in Resources */,
-				3F11330E24FABC8F00835A30 /* MaterialIcons.ttf in Resources */,
-				3F11330824FABC8F00835A30 /* FontAwesome5_Solid.ttf in Resources */,
-				3F11330424FABC8F00835A30 /* MaterialCommunityIcons.ttf in Resources */,
+				3F174990254FC41000398DB8 /* d2.mp3 in Resources */,
+				3F174991254FC41000398DB8 /* minor6thc.mp3 in Resources */,
+				3F17499F254FC41000398DB8 /* e2.mp3 in Resources */,
+				3F1749A6254FC41000398DB8 /* b.mp3 in Resources */,
+				3F17499E254FC41000398DB8 /* minor7thc.mp3 in Resources */,
+				3F174987254FC41000398DB8 /* minor9thc.mp3 in Resources */,
+				3F17498E254FC41000398DB8 /* minor13thc.mp3 in Resources */,
+				3F1749A0254FC41000398DB8 /* minor3rdc.mp3 in Resources */,
+				3F1749A3254FC41000398DB8 /* major7thc.mp3 in Resources */,
+				3F17498C254FC41000398DB8 /* g2.mp3 in Resources */,
+				3F1749A1254FC41000398DB8 /* a2.mp3 in Resources */,
+				3F17498A254FC41000398DB8 /* perfect5thc.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				3F1749A5254FC41000398DB8 /* db.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,29 +545,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		12DAF206390C2E5037D6A740 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PianoLessons-PianoLessonsTests/Pods-PianoLessons-PianoLessonsTests-resources.sh",
-				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PianoLessons-PianoLessonsTests/Pods-PianoLessons-PianoLessonsTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		18C9DF004A23AA943732B72B /* [CP] Check Pods Manifest.lock */ = {
+		0B621E7ADF5FD115084C2C06 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -676,28 +567,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2640178E7602684FB1AB6948 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PianoLessons/Pods-PianoLessons-resources.sh",
-				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PianoLessons/Pods-PianoLessons-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -712,7 +581,29 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		5C0396FE1E8AECF24059C36C /* [CP] Check Pods Manifest.lock */ = {
+		4E9B1D02660466B71B22AB54 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PianoLessons-PianoLessonsTests/Pods-PianoLessons-PianoLessonsTests-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PianoLessons-PianoLessonsTests/Pods-PianoLessons-PianoLessonsTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8EFB1B156910C431F6CC9BA8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -734,7 +625,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8F09E8FF84594E6ABAFB1C85 /* [CP] Check Pods Manifest.lock */ = {
+		C61BDF43EEBE3A8498DB5A56 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -756,26 +647,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D35DAFC5CD21A422FD979CD4 /* [CP] Check Pods Manifest.lock */ = {
+		DC06007D054788500AB79CAF /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${PODS_ROOT}/Target Support Files/Pods-PianoLessons/Pods-PianoLessons-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PianoLessons-PianoLessonsTests-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PianoLessons/Pods-PianoLessons-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -816,6 +707,28 @@
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		FE92365B4337580B3D2D96F8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PianoLessons-PianoLessonsTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -831,7 +744,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FBC9C8A2502B0D6002A045A /* PlayKey.m in Sources */,
+				3F1749AC254FC41B00398DB8 /* PlayKey.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -872,7 +785,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1038C95A289CB6D63DE7D079 /* Pods-PianoLessons-PianoLessonsTests.debug.xcconfig */;
+			baseConfigurationReference = FAA265697F0290FA25B2B8F9 /* Pods-PianoLessons-PianoLessonsTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -895,7 +808,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C026436E40417E796ACEBDFA /* Pods-PianoLessons-PianoLessonsTests.release.xcconfig */;
+			baseConfigurationReference = EBC61833826E420550BAFE63 /* Pods-PianoLessons-PianoLessonsTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -915,12 +828,11 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B58C88E5C0B1574B371B3B1F /* Pods-PianoLessons.debug.xcconfig */;
+			baseConfigurationReference = 3DB4FB6253EB366EFE6AA330 /* Pods-PianoLessons.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_TEAM = RR25B7NB9X;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PianoLessons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -930,7 +842,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ridleytech.PianoLessons;
-				PRODUCT_NAME = "Active Ear";
+				PRODUCT_NAME = ActiveEar;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -940,12 +852,11 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2B86A70FA85227DED81D5B98 /* Pods-PianoLessons.release.xcconfig */;
+			baseConfigurationReference = 4BB9DA7342199582CE5AB1AA /* Pods-PianoLessons.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_TEAM = RR25B7NB9X;
 				INFOPLIST_FILE = PianoLessons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -954,7 +865,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ridleytech.PianoLessons;
-				PRODUCT_NAME = "Active Ear";
+				PRODUCT_NAME = ActiveEar;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -963,7 +874,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 64569A42404F593265A1DC26 /* Pods-PianoLessons-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 9F710B61C2E0D72764B96660 /* Pods-PianoLessons-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -991,7 +902,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03A4615CCD0BD9F0D97BC88E /* Pods-PianoLessons-tvOS.release.xcconfig */;
+			baseConfigurationReference = 502DD4B115B07F011A162B01 /* Pods-PianoLessons-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1019,7 +930,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 486A37CA4831D160B682E847 /* Pods-PianoLessons-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = ED68F004F4706CD4B9BAA88D /* Pods-PianoLessons-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1046,7 +957,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A67089EF3F99C2CA785EE93 /* Pods-PianoLessons-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 8DF4157A0A31A1AA15D27129 /* Pods-PianoLessons-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;

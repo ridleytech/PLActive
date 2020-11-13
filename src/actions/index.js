@@ -12,6 +12,20 @@ export const setMode = (mode) => {
   };
 };
 
+export const manageGraph = (status) => {
+  return {
+    type: 'MANAGE_GRAPH',
+    status: status,
+  };
+};
+
+export const manageLogin = (status) => {
+  return {
+    type: 'MANAGE_LOGIN',
+    status: status,
+  };
+};
+
 export const setPitchProgress = (level) => {
   //console.log(`sp: ${JSON.stringify(level)}`);
   return {
@@ -25,5 +39,13 @@ export const setIntervalProgress = (level) => {
   return {
     type: 'SET_INTERVAL_PROGRESS',
     level: level,
+  };
+};
+
+export const logout = () => {
+  //console.log('action authUser: ' + JSON.stringify(user));
+
+  return {
+    type: 'LOGOUT_USER',
   };
 };
