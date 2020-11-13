@@ -54,8 +54,9 @@ const Header = (props) => {
           left: 20,
           top: 35,
         }}
-        // onPress={() => props.props.navigation.toggleDrawer()}
-        onPress={() => goHome()}>
+        onPress={() => props.props.navigation.toggleDrawer()}
+        //onPress={() => goHome()}
+      >
         <Image source={menuIcon} style={{zIndex: 3}} />
       </TouchableOpacity>
     </View>

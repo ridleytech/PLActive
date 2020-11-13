@@ -89,7 +89,7 @@
     "level1Answers": ["Major 2nd", "Major 3rd", "Perfect 4th", "Perfect 5th"],
     "level1Instructions": [
       "Using your keyboard, listen to the audio and write the correct note letter name in the provided boxes.",
-      " This level will consist of twelve 12 questions.",
+      "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
     ],
     "level2Questions": [
@@ -181,7 +181,7 @@
     "level2Answers": ["Major 2nd", "Major 3rd", "Perfect 4th", "Perfect 5th"],
     "level2Instructions": [
       "Using your keyboard, listen to the audio and write the correct note letter name in the provided boxes.",
-      " This level will consist of twelve 12 questions.",
+      "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
     ],
     "level3Questions": [
@@ -322,7 +322,7 @@
     "level3Answers": ["Major 2nd", "Major 3rd", "Perfect 4th", "Perfect 5th"],
     "level3Instructions": [
       "Using your keyboard, listen to the audio and write the correct note letter name in the provided boxes.",
-      " This level will consist of twelve 12 questions.",
+      "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
     ]
   },

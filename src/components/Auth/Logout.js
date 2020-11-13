@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {connect} from 'react-redux';
-import {logout, manageLogin} from '../../actions';
+import {logout, manageLogin, clearSupportError} from '../../actions';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 class Logout extends Component<Props> {
@@ -16,8 +16,9 @@ class Logout extends Component<Props> {
   logout = () => {
     console.log('logout');
 
-    this.props.manageLogin(false);
+    //this.props.manageLogin(false);
     this.props.logout();
+    this.props.clearSupportError();
   };
 
   render() {
@@ -45,4 +46,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   logout,
   manageLogin,
+  clearSupportError,
 })(Logout);

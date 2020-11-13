@@ -85,5 +85,37 @@ export const loginUser = (username, password) => (dispatch, getState) => {
     })
     .catch((error) => {
       console.log(error);
+
+      dispatch({type: 'LOGIN_ERROR', payload: error});
+    });
+};
+
+export const sendSupportMessage = (username, message) => (
+  dispatch,
+  getState,
+) => {
+  console.log(`username: ${username} message: ${message}`);
+
+  fetch('https://pianolessonwithwarren.com/support/index.php', {
+    method: 'POST',
+    body: JSON.stringify({
+      username: username,
+      message: message,
+    }),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      dispatch({type: 'SUPPORT_DATA', payload: data});
+    })
+    .catch((error) => {
+      console.log(error);
+
+      dispatch({type: 'SUPPORT_ERROR', payload: error});
     });
 };

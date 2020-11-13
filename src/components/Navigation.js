@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {View, Image, StyleSheet} from 'react-native';
 import Home from './Home';
+import Support from './Support';
 //import API from './debug/API';
 import SignIn from './Auth/SignIn';
 import SignUp from './Auth/SignUp';
@@ -13,6 +14,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {authUser} from '../actions';
 import menuIcon from '../../images/menu-icon.png';
+import DrawerContent from '../components/Navigation/drawer';
 
 const menuBtn = (props) => {
   return (
@@ -37,18 +39,28 @@ const GameStackScreen = (props) => (
 
 const AppDrawer = createDrawerNavigator();
 const AppDrawerScreen = () => (
+  // <AppDrawer.Navigator
+  //   drawerPosition="left"
+  //   drawerType="back"
+  //   drawerContentOptions={{
+  //     activeTintColor: '#3AB24A',
+  //   }}>
+
   <AppDrawer.Navigator
     drawerPosition="left"
     drawerType="back"
-    drawerContentOptions={{
-      activeTintColor: '#3AB24A',
-    }}>
+    drawerContent={(props) => <DrawerContent {...props} />}>
     <AppDrawer.Screen
-      name="Tabs"
+      name="CHALLENGES"
       component={GameStackScreen}
-      options={{drawerLabel: 'Home'}}
+      options={{drawerLabel: 'CHALLENGES'}}
     />
-    <AppDrawer.Screen name="Log Out" component={Logout} />
+    <AppDrawer.Screen
+      name="SUPPORT"
+      component={Support}
+      options={{drawerLabel: 'SUPPORT'}}
+    />
+    <AppDrawer.Screen name="LOG OUT" component={Logout} />
   </AppDrawer.Navigator>
 );
 

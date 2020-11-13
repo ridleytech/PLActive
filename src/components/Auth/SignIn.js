@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, Alert, Platform} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  Alert,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {manageLogin} from '../../actions';
@@ -13,7 +21,7 @@ class SignIn extends Component<Props> {
 
   state = {
     myInformation: {},
-    quickAddVal: '',
+    usernameVal: '',
     passwordVal: '',
     phone: null,
   };
@@ -31,11 +39,11 @@ class SignIn extends Component<Props> {
   changeVal = (val) => {
     if (val) {
       this.setState({
-        quickAddVal: val,
+        usernameVal: val,
       });
     } else {
       this.setState({
-        quickAddVal: '',
+        usernameVal: '',
       });
     }
   };
@@ -53,27 +61,36 @@ class SignIn extends Component<Props> {
   };
 
   componentDidMount() {
-    this.props.manageLogin(false);
+    //this.props.manageLogin(false);
+
+    //debug
+    //this.props.manageLogin(true);
+
+    this.setState({
+      usernameVal: 'ridley1224',
+    });
+
+    this.setState({
+      passwordVal: 'check1224',
+    });
   }
 
-  componentDidUpdate(prevProps, nextState) {
-    if (this.state.quickAddVal != nextState.quickAddVal) {
-      //console.log('quickValChanged');
-
-      console.log('update');
-
-      if (this.state.quickAddVal.length > 0) {
-        this.props.manageLogin(true);
-      } else {
-        this.props.manageLogin(false);
-      }
-    }
-  }
+  // componentDidUpdate(prevProps, nextState) {
+  //   if (this.state.usernameVal != nextState.usernameVal) {
+  //     //console.log('quickValChanged');
+  //     // console.log('update');
+  //     // if (this.state.usernameVal.length > 0) {
+  //     //   this.props.manageLogin(true);
+  //     // } else {
+  //     //   this.props.manageLogin(false);
+  //     // }
+  //   }
+  // }
 
   login = () => {
     //console.log('login');
     this.props.manageLogin(false);
-    this.props.loginUser(this.state.quickAddVal, this.state.passwordVal);
+    this.props.loginUser(this.state.usernameVal, this.state.passwordVal);
   };
 
   render() {
@@ -86,7 +103,7 @@ class SignIn extends Component<Props> {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 20,
+            marginTop: 30,
           }}>
           <Image
             source={headerLogo}
@@ -103,12 +120,14 @@ class SignIn extends Component<Props> {
           <TextInput
             autoCapitalize="none"
             style={styles.inputTxt}
+            value={this.state.usernameVal}
             onChangeText={(text) => this.changeVal(text)}></TextInput>
           <Text style={styles.txtHeader}>Password</Text>
           <TextInput
             autoCapitalize="none"
             secureTextEntry={true}
             style={styles.inputTxt}
+            value={this.state.passwordVal}
             onChangeText={(text) => this.changeVal2(text)}></TextInput>
 
           {this.props.loginError ? (
@@ -116,23 +135,43 @@ class SignIn extends Component<Props> {
               Username/password combination invalid.
             </Text>
           ) : null}
-          <TouchableOpacity
-            onPress={this.login}
-            style={[
-              styles.submitBtn,
-              {backgroundColor: this.props.loginEnabled ? '#3AB24A' : 'gray'},
-            ]}
-            disabled={!this.props.loginEnabled}>
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 25,
-                fontFamily: 'HelveticaNeue-Bold',
-                paddingTop: 5,
-              }}>
-              LOG IN
-            </Text>
-          </TouchableOpacity>
+
+          <View>
+            {!this.props.loginEnabled ? (
+              <ActivityIndicator
+                color="white"
+                size="large"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  zIndex: 3,
+                }}
+              />
+            ) : null}
+
+            <TouchableOpacity
+              onPress={this.login}
+              style={[
+                styles.submitBtn,
+                {backgroundColor: this.props.loginEnabled ? '#3AB24A' : 'gray'},
+              ]}
+              disabled={!this.props.loginEnabled}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 25,
+                  fontFamily: 'HelveticaNeue-Bold',
+                  paddingTop: 5,
+                }}>
+                LOG IN
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </>
     );

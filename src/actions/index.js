@@ -26,6 +26,19 @@ export const manageLogin = (status) => {
   };
 };
 
+export const manageSupport = (status) => {
+  return {
+    type: 'MANAGE_SUPPORT',
+    status: status,
+  };
+};
+
+export const clearSupportError = () => {
+  return {
+    type: 'CLEAR_SUPPORT_ERROR',
+  };
+};
+
 export const setPitchProgress = (level) => {
   //console.log(`sp: ${JSON.stringify(level)}`);
   return {
