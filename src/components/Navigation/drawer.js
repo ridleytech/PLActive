@@ -1,26 +1,14 @@
 import React from 'react';
-import {View, StyleSheet, Image, ImageBackground} from 'react-native';
 import {
-  useTheme,
-  Avatar,
-  Title,
-  Caption,
-  Paragraph,
-  Drawer,
-  Text,
-  TouchableRipple,
-  Switch,
-} from 'react-native-paper';
+  View,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  AsyncStorage,
+} from 'react-native';
+import {Drawer} from 'react-native-paper';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {useDispatch} from 'react-redux';
-import {CommonActions} from '@react-navigation/native';
-//import Icon2 from '../../images/edit-icon.png';
-// import Avatar1 from '../../images/a.png';
-// import DB from '../../images/db.png';
-// import Phase from '../../images/phase2.png';
-// import Max from '../../images/max.png';
-// import Profile from '../../images/profile.png';
-// import Logout from '../../images/logout.png';
 //import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 //import {AuthContext} from '../components/context';
 
@@ -29,6 +17,52 @@ import bgImg from '../../../images/menu-bg.png';
 function DrawerContent(props) {
   //const paperTheme = useTheme();
   const dispatch = useDispatch();
+
+  const test = () => {
+    console.log('test');
+
+    deleteUser();
+    deleteUsername();
+    deletePassword();
+  };
+
+  const deleteUsername = async () => {
+    try {
+      await AsyncStorage.removeItem('username');
+
+      console.log('username deleted');
+    } catch (error) {
+      // Error saving data
+    }
+
+    try {
+      await AsyncStorage.removeItem('user');
+
+      console.log('user deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  const deletePassword = async () => {
+    try {
+      await AsyncStorage.removeItem('password');
+
+      console.log('password deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  const deleteUser = async () => {
+    try {
+      await AsyncStorage.removeItem('hasUser');
+
+      console.log('user deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
 
   //const {signOut, toggleTheme} = React.useContext(AuthContext);
 
@@ -41,14 +75,12 @@ function DrawerContent(props) {
               flexDirection: 'row',
               marginTop: 15,
             }}>
-            {/* <Avatar.Image source={Avatar1} size={50} /> */}
-            <View
+            {/* <View
               style={{
-                //marginLeft: 15,
                 flexDirection: 'column',
               }}>
               <Title style={styles.title}>RANDALL RIDLEY</Title>
-            </View>
+            </View> */}
           </View>
         </View>
 
@@ -80,7 +112,9 @@ function DrawerContent(props) {
           label="LOG OUT"
           labelStyle={styles.item}
           onPress={() => {
-            props.navigation.navigate('LOG OUT');
+            //props.navigation.navigate('LOG OUT');
+            [dispatch({type: 'LOGOUT_USER'}), test()];
+            props.navigation.toggleDrawer();
           }}
         />
       </Drawer.Section>

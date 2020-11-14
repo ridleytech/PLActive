@@ -5,7 +5,7 @@ const inititalState = {
   userid: 1,
   highestCompletedIntervalLevel: 0,
   highestCompletedPitchLevel: 0,
-  isTrial: false,
+  isTrial: true,
   loggedIn: false,
   graphStarted: false,
   loginEnabled: true,
@@ -13,6 +13,7 @@ const inititalState = {
   supportSent: false,
   supportEnabled: true,
   supportError: false,
+  responseMessage: null,
 };
 
 export default (state = inititalState, action) => {
@@ -43,6 +44,7 @@ export default (state = inititalState, action) => {
         loggedIn: loginStatus,
         loginEnabled: true,
         loginError: loginError1,
+        isTrial: false,
       };
 
     case 'LOGIN_ERROR':
@@ -53,26 +55,43 @@ export default (state = inititalState, action) => {
       };
 
     case 'SUPPORT_DATA':
-      let supportData = action.payload.data;
+      let supportData = action.payload;
 
       console.log(`support data: ${JSON.stringify(supportData)}`);
       var supportStatus = false;
       var supportError1 = false;
+      var responseMessage1;
 
-      if (loginData.hasAccount === 1) {
+      //{"is_valid":false,"validation_messages":{"2":"Please enter a valid email address."},"page_number":1,"source_page_number":1}
+
+      if (supportData.is_valid == true) {
+        // var successResponse =
+        //   "<div id='gform_confirmation_wrapper_2' class='gform_confirmation_wrapper '><div id='gform_confirmation_message_2' class='gform_confirmation_message_2 gform_confirmation_message'>Thanks for contacting us! We will get in touch with you within 24 hours.</div></div>";
+
+        // if (supportData.confirmation_message === successResponse) {
+
+        // }
+
+        //console.log('confirmation messages matches');
+
+        responseMessage1 =
+          'Thanks for contacting us! We will get in touch with you within 24 hours.';
         supportStatus = true;
         supportError1 = false;
       } else {
+        responseMessage1 = supportData.validation_messages[2];
+
         supportError1 = true;
       }
 
-      console.log(`status: ${loginStatus}`);
+      console.log(`status: ${supportStatus}`);
 
       return {
         ...state,
         supportSent: supportStatus,
         supportEnabled: true,
         supportError: supportError1,
+        responseMessage: responseMessage1,
       };
 
     case 'SUPPORT_ERROR':
@@ -80,13 +99,16 @@ export default (state = inititalState, action) => {
         ...state,
         supportError: true,
         supportEnabled: true,
+        responseMessage: 'Message was not sent. Please try again later.',
       };
 
     case 'CLEAR_SUPPORT_ERROR':
       console.log('CLEAR_SUPPORT_ERROR');
       return {
         ...state,
+        supportSent: false,
         supportError: false,
+        responseMessage: null,
       };
 
     case 'MANAGE_LOGIN':
@@ -101,11 +123,20 @@ export default (state = inititalState, action) => {
         supportEnabled: action.status,
       };
 
+    case 'LOGIN_USER':
+      console.log('login redux');
+      return {
+        ...state,
+        loggedIn: true,
+        isTrial: false,
+      };
+
     case 'LOGOUT_USER':
       console.log('logout redux');
       return {
         ...state,
         loggedIn: false,
+        isTrial: true,
       };
 
     case 'MANAGE_GRAPH':

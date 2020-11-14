@@ -90,25 +90,56 @@ export const loginUser = (username, password) => (dispatch, getState) => {
     });
 };
 
-export const sendSupportMessage = (username, message) => (
+//   "input_1":"name field",
+// "input_2":"email@gmail.com",
+// "input_2_2":"email@gmail.com",
+// "input_4":"this is subject",
+// "input_3":"this is message",
+// "input_6":0
+
+export const sendSupportMessage = (name, email, subject, message) => (
   dispatch,
   getState,
 ) => {
-  console.log(`username: ${username} message: ${message}`);
+  console.log(
+    `name: ${name} message: ${message} email: ${email} subject: ${subject}`,
+  );
 
-  fetch('https://pianolessonwithwarren.com/support/index.php', {
+  //return;
+
+  var myHeaders = new Headers();
+  myHeaders.append(
+    'Authorization',
+    'Basic Y2tfMTNlZWZjYzZkOWMyYTA3ZDE0ODYyYmRhZTZlZDAwYmY1NjU3NDA1ODpjc183ZDg3NDY4ZWEwNzY1ZGJhYjgwNDM2ZjRkYjUzZGU2ZDMyNDIwNDdm',
+  );
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append(
+    'Cookie',
+    'wfwaf-authcookie-2927716f484e692d82f2f18aaed23c0a=3744%7Cadministrator%7C432b306082b3c7da03e6bd5e831bc9d3cc02bfd52fee14e921bca101cc490312',
+  );
+
+  var raw = JSON.stringify({
+    input_1: name,
+    input_2: email,
+    input_2_2: email,
+    input_4: subject,
+    input_3: message,
+    input_6: 0,
+  });
+
+  var requestOptions = {
     method: 'POST',
-    body: JSON.stringify({
-      username: username,
-      message: message,
-    }),
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((res) => {
-      return res.json();
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow',
+  };
+
+  fetch(
+    'https://pianolessonwithwarren.com/wp-json/gf/v2/forms/2/submissions',
+    requestOptions,
+  )
+    .then((response) => {
+      return response.json();
     })
     .then((data) => {
       dispatch({type: 'SUPPORT_DATA', payload: data});

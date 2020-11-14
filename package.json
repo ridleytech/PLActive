@@ -28,6 +28,7 @@
     "react": "16.13.1",
     "react-native": "0.63.3",
     "react-native-check-box": "^2.1.7",
+    "react-native-email": "^1.1.0",
     "react-native-fbsdk": "^2.0.0",
     "react-native-gesture-handler": "^1.7.0",
     "react-native-google-signin": "^2.1.1",

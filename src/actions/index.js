@@ -55,6 +55,12 @@ export const setIntervalProgress = (level) => {
   };
 };
 
+export const login = () => {
+  return {
+    type: 'LOGIN_USER',
+  };
+};
+
 export const logout = () => {
   //console.log('action authUser: ' + JSON.stringify(user));
 

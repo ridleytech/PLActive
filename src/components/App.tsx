@@ -1,4 +1,5 @@
 import React, {Component, useEffect} from 'react';
+import {AsyncStorage} from 'react-native';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
@@ -27,6 +28,17 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 const store = createStore(reducers, enhancer);
+
+// store.subscribe(() => {
+//   //console.log('last: ' + JSON.stringify(store.getState()))
+
+//   if (!store.getState().loggedIn) {
+//     //console.log('delete user');
+//     // deleteUsername();
+//     // deletePassword();
+//     // deleteUser();
+//   }
+// });
 
 //https://www.netguru.com/codestories/react-native-splash-screen
 

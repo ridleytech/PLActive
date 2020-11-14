@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet, AsyncStorage} from 'react-native';
 import Home from './Home';
 import Support from './Support';
 //import API from './debug/API';
@@ -12,7 +12,7 @@ import Loading from './Loading';
 import Logout from './Auth/Logout';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
-import {authUser} from '../actions';
+import {authUser, login} from '../actions';
 import menuIcon from '../../images/menu-icon.png';
 import DrawerContent from '../components/Navigation/drawer';
 
@@ -93,6 +93,8 @@ class Navigation extends Component {
         isLoading: !this.state.isLoading,
         //user: {username: 'ridley1224'},
       });
+
+      //this.retrieveData();
     }, 500);
 
     //this.props.authUser({username: 'ridley1224', password: '1224'});
@@ -114,11 +116,13 @@ class Navigation extends Component {
 const RootStack = createStackNavigator();
 const RootStackScreen = ({userToken, props}) => (
   <RootStack.Navigator headerMode="none">
-    {props.loggedIn ? (
+    {/* {props.loggedIn ? (
       <RootStack.Screen name="App" component={AppDrawerScreen} />
     ) : (
       <RootStack.Screen name="Auth" component={AuthStackScreen} />
-    )}
+    )} */}
+
+    <RootStack.Screen name="App" component={AppDrawerScreen} />
   </RootStack.Navigator>
 );
 
@@ -139,4 +143,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, {authUser})(Navigation);
+export default connect(mapStateToProps, {authUser, login})(Navigation);

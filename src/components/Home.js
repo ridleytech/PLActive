@@ -22,6 +22,7 @@ import {
   setIntervalProgress,
   setPitchProgress,
   manageGraph,
+  login,
 } from '../actions/';
 import {getProgressData} from '../thunks/';
 import IntervalLevels from './IntervalLevels';
@@ -33,11 +34,14 @@ import PitchLevels from './PitchLevels';
 
 var testView = NativeModules.PlayKey;
 
+//console.log('store: ' + store);
+
 class Home extends Component<Props> {
   constructor(props: Props) {
     super(props);
 
     this.retrieveData();
+    this.retrieveUserData();
     //console.log('home props: ' + JSON.stringify(props));
   }
 
@@ -103,6 +107,113 @@ class Home extends Component<Props> {
     }
   };
 
+  retrieveUserData = async () => {
+    try {
+      var value = await AsyncStorage.getItem('username');
+
+      if (value !== null) {
+        // We have data!!
+        console.log(`username: ${value}`);
+
+        this.setState({
+          usernameVal: value,
+        });
+      } else {
+        console.log('no username');
+
+        this.setState({
+          usernameVal: null,
+        });
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+
+    try {
+      var value2 = await AsyncStorage.getItem('password');
+
+      if (value2 !== null) {
+        // We have data!!
+        console.log(`password: ${value2}`);
+
+        this.setState({
+          passwordVal: value2,
+        });
+      } else {
+        console.log('no password');
+
+        this.setState({
+          passwordVal: null,
+        });
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+
+    try {
+      var value2 = await AsyncStorage.getItem('hasUser');
+
+      if (value2 !== null) {
+        // We have data!!
+        console.log(`user: ${value2}`);
+
+        this.setState({
+          hasUser: value2,
+        });
+      } else {
+        console.log('no user');
+
+        this.setState({
+          hasUser: null,
+        });
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
+  storeUsername = async () => {
+    try {
+      await AsyncStorage.setItem('username', this.state.usernameVal);
+
+      console.log('username saved: ' + this.state.usernameVal);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  storePassword = async () => {
+    try {
+      await AsyncStorage.setItem('password', this.state.passwordVal);
+
+      console.log('password saved: ' + this.state.passwordVal);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  storeUser = async () => {
+    try {
+      await AsyncStorage.setItem('hasUser', 'true');
+
+      console.log('user saved');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  componentDidUpdate(prevProps, nextState) {
+    if (
+      this.state.hasUser &&
+      this.state.usernameVal &&
+      this.state.passwordVal
+    ) {
+      console.log('has all vals');
+
+      this.props.login(true);
+    }
+  }
+
   componentDidMount() {
     this.props.getProgressData();
 
@@ -147,7 +258,7 @@ class Home extends Component<Props> {
     if (this.props.isTrial && level > 1) {
       Alert.alert(
         null,
-        `Please upgrade to Premium membership to unlock this level.`,
+        `Please log in or upgrade to Premium membership to unlock this level.`,
         [{text: 'OK', onPress: () => console.log('OK Pressed')}],
         {cancelable: false},
       );
@@ -246,6 +357,7 @@ export default connect(mapStateToProps, {
   setIntervalProgress,
   getProgressData,
   manageGraph,
+  login,
 })(Home);
 
 let offset = 100;

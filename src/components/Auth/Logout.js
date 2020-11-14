@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, AsyncStorage} from 'react-native';
 import {connect} from 'react-redux';
 import {logout, manageLogin, clearSupportError} from '../../actions';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -19,6 +19,48 @@ class Logout extends Component<Props> {
     //this.props.manageLogin(false);
     this.props.logout();
     this.props.clearSupportError();
+
+    this.deleteUsername();
+    this.deletePassword();
+    this.deleteUser();
+  };
+
+  deleteUsername = async () => {
+    try {
+      await AsyncStorage.removeItem('username');
+
+      console.log('username deleted');
+    } catch (error) {
+      // Error saving data
+    }
+
+    try {
+      await AsyncStorage.removeItem('user');
+
+      console.log('user deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  deletePassword = async () => {
+    try {
+      await AsyncStorage.removeItem('password');
+
+      console.log('password deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  deleteUser = async () => {
+    try {
+      await AsyncStorage.removeItem('hasUser');
+
+      console.log('user deleted');
+    } catch (error) {
+      // Error saving data
+    }
   };
 
   render() {
