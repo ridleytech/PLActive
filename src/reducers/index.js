@@ -2,6 +2,7 @@ const inititalState = {
   a: 1,
   level: 0,
   mode: 0,
+  previousMode: null,
   userid: 1,
   highestCompletedIntervalLevel: 0,
   highestCompletedPitchLevel: 0,
@@ -29,10 +30,12 @@ export default (state = inititalState, action) => {
       console.log(`loginData: ${JSON.stringify(loginData)}`);
       var loginStatus = false;
       var loginError1 = false;
+      var mode1 = state.mode;
 
       if (loginData.hasAccount === true) {
         loginStatus = true;
         loginError1 = false;
+        mode1 = state.previousMode;
       } else {
         loginError1 = true;
       }
@@ -45,6 +48,7 @@ export default (state = inititalState, action) => {
         loginEnabled: true,
         loginError: loginError1,
         isTrial: false,
+        mode: mode1,
       };
 
     case 'LOGIN_ERROR':
@@ -129,6 +133,17 @@ export default (state = inititalState, action) => {
         ...state,
         loggedIn: true,
         isTrial: false,
+      };
+
+    case 'SHOW_LOGIN':
+      console.log('SHOW_LOGIN');
+
+      var pm = state.mode;
+
+      return {
+        ...state,
+        mode: 3,
+        previousMode: pm,
       };
 
     case 'LOGOUT_USER':

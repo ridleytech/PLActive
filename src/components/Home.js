@@ -8,6 +8,7 @@ import {
   Platform,
   TouchableOpacity,
   Text,
+  Linking,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Header from './Header';
@@ -15,6 +16,7 @@ import Header from './Header';
 import TestMidi from './TestMidi';
 import MainMenu from './MainMenu';
 import PitchMenu from './PitchMenu';
+import SignIn from './Auth/SignIn';
 import IntervalMenu from './IntervalMenu';
 import {
   setLevel,
@@ -23,6 +25,7 @@ import {
   setPitchProgress,
   manageGraph,
   login,
+  showLogin,
 } from '../actions/';
 import {getProgressData} from '../thunks/';
 import IntervalLevels from './IntervalLevels';
@@ -241,6 +244,22 @@ class Home extends Component<Props> {
     }
   }
 
+  showLogin = () => {
+    this.props.showLogin();
+  };
+
+  upgrade = () => {
+    let url = 'http://pianolessonwithwarren.com/memberships/';
+
+    Linking.canOpenURL(url).then((supported) => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + url);
+      }
+    });
+  };
+
   setMode = (mode) => {
     //console.log('showLevel: ' + level);
 
@@ -259,7 +278,11 @@ class Home extends Component<Props> {
       Alert.alert(
         null,
         `Please log in or upgrade to Premium membership to unlock this level.`,
-        [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+        [
+          {text: 'LOGIN', onPress: () => this.showLogin()},
+          {text: 'UPGRADE', onPress: () => this.upgrade()},
+          {text: 'CANCEL', onPress: () => console.log('OK Pressed')},
+        ],
         {cancelable: false},
       );
 
@@ -333,6 +356,8 @@ class Home extends Component<Props> {
           <IntervalMenu showLevel={this.showLevel} />
         ) : this.props.mode == 2 && this.props.level > 0 ? (
           <IntervalLevels level={this.props.level} mode={this.props.mode} />
+        ) : this.props.mode == 3 ? (
+          <SignIn />
         ) : null}
       </>
     );
@@ -358,6 +383,7 @@ export default connect(mapStateToProps, {
   getProgressData,
   manageGraph,
   login,
+  showLogin,
 })(Home);
 
 let offset = 100;

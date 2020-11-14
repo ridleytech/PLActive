@@ -14,9 +14,6 @@ import {manageLogin, login} from '../../actions';
 import {loginUser} from '../../thunks';
 import headerLogo from '../../../images/header-logo.png';
 
-//import {sendEmail} from '../send-email';
-import email from 'react-native-email';
-
 class SignIn extends Component<Props> {
   constructor(props: Props) {
     super(props);
@@ -67,13 +64,13 @@ class SignIn extends Component<Props> {
     //this.props.manageLogin(false);
     //debug
     //this.props.manageLogin(true);
-    // this.setState({
-    //   usernameVal: 'ridley1224',
-    // });
-    // this.setState({
-    //   passwordVal: 'check1224',
-    // });
-    this.retrieveData();
+    this.setState({
+      usernameVal: 'ridley1224',
+    });
+    this.setState({
+      passwordVal: 'check1224',
+    });
+    //this.retrieveData();
 
     // sendEmail(
     //   'registerrt1224@gmail.com',
@@ -82,7 +79,6 @@ class SignIn extends Component<Props> {
     // ).then(() => {
     //   console.log('Our email successful provided to device mail ');
     // });
-
     // const to = ['registerrt1224@gmail.com']; // string or array of email addresses
     // email(to, {
     //   // Optional additional arguments
@@ -230,7 +226,7 @@ class SignIn extends Component<Props> {
     return (
       //console.log('user: ' + props.user);
       <>
-        <View
+        {/* <View
           style={{
             justifyContent: 'center',
             alignItems: 'center',
@@ -244,7 +240,7 @@ class SignIn extends Component<Props> {
               height: 55,
             }}
           />
-        </View>
+        </View> */}
 
         <View style={styles.content}>
           <Text style={styles.txtHeader}>Username</Text>

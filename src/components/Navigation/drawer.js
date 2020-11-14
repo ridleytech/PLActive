@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {Drawer} from 'react-native-paper';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 //import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 //import {AuthContext} from '../components/context';
 
@@ -17,6 +17,7 @@ import bgImg from '../../../images/menu-bg.png';
 function DrawerContent(props) {
   //const paperTheme = useTheme();
   const dispatch = useDispatch();
+  const authStatus = useSelector((state) => state.loggedIn);
 
   const test = () => {
     console.log('test');
@@ -107,17 +108,31 @@ function DrawerContent(props) {
         </Drawer.Section>
       </View>
 
-      <Drawer.Section style={styles.drawerSection}>
-        <DrawerItem
-          label="LOG OUT"
-          labelStyle={styles.item}
-          onPress={() => {
-            //props.navigation.navigate('LOG OUT');
-            [dispatch({type: 'LOGOUT_USER'}), test()];
-            props.navigation.toggleDrawer();
-          }}
-        />
-      </Drawer.Section>
+      {!authStatus ? (
+        <Drawer.Section style={styles.drawerSection}>
+          <DrawerItem
+            label="LOG IN"
+            labelStyle={styles.item}
+            onPress={() => {
+              dispatch({type: 'SHOW_LOGIN'});
+              props.navigation.toggleDrawer();
+              props.navigation.navigate('CHALLENGES');
+            }}
+          />
+        </Drawer.Section>
+      ) : (
+        <Drawer.Section style={styles.drawerSection}>
+          <DrawerItem
+            label="LOG OUT"
+            labelStyle={styles.item}
+            onPress={() => {
+              //props.navigation.navigate('LOG OUT');
+              [dispatch({type: 'LOGOUT_USER'}), test()];
+              props.navigation.toggleDrawer();
+            }}
+          />
+        </Drawer.Section>
+      )}
     </ImageBackground>
   );
 }

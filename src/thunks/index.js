@@ -31,7 +31,7 @@ export const getProgressData = () => (dispatch, getState) => {
 export const saveProgress = (level1) => (dispatch, getState) => {
   console.log('saveProgress');
 
-  return;
+  //return;
 
   let level = getState().currentLevel;
   let mode = getState().currentMode;
