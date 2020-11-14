@@ -19,7 +19,7 @@ import {FlatList, ScrollView} from 'react-native-gesture-handler';
 const IntervalMenu = ({showLevel}) => {
   var levels = [1, 2, 3, 4, 5];
 
-  const isTrial = useSelector((state) => state.isTrial);
+  const loggedIn = useSelector((state) => state.loggedIn);
   const highestCompletedIntervalLevel = useSelector(
     (state) => state.highestCompletedIntervalLevel,
   );
@@ -124,21 +124,21 @@ const IntervalMenu = ({showLevel}) => {
                     </Text>
                   </View>
 
-                  {isTrial ? (
-                    <Image
-                    source={index < highestCompletedIntervalLevel
-                      ? checkIcon : index > 0
-                      ? lockIcon
-                      : null}
-                      style={{position: 'absolute', right: 12, top: 12}}
-                    />
-                  ) : (
-
+                  {!loggedIn ? (
                     <Image
                       source={
                         index < highestCompletedIntervalLevel
                           ? checkIcon
+                          : index > 0
+                          ? lockIcon
                           : null
+                      }
+                      style={{position: 'absolute', right: 12, top: 12}}
+                    />
+                  ) : (
+                    <Image
+                      source={
+                        index < highestCompletedIntervalLevel ? checkIcon : null
                       }
                       style={{position: 'absolute', right: 12, top: 12}}
                     />

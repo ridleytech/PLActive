@@ -54,9 +54,9 @@ class Home extends Component<Props> {
 
       if (value !== null) {
         // We have data!!
-        console.log(`highestCompletedPitchLevel: ${value}`);
+        //console.log(`highestCompletedPitchLevel: ${value}`);
       } else {
-        console.log('save default pitch data');
+        //console.log('save default pitch data');
 
         value = 0;
         this.storePitchData();
@@ -74,9 +74,9 @@ class Home extends Component<Props> {
 
       if (value2 !== null) {
         // We have data!!
-        console.log(`highestCompletedIntervalLevel: ${value2}`);
+        //console.log(`highestCompletedIntervalLevel: ${value2}`);
       } else {
-        console.log('save default interval data');
+        //console.log('save default interval data');
 
         value2 = 0;
         this.storeIntervalData();
@@ -116,11 +116,13 @@ class Home extends Component<Props> {
 
       if (value !== null) {
         // We have data!!
-        console.log(`username: ${value}`);
+        console.log(`retrieved username: ${value}`);
 
         this.setState({
           usernameVal: value,
         });
+
+        // /this.props.login(true);
       } else {
         console.log('no username');
 
@@ -137,7 +139,7 @@ class Home extends Component<Props> {
 
       if (value2 !== null) {
         // We have data!!
-        console.log(`password: ${value2}`);
+        console.log(`retrieved password: ${value2}`);
 
         this.setState({
           passwordVal: value2,
@@ -158,11 +160,13 @@ class Home extends Component<Props> {
 
       if (value2 !== null) {
         // We have data!!
-        console.log(`user: ${value2}`);
+        console.log(`retrieved user: ${value2}`);
 
         this.setState({
           hasUser: value2,
         });
+
+        this.props.login(true);
       } else {
         console.log('no user');
 
@@ -177,9 +181,9 @@ class Home extends Component<Props> {
 
   storeUsername = async () => {
     try {
-      await AsyncStorage.setItem('username', this.state.usernameVal);
+      await AsyncStorage.setItem('username', this.props.username);
 
-      console.log('username saved: ' + this.state.usernameVal);
+      console.log('username saved: ' + this.props.username);
     } catch (error) {
       // Error saving data
     }
@@ -187,9 +191,9 @@ class Home extends Component<Props> {
 
   storePassword = async () => {
     try {
-      await AsyncStorage.setItem('password', this.state.passwordVal);
+      await AsyncStorage.setItem('password', this.props.password);
 
-      console.log('password saved: ' + this.state.passwordVal);
+      console.log('password saved: ' + this.props.password);
     } catch (error) {
       // Error saving data
     }
@@ -207,13 +211,19 @@ class Home extends Component<Props> {
 
   componentDidUpdate(prevProps, nextState) {
     if (
-      this.state.hasUser &&
-      this.state.usernameVal &&
-      this.state.passwordVal
+      prevProps.loggedIn != this.props.loggedIn &&
+      this.props.loggedIn == true &&
+      prevProps.username != this.props.username
     ) {
-      console.log('has all vals');
-
       this.props.login(true);
+
+      console.log('loggedin changed home: ' + this.props.loggedIn);
+
+      if (this.props.username) {
+        this.storeUsername(this.props.username);
+        this.storePassword(this.props.password);
+        this.storeUser();
+      }
     }
   }
 
@@ -372,6 +382,9 @@ const mapStateToProps = (state) => {
     highestCompletedPitchLevel: state.highestCompletedPitchLevel,
     highestCompletedIntervalLevel: state.highestCompletedIntervalLevel,
     graphStarted: state.graphStarted,
+    loggedIn: state.loggedIn,
+    username: state.username,
+    password: state.password,
   };
 };
 

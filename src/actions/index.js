@@ -55,9 +55,11 @@ export const setIntervalProgress = (level) => {
   };
 };
 
-export const login = () => {
+export const login = (username, password) => {
   return {
     type: 'LOGIN_USER',
+    // username: username,
+    // password: password,
   };
 };
 

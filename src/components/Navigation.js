@@ -93,8 +93,6 @@ class Navigation extends Component {
         isLoading: !this.state.isLoading,
         //user: {username: 'ridley1224'},
       });
-
-      //this.retrieveData();
     }, 500);
 
     //this.props.authUser({username: 'ridley1224', password: '1224'});

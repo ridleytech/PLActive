@@ -61,7 +61,7 @@ export const saveProgress = (level1) => (dispatch, getState) => {
 };
 
 export const loginUser = (username, password) => (dispatch, getState) => {
-  console.log(`username: ${username} password: ${password}`);
+  //console.log(`username: ${username} password: ${password}`);
 
   fetch(
     'https://pianolessonwithwarren.com/wp-json/ars/VerifyUser/?key=pk_017ddc497ab0d005eea8e2e2744f05f9e77a0ac4',
@@ -81,7 +81,11 @@ export const loginUser = (username, password) => (dispatch, getState) => {
       return res.json();
     })
     .then((data) => {
-      dispatch({type: 'AUTH_DATA', payload: data});
+      dispatch({
+        type: 'AUTH_DATA',
+        payload: data,
+        user: {username: username, password: password},
+      });
     })
     .catch((error) => {
       console.log(error);

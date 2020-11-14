@@ -78,7 +78,7 @@ class Support extends Component<Props> {
   }
 
   componentDidMount() {
-    console.log('support did unmount');
+    //console.log('support did unmount');
     this.props.clearSupportError();
 
     // this.setState({

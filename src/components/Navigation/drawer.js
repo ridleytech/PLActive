@@ -19,8 +19,8 @@ function DrawerContent(props) {
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.loggedIn);
 
-  const test = () => {
-    console.log('test');
+  const removeUserInfo = () => {
+    console.log('removeUserInfo drawer');
 
     deleteUser();
     deleteUsername();
@@ -127,7 +127,7 @@ function DrawerContent(props) {
             labelStyle={styles.item}
             onPress={() => {
               //props.navigation.navigate('LOG OUT');
-              [dispatch({type: 'LOGOUT_USER'}), test()];
+              [dispatch({type: 'LOGOUT_USER'}), removeUserInfo()];
               props.navigation.toggleDrawer();
             }}
           />

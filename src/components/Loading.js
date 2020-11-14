@@ -9,7 +9,7 @@ class Loading extends Component<Props> {
   render() {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Loading...</Text>
+        <Text style={{fontSize: 12}}>Loading...</Text>
       </View>
     );
   }

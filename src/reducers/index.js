@@ -15,6 +15,9 @@ const inititalState = {
   supportEnabled: true,
   supportError: false,
   responseMessage: null,
+  username: null,
+  password: null,
+  fullname: null,
 };
 
 export default (state = inititalState, action) => {
@@ -44,6 +47,8 @@ export default (state = inititalState, action) => {
 
       return {
         ...state,
+        username: action.user.username,
+        password: action.user.password,
         loggedIn: loginStatus,
         loginEnabled: true,
         loginError: loginError1,
@@ -107,7 +112,7 @@ export default (state = inititalState, action) => {
       };
 
     case 'CLEAR_SUPPORT_ERROR':
-      console.log('CLEAR_SUPPORT_ERROR');
+      //console.log('CLEAR_SUPPORT_ERROR');
       return {
         ...state,
         supportSent: false,
@@ -131,12 +136,14 @@ export default (state = inititalState, action) => {
       console.log('login redux');
       return {
         ...state,
+        // username: action.username,
+        // password: action.password,
         loggedIn: true,
         isTrial: false,
       };
 
     case 'SHOW_LOGIN':
-      console.log('SHOW_LOGIN');
+      //console.log('SHOW_LOGIN');
 
       var pm = state.mode;
 
@@ -152,10 +159,12 @@ export default (state = inititalState, action) => {
         ...state,
         loggedIn: false,
         isTrial: true,
+        username: null,
+        password: null,
       };
 
     case 'MANAGE_GRAPH':
-      console.log('MANAGE_GRAPH: ' + JSON.stringify(action));
+      //console.log('MANAGE_GRAPH: ' + JSON.stringify(action));
 
       return {
         ...state,
@@ -175,7 +184,7 @@ export default (state = inititalState, action) => {
       };
 
     case 'SET_PITCH_PROGRESS':
-      console.log('action: ' + JSON.stringify(action));
+      //console.log('action: ' + JSON.stringify(action));
 
       var completedLevel = parseInt(action.level.highestCompletedPitchLevel);
       var levelVal = state.highestCompletedPitchLevel;
@@ -193,7 +202,7 @@ export default (state = inititalState, action) => {
       };
 
     case 'SET_INTERVAL_PROGRESS':
-      console.log('action: ' + JSON.stringify(action));
+      //console.log('action: ' + JSON.stringify(action));
 
       var completedLevel = parseInt(action.level.highestCompletedIntervalLevel);
       var levelVal = state.highestCompletedIntervalLevel;

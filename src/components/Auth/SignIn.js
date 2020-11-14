@@ -71,22 +71,6 @@ class SignIn extends Component<Props> {
       passwordVal: 'check1224',
     });
     //this.retrieveData();
-
-    // sendEmail(
-    //   'registerrt1224@gmail.com',
-    //   'Piano Lessons with Warren Support!',
-    //   'Test message.',
-    // ).then(() => {
-    //   console.log('Our email successful provided to device mail ');
-    // });
-    // const to = ['registerrt1224@gmail.com']; // string or array of email addresses
-    // email(to, {
-    //   // Optional additional arguments
-    //   //cc: ['bazzy@moo.com', 'doooo@daaa.com'], // string or array of email addresses
-    //   //bcc: 'mee@mee.com', // string or array of email addresses
-    //   subject: 'Show how to use',
-    //   body: 'Some body right here',
-    // }).catch(console.error);
   }
 
   componentDidUpdate(prevProps, nextState) {
@@ -101,11 +85,11 @@ class SignIn extends Component<Props> {
     // }
 
     if (prevProps.loggedIn != this.props.loggedIn) {
-      console.log('loggedin changed: ' + this.props.loggedIn);
+      console.log('loggedin changed signin: ' + this.props.loggedIn);
 
-      this.storeUsername(this.state.usernameVal);
-      this.storePassword(this.state.passwordVal);
-      this.storeUser();
+      // this.storeUsername(this.state.usernameVal);
+      // this.storePassword(this.state.passwordVal);
+      // this.storeUser();
     }
 
     // if (
