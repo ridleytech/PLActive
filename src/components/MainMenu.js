@@ -6,8 +6,10 @@ import {
   StyleSheet,
   Image,
   Animated,
+  Linking,
 } from 'react-native';
 import Header from './Header';
+import Hyperlink from 'react-native-hyperlink';
 
 import videoImg from '../../images/instructions-placeholder.png';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
@@ -45,6 +47,19 @@ const MainMenu = ({setMode}) => {
     );
   };
 
+  viewCourse = () => {
+    let url =
+      'https://pianolessonwithwarren.com/courses/the-ear-training-regimen-for-beginners-and-intermediates/';
+
+    Linking.canOpenURL(url).then((supported) => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + url);
+      }
+    });
+  };
+
   return (
     <>
       <View
@@ -58,9 +73,28 @@ const MainMenu = ({setMode}) => {
             fontFamily: 'Helvetica Neue',
             fontSize: 20,
             fontWeight: 'bold',
+            color: '#3AB24A',
           }}>
           Active Ear Programs
         </Text>
+
+        <View
+          style={{
+            marginTop: 10,
+            display: 'flex',
+            //flexDirection: 'row',
+            //backgroundColor: 'yellow',
+          }}>
+          <Hyperlink
+            linkDefault
+            linkStyle={{color: '#3AB24A', fontSize: 15}}
+            linkText="Click here">
+            <Text style={{fontSize: 15}}>
+              For More Detail on these exercises, visit the full course
+              https://pianolessonwithwarren.com/courses/the-ear-training-regimen-for-beginners-and-intermediates/.
+            </Text>
+          </Hyperlink>
+        </View>
         <Image source={videoImg} style={styles.video} />
         <Animated.View style={{marginTop: 20, opacity: opacity}}>
           <View

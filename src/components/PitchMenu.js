@@ -67,6 +67,7 @@ const PitchMenu = ({showLevel}) => {
             fontFamily: 'Helvetica Neue',
             fontSize: 20,
             fontWeight: 'bold',
+            color: '#3AB24A',
           }}>
           Pitch Recognition
         </Text>

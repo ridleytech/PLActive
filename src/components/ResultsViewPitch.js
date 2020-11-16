@@ -9,14 +9,15 @@ import {
 
 import {useDispatch} from 'react-redux';
 
-const ResultsView = ({
+const ResultsViewPitch = ({
   correctAnswers,
   total,
   mainMenu,
   answerList,
   avgScore,
   level,
-  isTrial,
+  loggedIn,
+  mode,
 }) => {
   const [showStuff, setResults] = useState({show: false});
   const [passed, setPassed] = useState(false);
@@ -176,11 +177,26 @@ const ResultsView = ({
 
           {showStuff.show === true ? (
             <View style={{marginTop: 20}}>
-              {answerList.map((ob) => {
+              {mode == 1 ? (
+                <Text style={{marginTop: 20}}>
+                  Using your keyboard, listen to the audio below then write the
+                  correct note letter name in the box below.
+                </Text>
+              ) : null}
+
+              {answerList.map((ob, index) => {
                 return (
                   <View key={ob}>
-                    <Text style={{marginTop: 20}}>{ob.Question}</Text>
-                    {ob.Answer === ob.userAnswer ? (
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        color: 'black',
+                        fontSize: 15,
+                        fontFamily: 'Helvetica Neue',
+                      }}>
+                      Question {index + 1}
+                    </Text>
+                    {ob.file === ob.userAnswer ? (
                       <View
                         style={[
                           styles.correct,
@@ -193,7 +209,7 @@ const ResultsView = ({
                             fontFamily: 'Helvetica Neue',
                             fontWeight: 'bold',
                           }}>
-                          {ob.Answer}
+                          Correct: {ob.file}
                         </Text>
                       </View>
                     ) : (
@@ -210,7 +226,7 @@ const ResultsView = ({
                               fontFamily: 'Helvetica Neue',
                               fontWeight: 'bold',
                             }}>
-                            {ob.userAnswer}
+                            Your Answer: {ob.userAnswer}
                           </Text>
                         </View>
                         <View
@@ -225,7 +241,7 @@ const ResultsView = ({
                               fontFamily: 'Helvetica Neue',
                               fontWeight: 'bold',
                             }}>
-                            {ob.Answer}
+                            Correct Answer: {ob.file}
                           </Text>
                         </View>
                       </>
@@ -257,7 +273,7 @@ const ResultsView = ({
             fontWeight: 'bold',
             color: 'white',
           }}>
-          {isTrial && passed
+          {loggedIn && passed
             ? ' UPRGRADE TO START LEVEL ' + (level + 1)
             : passed
             ? ' START LEVEL ' + (level + 1)
@@ -285,4 +301,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResultsView;
+export default ResultsViewPitch;

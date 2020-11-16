@@ -22,7 +22,7 @@ import data from '../data/questions.json';
 import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
-import ResultsView from './ResultsView';
+import ResultsViewPitch from './ResultsViewPitch';
 import {TextInput} from 'react-native-gesture-handler';
 import WhiteIcon from '../../images/blank.jpg';
 import GreenIcon from '../../images/blank-green.png';
@@ -128,7 +128,7 @@ const PitchLevels = ({level, mode}) => {
     false,
   ]);
 
-  const isTrial = useSelector((state) => state.isTrial);
+  const loggedIn = useSelector((state) => state.loggedIn);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
@@ -313,7 +313,7 @@ const PitchLevels = ({level, mode}) => {
   const selectAnswer2 = () => {
     var al = answerList.slice();
 
-    //console.log('answerList: ' + JSON.stringify(al));
+    console.log('answerList pitch: ' + JSON.stringify(al));
 
     var currentQuestion = questionList[currentQuestionInd];
 
@@ -378,24 +378,26 @@ const PitchLevels = ({level, mode}) => {
     console.log(`mainMenu ${level} passed: ${passed}`);
     //saveProgress();
 
-    if (isTrial) {
-      dispatch({type: 'SET_MODE', mode: 0});
-    } else {
-      var currentLevel = level;
-
-      if (passed) {
-        dispatch({type: 'SET_MODE', mode: 1});
-        dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
-
-        console.log(`set level: ${currentLevel + 1}`);
-        //dispatch(saveProgress(level));
-      } else {
-        console.log('restart quiz');
-      }
-
+    if (!passed) {
       setRestarted(true);
       setCurrentAnswer(null);
       setCorrectAnswers(0);
+    } else {
+      if (loggedIn) {
+        var currentLevel = level;
+
+        if (passed) {
+          dispatch({type: 'SET_MODE', mode: 1});
+          dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
+
+          console.log(`set level: ${currentLevel + 1}`);
+          //dispatch(saveProgress(level));
+        } else {
+          console.log('restart quiz');
+        }
+      } else {
+        dispatch({type: 'SET_MODE', mode: 0});
+      }
     }
   };
 
@@ -651,6 +653,7 @@ const PitchLevels = ({level, mode}) => {
                     fontFamily: 'Helvetica Neue',
                     fontSize: 20,
                     fontWeight: 'bold',
+                    color: '#3AB24A',
                   }}>
                   Quiz - Pitch Recognition Level {level}
                 </Text>
@@ -670,14 +673,48 @@ const PitchLevels = ({level, mode}) => {
                   Debug
                 </Text>
               </TouchableOpacity> */}
-                <Text
-                  style={{
-                    fontFamily: 'Helvetica Neue',
-                    fontSize: 15,
-                    marginTop: 15,
-                  }}>
-                  Question {currentQuestionInd + 1} of {questionList.length}
-                </Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Text
+                    style={{
+                      fontFamily: 'Helvetica Neue',
+                      fontSize: 15,
+                      marginTop: 15,
+                    }}>
+                    Question
+                  </Text>
+
+                  <Text
+                    style={{
+                      fontFamily: 'Helvetica Neue',
+                      fontSize: 15,
+                      marginTop: 15,
+                      color: '#3AB24A',
+                      fontWeight: 'bold',
+                    }}>
+                    {' '}
+                    {currentQuestionInd + 1}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: 'Helvetica Neue',
+                      fontSize: 15,
+                      marginTop: 15,
+                    }}>
+                    {' '}
+                    of
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: 'Helvetica Neue',
+                      fontSize: 15,
+                      marginTop: 15,
+                      color: '#3AB24A',
+                      fontWeight: 'bold',
+                    }}>
+                    {' '}
+                    {questionList.length}
+                  </Text>
+                </View>
                 <Text
                   style={{
                     marginTop: 30,
@@ -794,14 +831,15 @@ const PitchLevels = ({level, mode}) => {
           </View>
         </>
       ) : quizFinished ? (
-        <ResultsView
+        <ResultsViewPitch
           avgScore={80}
           answerList={answerList}
           correctAnswers={correctAnswers}
           total={questionList.length}
           mainMenu={mainMenu}
           level={level}
-          isTrial={isTrial}
+          loggedIn={loggedIn}
+          mode={mode}
         />
       ) : null}
     </>

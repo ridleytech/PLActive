@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   ScrollView,
   Alert,
+  KeyboardAvoidingView,
 } from 'react-native';
 import Header from './Header';
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
@@ -164,97 +165,101 @@ class Support extends Component<Props> {
     return (
       //console.log('user: ' + props.user);
       <>
-        <SafeAreaView />
-        <Header props={this.props} />
+        <KeyboardAvoidingView
+          //keyboardVerticalOffset={150}
+          style={{flex: 1}}
+          behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+          <Header props={this.props} />
 
-        <View style={styles.content}>
-          <ScrollView>
-            <Text style={styles.txtHeader}>SUPPORT</Text>
-            <Text style={{marginBottom: 15, fontSize: 16}}>
-              HOW CAN WE HELP YOU?
-            </Text>
-
-            <Text style={styles.txtHeader}>Name</Text>
-
-            <TextInput
-              autoCapitalize="none"
-              style={styles.inputTxt1}
-              onChangeText={(text) => this.changeVal4(text)}
-              value={this.state.name}></TextInput>
-            <Text style={styles.txtHeader}>Email</Text>
-
-            <TextInput
-              autoCapitalize="none"
-              style={styles.inputTxt1}
-              onChangeText={(text) => this.changeVal1(text)}
-              value={this.state.email}></TextInput>
-            <Text style={styles.txtHeader}>Subject</Text>
-
-            <TextInput
-              autoCapitalize="none"
-              style={styles.inputTxt1}
-              onChangeText={(text) => this.changeVal2(text)}
-              value={this.state.subject}></TextInput>
-            <Text style={styles.txtHeader}>Message</Text>
-
-            <TextInput
-              autoCapitalize="none"
-              multiline={true}
-              style={styles.inputTxt}
-              onChangeText={(text) => this.changeVal(text)}
-              value={this.state.message}></TextInput>
-
-            {this.props.supportSent ? (
-              <Text style={styles.supportSuccess}>
-                {this.props.responseMessage}
+          <View style={styles.content}>
+            <ScrollView>
+              <Text style={styles.txtHeader}>SUPPORT</Text>
+              <Text style={{marginBottom: 15, fontSize: 16}}>
+                HOW CAN WE HELP YOU?
               </Text>
-            ) : this.props.supportError ? (
-              <Text style={styles.supportError}>
-                {this.props.responseMessage}
-              </Text>
-            ) : null}
 
-            <View>
-              {!this.props.supportEnabled ? (
-                <ActivityIndicator
-                  color="white"
-                  size="large"
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    zIndex: 3,
-                  }}
-                />
-              ) : null}
-              <TouchableOpacity
-                onPress={this.sendMessage}
-                style={[
-                  styles.submitBtn,
-                  {
-                    backgroundColor: this.props.supportEnabled
-                      ? '#3AB24A'
-                      : 'gray',
-                  },
-                ]}>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontSize: 25,
-                    fontFamily: 'HelveticaNeue-Bold',
-                    paddingTop: 5,
-                  }}>
-                  SUBMIT
+              <Text style={styles.txtHeader}>Name</Text>
+
+              <TextInput
+                autoCapitalize="none"
+                style={styles.inputTxt1}
+                onChangeText={(text) => this.changeVal4(text)}
+                value={this.state.name}></TextInput>
+              <Text style={styles.txtHeader}>Email</Text>
+
+              <TextInput
+                autoCapitalize="none"
+                style={styles.inputTxt1}
+                onChangeText={(text) => this.changeVal1(text)}
+                value={this.state.email}></TextInput>
+              <Text style={styles.txtHeader}>Subject</Text>
+
+              <TextInput
+                autoCapitalize="none"
+                style={styles.inputTxt1}
+                onChangeText={(text) => this.changeVal2(text)}
+                value={this.state.subject}></TextInput>
+              <Text style={styles.txtHeader}>Message</Text>
+
+              <TextInput
+                autoCapitalize="none"
+                multiline={true}
+                style={styles.inputTxt}
+                onChangeText={(text) => this.changeVal(text)}
+                value={this.state.message}></TextInput>
+
+              {this.props.supportSent ? (
+                <Text style={styles.supportSuccess}>
+                  {this.props.responseMessage}
                 </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{height: 20}}></View>
-          </ScrollView>
-        </View>
+              ) : this.props.supportError ? (
+                <Text style={styles.supportError}>
+                  {this.props.responseMessage}
+                </Text>
+              ) : null}
+
+              <View>
+                {!this.props.supportEnabled ? (
+                  <ActivityIndicator
+                    color="white"
+                    size="large"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      zIndex: 3,
+                    }}
+                  />
+                ) : null}
+                <TouchableOpacity
+                  onPress={this.sendMessage}
+                  style={[
+                    styles.submitBtn,
+                    {
+                      backgroundColor: this.props.supportEnabled
+                        ? '#3AB24A'
+                        : 'gray',
+                    },
+                  ]}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 25,
+                      fontFamily: 'HelveticaNeue-Bold',
+                      paddingTop: 5,
+                    }}>
+                    SUBMIT
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{height: 270}} />
+            </ScrollView>
+          </View>
+        </KeyboardAvoidingView>
       </>
     );
   }
@@ -299,7 +304,12 @@ const styles = StyleSheet.create({
   supportError: {marginBottom: 20, color: 'red', fontSize: 22},
   supportSuccess: {marginBottom: 20, color: 'green', fontSize: 22},
 
-  txtHeader: {fontFamily: 'HelveticaNeue-Bold', fontSize: 20, marginBottom: 10},
+  txtHeader: {
+    fontFamily: 'HelveticaNeue-Bold',
+    fontSize: 20,
+    marginBottom: 10,
+    color: '#3AB24A',
+  },
   inputTxt: {
     fontFamily: 'HelveticaNeue',
     fontSize: 20,

@@ -3,7 +3,7 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import reducers from '../reducers/';
-import Navigation from './Navigation';
+import Navigation from './Navigation/Navigation';
 import SplashScreen from 'react-native-splash-screen';
 
 //const store = createStore(reducers, applyMiddleware(thunk));

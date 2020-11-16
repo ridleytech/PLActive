@@ -9,16 +9,43 @@ import {
 import activeImg from '../../images/active-listening.png';
 import headerLogo from '../../images/header-logo.png';
 import menuIcon from '../../images/menu-icon.png';
+import backIcon from '../../images/back-btn.png';
 import {useSelector, useDispatch} from 'react-redux';
 
 const Header = (props) => {
   //console.log('header props: ' + JSON.stringify(props));
 
   const dispatch = useDispatch();
+  const mode = useSelector((state) => state.mode);
+
+  const level = useSelector((state) => state.level);
 
   const goHome = () => {
     dispatch({type: 'SET_MODE', mode: 0});
     dispatch({type: 'SET_LEVEL', level: 0});
+  };
+
+  var showMenu = false;
+
+  if (mode == 0) {
+    showMenu = true;
+  }
+
+  const manageButton = () => {
+    if (mode == 0) {
+      props.props.navigation.toggleDrawer();
+    } else if (mode == 1 && level > 0) {
+      dispatch({type: 'SET_MODE', mode: 1});
+      dispatch({type: 'SET_LEVEL', level: 0});
+    } else if (mode == 2 && level > 0) {
+      dispatch({type: 'SET_MODE', mode: 2});
+      dispatch({type: 'SET_LEVEL', level: 0});
+    } else {
+      dispatch({type: 'SET_MODE', mode: 0});
+      dispatch({type: 'SET_LEVEL', level: 0});
+    }
+
+    //props.props.navigation.toggleDrawer();
   };
 
   return (
@@ -54,10 +81,10 @@ const Header = (props) => {
           left: 20,
           top: 35,
         }}
-        onPress={() => props.props.navigation.toggleDrawer()}
+        onPress={() => manageButton()}
         //onPress={() => goHome()}
       >
-        <Image source={menuIcon} style={{zIndex: 3}} />
+        <Image source={showMenu ? menuIcon : backIcon} style={{zIndex: 3}} />
       </TouchableOpacity>
     </View>
   );

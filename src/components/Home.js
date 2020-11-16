@@ -291,10 +291,10 @@ class Home extends Component<Props> {
     if (this.props.isTrial && level > 1) {
       Alert.alert(
         null,
-        `Please log in or upgrade to Premium membership to unlock this level.`,
+        `Please log in or join the Premium membership to unlock this level.`,
         [
           {text: 'LOGIN', onPress: () => this.showLogin()},
-          {text: 'UPGRADE', onPress: () => this.upgrade()},
+          {text: 'JOIN MEMBERSHIP', onPress: () => this.upgrade()},
           {text: 'CANCEL', onPress: () => console.log('OK Pressed')},
         ],
         {cancelable: false},

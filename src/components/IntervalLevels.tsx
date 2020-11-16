@@ -23,7 +23,7 @@ import disabledImg from '../../images/checkbox-disabled.png';
 import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
-import ResultsView from './ResultsView';
+import ResultsViewInterval from './ResultsViewInterval';
 //import {AsyncStorage} from 'react-native-community/async-storage';
 import {saveProgress} from '../thunks/';
 
@@ -94,7 +94,7 @@ const IntervalLevels = ({level, mode}) => {
 
   const [answerState, setAnswerState] = useState('#E2E7ED');
 
-  const isTrial = useSelector((state) => state.isTrial);
+  const loggedIn = useSelector((state) => state.loggedIn);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
@@ -289,7 +289,7 @@ const IntervalLevels = ({level, mode}) => {
   const selectAnswer2 = () => {
     var al = answerList.slice();
 
-    console.log('answerList: ' + JSON.stringify(al));
+    console.log('answerList interval: ' + JSON.stringify(al));
 
     var currentQuestion = questionList[currentQuestionInd];
 
@@ -341,28 +341,55 @@ const IntervalLevels = ({level, mode}) => {
     setQuizStarted(false);
   };
 
+  // const mainMenu = (passed) => {
+  //   console.log(`mainMenu ${level + 1} ${passed}`);
+  //   //saveProgress();
+
+  //   var currentLevel = level;
+
+  //   if (loggedIn) {
+  //     dispatch({type: 'SET_MODE', mode: 0});
+  //   } else {
+  //     if (passed) {
+  //       dispatch({type: 'SET_MODE', mode: 2});
+  //       dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
+
+  //       console.log(`set level: ${currentLevel + 1}`);
+  //       //dispatch(saveProgress(level));
+  //     } else {
+  //       console.log('restart quiz');
+  //     }
+
+  //     setRestarted(true);
+  //     setCurrentAnswer(null);
+  //     setCorrectAnswers(0);
+  //   }
+  // };
+
   const mainMenu = (passed) => {
-    console.log(`mainMenu ${level + 1} ${passed}`);
+    console.log(`mainMenu ${level} passed: ${passed}`);
     //saveProgress();
 
-    var currentLevel = level;
-
-    if (isTrial) {
-      dispatch({type: 'SET_MODE', mode: 0});
-    } else {
-      if (passed) {
-        dispatch({type: 'SET_MODE', mode: 2});
-        dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
-
-        console.log(`set level: ${currentLevel + 1}`);
-        //dispatch(saveProgress(level));
-      } else {
-        console.log('restart quiz');
-      }
-
+    if (!passed) {
       setRestarted(true);
       setCurrentAnswer(null);
       setCorrectAnswers(0);
+    } else {
+      if (loggedIn) {
+        var currentLevel = level;
+
+        if (passed) {
+          dispatch({type: 'SET_MODE', mode: 2});
+          dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
+
+          console.log(`set level: ${currentLevel + 1}`);
+          //dispatch(saveProgress(level));
+        } else {
+          console.log('restart quiz');
+        }
+      } else {
+        dispatch({type: 'SET_MODE', mode: 0});
+      }
     }
   };
 
@@ -543,9 +570,12 @@ const IntervalLevels = ({level, mode}) => {
                   fontFamily: 'Helvetica Neue',
                   fontSize: 20,
                   fontWeight: 'bold',
+                  color: '#3AB24A',
                 }}>
                 Quiz - Interval Training Level {level}
               </Text>
+
+              <Text style={styles.scaleHeader}>C Major Scale</Text>
 
               {/* <TouchableOpacity onPress={() => debugResults()}>
                 <Text
@@ -561,14 +591,49 @@ const IntervalLevels = ({level, mode}) => {
                 </Text>
               </TouchableOpacity> */}
 
-              <Text
-                style={{
-                  fontFamily: 'Helvetica Neue',
-                  fontSize: 15,
-                  marginTop: 15,
-                }}>
-                Question {currentQuestionInd + 1} of {questionList.length}
-              </Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    fontFamily: 'Helvetica Neue',
+                    fontSize: 15,
+                    marginTop: 15,
+                  }}>
+                  Question
+                </Text>
+
+                <Text
+                  style={{
+                    fontFamily: 'Helvetica Neue',
+                    fontSize: 15,
+                    marginTop: 15,
+                    color: '#3AB24A',
+                    fontWeight: 'bold',
+                  }}>
+                  {' '}
+                  {currentQuestionInd + 1}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Helvetica Neue',
+                    fontSize: 15,
+                    marginTop: 15,
+                  }}>
+                  {' '}
+                  of
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Helvetica Neue',
+                    fontSize: 15,
+                    marginTop: 15,
+                    color: '#3AB24A',
+                    fontWeight: 'bold',
+                  }}>
+                  {' '}
+                  {questionList.length}
+                </Text>
+              </View>
+
               <Text
                 style={{
                   marginTop: 30,
@@ -690,14 +755,15 @@ const IntervalLevels = ({level, mode}) => {
           </View>
         </>
       ) : quizFinished ? (
-        <ResultsView
+        <ResultsViewInterval
           avgScore={80}
           answerList={answerList}
           correctAnswers={correctAnswers}
           total={questionList.length}
           mainMenu={mainMenu}
           level={level}
-          isTrial={isTrial}
+          loggedIn={loggedIn}
+          mode={mode}
         />
       ) : null}
     </>
@@ -733,5 +799,11 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     alignSelf: 'center',
+  },
+  scaleHeader: {
+    fontSize: 18,
+    fontFamily: 'Helvetica Neue',
+    fontWeight: 'bold',
+    marginTop: 20,
   },
 });

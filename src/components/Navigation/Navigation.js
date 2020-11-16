@@ -3,18 +3,19 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {View, Image, StyleSheet, AsyncStorage} from 'react-native';
-import Home from './Home';
-import Support from './Support';
+import Home from '../Home';
+import Support from '../Support';
+import KB from '../KB';
 //import API from './debug/API';
-import SignIn from './Auth/SignIn';
-import SignUp from './Auth/SignUp';
-import Loading from './Loading';
-import Logout from './Auth/Logout';
+import SignIn from '../Auth/SignIn';
+import SignUp from '../Auth/SignUp';
+import Loading from '../Loading';
+import Logout from '../Auth/Logout';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
-import {authUser, login} from '../actions';
-import menuIcon from '../../images/menu-icon.png';
-import DrawerContent from '../components/Navigation/drawer';
+import {authUser, login} from '../../actions';
+import menuIcon from '../../../images/menu-icon.png';
+import DrawerContent from './drawer';
 
 const menuBtn = (props) => {
   return (

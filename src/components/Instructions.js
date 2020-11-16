@@ -29,6 +29,8 @@ const Instructions = ({
     useNativeDriver: false,
   }).start();
 
+  console.log('mode: ' + modename);
+
   return (
     <>
       <ScrollView style={{backgroundColor: 'white'}}>
@@ -38,11 +40,16 @@ const Instructions = ({
               fontFamily: 'Helvetica Neue',
               fontSize: 20,
               fontWeight: 'bold',
+              color: '#3AB24A',
             }}>
             Quiz - {modename} Level {level}
           </Text>
 
           <Image source={videoImg} style={styles.video} />
+
+          {modename == 'Interval Training' ? (
+            <Text style={styles.scaleHeader}>C Major Scale</Text>
+          ) : null}
 
           <Text
             style={{
@@ -113,6 +120,12 @@ const Instructions = ({
 };
 
 const styles = StyleSheet.create({
+  scaleHeader: {
+    fontSize: 18,
+    fontFamily: 'Helvetica Neue',
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
   list: {
     fontSize: 14,
     fontFamily: 'Helvetica Neue',

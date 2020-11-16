@@ -8,7 +8,11 @@ import {
   ActivityIndicator,
   AsyncStorage,
 } from 'react-native';
-import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {manageLogin, login} from '../../actions';
 import {loginUser} from '../../thunks';
@@ -246,64 +250,71 @@ class SignIn extends Component<Props> {
         </View> */}
 
         <View style={styles.content}>
-          <Text style={styles.txtHeader}>Username</Text>
-          <TextInput
-            autoCapitalize="none"
-            style={styles.inputTxt}
-            value={this.state.usernameVal}
-            onChangeText={(text) => this.changeVal(text)}></TextInput>
-          <Text style={styles.txtHeader}>Password</Text>
-          <TextInput
-            autoCapitalize="none"
-            secureTextEntry={true}
-            style={styles.inputTxt}
-            value={this.state.passwordVal}
-            onChangeText={(text) => this.changeVal2(text)}></TextInput>
+          <ScrollView>
+            <Text style={styles.txtHeader}>Username</Text>
+            <TextInput
+              autoCapitalize="none"
+              style={styles.inputTxt}
+              value={this.state.usernameVal}
+              onChangeText={(text) => this.changeVal(text)}></TextInput>
+            <Text style={styles.txtHeader}>Password</Text>
+            <TextInput
+              autoCapitalize="none"
+              secureTextEntry={true}
+              style={styles.inputTxt}
+              value={this.state.passwordVal}
+              onChangeText={(text) => this.changeVal2(text)}></TextInput>
 
-          {this.props.loginError ? (
-            <Text style={styles.loginError}>
-              Username/password combination invalid.
-            </Text>
-          ) : null}
-
-          <View>
-            {/* {this.state.hasUser ? <Text>has user</Text> : null} */}
-
-            {!this.props.loginEnabled ? (
-              <ActivityIndicator
-                color="white"
-                size="large"
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  zIndex: 3,
-                }}
-              />
+            {this.props.loginError ? (
+              <Text style={styles.loginError}>
+                Username/password combination invalid.
+              </Text>
             ) : null}
 
-            <TouchableOpacity
-              onPress={this.login}
-              style={[
-                styles.submitBtn,
-                {backgroundColor: this.props.loginEnabled ? '#3AB24A' : 'gray'},
-              ]}
-              disabled={!this.props.loginEnabled}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: 25,
-                  fontFamily: 'HelveticaNeue-Bold',
-                  paddingTop: 5,
-                }}>
-                LOG IN
-              </Text>
-            </TouchableOpacity>
-          </View>
+            <View>
+              {/* {this.state.hasUser ? <Text>has user</Text> : null} */}
+
+              {!this.props.loginEnabled ? (
+                <ActivityIndicator
+                  color="white"
+                  size="large"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 3,
+                  }}
+                />
+              ) : null}
+
+              <TouchableOpacity
+                onPress={this.login}
+                style={[
+                  styles.submitBtn,
+                  {
+                    backgroundColor: this.props.loginEnabled
+                      ? '#3AB24A'
+                      : 'gray',
+                  },
+                ]}
+                disabled={!this.props.loginEnabled}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 25,
+                    fontFamily: 'HelveticaNeue-Bold',
+                    paddingTop: 5,
+                  }}>
+                  LOG IN
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{height: 270}}></View>
+          </ScrollView>
         </View>
       </>
     );
