@@ -6,7 +6,7 @@ import {
   ImageBackground,
   AsyncStorage,
 } from 'react-native';
-import {Drawer} from 'react-native-paper';
+import {Title, Drawer} from 'react-native-paper';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {useDispatch, useSelector} from 'react-redux';
 //import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -18,6 +18,7 @@ function DrawerContent(props) {
   //const paperTheme = useTheme();
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.loggedIn);
+  const username = useSelector((state) => state.username);
 
   const removeUserInfo = () => {
     console.log('removeUserInfo drawer');
@@ -76,12 +77,14 @@ function DrawerContent(props) {
               flexDirection: 'row',
               marginTop: 15,
             }}>
-            {/* <View
+            <View
               style={{
                 flexDirection: 'column',
               }}>
-              <Title style={styles.title}>RANDALL RIDLEY</Title>
-            </View> */}
+              <Title style={styles.title}>
+                {authStatus ? `Hi, ${username}` : ''}
+              </Title>
+            </View>
           </View>
         </View>
 
@@ -106,33 +109,33 @@ function DrawerContent(props) {
             }}
           />
         </Drawer.Section>
-      </View>
 
-      {!authStatus ? (
-        <Drawer.Section style={styles.drawerSection}>
-          <DrawerItem
-            label="LOG IN"
-            labelStyle={styles.item}
-            onPress={() => {
-              dispatch({type: 'SHOW_LOGIN'});
-              props.navigation.toggleDrawer();
-              props.navigation.navigate('CHALLENGES');
-            }}
-          />
-        </Drawer.Section>
-      ) : (
-        <Drawer.Section style={styles.drawerSection}>
-          <DrawerItem
-            label="LOG OUT"
-            labelStyle={styles.item}
-            onPress={() => {
-              //props.navigation.navigate('LOG OUT');
-              [dispatch({type: 'LOGOUT_USER'}), removeUserInfo()];
-              props.navigation.toggleDrawer();
-            }}
-          />
-        </Drawer.Section>
-      )}
+        {!authStatus ? (
+          <Drawer.Section style={styles.drawerSection}>
+            <DrawerItem
+              label="LOG IN"
+              labelStyle={styles.item}
+              onPress={() => {
+                dispatch({type: 'SHOW_LOGIN'});
+                props.navigation.toggleDrawer();
+                props.navigation.navigate('CHALLENGES');
+              }}
+            />
+          </Drawer.Section>
+        ) : (
+          <Drawer.Section style={styles.drawerSection}>
+            <DrawerItem
+              label="LOG OUT"
+              labelStyle={styles.item}
+              onPress={() => {
+                //props.navigation.navigate('LOG OUT');
+                [dispatch({type: 'LOGOUT_USER'}), removeUserInfo()];
+                props.navigation.toggleDrawer();
+              }}
+            />
+          </Drawer.Section>
+        )}
+      </View>
     </ImageBackground>
   );
 }
@@ -163,6 +166,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     fontFamily: 'HelveticaNeue',
+    height: 25,
   },
   item: {
     fontSize: 16,
@@ -191,6 +195,9 @@ const styles = StyleSheet.create({
   },
   drawerSection: {
     borderTopColor: '#f4f4f4',
+    borderTopWidth: 1,
+  },
+  drawerSectionNone: {
     borderTopWidth: 1,
   },
 });

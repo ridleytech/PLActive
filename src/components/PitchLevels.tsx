@@ -30,6 +30,8 @@ import BlackIcon from '../../images/black.png';
 import BlackGreenIcon from '../../images/black-green.png';
 //import {AsyncStorage} from 'react-native-community/async-storage';
 import {saveProgress} from '../thunks/';
+import KeyboardView from './KeyboardView';
+import KeyboardView2 from './KeyboardView2';
 
 var testView = NativeModules.PlayKey;
 
@@ -65,6 +67,11 @@ const shuffle = (array) => {
 var Sound = require('react-native-sound');
 var currentNote;
 
+const {height, width} = Dimensions.get('window');
+const aspectRatio = height / width;
+
+console.log('screen width: ' + width);
+
 const PitchLevels = ({level, mode}) => {
   const dispatch = useDispatch();
 
@@ -95,6 +102,18 @@ const PitchLevels = ({level, mode}) => {
   const [canAnswer, setCanAnswer] = useState(false);
 
   const [keyStates, setKeyStates] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
     false,
     false,
     false,
@@ -251,7 +270,7 @@ const PitchLevels = ({level, mode}) => {
 
   useEffect(
     () => () => {
-      console.log('unmount');
+      //console.log('unmount');
 
       setSeconds(0);
       setIsActive(false);
@@ -523,6 +542,11 @@ const PitchLevels = ({level, mode}) => {
     var question = questions[0];
 
     console.log('question: ' + JSON.stringify(question));
+
+    //debug view results
+    // setRestarted(false);
+    // setQuizFinished(true);
+    // setQuizStarted(false);
   };
 
   const changeVal = (val) => {
@@ -617,22 +641,23 @@ const PitchLevels = ({level, mode}) => {
       ) : quizStarted ? (
         <>
           <View style={styles.mainContainer}>
-            <View
-              style={{
-                padding: 20,
-              }}>
-              <Text
+            <ScrollView>
+              <View
                 style={{
-                  fontFamily: 'Helvetica Neue',
-                  fontSize: 20,
-                  fontWeight: 'bold',
+                  padding: 20,
                 }}>
-                Quiz - Pitch Recognition Level {level}
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Helvetica Neue',
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                  }}>
+                  Quiz - Pitch Recognition Level {level}
+                </Text>
 
-              {/* <Text>File: {trackFile}</Text> */}
+                {/* <Text>File: {trackFile}</Text> */}
 
-              {/* <TouchableOpacity onPress={() => debugResults()}>
+                {/* <TouchableOpacity onPress={() => debugResults()}>
                 <Text
                   style={{
                     height: 35,
@@ -645,83 +670,85 @@ const PitchLevels = ({level, mode}) => {
                   Debug
                 </Text>
               </TouchableOpacity> */}
-              <Text
-                style={{
-                  fontFamily: 'Helvetica Neue',
-                  fontSize: 15,
-                  marginTop: 15,
-                }}>
-                Question {currentQuestionInd + 1} of {questionList.length}
-              </Text>
-              <Text
-                style={{
-                  marginTop: 30,
-                  marginBottom: 20,
-                  fontFamily: 'Helvetica Neue',
-                }}>
-                {questionList[currentQuestionInd]
-                  ? questionList[currentQuestionInd].Question
-                  : null}
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Helvetica Neue',
+                    fontSize: 15,
+                    marginTop: 15,
+                  }}>
+                  Question {currentQuestionInd + 1} of {questionList.length}
+                </Text>
+                <Text
+                  style={{
+                    marginTop: 30,
+                    marginBottom: 20,
+                    fontFamily: 'Helvetica Neue',
+                  }}>
+                  {questionList[currentQuestionInd]
+                    ? questionList[currentQuestionInd].Question
+                    : null}
+                </Text>
 
-              <View
-                style={{
-                  backgroundColor: '#222222',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                  paddingLeft: 20,
-                  paddingRight: 20,
-                  marginTop: 10,
-                }}>
                 <View
                   style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-
-                    paddingTop: Platform.OS === 'android' ? 10 : 0,
-                    paddingBottom: Platform.OS === 'android' ? 10 : 0,
+                    backgroundColor: '#222222',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    paddingLeft: 20,
+                    paddingRight: 20,
+                    marginTop: 10,
                   }}>
-                  <TouchableOpacity
-                    onPress={onButtonPressed}
-                    style={{marginRight: Platform.OS === 'ios' ? 20 : 10}}>
-                    {isPlaying ? (
-                      <Image source={pauseImg} />
-                    ) : (
-                      <Image source={playImg} />
-                    )}
-                  </TouchableOpacity>
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
 
-                  <Slider
-                    width="85%"
-                    minimumValue={0}
-                    maximumValue={1}
-                    value={sliderValue}
-                    minimumTrackTintColor="#16ADE5"
-                    maximumTrackTintColor="#707070"
-                    onSlidingStart={slidingStarted}
-                    onSlidingComplete={slidingCompleted}
-                    thumbTintColor="#00000000"
-                    //trackImage={track}
-                  />
+                      paddingTop: Platform.OS === 'android' ? 10 : 0,
+                      paddingBottom: Platform.OS === 'android' ? 10 : 0,
+                    }}>
+                    <TouchableOpacity
+                      onPress={onButtonPressed}
+                      style={{marginRight: Platform.OS === 'ios' ? 20 : 10}}>
+                      {isPlaying ? (
+                        <Image source={pauseImg} />
+                      ) : (
+                        <Image source={playImg} />
+                      )}
+                    </TouchableOpacity>
+
+                    <Slider
+                      width="85%"
+                      minimumValue={0}
+                      maximumValue={1}
+                      value={sliderValue}
+                      minimumTrackTintColor="#16ADE5"
+                      maximumTrackTintColor="#707070"
+                      onSlidingStart={slidingStarted}
+                      onSlidingComplete={slidingCompleted}
+                      thumbTintColor="#00000000"
+                      //trackImage={track}
+                    />
+                  </View>
                 </View>
               </View>
-            </View>
-            <TextInput
-              style={{
-                width: 70,
-                height: 50,
-                backgroundColor: answerState,
-                marginTop: 5,
-                marginBottom: 30,
-                borderRadius: 3,
-                marginLeft: 'auto',
-                marginRight: 'auto',
-                fontSize: 35,
-                textAlign: 'center',
-              }}
-              value={currentAnswer}
-              onChangeText={(text) => changeVal(text)}></TextInput>
+              <TextInput
+                style={{
+                  width: 70,
+                  height: 50,
+                  backgroundColor: answerState,
+                  marginTop: 5,
+                  marginBottom: 30,
+                  borderRadius: 3,
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  fontSize: 35,
+                  textAlign: 'center',
+                }}
+                value={currentAnswer}
+                onChangeText={(text) => changeVal(text)}></TextInput>
+              <View style={{height: 230}} />
+            </ScrollView>
             <View
               style={{
                 position: 'absolute',
@@ -732,108 +759,14 @@ const PitchLevels = ({level, mode}) => {
                 flex: 1,
                 maxHeight: '55%',
               }}>
-              <View
-                style={{
-                  backgroundColor: 'black',
-                  display: 'flex',
-                  flex: 1,
-                  flexDirection: 'row',
-                  bottom: 100,
-                }}>
-                <View
-                  onTouchStart={() => pressKey(0)}
-                  onTouchEnd={() => releaseKey(0)}
-                  style={[styles.whiteKey]}>
-                  <Image
-                    source={keyStates[0] ? GreenIcon : WhiteIcon}
-                    style={styles.icon}
-                  />
-                </View>
-                <View
-                  onTouchStart={() => pressKey(1)}
-                  onTouchEnd={() => releaseKey(1)}
-                  style={styles.blackKey2}>
-                  <Image source={keyStates[1] ? BlackGreenIcon : BlackIcon} />
-                </View>
-                <View
-                  onTouchStart={() => pressKey(2)}
-                  onTouchEnd={() => releaseKey(2)}
-                  style={styles.whiteKey}>
-                  <Image
-                    source={keyStates[2] ? GreenIcon : WhiteIcon}
-                    style={styles.icon}
-                  />
-                </View>
-                <View
-                  onTouchStart={() => pressKey(3)}
-                  onTouchEnd={() => releaseKey(3)}
-                  style={styles.blackKey3}>
-                  <Image source={keyStates[3] ? BlackGreenIcon : BlackIcon} />
-                </View>
-                <View
-                  onTouchStart={() => pressKey(4)}
-                  onTouchEnd={() => releaseKey(4)}
-                  style={styles.whiteKey}>
-                  <Image
-                    source={keyStates[4] ? GreenIcon : WhiteIcon}
-                    style={styles.icon}
-                  />
-                </View>
-                <View
-                  onTouchStart={() => pressKey(5)}
-                  onTouchEnd={() => releaseKey(5)}
-                  style={styles.whiteKey}>
-                  <Image
-                    source={keyStates[5] ? GreenIcon : WhiteIcon}
-                    style={styles.icon}
-                  />
-                </View>
-                <View
-                  onTouchStart={() => pressKey(6)}
-                  onTouchEnd={() => releaseKey(6)}
-                  style={styles.blackKey4}>
-                  <Image source={keyStates[6] ? BlackGreenIcon : BlackIcon} />
-                </View>
-                <View
-                  onTouchStart={() => pressKey(7)}
-                  onTouchEnd={() => releaseKey(7)}
-                  style={styles.whiteKey}>
-                  <Image
-                    source={keyStates[7] ? GreenIcon : WhiteIcon}
-                    style={styles.icon}
-                  />
-                </View>
-                <View
-                  onTouchStart={() => pressKey(8)}
-                  onTouchEnd={() => releaseKey(8)}
-                  style={styles.blackKey5}>
-                  <Image source={keyStates[8] ? BlackGreenIcon : BlackIcon} />
-                </View>
-                <View
-                  onTouchStart={() => pressKey(9)}
-                  onTouchEnd={() => releaseKey(9)}
-                  style={styles.whiteKey}>
-                  <Image
-                    source={keyStates[9] ? GreenIcon : WhiteIcon}
-                    style={styles.icon}
-                  />
-                </View>
-                <View
-                  onTouchStart={() => pressKey(10)}
-                  onTouchEnd={() => releaseKey(10)}
-                  style={styles.blackKey6}>
-                  <Image source={keyStates[10] ? BlackGreenIcon : BlackIcon} />
-                </View>
-                <View
-                  onTouchStart={() => pressKey(11)}
-                  onTouchEnd={() => releaseKey(11)}
-                  style={styles.whiteKey}>
-                  <Image
-                    source={keyStates[11] ? GreenIcon : WhiteIcon}
-                    style={styles.icon}
-                  />
-                </View>
-              </View>
+              {/* randall to do. debug this for android screens */}
+              {/* {Platform.OS === 'ios' && aspectRatio < 1.6 ? (
+                <KeyboardView2 />
+              ) : Platform.OS === 'ios' && aspectRatio > 1.6 ? (
+                <KeyboardView />
+              ) : null} */}
+
+              {width > 450 ? <KeyboardView2 /> : <KeyboardView />}
 
               <TouchableOpacity
                 onPress={() => selectAnswer2()}
@@ -894,6 +827,8 @@ let offset = Dimensions.get('screen').width / 9.2;
 
 let whiteKeyWidth = Dimensions.get('screen').width / 7;
 let blackKeyWidth = Dimensions.get('screen').width / 13;
+
+//blackKeyWidth = 5;
 
 const styles = StyleSheet.create({
   mainContainer: {

@@ -26,6 +26,7 @@ import {
   manageGraph,
   login,
   showLogin,
+  setUsername,
 } from '../actions/';
 import {getProgressData} from '../thunks/';
 import IntervalLevels from './IntervalLevels';
@@ -117,6 +118,7 @@ class Home extends Component<Props> {
       if (value !== null) {
         // We have data!!
         console.log(`retrieved username: ${value}`);
+        this.props.setUsername(value);
 
         this.setState({
           usernameVal: value,
@@ -229,6 +231,8 @@ class Home extends Component<Props> {
 
   componentDidMount() {
     this.props.getProgressData();
+
+    //return;
 
     if (this.props.graphStarted == false) {
       if (Platform.OS === 'ios') {
@@ -397,6 +401,7 @@ export default connect(mapStateToProps, {
   manageGraph,
   login,
   showLogin,
+  setUsername,
 })(Home);
 
 let offset = 100;

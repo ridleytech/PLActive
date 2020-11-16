@@ -10,6 +10,7 @@ import {
 
 import videoImg from '../../images/instructions-placeholder.png';
 import check from '../../images/check.png';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Instructions = ({
   correctAnswers,
@@ -30,59 +31,62 @@ const Instructions = ({
 
   return (
     <>
-      <View style={{padding: 20, backgroundColor: 'white', height: 1000}}>
-        <Text
-          style={{
-            fontFamily: 'Helvetica Neue',
-            fontSize: 20,
-            fontWeight: 'bold',
-          }}>
-          Quiz - {modename} Level {level}
-        </Text>
+      <ScrollView style={{backgroundColor: 'white'}}>
+        <View style={{padding: 20, backgroundColor: 'white', height: '100%'}}>
+          <Text
+            style={{
+              fontFamily: 'Helvetica Neue',
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}>
+            Quiz - {modename} Level {level}
+          </Text>
 
-        <Image source={videoImg} style={styles.video} />
+          <Image source={videoImg} style={styles.video} />
 
-        <Text
-          style={{
-            fontFamily: 'Helvetica Neue',
-            fontSize: 15,
-            marginTop: 15,
-            fontWeight: 'bold',
-            color: '#3AB24A',
-          }}>
-          Instructions
-        </Text>
+          <Text
+            style={{
+              fontFamily: 'Helvetica Neue',
+              fontSize: 15,
+              marginTop: 15,
+              fontWeight: 'bold',
+              color: '#3AB24A',
+            }}>
+            Instructions
+          </Text>
 
-        <Animated.View
-          style={{
-            paddingLeft: 5,
-            marginTop: 15,
-            paddingRight: 25,
-            opacity: opacity,
-          }}>
-          {instructions
-            ? instructions.map((text, index) => {
-                if (index < 3) {
-                  return (
-                    <View style={styles.listItem} key={index}>
-                      <Image source={check} style={styles.check} />
-                      <Text style={[styles.list]}>{instructions[index]}</Text>
-                    </View>
-                  );
-                } else {
-                  return (
-                    <View style={styles.listItem} key={index}>
-                      <Image source={check} style={styles.check} />
-                      <Text style={[styles.list, {fontWeight: 'bold'}]}>
-                        {instructions[index]}
-                      </Text>
-                    </View>
-                  );
-                }
-              })
-            : null}
-        </Animated.View>
-      </View>
+          <Animated.View
+            style={{
+              paddingLeft: 5,
+              marginTop: 15,
+              paddingRight: 25,
+              opacity: opacity,
+            }}>
+            {instructions
+              ? instructions.map((text, index) => {
+                  if (index < 3) {
+                    return (
+                      <View style={styles.listItem} key={index}>
+                        <Image source={check} style={styles.check} />
+                        <Text style={[styles.list]}>{instructions[index]}</Text>
+                      </View>
+                    );
+                  } else {
+                    return (
+                      <View style={styles.listItem} key={index}>
+                        <Image source={check} style={styles.check} />
+                        <Text style={[styles.list, {fontWeight: 'bold'}]}>
+                          {instructions[index]}
+                        </Text>
+                      </View>
+                    );
+                  }
+                })
+              : null}
+          </Animated.View>
+        </View>
+        <View style={{height: 70}} />
+      </ScrollView>
       <TouchableOpacity
         onPress={() => startQuiz()}
         style={{

@@ -69,6 +69,13 @@ export const showLogin = () => {
   };
 };
 
+export const setUsername = (username) => {
+  return {
+    type: 'SET_USERNAME',
+    username: username,
+  };
+};
+
 export const logout = () => {
   //console.log('action authUser: ' + JSON.stringify(user));
 

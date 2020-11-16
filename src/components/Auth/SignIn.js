@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
-  Image,
+  Alert,
   StyleSheet,
   Platform,
   ActivityIndicator,
@@ -64,12 +64,12 @@ class SignIn extends Component<Props> {
     //this.props.manageLogin(false);
     //debug
     //this.props.manageLogin(true);
-    this.setState({
-      usernameVal: 'ridley1224',
-    });
-    this.setState({
-      passwordVal: 'check1224',
-    });
+    // this.setState({
+    //   usernameVal: 'ridley1224',
+    // });
+    // this.setState({
+    //   passwordVal: 'check1224',
+    // });
     //this.retrieveData();
   }
 
@@ -104,6 +104,25 @@ class SignIn extends Component<Props> {
   }
 
   login = () => {
+    if (!this.state.usernameVal) {
+      Alert.alert(
+        null,
+        `Please enter username.`,
+        [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+        {cancelable: false},
+      );
+      return;
+    }
+    if (!this.state.passwordVal) {
+      Alert.alert(
+        null,
+        `Please enter password.`,
+        [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+        {cancelable: false},
+      );
+      return;
+    }
+
     //console.log('login');
     this.props.manageLogin(false);
     this.props.loginUser(this.state.usernameVal, this.state.passwordVal);

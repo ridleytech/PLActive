@@ -98,65 +98,71 @@ const IntervalMenu = ({showLevel}) => {
             keyExtractor={(item, index) => index.toString()}
           /> */}
 
-          <ScrollView style={{maxHeight: 290}}>
+          <ScrollView style={{height: '100%'}}>
             {levels.map((level, index) => {
               return (
-                <TouchableOpacity
-                  //disabled={index > highestCompletedIntervalLevel ? true : false}
-                  onPress={() => {
-                    showLevel(level);
-                  }}
-                  key={index}>
-                  <View
-                    style={{
-                      backgroundColor: '#F6FA43',
-                      height: 65,
-                      marginBottom: 2,
-                    }}>
-                    <Text
+                <>
+                  <TouchableOpacity
+                    //disabled={index > highestCompletedIntervalLevel ? true : false}
+                    onPress={() => {
+                      showLevel(level);
+                    }}
+                    key={index}>
+                    <View
                       style={{
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                        padding: 20,
-                        textAlign: 'center',
+                        backgroundColor: '#F6FA43',
+                        height: 65,
+                        marginBottom: 2,
                       }}>
-                      Level {level}
-                    </Text>
-                  </View>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: 'bold',
+                          padding: 20,
+                          textAlign: 'center',
+                        }}>
+                        Level {level}
+                      </Text>
+                    </View>
 
-                  {!loggedIn ? (
-                    <Image
-                      source={
-                        index < highestCompletedIntervalLevel
-                          ? checkIcon
-                          : index > 0
-                          ? lockIcon
-                          : null
-                      }
-                      style={{position: 'absolute', right: 12, top: 12}}
-                    />
-                  ) : (
-                    <Image
-                      source={
-                        index < highestCompletedIntervalLevel ? checkIcon : null
-                      }
-                      style={{position: 'absolute', right: 12, top: 12}}
-                    />
+                    {!loggedIn ? (
+                      <Image
+                        source={
+                          index < highestCompletedIntervalLevel
+                            ? checkIcon
+                            : index > 0
+                            ? lockIcon
+                            : null
+                        }
+                        style={{position: 'absolute', right: 12, top: 12}}
+                      />
+                    ) : (
+                      <Image
+                        source={
+                          index < highestCompletedIntervalLevel
+                            ? checkIcon
+                            : null
+                        }
+                        style={{position: 'absolute', right: 12, top: 12}}
+                      />
 
-                    // <Image
-                    //   source={
-                    //     index < highestCompletedIntervalLevel
-                    //       ? checkIcon
-                    //       : index > highestCompletedIntervalLevel
-                    //       ? lockIcon
-                    //       : null
-                    //   }
-                    //   style={{position: 'absolute', right: 12, top: 12}}
-                    // />
-                  )}
-                </TouchableOpacity>
+                      // <Image
+                      //   source={
+                      //     index < highestCompletedIntervalLevel
+                      //       ? checkIcon
+                      //       : index > highestCompletedIntervalLevel
+                      //       ? lockIcon
+                      //       : null
+                      //   }
+                      //   style={{position: 'absolute', right: 12, top: 12}}
+                      // />
+                    )}
+                  </TouchableOpacity>
+                </>
               );
             })}
+            {/* <View style={{height: 400}} /> */}
+            <View style={{height: 270}} />
           </ScrollView>
         </Animated.View>
       </View>

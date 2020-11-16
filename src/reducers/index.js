@@ -63,6 +63,19 @@ export default (state = inititalState, action) => {
         loginEnabled: true,
       };
 
+    case 'SET_USERNAME':
+      return {
+        ...state,
+        username: action.username,
+      };
+
+    case 'LOGIN_ERROR':
+      return {
+        ...state,
+        loginError: true,
+        loginEnabled: true,
+      };
+
     case 'SUPPORT_DATA':
       let supportData = action.payload;
 

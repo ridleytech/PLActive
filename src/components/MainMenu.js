@@ -89,7 +89,7 @@ const MainMenu = ({setMode}) => {
             keyExtractor={(item, index) => index.toString()}
           /> */}
 
-          <ScrollView style={{maxHeight: 290}}>
+          <ScrollView style={{height: '100%'}}>
             {levels.map((level, index) => {
               return (
                 <TouchableOpacity
@@ -116,6 +116,7 @@ const MainMenu = ({setMode}) => {
                 </TouchableOpacity>
               );
             })}
+            <View style={{height: 270}} />
           </ScrollView>
         </Animated.View>
       </View>

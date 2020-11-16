@@ -15,7 +15,8 @@ const ResultsView = ({
   mainMenu,
   answerList,
   avgScore,
-  level,isTrial
+  level,
+  isTrial,
 }) => {
   const [showStuff, setResults] = useState({show: false});
   const [passed, setPassed] = useState(false);
@@ -157,7 +158,8 @@ const ResultsView = ({
               justifyContent: 'center',
               alignItems: 'center',
               marginTop: 30,
-              width: 300,
+              width: '100%',
+              maxWidth: 280,
               marginLeft: 'auto',
               marginRight: 'auto',
             }}>
@@ -255,7 +257,11 @@ const ResultsView = ({
             fontWeight: 'bold',
             color: 'white',
           }}>
-          {isTrial && passed ? ' UPRGRADE TO START LEVEL ' + (level + 1): passed ? ' START LEVEL ' + (level + 1) : 'RESTART QUIZ'}
+          {isTrial && passed
+            ? ' UPRGRADE TO START LEVEL ' + (level + 1)
+            : passed
+            ? ' START LEVEL ' + (level + 1)
+            : 'RESTART QUIZ'}
         </Text>
       </TouchableOpacity>
     </>
