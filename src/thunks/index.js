@@ -15,7 +15,10 @@ const getQuestions = () => {
 
 export const getProgressData = () => (dispatch, getState) => {
   console.log('get progress');
-  fetch('http://localhost:8888/ridleytech/PianoLessons/get-progress.php')
+
+  let url = getState().url;
+
+  fetch(url + 'get-progress.php')
     .then((data) => {
       return data.json();
     })
@@ -23,6 +26,62 @@ export const getProgressData = () => (dispatch, getState) => {
       console.log(`data: ${data}`);
       dispatch({type: 'PROGRESS_INFO', payload: data});
     })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const getLeaderData = () => (dispatch, getState) => {
+  let url = getState().url;
+
+  console.log('getLeaderData: ' + url + 'get-leaderboard.php');
+
+  fetch(url + 'get-leaderboard.php')
+    .then((data) => {
+      return data.json();
+    })
+    .then((data) => {
+      console.log(`data: ${data}`);
+      dispatch({type: 'LEADER_DATA', payload: data});
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const saveTestScore = (score, duration) => (dispatch, getState) => {
+  //return;
+
+  let username = getState().username;
+  let loggedIn = getState().loggedIn;
+  let mode = getState().mode;
+  let url = getState().url;
+
+  console.log(
+    `saveTestScore: username: ${username} loggedIn: ${loggedIn} mode: ${mode} duration: ${duration} score: ${score}`,
+  );
+
+  fetch(url + 'add-results.php', {
+    method: 'POST',
+    body: JSON.stringify({
+      score: score,
+      duration: duration,
+      mode: mode,
+      username: username,
+      loggedIn: loggedIn,
+    }),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      dispatch({type: 'SCORE_SAVED', payload: data});
+    })
+
     .catch((error) => {
       console.log(error);
     });
@@ -36,6 +95,7 @@ export const saveProgress = (level1) => (dispatch, getState) => {
   let level = getState().currentLevel;
   let mode = getState().currentMode;
   let userid = getState().userid;
+  let url = getState().url;
 
   fetch('http://', {
     method: 'POST',

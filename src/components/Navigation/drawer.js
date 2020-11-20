@@ -110,6 +110,16 @@ function DrawerContent(props) {
           />
         </Drawer.Section>
 
+        <Drawer.Section style={styles.drawerSection}>
+          <DrawerItem
+            label="LEADER BOARD"
+            labelStyle={styles.item}
+            onPress={() => {
+              props.navigation.navigate('LEADER BOARD');
+            }}
+          />
+        </Drawer.Section>
+
         {!authStatus ? (
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem

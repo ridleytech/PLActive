@@ -10,10 +10,11 @@ import {
   Dimensions,
   Animated,
   AsyncStorage,
+  Alert,
+  Linking,
 } from 'react-native';
 
-import {useDispatch, useSelector} from 'react-redux';
-
+import {useDispatch, useSelector, connect} from 'react-redux';
 import Slider from '@react-native-community/slider';
 //import styles from './styles';
 import CheckBox from 'react-native-check-box';
@@ -25,7 +26,7 @@ import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
 import ResultsViewInterval from './ResultsViewInterval';
 //import {AsyncStorage} from 'react-native-community/async-storage';
-import {saveProgress} from '../thunks/';
+import {saveTestScore} from '../thunks/';
 
 //console.log('data: ' + JSON.stringify(data));
 
@@ -98,6 +99,29 @@ const IntervalLevels = ({level, mode}) => {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
+  const [quizTime, setQuizTime] = useState(0);
+  const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
+
+  //quiz timer
+
+  useEffect(() => {
+    let interval = null;
+
+    if (isQuizTimerActive) {
+      console.log('start quiz timer');
+      interval = setInterval(() => {
+        console.log('the seconds: ' + quizTime);
+
+        setQuizTime((quizTime) => quizTime + 1);
+      }, 1000);
+    } else if (!isQuizTimerActive && quizTime !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isQuizTimerActive, quizTime]);
+
+  //audio playhead
+
   useEffect(() => {
     let interval = null;
 
@@ -127,6 +151,8 @@ const IntervalLevels = ({level, mode}) => {
     }
     return () => clearInterval(interval);
   }, [isActive, seconds]);
+
+  //track info changed
 
   useEffect(() => {
     console.log('track info changed: ' + JSON.stringify(trackInfo));
@@ -173,10 +199,13 @@ const IntervalLevels = ({level, mode}) => {
       setCurrentQuestionInd(currentQuestion1);
       populateAnswers(questionList, currentQuestion1);
     } else {
+      setisQuizTimerActive(false);
       setQuizFinished(true);
       setQuizStarted(false);
     }
   };
+
+  //init load
 
   useEffect(() => {
     if (level > 1) {
@@ -213,6 +242,8 @@ const IntervalLevels = ({level, mode}) => {
     }
   }, [currentQuestionInd]);
 
+  //quiz finished changed
+
   useEffect(() => {
     if (quizFinished) {
       console.log('quiz finished');
@@ -231,20 +262,35 @@ const IntervalLevels = ({level, mode}) => {
           level: {highestCompletedIntervalLevel: level.toString()},
         });
 
-        storeData(level);
+        if (!loggedIn) {
+          if (level == 1) {
+            storeData(level);
+            dispatch(saveTestScore(per, quizTime));
+          }
+        } else {
+          storeData(level);
+          dispatch(saveTestScore(per, quizTime));
+        }
       }
     }
   }, [quizFinished]);
 
+  //unmount
+
   useEffect(
     () => () => {
       console.log('unmount');
+
+      setisQuizTimerActive(false);
+
       if (currentNote) {
         currentNote.release();
       }
     },
     [],
   );
+
+  //current track changed
 
   useEffect(() => {
     console.log('currentTrack changed');
@@ -341,33 +387,8 @@ const IntervalLevels = ({level, mode}) => {
     setQuizStarted(false);
   };
 
-  // const mainMenu = (passed) => {
-  //   console.log(`mainMenu ${level + 1} ${passed}`);
-  //   //saveProgress();
-
-  //   var currentLevel = level;
-
-  //   if (loggedIn) {
-  //     dispatch({type: 'SET_MODE', mode: 0});
-  //   } else {
-  //     if (passed) {
-  //       dispatch({type: 'SET_MODE', mode: 2});
-  //       dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
-
-  //       console.log(`set level: ${currentLevel + 1}`);
-  //       //dispatch(saveProgress(level));
-  //     } else {
-  //       console.log('restart quiz');
-  //     }
-
-  //     setRestarted(true);
-  //     setCurrentAnswer(null);
-  //     setCorrectAnswers(0);
-  //   }
-  // };
-
   const mainMenu = (passed) => {
-    console.log(`mainMenu ${level} passed: ${passed}`);
+    console.log(`interval ${level} passed: ${passed}`);
     //saveProgress();
 
     if (!passed) {
@@ -388,9 +409,45 @@ const IntervalLevels = ({level, mode}) => {
           console.log('restart quiz');
         }
       } else {
-        dispatch({type: 'SET_MODE', mode: 0});
+        upgrade();
+
+        setTimeout(() => {
+          dispatch({type: 'SET_MODE', mode: 0});
+          dispatch({type: 'SET_LEVEL', level: 0});
+        }, 1000);
+        return;
+
+        Alert.alert(
+          null,
+          `Please log in or join the Premium membership to unlock this level.`,
+          [
+            {text: 'JOIN MEMBERSHIP', onPress: () => upgrade()},
+            {
+              text: 'GO TO MAIN MENU',
+              onPress: () => {
+                console.log('main menu');
+                dispatch({type: 'SET_MODE', mode: 0});
+                dispatch({type: 'SET_LEVEL', level: 0});
+              },
+            },
+            {text: 'CANCEL', onPress: () => {}},
+          ],
+          {cancelable: false},
+        );
       }
     }
+  };
+
+  const upgrade = () => {
+    let url = 'http://pianolessonwithwarren.com/memberships/';
+
+    Linking.canOpenURL(url).then((supported) => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + url);
+      }
+    });
   };
 
   const storeData = async (level) => {
@@ -459,6 +516,8 @@ const IntervalLevels = ({level, mode}) => {
 
   const startQuiz = () => {
     console.log('startQuiz');
+
+    setisQuizTimerActive(true);
 
     var questions;
 
@@ -770,7 +829,15 @@ const IntervalLevels = ({level, mode}) => {
   );
 };
 
-export default IntervalLevels;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+    loggedIn: state.loggedIn,
+  };
+};
+
+//export default IntervalLevels;
+export default connect(mapStateToProps, {saveTestScore})(IntervalLevels);
 
 let offset = 100;
 

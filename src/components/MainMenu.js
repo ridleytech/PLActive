@@ -95,8 +95,8 @@ const MainMenu = ({setMode}) => {
             </Text>
           </Hyperlink>
         </View>
-        <Image source={videoImg} style={styles.video} />
-        <Animated.View style={{marginTop: 20, opacity: opacity}}>
+        {/* <Image source={videoImg} style={styles.video} /> */}
+        <Animated.View style={{marginTop: 40, opacity: opacity}}>
           <View
             style={{
               backgroundColor: '#3AB24A',

@@ -1,3 +1,15 @@
+var local = false;
+var localPath = 'http://localhost:8888/ridleytech/pianolesson/';
+var remotePath = 'https://pianolessonwithwarren.com/dev_site/pianolesson/';
+
+var url;
+
+if (local) {
+  url = localPath;
+} else {
+  url = remotePath;
+}
+
 const inititalState = {
   a: 1,
   level: 0,
@@ -18,6 +30,8 @@ const inititalState = {
   username: null,
   password: null,
   fullname: null,
+  leaderData: [],
+  url: url,
 };
 
 export default (state = inititalState, action) => {
@@ -91,7 +105,6 @@ export default (state = inititalState, action) => {
         //   "<div id='gform_confirmation_wrapper_2' class='gform_confirmation_wrapper '><div id='gform_confirmation_message_2' class='gform_confirmation_message_2 gform_confirmation_message'>Thanks for contacting us! We will get in touch with you within 24 hours.</div></div>";
 
         // if (supportData.confirmation_message === successResponse) {
-
         // }
 
         //console.log('confirmation messages matches');
@@ -194,6 +207,26 @@ export default (state = inititalState, action) => {
         highestCompletedIntervalLevel:
           progressData.highestCompletedIntervalLevel,
         highestCompletedPitchLevel: progressData.highestCompletedPitchLevel,
+      };
+
+    case 'LEADER_DATA':
+      let leaderData = action.payload.leaderData;
+
+      console.log(`leaderData: ${JSON.stringify(leaderData)}`);
+
+      return {
+        ...state,
+        leaderData: leaderData,
+      };
+
+    case 'SCORE_SAVED':
+      let scoreData = action.payload;
+
+      console.log(`scoreData: ${JSON.stringify(scoreData)}`);
+
+      return {
+        ...state,
+        //leaderData: leaderData,
       };
 
     case 'SET_PITCH_PROGRESS':

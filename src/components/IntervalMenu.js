@@ -71,8 +71,8 @@ const IntervalMenu = ({showLevel}) => {
           }}>
           Interval Training
         </Text>
-        <Image source={videoImg} style={styles.video} />
-        <Animated.View style={{marginTop: 20, opacity: opacity}}>
+        {/* <Image source={videoImg} style={styles.video} /> */}
+        <Animated.View style={{marginTop: 40, opacity: opacity}}>
           <View
             style={{
               backgroundColor: '#3AB24A',

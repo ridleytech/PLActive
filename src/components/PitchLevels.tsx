@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import {
   Text,
   Button,
@@ -12,9 +12,11 @@ import {
   NativeModules,
   Keyboard,
   AsyncStorage,
+  Alert,
+  Linking,
 } from 'react-native';
 
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector, connect} from 'react-redux';
 
 import Slider from '@react-native-community/slider';
 //import styles from './styles';
@@ -24,14 +26,11 @@ import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
 import ResultsViewPitch from './ResultsViewPitch';
 import {TextInput} from 'react-native-gesture-handler';
-import WhiteIcon from '../../images/blank.jpg';
-import GreenIcon from '../../images/blank-green.png';
-import BlackIcon from '../../images/black.png';
-import BlackGreenIcon from '../../images/black-green.png';
 //import {AsyncStorage} from 'react-native-community/async-storage';
 import {saveProgress} from '../thunks/';
 import KeyboardView from './KeyboardView';
 import KeyboardView2 from './KeyboardView2';
+import {saveTestScore} from '../thunks/';
 
 var testView = NativeModules.PlayKey;
 
@@ -70,7 +69,7 @@ var currentNote;
 const {height, width} = Dimensions.get('window');
 const aspectRatio = height / width;
 
-console.log('screen width: ' + width);
+//console.log('screen width: ' + width);
 
 const PitchLevels = ({level, mode}) => {
   const dispatch = useDispatch();
@@ -132,6 +131,29 @@ const PitchLevels = ({level, mode}) => {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
+  const [quizTime, setQuizTime] = useState(0);
+  const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
+
+  //quiz timer
+
+  useEffect(() => {
+    let interval = null;
+
+    if (isQuizTimerActive) {
+      console.log('start quiz timer');
+      interval = setInterval(() => {
+        console.log('the seconds: ' + quizTime);
+
+        setQuizTime((quizTime) => quizTime + 1);
+      }, 1000);
+    } else if (!isQuizTimerActive && quizTime !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isQuizTimerActive, quizTime]);
+
+  //audio playhead
+
   useEffect(() => {
     let interval = null;
 
@@ -162,12 +184,14 @@ const PitchLevels = ({level, mode}) => {
     return () => clearInterval(interval);
   }, [isActive, seconds]);
 
+  //track info changed
+
   useEffect(() => {
-    console.log('track info changed: ' + JSON.stringify(trackInfo));
+    //console.log('track info changed: ' + JSON.stringify(trackInfo));
 
     var pos = trackInfo.position / trackInfo.duration;
 
-    console.log('slider val: ' + pos);
+    //console.log('slider val: ' + pos);
 
     if (pos > 0) {
       setSliderValue(pos);
@@ -207,14 +231,18 @@ const PitchLevels = ({level, mode}) => {
       setCurrentQuestionInd(currentQuestion1);
       populateAnswers(questionList, currentQuestion1);
     } else {
+      setisQuizTimerActive(false);
+
       setQuizFinished(true);
       setQuizStarted(false);
     }
   };
 
+  //init load
+
   useEffect(() => {
-    console.log('on load pitch');
-    console.log('loadCount pitch: ' + loadCount);
+    // console.log('on load pitch');
+    // console.log('loadCount pitch: ' + loadCount);
 
     var lc = loadCount;
     lc++;
@@ -239,11 +267,15 @@ const PitchLevels = ({level, mode}) => {
 
   //console.log('height: ' + Dimensions.get('screen').height);
 
+  //current question index changed
+
   useEffect(() => {
     if (currentTrack) {
       console.log('currentQuestion changed: ' + currentTrack.name);
     }
   }, [currentQuestionInd]);
+
+  //quiz finished changed
 
   useEffect(() => {
     if (quizFinished) {
@@ -263,10 +295,20 @@ const PitchLevels = ({level, mode}) => {
           level: {highestCompletedPitchLevel: level.toString()},
         });
 
-        storeData(level);
+        if (!loggedIn) {
+          if (level == 1) {
+            storeData(level);
+            dispatch(saveTestScore(per, quizTime));
+          }
+        } else {
+          storeData(level);
+          dispatch(saveTestScore(per, quizTime));
+        }
       }
     }
   }, [quizFinished]);
+
+  //unmount
 
   useEffect(
     () => () => {
@@ -274,6 +316,7 @@ const PitchLevels = ({level, mode}) => {
 
       setSeconds(0);
       setIsActive(false);
+      setisQuizTimerActive(false);
 
       if (currentNote) {
         currentNote.release();
@@ -282,9 +325,10 @@ const PitchLevels = ({level, mode}) => {
     [],
   );
 
-  useEffect(() => {
-    console.log('currentTrack changed');
+  //current track changed
 
+  useEffect(() => {
+    //console.log('currentTrack changed');
     // console.log('add track: ' + currentTrack.name);
   }, [currentTrack]);
 
@@ -375,7 +419,7 @@ const PitchLevels = ({level, mode}) => {
   };
 
   const mainMenu = (passed) => {
-    console.log(`mainMenu ${level} passed: ${passed}`);
+    console.log(`pitch ${level} passed: ${passed}`);
     //saveProgress();
 
     if (!passed) {
@@ -396,9 +440,46 @@ const PitchLevels = ({level, mode}) => {
           console.log('restart quiz');
         }
       } else {
-        dispatch({type: 'SET_MODE', mode: 0});
+        upgrade();
+
+        //randall to do. check when app becomes active for new join status
+
+        setTimeout(() => {
+          dispatch({type: 'SET_MODE', mode: 0});
+          dispatch({type: 'SET_LEVEL', level: 0});
+        }, 1000);
+        return;
+        Alert.alert(
+          null,
+          `Please log in or join the Premium membership to unlock this level.`,
+          [
+            {text: 'JOIN MEMBERSHIP', onPress: () => upgrade()},
+            {
+              text: 'GO TO MAIN MENU',
+              onPress: () => {
+                console.log('main menu');
+                dispatch({type: 'SET_MODE', mode: 0});
+                dispatch({type: 'SET_LEVEL', level: 0});
+              },
+            },
+            {text: 'CANCEL', onPress: () => {}},
+          ],
+          {cancelable: false},
+        );
       }
     }
+  };
+
+  const upgrade = () => {
+    let url = 'http://pianolessonwithwarren.com/memberships/';
+
+    Linking.canOpenURL(url).then((supported) => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + url);
+      }
+    });
   };
 
   const storeData = async (level) => {
@@ -468,6 +549,8 @@ const PitchLevels = ({level, mode}) => {
   const startQuiz = () => {
     console.log('startQuiz');
 
+    setisQuizTimerActive(true);
+
     //currentNote.play();
 
     //setIsActive(true);
@@ -516,7 +599,7 @@ const PitchLevels = ({level, mode}) => {
       console.log(
         'duration in seconds: ' +
           currentNote.getDuration() +
-          'number of channels: ' +
+          ' number of channels: ' +
           currentNote.getNumberOfChannels(),
       );
 
@@ -846,7 +929,14 @@ const PitchLevels = ({level, mode}) => {
   );
 };
 
-export default PitchLevels;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+    loggedIn: state.loggedIn,
+  };
+};
+
+export default connect(mapStateToProps, {saveTestScore})(PitchLevels);
 
 // var sh = Dimensions.get('screen').height;
 // var h;

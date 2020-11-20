@@ -54,6 +54,7 @@ typedef struct {
   int currentNote;
   AUGraph _processingGraph;
   UInt32 numBuses;
+  bool graphStarted;
   
   SourceAudioBufferData mUserData;
 }

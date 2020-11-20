@@ -28,7 +28,7 @@ import {
   showLogin,
   setUsername,
 } from '../actions/';
-import {getProgressData} from '../thunks/';
+import {getProgressData, saveTestScore} from '../thunks/';
 import IntervalLevels from './IntervalLevels';
 import PitchLevels from './PitchLevels';
 //import {AsyncStorage} from 'react-native-community/async-storage';
@@ -55,7 +55,7 @@ class Home extends Component<Props> {
 
       if (value !== null) {
         // We have data!!
-        //console.log(`highestCompletedPitchLevel: ${value}`);
+        console.log(`highestCompletedPitchLevel: ${value}`);
       } else {
         //console.log('save default pitch data');
 
@@ -75,7 +75,7 @@ class Home extends Component<Props> {
 
       if (value2 !== null) {
         // We have data!!
-        //console.log(`highestCompletedIntervalLevel: ${value2}`);
+        console.log(`highestCompletedIntervalLevel: ${value2}`);
       } else {
         //console.log('save default interval data');
 
@@ -93,6 +93,18 @@ class Home extends Component<Props> {
     //reset progress data
     // this.storePitchData();
     // this.storeIntervalData();
+  };
+
+  storeNewAppUserData = async () => {
+    var id = this.makeid(8);
+    try {
+      await AsyncStorage.setItem('newAppUser', id);
+
+      console.log('newAppUser created');
+    } catch (error) {
+      // Error saving data
+      console.log('cant create newAppUser ');
+    }
   };
 
   storePitchData = async () => {
@@ -175,10 +187,48 @@ class Home extends Component<Props> {
         this.setState({
           hasUser: null,
         });
+
+        try {
+          var value2 = await AsyncStorage.getItem('newAppUser');
+
+          if (value2 !== null) {
+            // We have data!!
+            console.log(`newAppUser: ${value2}`);
+            //this.storeNewAppUserData();
+
+            this.props.setUsername(value2);
+
+            // try {
+            //   await AsyncStorage.removeItem('newAppUser');
+
+            //   console.log('newAppUser deleted');
+            // } catch (error) {
+            //   // Error saving data
+            //   console.log('cant delete 2');
+            // }
+          } else {
+            console.log('save default interval data new user');
+
+            this.storeNewAppUserData();
+          }
+        } catch (error) {
+          // Error retrieving data
+        }
       }
     } catch (error) {
       // Error retrieving data
     }
+  };
+
+  makeid = (length) => {
+    var result = '';
+    var characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   };
 
   storeUsername = async () => {
@@ -230,7 +280,8 @@ class Home extends Component<Props> {
   }
 
   componentDidMount() {
-    this.props.getProgressData();
+    //this.props.getProgressData();
+    //this.props.saveTestScore(89, 120);
 
     //return;
 
@@ -402,6 +453,7 @@ export default connect(mapStateToProps, {
   login,
   showLogin,
   setUsername,
+  saveTestScore,
 })(Home);
 
 let offset = 100;

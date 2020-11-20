@@ -29,7 +29,7 @@ const Instructions = ({
     useNativeDriver: false,
   }).start();
 
-  console.log('mode: ' + modename);
+  //console.log('mode: ' + modename);
 
   return (
     <>
@@ -45,7 +45,7 @@ const Instructions = ({
             Quiz - {modename} Level {level}
           </Text>
 
-          <Image source={videoImg} style={styles.video} />
+          {/* <Image source={videoImg} style={styles.video} /> */}
 
           {modename == 'Interval Training' ? (
             <Text style={styles.scaleHeader}>C Major Scale</Text>
@@ -54,10 +54,10 @@ const Instructions = ({
           <Text
             style={{
               fontFamily: 'Helvetica Neue',
-              fontSize: 15,
-              marginTop: 15,
+              fontSize: 18,
+              marginTop: 40,
               fontWeight: 'bold',
-              color: '#3AB24A',
+              color: 'black',
             }}>
             Instructions
           </Text>

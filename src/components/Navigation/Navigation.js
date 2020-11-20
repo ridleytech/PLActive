@@ -16,6 +16,7 @@ import {connect} from 'react-redux';
 import {authUser, login} from '../../actions';
 import menuIcon from '../../../images/menu-icon.png';
 import DrawerContent from './drawer';
+import Leaderboard from '../Leaderboard';
 
 const menuBtn = (props) => {
   return (
@@ -60,6 +61,11 @@ const AppDrawerScreen = () => (
       name="SUPPORT"
       component={Support}
       options={{drawerLabel: 'SUPPORT'}}
+    />
+    <AppDrawer.Screen
+      name="LEADER BOARD"
+      component={Leaderboard}
+      options={{drawerLabel: 'LEADER BOARD'}}
     />
     <AppDrawer.Screen name="LOG OUT" component={Logout} />
   </AppDrawer.Navigator>

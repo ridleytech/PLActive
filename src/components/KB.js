@@ -1,57 +1,78 @@
-import React from 'react';
-import {
-  View,
-  KeyboardAvoidingView,
-  TextInput,
-  StyleSheet,
-  Text,
-  Platform,
-  TouchableWithoutFeedback,
-  Button,
-  Keyboard,
-} from 'react-native';
+import React, {Component} from 'react';
+import {View, TextInput, Image, Animated, Keyboard} from 'react-native';
+import styles, {IMAGE_HEIGHT, IMAGE_HEIGHT_SMALL} from './styles';
+import logo from '../../images/logo.png';
 
-const KeyboardAvoidingComponent = () => {
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.inner}>
-          <Text style={styles.header}>Header</Text>
-          <TextInput placeholder="Username" style={styles.textInput} />
-          <View style={styles.btnContainer}>
-            <Button title="Submit" onPress={() => null} />
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
-  );
-};
+class Demo extends Component {
+  constructor(props) {
+    super(props);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  inner: {
-    padding: 24,
-    flex: 1,
-    justifyContent: 'space-around',
-  },
-  header: {
-    fontSize: 36,
-    marginBottom: 48,
-  },
-  textInput: {
-    height: 40,
-    borderColor: '#000000',
-    borderBottomWidth: 1,
-    marginBottom: 36,
-  },
-  btnContainer: {
-    backgroundColor: 'white',
-    marginTop: 12,
-  },
-});
+    this.keyboardHeight = new Animated.Value(0);
+    this.imageHeight = new Animated.Value(IMAGE_HEIGHT);
+  }
 
-export default KeyboardAvoidingComponent;
+  UNSAFE_componentWillMount() {
+    this.keyboardWillShowSub = Keyboard.addListener(
+      'keyboardWillShow',
+      this.keyboardWillShow,
+    );
+    this.keyboardWillHideSub = Keyboard.addListener(
+      'keyboardWillHide',
+      this.keyboardWillHide,
+    );
+  }
+
+  UNSAFE_componentWillUnmount() {
+    this.keyboardWillShowSub.remove();
+    this.keyboardWillHideSub.remove();
+  }
+
+  keyboardWillShow = (event) => {
+    console.log('show 2');
+    Animated.parallel([
+      Animated.timing(this.keyboardHeight, {
+        duration: event.duration,
+        toValue: event.endCoordinates.height,
+        useNativeDriver: false,
+      }),
+      // Animated.timing(this.imageHeight, {
+      //   duration: event.duration,
+      //   toValue: IMAGE_HEIGHT_SMALL,
+      //   useNativeDriver: false,
+      // }),
+    ]).start();
+  };
+
+  keyboardWillHide = (event) => {
+    Animated.parallel([
+      Animated.timing(this.keyboardHeight, {
+        duration: event.duration,
+        toValue: 0,
+        useNativeDriver: false,
+      }),
+      // Animated.timing(this.imageHeight, {
+      //   duration: event.duration,
+      //   toValue: IMAGE_HEIGHT,
+      //   useNativeDriver: false,
+      // }),
+    ]).start();
+  };
+
+  render() {
+    return (
+      <Animated.View
+        style={[styles.container, {paddingBottom: this.keyboardHeight}]}>
+        <Animated.Image
+          source={logo}
+          style={[styles.logo, {height: this.imageHeight}]}
+        />
+        <TextInput placeholder="Email" style={styles.input} />
+        <TextInput placeholder="Username" style={styles.input} />
+        <TextInput placeholder="Password" style={styles.input} />
+        <TextInput placeholder="Confirm Password" style={styles.input} />
+      </Animated.View>
+    );
+  }
+}
+
+export default Demo;

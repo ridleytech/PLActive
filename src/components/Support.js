@@ -165,6 +165,7 @@ class Support extends Component<Props> {
     return (
       //console.log('user: ' + props.user);
       <>
+        <SafeAreaView />
         <KeyboardAvoidingView
           //keyboardVerticalOffset={150}
           style={{flex: 1}}
@@ -173,8 +174,8 @@ class Support extends Component<Props> {
 
           <View style={styles.content}>
             <ScrollView>
-              <Text style={styles.txtHeader}>SUPPORT</Text>
-              <Text style={{marginBottom: 15, fontSize: 16}}>
+              <Text style={[styles.txtHeader, {marginTop: 20}]}>Support</Text>
+              <Text style={{marginBottom: 40, fontSize: 16}}>
                 HOW CAN WE HELP YOU?
               </Text>
 
@@ -256,7 +257,7 @@ class Support extends Component<Props> {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View style={{height: 270}} />
+              {/* <View style={{height: 270}} /> */}
             </ScrollView>
           </View>
         </KeyboardAvoidingView>
@@ -286,7 +287,6 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     width: '80%',
-    marginTop: 20,
   },
   submitBtn: {
     fontFamily:

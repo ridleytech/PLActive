@@ -274,8 +274,8 @@ const ResultsViewInterval = ({
             fontWeight: 'bold',
             color: 'white',
           }}>
-          {loggedIn && passed
-            ? ' UPRGRADE TO START LEVEL ' + (level + 1)
+          {!loggedIn && passed
+            ? ' JOIN TO START LEVEL ' + (level + 1)
             : passed
             ? ' START LEVEL ' + (level + 1)
             : 'RESTART QUIZ'}

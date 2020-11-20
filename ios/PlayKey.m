@@ -172,6 +172,11 @@ RCT_EXPORT_METHOD(releaseKey:(int)key
 
 - (void)initGraph {
   
+  if(_processingGraph)
+  {
+    NSLog(@"graph already started in xcode");
+  }
+  
   OSStatus status = 0;
   OSStatus result = noErr;
   
