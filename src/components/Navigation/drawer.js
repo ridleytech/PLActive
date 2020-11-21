@@ -4,13 +4,14 @@ import {
   StyleSheet,
   Image,
   ImageBackground,
-  AsyncStorage,
+  //AsyncStorage,
 } from 'react-native';
 import {Title, Drawer} from 'react-native-paper';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {useDispatch, useSelector} from 'react-redux';
 //import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 //import {AuthContext} from '../components/context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import bgImg from '../../../images/menu-bg.png';
 
@@ -26,6 +27,7 @@ function DrawerContent(props) {
     deleteUser();
     deleteUsername();
     deletePassword();
+    dispatch({type: 'RESET_PROGRESS'});
   };
 
   const deleteUsername = async () => {
@@ -75,7 +77,7 @@ function DrawerContent(props) {
           <View
             style={{
               flexDirection: 'row',
-              marginTop: 15,
+              marginTop: 25,
             }}>
             <View
               style={{

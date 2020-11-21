@@ -79,7 +79,7 @@ const Header = (props) => {
           height: 35,
           position: 'absolute',
           left: 20,
-          top: 35,
+          top: 30,
         }}
         onPress={() => manageButton()}
         //onPress={() => goHome()}

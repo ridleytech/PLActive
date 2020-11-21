@@ -72,7 +72,7 @@ const IntervalMenu = ({showLevel}) => {
           Interval Training
         </Text>
         {/* <Image source={videoImg} style={styles.video} /> */}
-        <Animated.View style={{marginTop: 40, opacity: opacity}}>
+        <Animated.View style={{marginTop: 30, opacity: opacity}}>
           <View
             style={{
               backgroundColor: '#3AB24A',
@@ -146,24 +146,12 @@ const IntervalMenu = ({showLevel}) => {
                         }
                         style={{position: 'absolute', right: 12, top: 12}}
                       />
-
-                      // <Image
-                      //   source={
-                      //     index < highestCompletedIntervalLevel
-                      //       ? checkIcon
-                      //       : index > highestCompletedIntervalLevel
-                      //       ? lockIcon
-                      //       : null
-                      //   }
-                      //   style={{position: 'absolute', right: 12, top: 12}}
-                      // />
                     )}
                   </TouchableOpacity>
                 </>
               );
             })}
-            {/* <View style={{height: 400}} /> */}
-            <View style={{height: 270}} />
+            <View style={{height: 100}} />
           </ScrollView>
         </Animated.View>
       </View>

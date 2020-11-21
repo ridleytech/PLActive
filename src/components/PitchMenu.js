@@ -19,7 +19,7 @@ import {FlatList, ScrollView} from 'react-native-gesture-handler';
 const PitchMenu = ({showLevel}) => {
   var levels = [1, 2, 3];
 
-  const isTrial = useSelector((state) => state.isTrial);
+  const loggedIn = useSelector((state) => state.loggedIn);
   const highestCompletedPitchLevel = useSelector(
     (state) => state.highestCompletedPitchLevel,
   );
@@ -72,7 +72,7 @@ const PitchMenu = ({showLevel}) => {
           Pitch Recognition
         </Text>
         {/* <Image source={videoImg} style={styles.video} /> */}
-        <Animated.View style={{marginTop: 40, opacity: opacity}}>
+        <Animated.View style={{marginTop: 30, opacity: opacity}}>
           <View
             style={{
               backgroundColor: '#3AB24A',
@@ -125,7 +125,7 @@ const PitchMenu = ({showLevel}) => {
                     </Text>
                   </View>
 
-                  {isTrial ? (
+                  {!loggedIn ? (
                     <Image
                       source={
                         index < highestCompletedPitchLevel

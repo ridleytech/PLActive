@@ -18,7 +18,6 @@ const inititalState = {
   userid: 1,
   highestCompletedIntervalLevel: 0,
   highestCompletedPitchLevel: 0,
-  isTrial: true,
   loggedIn: false,
   graphStarted: false,
   loginEnabled: true,
@@ -67,7 +66,6 @@ export default (state = inititalState, action) => {
         loggedIn: loginStatus,
         loginEnabled: true,
         loginError: loginError1,
-        isTrial: false,
         mode: mode1,
       };
 
@@ -172,7 +170,6 @@ export default (state = inititalState, action) => {
         // username: action.username,
         // password: action.password,
         loggedIn: true,
-        isTrial: false,
       };
 
     case 'SHOW_LOGIN':
@@ -191,7 +188,6 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         loggedIn: false,
-        isTrial: true,
         username: null,
         password: null,
       };
@@ -266,6 +262,16 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         highestCompletedIntervalLevel: levelVal,
+      };
+
+    case 'RESET_PROGRESS':
+      //console.log('action: ' + JSON.stringify(action));
+
+      console.log('RESET_PROGRESS');
+      return {
+        ...state,
+        highestCompletedPitchLevel: 0,
+        highestCompletedIntervalLevel: 0,
       };
 
     case 'SET_LEVEL':

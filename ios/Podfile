@@ -10,6 +10,7 @@ target 'PianoLessons' do
 
   pod 'RNSound', :path => '../node_modules/react-native-sound'
 
+
   target 'PianoLessonsTests' do
     inherit! :complete
     # Pods for testing

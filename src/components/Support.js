@@ -167,7 +167,6 @@ class Support extends Component<Props> {
       <>
         <SafeAreaView />
         <KeyboardAvoidingView
-          //keyboardVerticalOffset={150}
           style={{flex: 1}}
           behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
           <Header props={this.props} />

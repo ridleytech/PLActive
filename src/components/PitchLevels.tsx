@@ -11,7 +11,7 @@ import {
   Animated,
   NativeModules,
   Keyboard,
-  AsyncStorage,
+  //AsyncStorage,
   Alert,
   Linking,
 } from 'react-native';
@@ -26,11 +26,13 @@ import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
 import ResultsViewPitch from './ResultsViewPitch';
 import {TextInput} from 'react-native-gesture-handler';
-//import {AsyncStorage} from 'react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {saveProgress} from '../thunks/';
 import KeyboardView from './KeyboardView';
 import KeyboardView2 from './KeyboardView2';
 import {saveTestScore} from '../thunks/';
+
+//https://nicedoc.io/zmxv/react-native-sound
 
 var testView = NativeModules.PlayKey;
 
@@ -596,6 +598,9 @@ const PitchLevels = ({level, mode}) => {
         return;
       }
       // loaded successfully
+
+      currentNote.setCategory('Playback');
+
       console.log(
         'duration in seconds: ' +
           currentNote.getDuration() +
@@ -737,6 +742,7 @@ const PitchLevels = ({level, mode}) => {
                     fontSize: 20,
                     fontWeight: 'bold',
                     color: '#3AB24A',
+                    width: '95%',
                   }}>
                   Quiz - Pitch Recognition Level {level}
                 </Text>
@@ -800,8 +806,8 @@ const PitchLevels = ({level, mode}) => {
                 </View>
                 <Text
                   style={{
-                    marginTop: 30,
-                    marginBottom: 20,
+                    marginTop: 15,
+                    marginBottom: 15,
                     fontFamily: 'Helvetica Neue',
                   }}>
                   {questionList[currentQuestionInd]

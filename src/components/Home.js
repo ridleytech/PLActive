@@ -3,7 +3,7 @@ import {
   StyleSheet,
   NativeModules,
   SafeAreaView,
-  AsyncStorage,
+  //AsyncStorage,
   Alert,
   Platform,
   TouchableOpacity,
@@ -32,8 +32,7 @@ import {
 import {getProgressData, saveTestScore} from '../thunks/';
 import IntervalLevels from './IntervalLevels';
 import PitchLevels from './PitchLevels';
-//import {AsyncStorage} from 'react-native-community/async-storage';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 //https://www.npmjs.com/package/react-native-check-box
 //cant update git
 
@@ -269,9 +268,11 @@ class Home extends Component<Props> {
       this.props.loggedIn == true &&
       prevProps.username != this.props.username
     ) {
-      this.props.login(true);
-
       console.log('loggedin changed home: ' + this.props.loggedIn);
+
+      //this.props.login(true);
+
+      this.props.getProgressData();
 
       if (this.props.username) {
         this.storeUsername(this.props.username);
@@ -286,7 +287,7 @@ class Home extends Component<Props> {
       this.props.getProgressData();
     }
 
-    this.props.getProgressData();
+    //this.props.getProgressData();
 
     //return;
 

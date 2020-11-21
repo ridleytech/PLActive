@@ -9,7 +9,7 @@ import {
   ScrollView,
   Dimensions,
   Animated,
-  AsyncStorage,
+  //AsyncStorage,
   Alert,
   Linking,
 } from 'react-native';
@@ -25,7 +25,7 @@ import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
 import ResultsViewInterval from './ResultsViewInterval';
-//import {AsyncStorage} from 'react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {saveTestScore} from '../thunks/';
 
 //console.log('data: ' + JSON.stringify(data));
@@ -194,6 +194,8 @@ const IntervalLevels = ({level, mode}) => {
           console.log('file ' + filename + ' loaded');
 
           //currentNote.play();
+
+          currentNote.setCategory('Playback');
         });
       }
       setCurrentQuestionInd(currentQuestion1);
@@ -630,6 +632,7 @@ const IntervalLevels = ({level, mode}) => {
                   fontSize: 20,
                   fontWeight: 'bold',
                   color: '#3AB24A',
+                  width: '95%',
                 }}>
                 Quiz - Interval Training Level {level}
               </Text>
@@ -695,8 +698,8 @@ const IntervalLevels = ({level, mode}) => {
 
               <Text
                 style={{
-                  marginTop: 30,
-                  marginBottom: 20,
+                  marginTop: 15,
+                  marginBottom: 15,
                   fontFamily: 'Helvetica Neue',
                 }}>
                 {questionList[currentQuestionInd]

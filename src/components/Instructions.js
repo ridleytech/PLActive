@@ -41,6 +41,7 @@ const Instructions = ({
               fontSize: 20,
               fontWeight: 'bold',
               color: '#3AB24A',
+              width: '95%',
             }}>
             Quiz - {modename} Level {level}
           </Text>
@@ -55,7 +56,7 @@ const Instructions = ({
             style={{
               fontFamily: 'Helvetica Neue',
               fontSize: 18,
-              marginTop: 40,
+              marginTop: 20,
               fontWeight: 'bold',
               color: 'black',
             }}>

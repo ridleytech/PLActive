@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {View, Image, StyleSheet, AsyncStorage} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 import Home from '../Home';
 import Support from '../Support';
 import KB from '../KB';
