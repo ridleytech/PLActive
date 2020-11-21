@@ -335,27 +335,27 @@
       {
         "Question": "What is the distance between C and E?",
         "Answer": "Major 3rd"
+      },
+      {
+        "Question": "What is the distance between C and F?",
+        "Answer": "Perfect 4th"
+      },
+      {
+        "Question": "What is the distance between C and G?",
+        "Answer": "Perfect 5th"
+      },
+      {
+        "Question": "What is the distance between C and A?",
+        "Answer": "Major 6th"
+      },
+      {
+        "Question": "What is the distance between C and B?",
+        "Answer": "Major 7th"
+      },
+      {
+        "Question": "What is the distance between C and C?",
+        "Answer": "Octave"
       }
-      // {
-      //   "Question": "What is the distance between C and F?",
-      //   "Answer": "Perfect 4th"
-      // },
-      // {
-      //   "Question": "What is the distance between C and G?",
-      //   "Answer": "Perfect 5th"
-      // },
-      // {
-      //   "Question": "What is the distance between C and A?",
-      //   "Answer": "Major 6th"
-      // },
-      // {
-      //   "Question": "What is the distance between C and B?",
-      //   "Answer": "Major 7th"
-      // },
-      // {
-      //   "Question": "What is the distance between C and C?",
-      //   "Answer": "Octave"
-      // }
     ],
     "level1Answers": [
       "Major 2nd",

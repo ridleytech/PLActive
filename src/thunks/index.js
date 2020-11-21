@@ -1,29 +1,24 @@
-const getQuestions = () => {
-  return (dispatch) => {
-    fetch('http://')
-      .then((data) => {
-        return data.json();
-      })
-      .then((data) => {
-        dispatch({type: 'GOT_QUESTION', payload: data});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
-
 export const getProgressData = () => (dispatch, getState) => {
-  console.log('get progress');
-
   let url = getState().url;
+  let username = getState().username;
 
-  fetch(url + 'get-progress.php')
+  console.log('get progress:' + url + 'get-progress.php ' + username);
+
+  fetch(url + 'get-progress.php', {
+    method: 'POST',
+    body: JSON.stringify({
+      username: username,
+    }),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
     .then((data) => {
       return data.json();
     })
     .then((data) => {
-      console.log(`data: ${data}`);
+      //console.log(`data: ${JSON.stringify(data)}`);
       dispatch({type: 'PROGRESS_INFO', payload: data});
     })
     .catch((error) => {
@@ -31,12 +26,25 @@ export const getProgressData = () => (dispatch, getState) => {
     });
 };
 
-export const getLeaderData = () => (dispatch, getState) => {
+export const getLeaderData = (level, mode) => (dispatch, getState) => {
   let url = getState().url;
 
-  console.log('getLeaderData: ' + url + 'get-leaderboard.php');
+  console.log(
+    'getLeaderData: ' +
+      url +
+      'get-leaderboard.php level: ' +
+      level +
+      ' mode: ' +
+      mode,
+  );
 
-  fetch(url + 'get-leaderboard.php')
+  fetch(url + 'get-leaderboard.php', {
+    method: 'POST',
+    body: JSON.stringify({
+      level: level,
+      mode: mode,
+    }),
+  })
     .then((data) => {
       return data.json();
     })
@@ -56,9 +64,10 @@ export const saveTestScore = (score, duration) => (dispatch, getState) => {
   let loggedIn = getState().loggedIn;
   let mode = getState().mode;
   let url = getState().url;
+  let level = getState().level;
 
   console.log(
-    `saveTestScore: username: ${username} loggedIn: ${loggedIn} mode: ${mode} duration: ${duration} score: ${score}`,
+    `saveTestScore: username: ${username} loggedIn: ${loggedIn} mode: ${mode} duration: ${duration} score: ${score} level: ${level}`,
   );
 
   fetch(url + 'add-results.php', {
@@ -67,6 +76,7 @@ export const saveTestScore = (score, duration) => (dispatch, getState) => {
       score: score,
       duration: duration,
       mode: mode,
+      level: level,
       username: username,
       loggedIn: loggedIn,
     }),
@@ -94,14 +104,16 @@ export const saveProgress = (level1) => (dispatch, getState) => {
 
   let level = getState().currentLevel;
   let mode = getState().currentMode;
+  let username = getState().username;
   let userid = getState().userid;
   let url = getState().url;
 
-  fetch('http://', {
+  fetch(url + 'save-progress.php', {
     method: 'POST',
     body: JSON.stringify({
       level: level,
       mode: mode,
+      username: username,
       userid: userid,
     }),
     headers: {
@@ -123,6 +135,8 @@ export const saveProgress = (level1) => (dispatch, getState) => {
 export const loginUser = (username, password) => (dispatch, getState) => {
   //console.log(`username: ${username} password: ${password}`);
 
+  let deviceUsername = getState().deviceUsername;
+
   fetch(
     'https://pianolessonwithwarren.com/wp-json/ars/VerifyUser/?key=pk_017ddc497ab0d005eea8e2e2744f05f9e77a0ac4',
     {
@@ -130,6 +144,7 @@ export const loginUser = (username, password) => (dispatch, getState) => {
       body: JSON.stringify({
         username: username,
         password: password,
+        deviceUsername: deviceUsername,
       }),
       headers: {
         Accept: 'application/json',

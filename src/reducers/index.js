@@ -28,6 +28,7 @@ const inititalState = {
   supportError: false,
   responseMessage: null,
   username: null,
+  deviceUsername: null,
   password: null,
   fullname: null,
   leaderData: [],
@@ -81,6 +82,12 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         username: action.username,
+      };
+
+    case 'SET_DEVICE_USERNAME':
+      return {
+        ...state,
+        deviceUsername: action.username,
       };
 
     case 'LOGIN_ERROR':
@@ -200,13 +207,12 @@ export default (state = inititalState, action) => {
     case 'PROGRESS_INFO':
       let progressData = action.payload.progressData;
 
-      console.log(`progressData: ${progressData}`);
+      console.log(`progressData: ${JSON.stringify(progressData)}`);
 
       return {
         ...state,
-        highestCompletedIntervalLevel:
-          progressData.highestCompletedIntervalLevel,
-        highestCompletedPitchLevel: progressData.highestCompletedPitchLevel,
+        highestCompletedIntervalLevel: progressData.ihi,
+        highestCompletedPitchLevel: progressData.phi,
       };
 
     case 'LEADER_DATA':

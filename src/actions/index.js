@@ -76,6 +76,13 @@ export const setUsername = (username) => {
   };
 };
 
+export const setDeviceUsername = (username) => {
+  return {
+    type: 'SET_DEVICE_USERNAME',
+    username: username,
+  };
+};
+
 export const logout = () => {
   //console.log('action authUser: ' + JSON.stringify(user));
 

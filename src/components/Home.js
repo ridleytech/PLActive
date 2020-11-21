@@ -27,6 +27,7 @@ import {
   login,
   showLogin,
   setUsername,
+  setDeviceUsername,
 } from '../actions/';
 import {getProgressData, saveTestScore} from '../thunks/';
 import IntervalLevels from './IntervalLevels';
@@ -197,6 +198,7 @@ class Home extends Component<Props> {
             //this.storeNewAppUserData();
 
             this.props.setUsername(value2);
+            this.props.setDeviceUsername(value2);
 
             // try {
             //   await AsyncStorage.removeItem('newAppUser');
@@ -280,8 +282,11 @@ class Home extends Component<Props> {
   }
 
   componentDidMount() {
-    //this.props.getProgressData();
-    //this.props.saveTestScore(89, 120);
+    if (this.props.loggedIn) {
+      this.props.getProgressData();
+    }
+
+    this.props.getProgressData();
 
     //return;
 
@@ -339,7 +344,7 @@ class Home extends Component<Props> {
     // return;
     // //end debug
 
-    if (this.props.isTrial && level > 1) {
+    if (!this.props.loggedIn && level > 1) {
       Alert.alert(
         null,
         `Please log in or join the Premium membership to unlock this level.`,
@@ -431,7 +436,6 @@ class Home extends Component<Props> {
 
 const mapStateToProps = (state) => {
   return {
-    isTrial: state.isTrial,
     level: state.level,
     mode: state.mode,
     highestCompletedPitchLevel: state.highestCompletedPitchLevel,
@@ -440,6 +444,7 @@ const mapStateToProps = (state) => {
     loggedIn: state.loggedIn,
     username: state.username,
     password: state.password,
+    url: state.url,
   };
 };
 
@@ -453,6 +458,7 @@ export default connect(mapStateToProps, {
   login,
   showLogin,
   setUsername,
+  setDeviceUsername,
   saveTestScore,
 })(Home);
 

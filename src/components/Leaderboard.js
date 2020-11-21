@@ -10,23 +10,109 @@ import {
 import Header from './Header';
 import {connect} from 'react-redux';
 import {getLeaderData} from '../thunks';
+import SegmentedControl from '@react-native-community/segmented-control';
 
 class Leaderboard extends Component<Props> {
   constructor(props: Props) {
     super(props);
+
+    this.state = {
+      currentMode: 'Interval Training',
+      currentLevel: 1,
+      selectedIndex: 0,
+      lastMode: 0,
+      selectedLevelIndex: 0,
+      lastIntervalLevel: 0,
+      lastPitchLevel: 0,
+      pitchLevels: ['1', '2', '3'],
+      intervalLevels: ['1', '2', '3', '4', '5'],
+      currentLevelDisplayLevels: ['1', '2', '3'],
+    };
   }
 
   componentDidMount() {
     //console.log('leaderboard did mount');
 
-    this.props.getLeaderData();
+    //(level,mode)
+    this.props.getLeaderData(1, 1);
   }
 
   str_pad_left = (string, pad, length) => {
     return (new Array(length + 1).join(pad) + string).slice(-length);
   };
 
-  //componentDidUpdate(prevProps, nextState) {}
+  setOption = (event) => {
+    console.log('update UI');
+
+    if (event.nativeEvent.selectedSegmentIndex == 1) {
+      this.setState({
+        currentLevelDisplayLevels: this.state.intervalLevels,
+        currentMode: 'Interval Training',
+        lastPitchLevel: 0,
+        lastMode: event.nativeEvent.selectedSegmentIndex,
+        selectedIndex: event.nativeEvent.selectedSegmentIndex,
+      });
+    } else {
+      this.setState({
+        currentLevelDisplayLevels: this.state.pitchLevels,
+        currentMode: 'Pitch Recognition',
+        lastIntervalLevel: 0,
+        lastMode: event.nativeEvent.selectedSegmentIndex,
+        selectedIndex: event.nativeEvent.selectedSegmentIndex,
+      });
+    }
+  };
+
+  setLevelOption = (event) => {
+    this.setState({});
+
+    if (this.state.currentMode == 'Interval Training') {
+      console.log(
+        'set int last level to: ' + event.nativeEvent.selectedSegmentIndex,
+      );
+      this.setState({
+        lastIntervalLevel: event.nativeEvent.selectedSegmentIndex,
+
+        selectedLevelIndex: event.nativeEvent.selectedSegmentIndex,
+      });
+    } else {
+      console.log(
+        'set pitch last level to: ' + event.nativeEvent.selectedSegmentIndex,
+      );
+
+      this.setState({
+        lastPitchLevel: event.nativeEvent.selectedSegmentIndex,
+
+        selectedLevelIndex: event.nativeEvent.selectedSegmentIndex,
+      });
+    }
+  };
+
+  componentDidUpdate(prevProps, nextState) {
+    if (
+      this.state.lastMode != nextState.lastMode ||
+      this.state.lastIntervalLevel != nextState.lastIntervalLevel ||
+      this.state.lastPitchLevel != nextState.lastPitchLevel
+    ) {
+      console.log('get new data: ' + JSON.stringify(nextState));
+      //console.log('index: ' + this.state.selectedLevelIndex);
+
+      var level;
+
+      if (this.state.lastIntervalLevel != nextState.lastIntervalLevel) {
+        level = parseInt(this.state.lastIntervalLevel) + 1;
+      } else {
+        level = parseInt(this.state.lastPitchLevel) + 1;
+      }
+      var mode = parseInt(this.state.lastMode) + 1;
+
+      console.log('mode: ' + mode);
+      console.log('level: ' + level);
+
+      //(level,mode)
+      this.props.getLeaderData(level, mode);
+    }
+  }
 
   render() {
     //console.log('Support 2 props: ' + JSON.stringify(this.props));
@@ -89,6 +175,40 @@ class Leaderboard extends Component<Props> {
         <Header props={this.props} />
         <View style={styles.content}>
           <Text style={styles.txtHeader}>Leader Board</Text>
+          {/* <Text style={styles.subHeader}>{this.state.currentMode}</Text>
+          <Text style={styles.subHeader}>Level {this.state.currentLevel}</Text> */}
+
+          <Text style={[styles.subHeader, [{marginTop: 20}]]}>Program</Text>
+
+          <SegmentedControl
+            style={{marginBottom: 10}}
+            height={50}
+            tintColor={'#3AB24A'}
+            activeFontStyle={{color: 'white', fontSize: 16}}
+            fontStyle={{color: 'black', fontSize: 16}}
+            values={['Pitch Recognition', 'Interval Training']}
+            selectedIndex={this.state.selectedIndex}
+            onChange={(event) => {
+              this.setOption(event);
+            }}
+          />
+
+          <Text style={styles.subHeader}>Level</Text>
+
+          <SegmentedControl
+            values={this.state.currentLevelDisplayLevels}
+            tintColor={'#3AB24A'}
+            activeFontStyle={{color: 'white', fontSize: 14}}
+            fontStyle={{color: 'black'}}
+            selectedIndex={
+              this.state.currentMode == 'Interval Training'
+                ? this.state.lastIntervalLevel
+                : this.state.lastPitchLevel
+            }
+            onChange={(event) => {
+              this.setLevelOption(event);
+            }}
+          />
 
           <View
             style={{
@@ -97,7 +217,7 @@ class Leaderboard extends Component<Props> {
               padding: 20,
               backgroundColor: '#3AB24A',
               height: 65,
-              marginTop: 40,
+              marginTop: 20,
               borderTopLeftRadius: 8,
               borderTopRightRadius: 8,
             }}>
@@ -154,6 +274,12 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     width: '80%',
     marginTop: 20,
+  },
+  subHeader: {
+    marginTop: 10,
+    fontSize: 17,
+    marginBottom: 10,
+    fontWeight: 'bold',
   },
   txtHeader: {
     fontFamily: 'HelveticaNeue-Bold',
