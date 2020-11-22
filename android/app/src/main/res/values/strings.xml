@@ -3,4 +3,6 @@
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
     <string name="facebook_app_id">1902589753385038</string>
+    <color name="background">#282c33</color>
+
 </resources>

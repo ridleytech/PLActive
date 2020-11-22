@@ -30,6 +30,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {saveProgress} from '../thunks/';
 import KeyboardView from './KeyboardView';
 import KeyboardView2 from './KeyboardView2';
+//import KeyboardView3 from './KeyboardView3';
 import {saveTestScore} from '../thunks/';
 
 //https://nicedoc.io/zmxv/react-native-sound
@@ -70,8 +71,6 @@ var currentNote;
 
 const {height, width} = Dimensions.get('window');
 const aspectRatio = height / width;
-
-//console.log('screen width: ' + width);
 
 const PitchLevels = ({level, mode}) => {
   const dispatch = useDispatch();
@@ -142,9 +141,9 @@ const PitchLevels = ({level, mode}) => {
     let interval = null;
 
     if (isQuizTimerActive) {
-      console.log('start quiz timer');
+      //console.log('start quiz timer');
       interval = setInterval(() => {
-        console.log('the seconds: ' + quizTime);
+        //console.log('the seconds: ' + quizTime);
 
         setQuizTime((quizTime) => quizTime + 1);
       }, 1000);
@@ -245,6 +244,8 @@ const PitchLevels = ({level, mode}) => {
   useEffect(() => {
     // console.log('on load pitch');
     // console.log('loadCount pitch: ' + loadCount);
+
+    console.log('screen width: ' + width);
 
     var lc = loadCount;
     lc++;

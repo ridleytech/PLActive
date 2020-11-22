@@ -108,9 +108,9 @@ const IntervalLevels = ({level, mode}) => {
     let interval = null;
 
     if (isQuizTimerActive) {
-      console.log('start quiz timer');
+      //console.log('start quiz timer');
       interval = setInterval(() => {
-        console.log('the seconds: ' + quizTime);
+        //console.log('the seconds: ' + quizTime);
 
         setQuizTime((quizTime) => quizTime + 1);
       }, 1000);

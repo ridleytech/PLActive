@@ -196,6 +196,8 @@ let offset = Dimensions.get('screen').width / 9.2;
 let whiteKeyWidth = Dimensions.get('screen').width / 7;
 let blackKeyWidth = Dimensions.get('screen').width / 13;
 
+console.log('white key width kb1: ' + whiteKeyWidth);
+
 const styles = StyleSheet.create({
   mainContainer: {
     //backgroundColor: 'yellow',
