@@ -862,7 +862,7 @@ const PitchLevels = ({level, mode}) => {
               <TextInput
                 style={{
                   width: 70,
-                  height: 50,
+                  height: 70,
                   backgroundColor: answerState,
                   marginTop: 5,
                   marginBottom: 30,
@@ -874,7 +874,7 @@ const PitchLevels = ({level, mode}) => {
                 }}
                 value={currentAnswer}
                 onChangeText={(text) => changeVal(text)}></TextInput>
-              <View style={{height: 230}} />
+              <View style={{height: 250}} />
             </ScrollView>
             <View
               style={{
@@ -882,9 +882,9 @@ const PitchLevels = ({level, mode}) => {
                 bottom: 0,
                 left: 0,
                 width: '100%',
-                backgroundColor: 'yellow',
+                backgroundColor: 'black',
                 flex: 1,
-                maxHeight: '55%',
+                //maxHeight: '85%',
               }}>
               {/* randall to do. debug this for android screens */}
               {/* {Platform.OS === 'ios' && aspectRatio < 1.6 ? (

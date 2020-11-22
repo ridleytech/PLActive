@@ -86,11 +86,11 @@ const KeyboardView = () => {
   return (
     <View
       style={{
-        backgroundColor: 'black',
+        //backgroundColor: 'blue',
         display: 'flex',
         flex: 1,
         flexDirection: 'row',
-        bottom: 100,
+        //bottom: 100,
       }}>
       <View
         onTouchStart={() => pressKey(0)}
@@ -220,6 +220,7 @@ const styles = StyleSheet.create({
     height: '100%',
     maxHeight: 250,
     marginRight: 0.5,
+    //backgroundColor: 'purple',
   },
   blackKey: {position: 'absolute', zIndex: 1},
   blackKey2: {
@@ -227,34 +228,35 @@ const styles = StyleSheet.create({
     zIndex: 1,
     height: 135,
     width: blackKeyWidth,
+    //backgroundColor: 'red',
     left: offset,
   },
   blackKey3: {
     position: 'absolute',
     zIndex: 1,
     height: 135,
-    width: blackKeyWidth,
+    //width: blackKeyWidth,
     left: offset + whiteKeyWidth,
   },
   blackKey4: {
     position: 'absolute',
     zIndex: 1,
     height: 135,
-    width: blackKeyWidth,
+    //width: blackKeyWidth,
     left: offset + whiteKeyWidth * 3,
   },
   blackKey5: {
     position: 'absolute',
     zIndex: 1,
     height: 135,
-    width: blackKeyWidth,
+    //width: blackKeyWidth,
     left: offset + whiteKeyWidth * 4,
   },
   blackKey6: {
     position: 'absolute',
     zIndex: 1,
     height: 135,
-    width: blackKeyWidth,
+    //width: blackKeyWidth,
     left: offset + whiteKeyWidth * 5,
   },
 });
