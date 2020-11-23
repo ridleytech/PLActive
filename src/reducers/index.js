@@ -207,8 +207,8 @@ export default (state = inititalState, action) => {
 
       return {
         ...state,
-        highestCompletedIntervalLevel: progressData.ihi,
-        highestCompletedPitchLevel: progressData.phi,
+        highestCompletedIntervalLevel: parseInt(progressData.ihi),
+        highestCompletedPitchLevel: parseInt(progressData.phi),
       };
 
     case 'LEADER_DATA':

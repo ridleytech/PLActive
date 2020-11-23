@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  ImageBackground,
-  //AsyncStorage,
-} from 'react-native';
+import {View, StyleSheet, Image, ImageBackground} from 'react-native';
 import {Title, Drawer} from 'react-native-paper';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {useDispatch, useSelector} from 'react-redux';

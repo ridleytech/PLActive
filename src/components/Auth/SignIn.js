@@ -6,8 +6,8 @@ import {
   StyleSheet,
   Platform,
   ActivityIndicator,
-  AsyncStorage,
   KeyboardAvoidingView,
+  Linking,
 } from 'react-native';
 import {
   ScrollView,
@@ -89,6 +89,18 @@ class SignIn extends Component<Props> {
     this.props.loginUser(this.state.usernameVal, this.state.passwordVal);
   };
 
+  join = () => {
+    let url = 'http://pianolessonwithwarren.com/memberships/';
+
+    Linking.canOpenURL(url).then((supported) => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + url);
+      }
+    });
+  };
+
   componentDidUpdate(prevProps, nextState) {
     if (this.props.loggedIn != prevProps.loggedIn) {
       console.log('login changed on signin screen');
@@ -160,6 +172,37 @@ class SignIn extends Component<Props> {
                       paddingTop: 5,
                     }}>
                     LOG IN
+                  </Text>
+                </TouchableOpacity>
+                {/* <TouchableOpacity
+                  onPress={this.join}
+                  style={[
+                    styles.submitBtn,
+                    {
+                      backgroundColor: '#3AB24A',
+                    },
+                    {marginTop: 10},
+                  ]}
+                  disabled={!this.props.loginEnabled}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 25,
+                      fontFamily: 'HelveticaNeue-Bold',
+                      paddingTop: 5,
+                    }}>
+                    JOIN NOW
+                  </Text>
+                </TouchableOpacity> */}
+                <TouchableOpacity onPress={this.join} style={[{marginTop: 20}]}>
+                  <Text
+                    style={{
+                      color: '#3AB24A',
+                      fontSize: 18,
+                      fontFamily: 'HelveticaNeue',
+                      textAlign: 'center',
+                    }}>
+                    Join now
                   </Text>
                 </TouchableOpacity>
               </View>

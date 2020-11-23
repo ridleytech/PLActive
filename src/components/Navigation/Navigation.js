@@ -5,10 +5,8 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {View, Image, StyleSheet} from 'react-native';
 import Home from '../Home';
 import Support from '../Support';
-import KB from '../KB';
 //import API from './debug/API';
 import SignIn from '../Auth/SignIn';
-import SignUp from '../Auth/SignUp';
 import Loading from '../Loading';
 import Logout from '../Auth/Logout';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -78,7 +76,6 @@ const AuthStackScreen = (props) => {
   return (
     <AuthStack.Navigator initialRouteName={SignIn} headerMode="none">
       <AuthStack.Screen name="SignIn" component={SignIn} />
-      <AuthStack.Screen name="SignUp" component={SignUp} />
     </AuthStack.Navigator>
   );
 };

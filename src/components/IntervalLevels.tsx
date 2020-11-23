@@ -9,7 +9,6 @@ import {
   ScrollView,
   Dimensions,
   Animated,
-  //AsyncStorage,
   Alert,
   Linking,
 } from 'react-native';
@@ -411,31 +410,41 @@ const IntervalLevels = ({level, mode}) => {
           console.log('restart quiz');
         }
       } else {
-        upgrade();
+        //upgrade();
 
-        setTimeout(() => {
-          dispatch({type: 'SET_MODE', mode: 0});
-          dispatch({type: 'SET_LEVEL', level: 0});
-        }, 1000);
-        return;
+        // setTimeout(() => {
+        //   dispatch({type: 'SET_MODE', mode: 0});
+        //   dispatch({type: 'SET_LEVEL', level: 0});
+        // }, 1000);
 
-        Alert.alert(
-          null,
-          `Please log in or join the Premium membership to unlock this level.`,
-          [
-            {text: 'JOIN MEMBERSHIP', onPress: () => upgrade()},
-            {
-              text: 'GO TO MAIN MENU',
-              onPress: () => {
-                console.log('main menu');
-                dispatch({type: 'SET_MODE', mode: 0});
-                dispatch({type: 'SET_LEVEL', level: 0});
-              },
-            },
-            {text: 'CANCEL', onPress: () => {}},
-          ],
-          {cancelable: false},
-        );
+        //show login
+
+        dispatch({type: 'SET_MODE', mode: 0});
+        dispatch({type: 'SET_LEVEL', level: 0});
+        dispatch({type: 'SHOW_LOGIN'});
+        props.navigation.navigate('CHALLENGES');
+
+        // return;
+
+        // Alert.alert(
+        //   null,
+        //   //`Please log in or join the Premium membership to unlock this level.`,
+        //   `Please log in to unlock this level.`,
+        //   [
+        //     //{text: 'JOIN MEMBERSHIP', onPress: () => upgrade()},
+        //     {text: 'LOGIN', onPress: () => upgrade()},
+        //     {
+        //       text: 'GO TO MAIN MENU',
+        //       onPress: () => {
+        //         console.log('main menu');
+        //         dispatch({type: 'SET_MODE', mode: 0});
+        //         dispatch({type: 'SET_LEVEL', level: 0});
+        //       },
+        //     },
+        //     {text: 'CANCEL', onPress: () => {}},
+        //   ],
+        //   {cancelable: false},
+        // );
       }
     }
   };

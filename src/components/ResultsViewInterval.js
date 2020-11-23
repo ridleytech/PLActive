@@ -275,7 +275,7 @@ const ResultsViewInterval = ({
             color: 'white',
           }}>
           {!loggedIn && passed
-            ? ' JOIN TO START LEVEL ' + (level + 1)
+            ? ' LOGIN TO START LEVEL ' + (level + 1)
             : passed
             ? ' START LEVEL ' + (level + 1)
             : 'RESTART QUIZ'}

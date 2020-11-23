@@ -11,7 +11,6 @@ import {
   Animated,
   NativeModules,
   Keyboard,
-  //AsyncStorage,
   Alert,
   Linking,
 } from 'react-native';
@@ -30,7 +29,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {saveProgress} from '../thunks/';
 import KeyboardView from './KeyboardView';
 import KeyboardView2 from './KeyboardView2';
-//import KeyboardView3 from './KeyboardView3';
 import {saveTestScore} from '../thunks/';
 
 //https://nicedoc.io/zmxv/react-native-sound
@@ -443,32 +441,41 @@ const PitchLevels = ({level, mode}) => {
           console.log('restart quiz');
         }
       } else {
-        upgrade();
+        //upgrade();
 
-        //randall to do. check when app becomes active for new join status
+        // setTimeout(() => {
+        //   dispatch({type: 'SET_MODE', mode: 0});
+        //   dispatch({type: 'SET_LEVEL', level: 0});
+        // }, 1000);
 
-        setTimeout(() => {
-          dispatch({type: 'SET_MODE', mode: 0});
-          dispatch({type: 'SET_LEVEL', level: 0});
-        }, 1000);
-        return;
-        Alert.alert(
-          null,
-          `Please log in or join the Premium membership to unlock this level.`,
-          [
-            {text: 'JOIN MEMBERSHIP', onPress: () => upgrade()},
-            {
-              text: 'GO TO MAIN MENU',
-              onPress: () => {
-                console.log('main menu');
-                dispatch({type: 'SET_MODE', mode: 0});
-                dispatch({type: 'SET_LEVEL', level: 0});
-              },
-            },
-            {text: 'CANCEL', onPress: () => {}},
-          ],
-          {cancelable: false},
-        );
+        //show login
+
+        dispatch({type: 'SET_MODE', mode: 0});
+        dispatch({type: 'SET_LEVEL', level: 0});
+        dispatch({type: 'SHOW_LOGIN'});
+        props.navigation.navigate('CHALLENGES');
+
+        // return;
+
+        // Alert.alert(
+        //   null,
+        //   //`Please log in or join the Premium membership to unlock this level.`,
+        //   `Please log in to unlock this level.`,
+        //   [
+        //     //{text: 'JOIN MEMBERSHIP', onPress: () => upgrade()},
+        //     {text: 'LOGIN', onPress: () => upgrade()},
+        //     {
+        //       text: 'GO TO MAIN MENU',
+        //       onPress: () => {
+        //         console.log('main menu');
+        //         dispatch({type: 'SET_MODE', mode: 0});
+        //         dispatch({type: 'SET_LEVEL', level: 0});
+        //       },
+        //     },
+        //     {text: 'CANCEL', onPress: () => {}},
+        //   ],
+        //   {cancelable: false},
+        // );
       }
     }
   };
