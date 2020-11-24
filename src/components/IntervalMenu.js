@@ -8,7 +8,8 @@ import {
   Animated,
 } from 'react-native';
 import Header from './Header';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {getAccess} from '../thunks/';
 
 import videoImg from '../../images/instructions-placeholder.png';
 import lockIcon from '../../images/lock-icon.png';
@@ -20,6 +21,9 @@ const IntervalMenu = ({showLevel}) => {
   var levels = [1, 2, 3, 4, 5];
 
   const loggedIn = useSelector((state) => state.loggedIn);
+  const accessFeature = useSelector((state) => state.accessFeature);
+  const dispatch = useDispatch();
+
   const highestCompletedIntervalLevel = useSelector(
     (state) => state.highestCompletedIntervalLevel,
   );
@@ -31,6 +35,10 @@ const IntervalMenu = ({showLevel}) => {
     duration: 500,
     useNativeDriver: false,
   }).start();
+
+  // useEffect(() => {
+  //   dispatch(getAccess());
+  // }, []);
 
   const listItem = (level) => {
     console.log('level: ' + JSON.stringify(level.item));
@@ -126,7 +134,7 @@ const IntervalMenu = ({showLevel}) => {
                       </Text>
                     </View>
 
-                    {!loggedIn ? (
+                    {!loggedIn && accessFeature == 1 ? (
                       <Image
                         source={
                           index < highestCompletedIntervalLevel

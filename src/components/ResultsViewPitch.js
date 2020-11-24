@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const ResultsViewPitch = ({
   correctAnswers,
@@ -19,6 +19,8 @@ const ResultsViewPitch = ({
   loggedIn,
   mode,
 }) => {
+  const accessFeature = useSelector((state) => state.accessFeature);
+
   const [showStuff, setResults] = useState({show: false});
   const [passed, setPassed] = useState(false);
 
@@ -273,7 +275,7 @@ const ResultsViewPitch = ({
             fontWeight: 'bold',
             color: 'white',
           }}>
-          {!loggedIn && passed
+          {!loggedIn && passed && accessFeature == 1
             ? ' LOGIN TO START LEVEL ' + (level + 1)
             : passed
             ? ' START LEVEL ' + (level + 1)

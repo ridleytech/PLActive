@@ -8,7 +8,8 @@ import {
   Animated,
 } from 'react-native';
 import Header from './Header';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {getAccess} from '../thunks/';
 
 import videoImg from '../../images/instructions-placeholder.png';
 import lockIcon from '../../images/lock-icon.png';
@@ -20,6 +21,9 @@ const PitchMenu = ({showLevel}) => {
   var levels = [1, 2, 3];
 
   const loggedIn = useSelector((state) => state.loggedIn);
+  const accessFeature = useSelector((state) => state.accessFeature);
+  const dispatch = useDispatch();
+
   const highestCompletedPitchLevel = useSelector(
     (state) => state.highestCompletedPitchLevel,
   );
@@ -31,6 +35,10 @@ const PitchMenu = ({showLevel}) => {
     duration: 500,
     useNativeDriver: false,
   }).start();
+
+  // useEffect(() => {
+  //   dispatch(getAccess());
+  // }, []);
 
   const listItem = (level) => {
     console.log('level: ' + JSON.stringify(level.item));
@@ -125,7 +133,7 @@ const PitchMenu = ({showLevel}) => {
                     </Text>
                   </View>
 
-                  {!loggedIn ? (
+                  {!loggedIn && accessFeature == 1 ? (
                     <Image
                       source={
                         index < highestCompletedPitchLevel
@@ -143,17 +151,6 @@ const PitchMenu = ({showLevel}) => {
                       }
                       style={{position: 'absolute', right: 12, top: 12}}
                     />
-
-                    // <Image
-                    //   source={
-                    //     index < highestCompletedPitchLevel
-                    //       ? checkIcon
-                    //       : index > highestCompletedPitchLevel
-                    //       ? lockIcon
-                    //       : null
-                    //   }
-                    //   style={{position: 'absolute', right: 12, top: 12}}
-                    // />
                   )}
                 </TouchableOpacity>
               );

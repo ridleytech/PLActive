@@ -194,17 +194,22 @@ class SignIn extends Component<Props> {
                     JOIN NOW
                   </Text>
                 </TouchableOpacity> */}
-                <TouchableOpacity onPress={this.join} style={[{marginTop: 20}]}>
-                  <Text
-                    style={{
-                      color: '#3AB24A',
-                      fontSize: 18,
-                      fontFamily: 'HelveticaNeue',
-                      textAlign: 'center',
-                    }}>
-                    Join now
-                  </Text>
-                </TouchableOpacity>
+
+                {this.props.accessFeature == 1 ? (
+                  <TouchableOpacity
+                    onPress={this.join}
+                    style={[{marginTop: 20}]}>
+                    <Text
+                      style={{
+                        color: '#3AB24A',
+                        fontSize: 18,
+                        fontFamily: 'HelveticaNeue',
+                        textAlign: 'center',
+                      }}>
+                      Join now
+                    </Text>
+                  </TouchableOpacity>
+                ) : null}
               </View>
               {/* <View style={{height: 270}}></View> */}
             </ScrollView>
@@ -221,6 +226,7 @@ const mapStateToProps = (state) => {
     loginEnabled: state.loginEnabled,
     loginError: state.loginError,
     loggedIn: state.loggedIn,
+    accessFeature: state.accessFeature,
   };
 };
 

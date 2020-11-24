@@ -1,3 +1,5 @@
+import {act} from 'react-test-renderer';
+
 var local = false;
 var localPath = 'http://localhost:8888/ridleytech/pianolesson/';
 var remotePath = 'https://pianolessonwithwarren.com/dev_site/pianolesson/';
@@ -32,6 +34,7 @@ const inititalState = {
   fullname: null,
   leaderData: [],
   url: url,
+  accessFeature: 0,
 };
 
 export default (state = inititalState, action) => {
@@ -74,6 +77,12 @@ export default (state = inititalState, action) => {
         ...state,
         loginError: true,
         loginEnabled: true,
+      };
+
+    case 'SET_ACCESS_FEATURE':
+      return {
+        ...state,
+        accessFeature: action.payload.accessData.status,
       };
 
     case 'SET_USERNAME':

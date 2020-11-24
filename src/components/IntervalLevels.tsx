@@ -57,8 +57,9 @@ const shuffle = (array) => {
 var Sound = require('react-native-sound');
 var currentNote;
 
-const IntervalLevels = ({level, mode}) => {
+const IntervalLevels = ({level, mode, props}) => {
   const dispatch = useDispatch();
+  const accessFeature = useSelector((state) => state.accessFeature);
 
   //console.log('selectedLevel: ' + level);
 
@@ -266,7 +267,7 @@ const IntervalLevels = ({level, mode}) => {
         if (!loggedIn) {
           if (level == 1) {
             storeData(level);
-            dispatch(saveTestScore(per, quizTime));
+            //dispatch(saveTestScore(per, quizTime));
           }
         } else {
           storeData(level);
@@ -392,14 +393,15 @@ const IntervalLevels = ({level, mode}) => {
     console.log(`interval ${level} passed: ${passed}`);
     //saveProgress();
 
-    if (!passed) {
-      setRestarted(true);
-      setCurrentAnswer(null);
-      setCorrectAnswers(0);
-    } else {
-      if (loggedIn) {
-        var currentLevel = level;
+    setRestarted(true);
+    setCurrentAnswer(null);
+    setCorrectAnswers(0);
 
+    if (!passed) {
+    } else {
+      var currentLevel = level;
+
+      if (loggedIn) {
         if (passed) {
           dispatch({type: 'SET_MODE', mode: 2});
           dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
@@ -419,10 +421,17 @@ const IntervalLevels = ({level, mode}) => {
 
         //show login
 
-        dispatch({type: 'SET_MODE', mode: 0});
-        dispatch({type: 'SET_LEVEL', level: 0});
-        dispatch({type: 'SHOW_LOGIN'});
-        props.navigation.navigate('CHALLENGES');
+        if (accessFeature == 1) {
+          dispatch({type: 'SET_MODE', mode: 0});
+          dispatch({type: 'SET_LEVEL', level: 0});
+          dispatch({type: 'SHOW_LOGIN'});
+          props.navigation.navigate('CHALLENGES');
+        } else {
+          dispatch({type: 'SET_MODE', mode: 2});
+          dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
+
+          console.log(`set level: ${currentLevel + 1}`);
+        }
 
         // return;
 

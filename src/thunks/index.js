@@ -26,6 +26,27 @@ export const getProgressData = () => (dispatch, getState) => {
     });
 };
 
+export const getAccess = () => (dispatch, getState) => {
+  let url = getState().url;
+
+  console.log('getAccess: ' + url + 'get-access.php');
+
+  fetch(url + 'get-access.php', {
+    method: 'POST',
+    body: JSON.stringify({}),
+  })
+    .then((data) => {
+      return data.json();
+    })
+    .then((data) => {
+      console.log(`access data: ${JSON.stringify(data)}`);
+      dispatch({type: 'SET_ACCESS_FEATURE', payload: data});
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 export const getLeaderData = (level, mode) => (dispatch, getState) => {
   let url = getState().url;
 

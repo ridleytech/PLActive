@@ -12,7 +12,6 @@ import {
 import {connect} from 'react-redux';
 import Header from './Header';
 //import PlayerMidi from './PlayerMidi';
-import TestMidi from './TestMidi';
 import MainMenu from './MainMenu';
 import PitchMenu from './PitchMenu';
 import SignIn from './Auth/SignIn';
@@ -28,7 +27,7 @@ import {
   setUsername,
   setDeviceUsername,
 } from '../actions/';
-import {getProgressData, saveTestScore} from '../thunks/';
+import {getProgressData, saveTestScore, getAccess} from '../thunks/';
 import IntervalLevels from './IntervalLevels';
 import PitchLevels from './PitchLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -284,6 +283,8 @@ class Home extends Component<Props> {
   }
 
   componentDidMount() {
+    this.props.getAccess();
+
     if (this.props.loggedIn) {
       this.props.getProgressData();
     }
@@ -346,7 +347,7 @@ class Home extends Component<Props> {
     // return;
     // //end debug
 
-    if (!this.props.loggedIn && level > 1) {
+    if (!this.props.loggedIn && level > 1 && this.props.accessFeature == 1) {
       Alert.alert(
         null,
         //`Please log in or join the Premium membership to unlock this level.`,
@@ -413,22 +414,24 @@ class Home extends Component<Props> {
         <SafeAreaView />
         <Header props={this.props} />
 
-        {/* <TouchableOpacity onPress={this.loadMusic}>
-          <Text>Play</Text>
-        </TouchableOpacity> */}
-
-        {/* <TestMidi /> */}
-
         {this.props.mode == 0 ? (
           <MainMenu setMode={this.setMode} />
         ) : this.props.mode == 1 && this.props.level == 0 ? (
           <PitchMenu showLevel={this.showLevel} />
         ) : this.props.mode == 1 && this.props.level > 0 ? (
-          <PitchLevels level={this.props.level} mode={this.props.mode} />
+          <PitchLevels
+            level={this.props.level}
+            mode={this.props.mode}
+            props={this.props}
+          />
         ) : this.props.mode == 2 && this.props.level == 0 ? (
           <IntervalMenu showLevel={this.showLevel} />
         ) : this.props.mode == 2 && this.props.level > 0 ? (
-          <IntervalLevels level={this.props.level} mode={this.props.mode} />
+          <IntervalLevels
+            level={this.props.level}
+            mode={this.props.mode}
+            props={this.props}
+          />
         ) : this.props.mode == 3 ? (
           <SignIn />
         ) : null}
@@ -448,6 +451,7 @@ const mapStateToProps = (state) => {
     username: state.username,
     password: state.password,
     url: state.url,
+    accessFeature: state.accessFeature,
   };
 };
 
@@ -463,6 +467,7 @@ export default connect(mapStateToProps, {
   setUsername,
   setDeviceUsername,
   saveTestScore,
+  getAccess,
 })(Home);
 
 let offset = 100;
