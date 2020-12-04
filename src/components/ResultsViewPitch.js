@@ -18,6 +18,7 @@ const ResultsViewPitch = ({
   level,
   loggedIn,
   mode,
+  passScore,
 }) => {
   const accessFeature = useSelector((state) => state.accessFeature);
 
@@ -25,7 +26,7 @@ const ResultsViewPitch = ({
   const [passed, setPassed] = useState(false);
 
   const viewResults = () => {
-    console.log('go');
+    console.log('viewResults');
     setResults({show: true});
   };
 
@@ -34,6 +35,8 @@ const ResultsViewPitch = ({
   //   }, []);
 
   // ' + JSON.stringify(answerList));
+
+  console.log('answers: ' + JSON.stringify(answerList));
 
   var per = parseInt((correctAnswers / total) * 100);
 
@@ -47,7 +50,7 @@ const ResultsViewPitch = ({
   var results;
 
   useEffect(() => {
-    if (per >= 85) {
+    if (per >= passScore) {
       results = 'Great job! You passed.';
       setPassed(true);
     } else {
@@ -68,17 +71,6 @@ const ResultsViewPitch = ({
             }}>
             Quiz completed.
           </Text>
-          {/* <Text
-            style={{
-              fontFamily: 'Helvetica Neue',
-              fontSize: 20,
-              marginTop: 20,
-              width: '100%',
-              textAlign: 'center',
-              //color: {results==="Pass" ? "green" : "red"}
-            }}>
-            {results}
-          </Text> */}
           <Text
             style={{
               fontFamily: 'Helvetica Neue',
@@ -198,7 +190,7 @@ const ResultsViewPitch = ({
                       }}>
                       Question {index + 1}
                     </Text>
-                    {ob.file === ob.userAnswer ? (
+                    {ob.Answers.includes(ob.userAnswer) ? (
                       <View
                         style={[
                           styles.correct,
@@ -211,7 +203,7 @@ const ResultsViewPitch = ({
                             fontFamily: 'Helvetica Neue',
                             fontWeight: 'bold',
                           }}>
-                          Correct: {ob.file}
+                          Correct: {ob.userAnswer}
                         </Text>
                       </View>
                     ) : (
@@ -275,7 +267,7 @@ const ResultsViewPitch = ({
             fontWeight: 'bold',
             color: 'white',
           }}>
-          {!loggedIn && passed && accessFeature == 1
+          {!loggedIn && passed && accessFeature > 0
             ? ' LOGIN TO START LEVEL ' + (level + 1)
             : passed
             ? ' START LEVEL ' + (level + 1)

@@ -12,8 +12,9 @@ import bgImg from '../../../images/menu-bg.png';
 function DrawerContent(props) {
   //const paperTheme = useTheme();
   const dispatch = useDispatch();
-  const authStatus = useSelector((state) => state.loggedIn);
+  const loggedIn = useSelector((state) => state.loggedIn);
   const username = useSelector((state) => state.username);
+  const accessFeature = useSelector((state) => state.accessFeature);
 
   const removeUserInfo = () => {
     console.log('removeUserInfo drawer');
@@ -21,6 +22,8 @@ function DrawerContent(props) {
     deleteUser();
     deleteUsername();
     deletePassword();
+    deleteInterval();
+    deletePitch();
     dispatch({type: 'RESET_PROGRESS'});
   };
 
@@ -62,6 +65,26 @@ function DrawerContent(props) {
     }
   };
 
+  const deleteInterval = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompletedIntervalLevel');
+
+      console.log('highestCompletedIntervalLevel deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  const deletePitch = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompletedPitchLevel');
+
+      console.log('highestCompletedPitchLevel deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
   //const {signOut, toggleTheme} = React.useContext(AuthContext);
 
   return (
@@ -78,7 +101,7 @@ function DrawerContent(props) {
                 flexDirection: 'column',
               }}>
               <Title style={styles.title}>
-                {authStatus ? `Hi, ${username}` : ''}
+                {loggedIn ? `Hi, ${username}` : ''}
               </Title>
             </View>
           </View>
@@ -116,7 +139,7 @@ function DrawerContent(props) {
           />
         </Drawer.Section>
 
-        {!authStatus ? (
+        {!loggedIn && accessFeature > 0 ? (
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
               label="LOG IN"
@@ -128,7 +151,7 @@ function DrawerContent(props) {
               }}
             />
           </Drawer.Section>
-        ) : (
+        ) : accessFeature > 0 ? (
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
               label="LOG OUT"
@@ -140,7 +163,7 @@ function DrawerContent(props) {
               }}
             />
           </Drawer.Section>
-        )}
+        ) : null}
       </View>
     </ImageBackground>
   );

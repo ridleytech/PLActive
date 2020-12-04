@@ -76,6 +76,7 @@ const IntervalLevels = ({level, mode, props}) => {
   const [answerList, setAnswerList] = useState(null);
   const [answers, setAnswers] = useState(null);
   const [instructions, setInstructions] = useState(null);
+  const [passScore, setPassScore] = useState(0);
 
   const [selectionColors, setSelectionColors] = useState([
     '#EFEFEF',
@@ -101,6 +102,11 @@ const IntervalLevels = ({level, mode, props}) => {
 
   const [quizTime, setQuizTime] = useState(0);
   const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
+
+  useEffect(() => {
+    console.log('interval level changed');
+    populateInstructions();
+  }, [level]);
 
   //quiz timer
 
@@ -130,7 +136,7 @@ const IntervalLevels = ({level, mode, props}) => {
         //console.log('the seconds: ' + interval);
 
         currentNote.getCurrentTime((seconds1) => {
-          console.log('at ' + seconds1);
+          //console.log('at ' + seconds1);
 
           setTrackInfo({
             position: seconds1,
@@ -155,11 +161,11 @@ const IntervalLevels = ({level, mode, props}) => {
   //track info changed
 
   useEffect(() => {
-    console.log('track info changed: ' + JSON.stringify(trackInfo));
+    //console.log('track info changed: ' + JSON.stringify(trackInfo));
 
     var pos = trackInfo.position / trackInfo.duration;
 
-    console.log('slider val: ' + pos);
+    //console.log('slider val: ' + pos);
 
     if (pos > 0) {
       setSliderValue(pos);
@@ -175,8 +181,6 @@ const IntervalLevels = ({level, mode, props}) => {
       currentQuestion1 += 1;
 
       if (level > 1) {
-        //TrackPlayer.reset();
-
         setCurrentTrack({
           name: questionList[currentQuestion1].file,
           id: currentQuestion1.toString(),
@@ -201,6 +205,7 @@ const IntervalLevels = ({level, mode, props}) => {
       setCurrentQuestionInd(currentQuestion1);
       populateAnswers(questionList, currentQuestion1);
     } else {
+      console.log('set quiz finished');
       setisQuizTimerActive(false);
       setQuizFinished(true);
       setQuizStarted(false);
@@ -211,30 +216,45 @@ const IntervalLevels = ({level, mode, props}) => {
 
   useEffect(() => {
     if (level > 1) {
-      console.log('on load int');
-      console.log('loadCount int: ' + loadCount);
+      // console.log('on load int');
+      // console.log('loadCount int: ' + loadCount);
 
       var lc = loadCount;
       lc++;
       setLoadCount(lc);
     }
 
+    populateInstructions();
+  }, []);
+
+  const populateInstructions = () => {
+    console.log('populate instructions: ' + level);
+
     var instructions; // = data.Interval.level3Instructions;
 
     if (level == 1) {
       instructions = shuffle(data.Interval.level1Instructions);
+      setPassScore(data.Interval.level1PassScore);
     } else if (level == 2) {
       instructions = shuffle(data.Interval.level2Instructions);
+      setPassScore(data.Interval.level2PassScore);
     } else if (level == 3) {
       instructions = shuffle(data.Interval.level3Instructions);
+      setPassScore(data.Interval.level3PassScore);
     } else if (level == 4) {
       instructions = shuffle(data.Interval.level4Instructions);
+      setPassScore(data.Interval.level4PassScore);
     } else if (level == 5) {
       instructions = shuffle(data.Interval.level5Instructions);
+      setPassScore(data.Interval.level5PassScore);
     }
 
     setInstructions(instructions);
-  }, []);
+  };
+
+  useEffect(() => {
+    console.log('passScore: ' + passScore);
+  }, [passScore]);
 
   //console.log('height: ' + Dimensions.get('screen').height);
 
@@ -254,9 +274,9 @@ const IntervalLevels = ({level, mode, props}) => {
 
       var per = parseInt((correctAnswers / questionList.length) * 100);
 
-      console.log(`per levels: ${per}`);
+      console.log(`per levels: ${per} passScore: ${passScore}`);
 
-      if (per >= 85) {
+      if (per >= passScore) {
         console.log('store data');
 
         dispatch({
@@ -265,11 +285,20 @@ const IntervalLevels = ({level, mode, props}) => {
         });
 
         if (!loggedIn) {
-          if (level == 1) {
+          console.log('quiz finished not logged in');
+
+          if (accessFeature > 0) {
+            if (level == 1) {
+              storeData(level);
+            }
+          } else {
+            //store data if in app store safe mode
+
+            console.log('store data in safe mode');
             storeData(level);
-            //dispatch(saveTestScore(per, quizTime));
           }
         } else {
+          console.log('logged in store data');
           storeData(level);
           dispatch(saveTestScore(per, quizTime));
         }
@@ -281,7 +310,7 @@ const IntervalLevels = ({level, mode, props}) => {
 
   useEffect(
     () => () => {
-      console.log('unmount');
+      //console.log('unmount');
 
       setisQuizTimerActive(false);
 
@@ -295,8 +324,7 @@ const IntervalLevels = ({level, mode, props}) => {
   //current track changed
 
   useEffect(() => {
-    console.log('currentTrack changed');
-
+    //console.log('currentTrack changed');
     // console.log('add track: ' + currentTrack.name);
   }, [currentTrack]);
 
@@ -390,12 +418,8 @@ const IntervalLevels = ({level, mode, props}) => {
   };
 
   const mainMenu = (passed) => {
-    console.log(`interval ${level} passed: ${passed}`);
+    console.log(`main menu interval ${level} passed: ${passed}`);
     //saveProgress();
-
-    setRestarted(true);
-    setCurrentAnswer(null);
-    setCorrectAnswers(0);
 
     if (!passed) {
     } else {
@@ -421,7 +445,7 @@ const IntervalLevels = ({level, mode, props}) => {
 
         //show login
 
-        if (accessFeature == 1) {
+        if (accessFeature > 0) {
           dispatch({type: 'SET_MODE', mode: 0});
           dispatch({type: 'SET_LEVEL', level: 0});
           dispatch({type: 'SHOW_LOGIN'});
@@ -456,6 +480,12 @@ const IntervalLevels = ({level, mode, props}) => {
         // );
       }
     }
+
+    //move to level update method
+
+    setRestarted(true);
+    setCurrentAnswer(null);
+    setCorrectAnswers(0);
   };
 
   const upgrade = () => {
@@ -474,12 +504,15 @@ const IntervalLevels = ({level, mode, props}) => {
     console.log(`highestCompletedIntervalLevel: ${level}`);
 
     try {
-      console.log('try to save');
+      console.log('try to save highestCompletedIntervalLevel');
       await AsyncStorage.setItem(
         'highestCompletedIntervalLevel',
         level.toString(),
       );
+
+      console.log('highestCompletedIntervalLevel saved');
     } catch (error) {
+      console.log('highestCompletedIntervalLevel not saved');
       // Error saving data
     }
   };
@@ -566,6 +599,7 @@ const IntervalLevels = ({level, mode, props}) => {
 
     setQuizStarted(true);
     setRestarted(false);
+    setQuizFinished(false);
 
     if (level > 1) {
       var newTracks = [];
@@ -731,8 +765,8 @@ const IntervalLevels = ({level, mode, props}) => {
                     backgroundColor: '#222222',
                     marginLeft: 'auto',
                     marginRight: 'auto',
-                    paddingLeft: 20,
-                    paddingRight: 20,
+                    paddingLeft: 12,
+                    paddingRight: 12,
                     marginTop: 10,
                   }}>
                   <View
@@ -740,14 +774,21 @@ const IntervalLevels = ({level, mode, props}) => {
                       display: 'flex',
                       flexDirection: 'row',
                       alignItems: 'center',
+                      height: 50,
                     }}>
                     <TouchableOpacity
                       onPress={onButtonPressed}
-                      style={{marginRight: 20}}>
+                      style={{marginRight: 12}}>
                       {isPlaying ? (
-                        <Image source={pauseImg} />
+                        <Image
+                          source={pauseImg}
+                          style={{width: 25, height: 25}}
+                        />
                       ) : (
-                        <Image source={playImg} />
+                        <Image
+                          source={playImg}
+                          style={{width: 25, height: 25}}
+                        />
                       )}
                     </TouchableOpacity>
 
@@ -844,6 +885,7 @@ const IntervalLevels = ({level, mode, props}) => {
           level={level}
           loggedIn={loggedIn}
           mode={mode}
+          passScore={passScore}
         />
       ) : null}
     </>

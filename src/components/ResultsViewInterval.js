@@ -18,6 +18,7 @@ const ResultsViewInterval = ({
   level,
   loggedIn,
   mode,
+  passScore,
 }) => {
   const accessFeature = useSelector((state) => state.accessFeature);
 
@@ -37,7 +38,7 @@ const ResultsViewInterval = ({
 
   var per = parseInt((correctAnswers / total) * 100);
 
-  console.log('per: ' + per);
+  //console.log('per: ' + per);
 
   //per = 80;
 
@@ -47,7 +48,7 @@ const ResultsViewInterval = ({
   var results;
 
   useEffect(() => {
-    if (per >= 85) {
+    if (per >= passScore) {
       results = 'Great job! You passed.';
       setPassed(true);
     } else {
@@ -68,17 +69,6 @@ const ResultsViewInterval = ({
             }}>
             Quiz completed.
           </Text>
-          {/* <Text
-            style={{
-              fontFamily: 'Helvetica Neue',
-              fontSize: 20,
-              marginTop: 20,
-              width: '100%',
-              textAlign: 'center',
-              //color: {results==="Pass" ? "green" : "red"}
-            }}>
-            {results}
-          </Text> */}
           <Text
             style={{
               fontFamily: 'Helvetica Neue',
@@ -276,7 +266,7 @@ const ResultsViewInterval = ({
             fontWeight: 'bold',
             color: 'white',
           }}>
-          {!loggedIn && passed && accessFeature == 1
+          {!loggedIn && passed && accessFeature > 0
             ? ' LOGIN TO START LEVEL ' + (level + 1)
             : passed
             ? ' START LEVEL ' + (level + 1)

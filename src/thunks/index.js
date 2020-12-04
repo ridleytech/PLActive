@@ -28,10 +28,11 @@ export const getProgressData = () => (dispatch, getState) => {
 
 export const getAccess = () => (dispatch, getState) => {
   let url = getState().url;
+  let dest = 'get-accessV2.php';
 
-  console.log('getAccess: ' + url + 'get-access.php');
+  console.log('getAccess: ' + url + dest);
 
-  fetch(url + 'get-access.php', {
+  fetch(url + dest, {
     method: 'POST',
     body: JSON.stringify({}),
   })

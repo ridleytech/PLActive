@@ -133,7 +133,7 @@ const PitchMenu = ({showLevel}) => {
                     </Text>
                   </View>
 
-                  {!loggedIn && accessFeature == 1 ? (
+                  {!loggedIn && accessFeature == 2 ? (
                     <Image
                       source={
                         index < highestCompletedPitchLevel

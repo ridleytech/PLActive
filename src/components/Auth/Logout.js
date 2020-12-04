@@ -23,6 +23,8 @@ class Logout extends Component<Props> {
     this.deleteUsername();
     this.deletePassword();
     this.deleteUser();
+    this.deleteInterval();
+    this.deletePitch();
   };
 
   deleteUsername = async () => {
@@ -58,6 +60,26 @@ class Logout extends Component<Props> {
       await AsyncStorage.removeItem('hasUser');
 
       console.log('user deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  deleteInterval = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompletedIntervalLevel');
+
+      console.log('highestCompletedIntervalLevel deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  deletePitch = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompletedPitchLevel');
+
+      console.log('highestCompletedPitchLevel deleted');
     } catch (error) {
       // Error saving data
     }

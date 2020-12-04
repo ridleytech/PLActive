@@ -133,6 +133,12 @@ const PitchLevels = ({level, mode, props}) => {
 
   const [quizTime, setQuizTime] = useState(0);
   const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
+  const [passScore, setPassScore] = useState(0);
+
+  useEffect(() => {
+    console.log('pitch evel changed');
+    populateInstructions();
+  }, [level]);
 
   //quiz timer
 
@@ -250,22 +256,31 @@ const PitchLevels = ({level, mode, props}) => {
     lc++;
     setLoadCount(lc);
 
-    var instructions; // = data.Pitch.level3Instructions;
+    populateInstructions();
+  }, []);
+
+  const populateInstructions = () => {
+    var instructions; // = data.Interval.level3Instructions;
 
     if (level == 1) {
       instructions = shuffle(data.Pitch.level1Instructions);
+      setPassScore(data.Pitch.level1PassScore);
     } else if (level == 2) {
       instructions = shuffle(data.Pitch.level2Instructions);
+      setPassScore(data.Pitch.level2PassScore);
     } else if (level == 3) {
       instructions = shuffle(data.Pitch.level3Instructions);
+      setPassScore(data.Pitch.level3PassScore);
     } else if (level == 4) {
       instructions = shuffle(data.Pitch.level4Instructions);
+      setPassScore(data.Pitch.level4PassScore);
     } else if (level == 5) {
       instructions = shuffle(data.Pitch.level5Instructions);
+      setPassScore(data.Pitch.level5PassScore);
     }
 
     setInstructions(instructions);
-  }, []);
+  };
 
   //console.log('height: ' + Dimensions.get('screen').height);
 
@@ -289,7 +304,7 @@ const PitchLevels = ({level, mode, props}) => {
 
       console.log(`per levels: ${per}`);
 
-      if (per >= 85) {
+      if (per >= passScore) {
         console.log('store data');
 
         dispatch({
@@ -298,9 +313,15 @@ const PitchLevels = ({level, mode, props}) => {
         });
 
         if (!loggedIn) {
-          if (level == 1) {
+          if (accessFeature > 0) {
+            if (level == 1) {
+              storeData(level);
+            }
+          } else {
+            //store data if in app store safe mode
+            console.log('store data in safe mode');
+
             storeData(level);
-            //dispatch(saveTestScore(per, quizTime));
           }
         } else {
           storeData(level);
@@ -424,10 +445,6 @@ const PitchLevels = ({level, mode, props}) => {
     console.log(`pitch ${level} passed: ${passed}`);
     //saveProgress();
 
-    setRestarted(true);
-    setCurrentAnswer(null);
-    setCorrectAnswers(0);
-
     if (!passed) {
     } else {
       var currentLevel = level;
@@ -452,7 +469,7 @@ const PitchLevels = ({level, mode, props}) => {
 
         //show login
 
-        if (accessFeature == 1) {
+        if (accessFeature > 0) {
           dispatch({type: 'SET_MODE', mode: 0});
           dispatch({type: 'SET_LEVEL', level: 0});
           dispatch({type: 'SHOW_LOGIN'});
@@ -487,6 +504,10 @@ const PitchLevels = ({level, mode, props}) => {
         // );
       }
     }
+
+    setRestarted(true);
+    setCurrentAnswer(null);
+    setCorrectAnswers(0);
   };
 
   const upgrade = () => {
@@ -639,6 +660,7 @@ const PitchLevels = ({level, mode, props}) => {
 
     setQuizStarted(true);
     setRestarted(false);
+    setQuizFinished(false);
 
     setCurrentTrack({
       name: questions[0].file,
@@ -837,8 +859,8 @@ const PitchLevels = ({level, mode, props}) => {
                     backgroundColor: '#222222',
                     marginLeft: 'auto',
                     marginRight: 'auto',
-                    paddingLeft: 20,
-                    paddingRight: 20,
+                    paddingLeft: 12,
+                    paddingRight: 12,
                     marginTop: 10,
                   }}>
                   <View
@@ -846,17 +868,23 @@ const PitchLevels = ({level, mode, props}) => {
                       display: 'flex',
                       flexDirection: 'row',
                       alignItems: 'center',
-
+                      height: 50,
                       paddingTop: Platform.OS === 'android' ? 10 : 0,
                       paddingBottom: Platform.OS === 'android' ? 10 : 0,
                     }}>
                     <TouchableOpacity
                       onPress={onButtonPressed}
-                      style={{marginRight: Platform.OS === 'ios' ? 20 : 10}}>
+                      style={{marginRight: Platform.OS === 'ios' ? 12 : 10}}>
                       {isPlaying ? (
-                        <Image source={pauseImg} />
+                        <Image
+                          source={pauseImg}
+                          style={{width: 25, height: 25}}
+                        />
                       ) : (
-                        <Image source={playImg} />
+                        <Image
+                          source={playImg}
+                          style={{width: 25, height: 25}}
+                        />
                       )}
                     </TouchableOpacity>
 
@@ -946,6 +974,7 @@ const PitchLevels = ({level, mode, props}) => {
           level={level}
           loggedIn={loggedIn}
           mode={mode}
+          passScore={passScore}
         />
       ) : null}
     </>

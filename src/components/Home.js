@@ -283,6 +283,17 @@ class Home extends Component<Props> {
   }
 
   componentDidMount() {
+    //start debug
+    // this.props.setIntervalProgress({
+    //   highestCompletedIntervalLevel: 1,
+    // });
+
+    // this.props.setPitchProgress({
+    //   highestCompletedPitchLevel: 1,
+    // });
+
+    //end debug
+
     this.props.getAccess();
 
     if (this.props.loggedIn) {
@@ -347,7 +358,7 @@ class Home extends Component<Props> {
     // return;
     // //end debug
 
-    if (!this.props.loggedIn && level > 1 && this.props.accessFeature == 1) {
+    if (!this.props.loggedIn && level > 1 && this.props.accessFeature > 0) {
       Alert.alert(
         null,
         //`Please log in or join the Premium membership to unlock this level.`,

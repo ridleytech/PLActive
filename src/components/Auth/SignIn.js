@@ -195,7 +195,7 @@ class SignIn extends Component<Props> {
                   </Text>
                 </TouchableOpacity> */}
 
-                {this.props.accessFeature == 1 ? (
+                {this.props.accessFeature > 0 ? (
                   <TouchableOpacity
                     onPress={this.join}
                     style={[{marginTop: 20}]}>

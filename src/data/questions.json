@@ -92,6 +92,7 @@
       "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
     ],
+    "level1PassScore": 92,
     "level2Questions": [
       {
         "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
@@ -184,6 +185,7 @@
       "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
     ],
+    "level2PassScore": 92,
     "level3Questions": [
       {
         "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
@@ -324,7 +326,8 @@
       "Using your keyboard, listen to the audio and write the correct note letter name in the provided boxes.",
       "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
-    ]
+    ],
+    "level3PassScore": 92
   },
   "Interval": {
     "level1Questions": [
@@ -372,6 +375,7 @@
       "You need to score a 6/7 to past the quiz.",
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
+    "level1PassScore": 85,
     "level2Questions": [
       {
         "Question": "Listen to the audio, what interval is being played?",
@@ -437,6 +441,7 @@
       "You need to score a 7/8 to past the quiz.",
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
+    "level2PassScore": 87,
     "level3Questions": [
       {
         "Question": "Listen to the audio, what interval is being played?",
@@ -540,6 +545,7 @@
       "You need to score a 10/12 to past the quiz.",
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
+    "level3PassScore": 83,
     "level4Questions": [
       {
         "Question": "Listen to the audio, what interval is being played?",
@@ -643,6 +649,7 @@
       "You need to score a 10/12 to past the quiz.",
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
+    "level4PassScore": 83,
     "level5Questions": [
       {
         "Question": "Listen to the audio, what interval is being played?",
@@ -810,6 +817,7 @@
       "This level will consist of 20 multiple choice questions.",
       "You need to score a 17/20 to past the quiz.",
       "This quiz should be completed using ONLY your ear. No keyboard."
-    ]
+    ],
+    "level5PassScore": 85
   }
 }
