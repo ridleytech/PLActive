@@ -20,6 +20,7 @@ function DrawerContent(props) {
     console.log('removeUserInfo drawer');
 
     deleteUser();
+    deleteUserID();
     deleteUsername();
     deletePassword();
     deleteInterval();
@@ -60,6 +61,16 @@ function DrawerContent(props) {
       await AsyncStorage.removeItem('hasUser');
 
       console.log('user deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  const deleteUserID = async () => {
+    try {
+      await AsyncStorage.removeItem('userid');
+
+      console.log('userid deleted');
     } catch (error) {
       // Error saving data
     }
@@ -129,15 +140,17 @@ function DrawerContent(props) {
           />
         </Drawer.Section>
 
-        <Drawer.Section style={styles.drawerSection}>
-          <DrawerItem
-            label="LEADER BOARD"
-            labelStyle={styles.item}
-            onPress={() => {
-              props.navigation.navigate('LEADER BOARD');
-            }}
-          />
-        </Drawer.Section>
+        {accessFeature > 0 ? (
+          <Drawer.Section style={styles.drawerSection}>
+            <DrawerItem
+              label="LEADER BOARD"
+              labelStyle={styles.item}
+              onPress={() => {
+                props.navigation.navigate('LEADER BOARD');
+              }}
+            />
+          </Drawer.Section>
+        ) : null}
 
         {!loggedIn && accessFeature > 0 ? (
           <Drawer.Section style={styles.drawerSection}>

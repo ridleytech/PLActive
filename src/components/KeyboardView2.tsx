@@ -334,8 +334,8 @@ if (whiteKeyWidth > 70) {
   offset = offset * a;
 }
 
-console.log('white key width kb2: ' + whiteKeyWidth);
-console.log('black key width kb2: ' + blackKeyWidth);
+// console.log('white key width kb2: ' + whiteKeyWidth);
+// console.log('black key width kb2: ' + blackKeyWidth);
 
 const styles = StyleSheet.create({
   mainContainer: {

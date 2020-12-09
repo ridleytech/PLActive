@@ -1,10 +1,11 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, version} from 'react';
 import {
   View,
   TouchableOpacity,
   Image,
   ImageBackground,
   StyleSheet,
+  Text,
 } from 'react-native';
 import activeImg from '../../images/active-listening.png';
 import headerLogo from '../../images/header-logo.png';
@@ -14,6 +15,8 @@ import {useSelector, useDispatch} from 'react-redux';
 
 const Header = (props) => {
   //console.log('header props: ' + JSON.stringify(props));
+
+  //console.log('currentVersion header: ' + currentVersion);
 
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.mode);
@@ -86,6 +89,20 @@ const Header = (props) => {
       >
         <Image source={showMenu ? menuIcon : backIcon} style={{zIndex: 3}} />
       </TouchableOpacity>
+      <Text
+        style={{
+          zIndex: 3,
+          //width: 35,
+          height: 35,
+          position: 'absolute',
+          right: 5,
+          top: 5,
+          fontSize: 10,
+          color: 'white',
+          fontWeight: 'bold',
+        }}>
+        Version {props.props.currentVersion}
+      </Text>
     </View>
   );
 };

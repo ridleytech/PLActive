@@ -838,7 +838,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PianoLessons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.02;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -863,7 +863,7 @@
 				DEVELOPMENT_TEAM = QPC42R2G9L;
 				INFOPLIST_FILE = PianoLessons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.02;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

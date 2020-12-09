@@ -19,11 +19,14 @@ const ResultsViewPitch = ({
   loggedIn,
   mode,
   passScore,
+  postLeaderboard,
 }) => {
   const accessFeature = useSelector((state) => state.accessFeature);
 
   const [showStuff, setResults] = useState({show: false});
   const [passed, setPassed] = useState(false);
+
+  var per = parseInt((correctAnswers / total) * 100);
 
   const viewResults = () => {
     console.log('viewResults');
@@ -37,8 +40,6 @@ const ResultsViewPitch = ({
   // ' + JSON.stringify(answerList));
 
   console.log('answers: ' + JSON.stringify(answerList));
-
-  var per = parseInt((correctAnswers / total) * 100);
 
   console.log('per: ' + per);
 
@@ -160,12 +161,36 @@ const ResultsViewPitch = ({
             }}>
             <Text
               style={{
-                fontSize: 25,
+                fontSize: 20,
                 fontFamily: 'Helvetica Neue',
                 fontWeight: 'bold',
                 color: 'white',
               }}>
               View Results
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => postLeaderboard()}
+            style={{
+              height: 60,
+              backgroundColor: '#3AB24A',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 10,
+              width: '100%',
+              maxWidth: 280,
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: 'Helvetica Neue',
+                fontWeight: 'bold',
+                color: 'white',
+              }}>
+              Post to Leader Board
             </Text>
           </TouchableOpacity>
 

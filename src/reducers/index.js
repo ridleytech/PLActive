@@ -17,7 +17,7 @@ const inititalState = {
   level: 0,
   mode: 0,
   previousMode: null,
-  userid: 1,
+  userid: null,
   highestCompletedIntervalLevel: 0,
   highestCompletedPitchLevel: 0,
   loggedIn: false,
@@ -35,6 +35,9 @@ const inititalState = {
   leaderData: [],
   url: url,
   accessFeature: 0,
+  currentVersion: 1.02,
+  latestVersion: null,
+  hasProgress: null,
 };
 
 export default (state = inititalState, action) => {
@@ -79,16 +82,43 @@ export default (state = inititalState, action) => {
         loginEnabled: true,
       };
 
+    case 'AUTH_SITE_DATA':
+      let authData = action.payload.data;
+
+      console.log(`loginData: ${JSON.stringify(authData)}`);
+      var userid1;
+
+      if (authData.status !== 'username missing') {
+        userid1 = parseInt(authData.userid);
+      }
+
+      return {
+        ...state,
+        userid: userid1,
+      };
+
+    case 'LOGIN_SITE_ERROR':
+      return {
+        ...state,
+      };
+
     case 'SET_ACCESS_FEATURE':
       return {
         ...state,
         accessFeature: action.payload.accessData.status,
+        latestVersion: action.payload.accessData.latestVersion,
       };
 
     case 'SET_USERNAME':
       return {
         ...state,
         username: action.username,
+      };
+
+    case 'SET_USERID':
+      return {
+        ...state,
+        userid: action.userid,
       };
 
     case 'SET_DEVICE_USERNAME':
@@ -199,6 +229,8 @@ export default (state = inititalState, action) => {
         loggedIn: false,
         username: null,
         password: null,
+        userid: null,
+        hasProgress: null,
       };
 
     case 'MANAGE_GRAPH':
@@ -218,6 +250,7 @@ export default (state = inititalState, action) => {
         ...state,
         highestCompletedIntervalLevel: parseInt(progressData.ihi),
         highestCompletedPitchLevel: parseInt(progressData.phi),
+        hasProgress: true,
       };
 
     case 'LEADER_DATA':
@@ -296,6 +329,8 @@ export default (state = inititalState, action) => {
       };
 
     case 'PROGRESS_SAVED':
+      console.log('PROGRESS_SAVED: ' + JSON.stringify(action.payload));
+
       return {
         ...state,
       };

@@ -28,13 +28,17 @@ export const getProgressData = () => (dispatch, getState) => {
 
 export const getAccess = () => (dispatch, getState) => {
   let url = getState().url;
-  let dest = 'get-accessV2.php';
+  let currentVersion = getState().currentVersion;
+
+  let dest = 'get-access.php';
 
   console.log('getAccess: ' + url + dest);
 
   fetch(url + dest, {
     method: 'POST',
-    body: JSON.stringify({}),
+    body: JSON.stringify({
+      currentVersion: currentVersion,
+    }),
   })
     .then((data) => {
       return data.json();
@@ -71,7 +75,7 @@ export const getLeaderData = (level, mode) => (dispatch, getState) => {
       return data.json();
     })
     .then((data) => {
-      console.log(`data: ${data}`);
+      //console.log(`data: ${data}`);
       dispatch({type: 'LEADER_DATA', payload: data});
     })
     .catch((error) => {
@@ -119,23 +123,28 @@ export const saveTestScore = (score, duration) => (dispatch, getState) => {
     });
 };
 
-export const saveProgress = (level1) => (dispatch, getState) => {
-  console.log('saveProgress');
-
-  //return;
-
-  let level = getState().currentLevel;
-  let mode = getState().currentMode;
-  let username = getState().username;
+export const saveProgress = () => (dispatch, getState) => {
+  let highestInterval = getState().highestCompletedIntervalLevel;
+  let highestPitch = getState().highestCompletedPitchLevel;
   let userid = getState().userid;
   let url = getState().url;
+
+  console.log(
+    'saveProgress: ' +
+      JSON.stringify({
+        highestInterval: highestInterval,
+        highestPitch: highestPitch,
+        userid: userid,
+      }),
+  );
+
+  // return;
 
   fetch(url + 'save-progress.php', {
     method: 'POST',
     body: JSON.stringify({
-      level: level,
-      mode: mode,
-      username: username,
+      highestInterval: highestInterval,
+      highestPitch: highestPitch,
       userid: userid,
     }),
     headers: {
@@ -188,6 +197,44 @@ export const loginUser = (username, password) => (dispatch, getState) => {
       console.log(error);
 
       dispatch({type: 'LOGIN_ERROR', payload: error});
+    });
+};
+
+export const userAuth = (username) => (dispatch, getState) => {
+  //console.log(`username: ${username} password: ${password}`);
+
+  let url = getState().url;
+  let deviceUsername = getState().deviceUsername;
+  let username = getState().username;
+  let highestInterval = getState().highestCompletedIntervalLevel;
+  let highestPitch = getState().highestCompletedPitchLevel;
+
+  fetch(url + 'user-auth.php', {
+    method: 'POST',
+    body: JSON.stringify({
+      username: username,
+      deviceUsername: deviceUsername,
+      highestInterval: highestInterval,
+      highestPitch: highestPitch,
+    }),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      dispatch({
+        type: 'AUTH_SITE_DATA',
+        payload: data,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+
+      dispatch({type: 'LOGIN_SITE_ERROR', payload: error});
     });
 };
 

@@ -26,10 +26,9 @@ import Instructions from './Instructions';
 import ResultsViewPitch from './ResultsViewPitch';
 import {TextInput} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {saveProgress} from '../thunks/';
 import KeyboardView from './KeyboardView';
 import KeyboardView2 from './KeyboardView2';
-import {saveTestScore} from '../thunks/';
+import {saveTestScore, saveProgress} from '../thunks/';
 
 //https://nicedoc.io/zmxv/react-native-sound
 
@@ -134,9 +133,10 @@ const PitchLevels = ({level, mode, props}) => {
   const [quizTime, setQuizTime] = useState(0);
   const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
   const [passScore, setPassScore] = useState(0);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
-    console.log('pitch evel changed');
+    //console.log('pitch level changed');
     populateInstructions();
   }, [level]);
 
@@ -168,7 +168,7 @@ const PitchLevels = ({level, mode, props}) => {
         //console.log('the seconds: ' + interval);
 
         currentNote.getCurrentTime((seconds1) => {
-          console.log('at ' + seconds1);
+          //console.log('at ' + seconds1);
 
           setTrackInfo({
             position: seconds1,
@@ -252,6 +252,8 @@ const PitchLevels = ({level, mode, props}) => {
 
     console.log('screen width: ' + width);
 
+    //dispatch(saveProgress());
+
     var lc = loadCount;
     lc++;
     setLoadCount(lc);
@@ -282,6 +284,10 @@ const PitchLevels = ({level, mode, props}) => {
     setInstructions(instructions);
   };
 
+  useEffect(() => {
+    console.log('passScore: ' + passScore);
+  }, [passScore]);
+
   //console.log('height: ' + Dimensions.get('screen').height);
 
   //current question index changed
@@ -301,6 +307,8 @@ const PitchLevels = ({level, mode, props}) => {
       console.log(`ca: ${correctAnswers} total: ${questionList.length}`);
 
       var per = parseInt((correctAnswers / questionList.length) * 100);
+
+      setScore(per);
 
       console.log(`per levels: ${per}`);
 
@@ -325,11 +333,21 @@ const PitchLevels = ({level, mode, props}) => {
           }
         } else {
           storeData(level);
-          dispatch(saveTestScore(per, quizTime));
+          //dispatch(saveTestScore(per, quizTime));
+          dispatch(saveProgress());
         }
       }
     }
   }, [quizFinished]);
+
+  const postLeaderboard = () => {
+    console.log('postLeaderboard pitch');
+    dispatch(saveTestScore(score, quizTime));
+
+    dispatch({type: 'SET_MODE', mode: 0});
+    dispatch({type: 'SET_LEVEL', level: 0});
+    props.navigation.navigate('LEADER BOARD');
+  };
 
   //unmount
 
@@ -443,7 +461,6 @@ const PitchLevels = ({level, mode, props}) => {
 
   const mainMenu = (passed) => {
     console.log(`pitch ${level} passed: ${passed}`);
-    //saveProgress();
 
     if (!passed) {
     } else {
@@ -975,6 +992,7 @@ const PitchLevels = ({level, mode, props}) => {
           loggedIn={loggedIn}
           mode={mode}
           passScore={passScore}
+          postLeaderboard={postLeaderboard}
         />
       ) : null}
     </>
@@ -989,7 +1007,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {saveTestScore})(PitchLevels);
+export default connect(mapStateToProps, {saveTestScore, saveProgress})(
+  PitchLevels,
+);
 
 // var sh = Dimensions.get('screen').height;
 // var h;

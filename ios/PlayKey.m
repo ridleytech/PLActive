@@ -194,17 +194,20 @@ RCT_EXPORT_METHOD(releaseKey:(int)key
   
   AUGraphAddNode (_processingGraph, &cd, &samplerNode);
   
-  cd.componentType = kAudioUnitType_Mixer;
-  cd.componentSubType = kAudioUnitSubType_MultiChannelMixer;
-  result = AUGraphAddNode (_processingGraph, &cd, &mixerNode);
+  AudioComponentDescription cd2 = {};
+  cd2.componentManufacturer     = kAudioUnitManufacturer_Apple;
+  
+  cd2.componentType = kAudioUnitType_Mixer;
+  cd2.componentSubType = kAudioUnitSubType_MultiChannelMixer;
+  result = AUGraphAddNode (_processingGraph, &cd2, &mixerNode);
   NSCAssert (result == noErr, @"Unable to add the Output unit to the audio processing graph. Error code: %d '%.4s'", (int) result, (const char *)&result);
   
+  AudioComponentDescription cd3 = {};
+  cd3.componentManufacturer     = kAudioUnitManufacturer_Apple;
+  cd3.componentType = kAudioUnitType_Output;
+  cd3.componentSubType = kAudioUnitSubType_RemoteIO;  // Output to speakers
   
-  
-  cd.componentType = kAudioUnitType_Output;
-  cd.componentSubType = kAudioUnitSubType_RemoteIO;  // Output to speakers
-  
-  AUGraphAddNode (_processingGraph, &cd, &ioNode);
+  AUGraphAddNode (_processingGraph, &cd3, &ioNode);
   
   AUGraphOpen (_processingGraph);
   
@@ -222,7 +225,6 @@ RCT_EXPORT_METHOD(releaseKey:(int)key
   //mClientFormat.SetCanonical(2, true);
   mClientFormat.mSampleRate = kGraphSampleRate;
   //mClientFormat.Print();
-  
   mClientFormat.mFormatID = kAudioFormatLinearPCM;
 #if CA_ENV_MACOSX
   int sampleSize = sizeof(Float32);
@@ -250,6 +252,13 @@ RCT_EXPORT_METHOD(releaseKey:(int)key
                        &numBuses,
                        sizeof(numBuses));
   
+  OSStatus result2 = noErr;
+  
+  int estimatedSamplesPerBlock = 4096;
+  
+  result2 = AudioUnitSetProperty(_mixerUnit, kAudioUnitProperty_MaximumFramesPerSlice,
+                              kAudioUnitScope_Global, 0, & estimatedSamplesPerBlock, sizeof(estimatedSamplesPerBlock));
+  
   UInt32 prop1;
   UInt32 propSize1 = sizeof(prop1);
   
@@ -261,7 +270,6 @@ RCT_EXPORT_METHOD(releaseKey:(int)key
   rcbs.inputProc = &renderInput;
   rcbs.inputProcRefCon = &mUserData;
   
-  
   result = AUGraphSetNodeInputCallback(_processingGraph, mixerNode, 2, &rcbs);
   
   AUGraphNodeInfo (_processingGraph, samplerNode, 0, &_samplerUnit);
@@ -269,7 +277,6 @@ RCT_EXPORT_METHOD(releaseKey:(int)key
   AUGraphNodeInfo (_processingGraph, mixerNode, 0, &_mixerUnit);
   
   AUGraphConnectNodeInput (_processingGraph, samplerNode, 0, mixerNode, 1);
-  
   
   result = AudioUnitSetParameter(_mixerUnit, kMultiChannelMixerParam_Volume, kAudioUnitScope_Input, 0, 1, 0);
   result = AudioUnitSetParameter(_mixerUnit, kMultiChannelMixerParam_Pan, kAudioUnitScope_Input, 0, 0, 0);
@@ -399,19 +406,27 @@ static OSStatus renderNotification(void *inRefCon,
 
 - (OSStatus)loadFromDLSOrSoundFont: (NSURL *)bankURL withBank: (UInt8) bank withPatch: (int)presetNumber withSampler: (AudioUnit) sampler {
   OSStatus result = noErr;
+  OSStatus result2 = noErr;
   
   AUSamplerBankPresetData bpdata;
   bpdata.bankURL  = (__bridge CFURLRef) bankURL;
   bpdata.bankMSB  = bank;
   bpdata.bankLSB  = kAUSampler_DefaultBankLSB;
   bpdata.presetID = (UInt8) presetNumber;
-  
+
   result = AudioUnitSetProperty(sampler,
                                 kAUSamplerProperty_LoadPresetFromBank,
                                 kAudioUnitScope_Global,
                                 0,
                                 &bpdata,
                                 sizeof(bpdata));
+  
+  int estimatedSamplesPerBlock = 4096;
+  
+  result2 = AudioUnitSetProperty(sampler, kAudioUnitProperty_MaximumFramesPerSlice,
+                              kAudioUnitScope_Global, 0, & estimatedSamplesPerBlock, sizeof(estimatedSamplesPerBlock));
+         
+
   
   NSCAssert (result == noErr,@"Unable to set the preset property on the Sampler. Error code:%d '%.4s'",(int) result,(const char *)&result);
   

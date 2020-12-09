@@ -25,7 +25,7 @@ import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
 import ResultsViewInterval from './ResultsViewInterval';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {saveTestScore} from '../thunks/';
+import {saveTestScore, saveProgress} from '../thunks/';
 
 //console.log('data: ' + JSON.stringify(data));
 
@@ -102,6 +102,7 @@ const IntervalLevels = ({level, mode, props}) => {
 
   const [quizTime, setQuizTime] = useState(0);
   const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     console.log('interval level changed');
@@ -274,6 +275,8 @@ const IntervalLevels = ({level, mode, props}) => {
 
       var per = parseInt((correctAnswers / questionList.length) * 100);
 
+      setScore(per);
+
       console.log(`per levels: ${per} passScore: ${passScore}`);
 
       if (per >= passScore) {
@@ -300,11 +303,21 @@ const IntervalLevels = ({level, mode, props}) => {
         } else {
           console.log('logged in store data');
           storeData(level);
-          dispatch(saveTestScore(per, quizTime));
+          dispatch(saveProgress());
+          //dispatch(saveTestScore(per, quizTime));
         }
       }
     }
   }, [quizFinished]);
+
+  const postLeaderboard = () => {
+    console.log('postLeaderboard interval');
+    dispatch(saveTestScore(score, quizTime));
+
+    dispatch({type: 'SET_MODE', mode: 0});
+    dispatch({type: 'SET_LEVEL', level: 0});
+    props.navigation.navigate('LEADER BOARD');
+  };
 
   //unmount
 
@@ -419,7 +432,6 @@ const IntervalLevels = ({level, mode, props}) => {
 
   const mainMenu = (passed) => {
     console.log(`main menu interval ${level} passed: ${passed}`);
-    //saveProgress();
 
     if (!passed) {
     } else {
@@ -886,6 +898,7 @@ const IntervalLevels = ({level, mode, props}) => {
           loggedIn={loggedIn}
           mode={mode}
           passScore={passScore}
+          postLeaderboard={postLeaderboard}
         />
       ) : null}
     </>
@@ -901,7 +914,9 @@ const mapStateToProps = (state) => {
 };
 
 //export default IntervalLevels;
-export default connect(mapStateToProps, {saveTestScore})(IntervalLevels);
+export default connect(mapStateToProps, {saveTestScore, saveProgress})(
+  IntervalLevels,
+);
 
 let offset = 100;
 

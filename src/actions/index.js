@@ -82,6 +82,13 @@ export const setUsername = (username) => {
   };
 };
 
+export const setUserID = (userid) => {
+  return {
+    type: 'SET_USERID',
+    userid: userid,
+  };
+};
+
 export const setDeviceUsername = (username) => {
   return {
     type: 'SET_DEVICE_USERNAME',

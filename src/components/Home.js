@@ -26,11 +26,19 @@ import {
   showLogin,
   setUsername,
   setDeviceUsername,
+  setUserID,
 } from '../actions/';
-import {getProgressData, saveTestScore, getAccess} from '../thunks/';
+import {
+  getProgressData,
+  saveTestScore,
+  getAccess,
+  userAuth,
+  saveProgress,
+} from '../thunks/';
 import IntervalLevels from './IntervalLevels';
 import PitchLevels from './PitchLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Footer from './Footer';
 //https://www.npmjs.com/package/react-native-check-box
 //cant update git
 
@@ -58,7 +66,7 @@ class Home extends Component<Props> {
         //console.log('save default pitch data');
 
         value = 0;
-        this.storePitchData();
+        this.storePitchData(value);
       }
 
       this.props.setPitchProgress({
@@ -78,7 +86,7 @@ class Home extends Component<Props> {
         //console.log('save default interval data');
 
         value2 = 0;
-        this.storeIntervalData();
+        this.storeIntervalData(value2);
       }
 
       this.props.setIntervalProgress({
@@ -105,17 +113,23 @@ class Home extends Component<Props> {
     }
   };
 
-  storePitchData = async () => {
+  storePitchData = async (val) => {
     try {
-      await AsyncStorage.setItem('highestCompletedPitchLevel', '0');
+      await AsyncStorage.setItem('highestCompletedPitchLevel', val.toString());
+
+      console.log('pitch saved storage: ' + val);
     } catch (error) {
       // Error saving data
     }
   };
 
-  storeIntervalData = async () => {
+  storeIntervalData = async (val) => {
     try {
-      await AsyncStorage.setItem('highestCompletedIntervalLevel', '0');
+      await AsyncStorage.setItem(
+        'highestCompletedIntervalLevel',
+        val.toString(),
+      );
+      console.log('interval saved storage: ' + val);
     } catch (error) {
       // Error saving data
     }
@@ -161,6 +175,29 @@ class Home extends Component<Props> {
 
         this.setState({
           passwordVal: null,
+        });
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+
+    try {
+      var value2 = await AsyncStorage.getItem('userid');
+
+      if (value2 !== null) {
+        // We have data!!
+        console.log(`retrieved userid: ${value2}`);
+
+        this.props.setUserID(parseInt(value2));
+
+        this.setState({
+          useridVal: value2,
+        });
+      } else {
+        console.log('no userid');
+
+        this.setState({
+          useridVal: null,
         });
       }
     } catch (error) {
@@ -232,6 +269,16 @@ class Home extends Component<Props> {
     return result;
   };
 
+  storeUserid = async () => {
+    try {
+      await AsyncStorage.setItem('userid', this.props.userid.toString());
+
+      console.log('userid saved: ' + this.props.userid);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
   storeUsername = async () => {
     try {
       await AsyncStorage.setItem('username', this.props.username);
@@ -262,6 +309,10 @@ class Home extends Component<Props> {
     }
   };
 
+  saveP = () => {
+    this.props.saveProgress();
+  };
+
   componentDidUpdate(prevProps, nextState) {
     if (
       prevProps.loggedIn != this.props.loggedIn &&
@@ -272,20 +323,62 @@ class Home extends Component<Props> {
 
       //this.props.login(true);
 
-      this.props.getProgressData();
+      this.props.userAuth();
+      //this.props.getProgressData();
 
       if (this.props.username) {
-        this.storeUsername(this.props.username);
-        this.storePassword(this.props.password);
+        this.storeUsername();
+        this.storePassword();
         this.storeUser();
       }
+    }
+
+    if (prevProps.userid != this.props.userid && this.props.userid) {
+      this.props.getProgressData();
+      this.storeUserid();
+    }
+
+    if (prevProps.latestVersion != this.props.latestVersion) {
+      console.log(
+        'check version latest: ' +
+          this.props.latestVersion +
+          ' current: ' +
+          parseFloat(this.props.currentVersion),
+      );
+
+      if (parseFloat(this.props.currentVersion) < this.props.latestVersion) {
+        var msg;
+
+        msg = `UPDATE`;
+
+        Alert.alert(
+          null,
+          //`Please log in or join the Premium membership to unlock this level.`,
+          `New version of Active Ear is now available.`,
+          [
+            {text: msg, onPress: () => this.appStore()},
+            //{text: 'JOIN MEMBERSHIP', onPress: () => this.upgrade()},
+            {text: 'CANCEL', onPress: () => {}},
+          ],
+          {cancelable: false},
+        );
+      }
+    }
+
+    if (prevProps.hasProgress != this.props.hasProgress && this.props.userid) {
+      console.log('hasProgress changed');
+
+      this.storePitchData(this.props.highestCompletedPitchLevel.toString());
+      this.storeIntervalData(
+        this.props.highestCompletedIntervalLevel.toString(),
+      );
     }
   }
 
   componentDidMount() {
     //start debug
     // this.props.setIntervalProgress({
-    //   highestCompletedIntervalLevel: 1,
+    //   highestCompletedIntervalLevel: 5,
     // });
 
     // this.props.setPitchProgress({
@@ -334,6 +427,27 @@ class Home extends Component<Props> {
 
   upgrade = () => {
     let url = 'http://pianolessonwithwarren.com/memberships/';
+
+    Linking.canOpenURL(url).then((supported) => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + url);
+      }
+    });
+  };
+
+  appStore = () => {
+    var url;
+
+    //https://play.google.com/store/apps/details?id=com.pianolessons
+
+    if (Platform.OS === 'ios') {
+      url = 'itms-apps://apple.com/app/id1541508221';
+    } else {
+      url = 'https://play.google.com/store/apps/details?id=com.pianolessons';
+      //url = 'market://details?gotohome=com.pianolessons';
+    }
 
     Linking.canOpenURL(url).then((supported) => {
       if (supported) {
@@ -446,6 +560,15 @@ class Home extends Component<Props> {
         ) : this.props.mode == 3 ? (
           <SignIn />
         ) : null}
+
+        {/* <TouchableOpacity onPress={() => this.appStore()}>
+          <Text style={{height: 50}}>App Store</Text>
+        </TouchableOpacity> */}
+
+        {/* <TouchableOpacity onPress={() => this.saveP()}>
+          <Text style={{height: 50}}>Debug Progress</Text>
+        </TouchableOpacity> */}
+        {/* <Footer /> */}
       </>
     );
   }
@@ -463,6 +586,10 @@ const mapStateToProps = (state) => {
     password: state.password,
     url: state.url,
     accessFeature: state.accessFeature,
+    latestVersion: state.latestVersion,
+    currentVersion: state.currentVersion,
+    userid: state.userid,
+    hasProgress: state.hasProgress,
   };
 };
 
@@ -479,6 +606,9 @@ export default connect(mapStateToProps, {
   setDeviceUsername,
   saveTestScore,
   getAccess,
+  userAuth,
+  setUserID,
+  saveProgress,
 })(Home);
 
 let offset = 100;

@@ -9,7 +9,7 @@ import BlackGreenIcon from '../../images/black-green.png';
 
 var testView = NativeModules.PlayKey;
 
-const KeyboardView = () => {
+const KeyboardViewScroll = () => {
   const [keyStates, setKeyStates] = useState([
     false,
     false,
@@ -189,7 +189,7 @@ const KeyboardView = () => {
   );
 };
 
-export default KeyboardView;
+export default KeyboardViewScroll;
 
 let offset = Dimensions.get('screen').width / 9.2;
 

@@ -92,7 +92,7 @@
       "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
     ],
-    "level1PassScore": 92,
+    "level1PassScore": 91,
     "level2Questions": [
       {
         "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
@@ -185,7 +185,7 @@
       "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
     ],
-    "level2PassScore": 92,
+    "level2PassScore": 91,
     "level3Questions": [
       {
         "Question": "Using your keyboard, listen to the audio below then write the correct note letter name in the box below.",
@@ -327,7 +327,7 @@
       "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
     ],
-    "level3PassScore": 92
+    "level3PassScore": 91
   },
   "Interval": {
     "level1Questions": [
@@ -807,6 +807,7 @@
       "Octave",
       "Minor 9th",
       "Major 9th",
+      "Augmented 11th",
       "Minor 11th",
       "Major 11th",
       "Minor 13th",
