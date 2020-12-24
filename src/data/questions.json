@@ -820,5 +820,47 @@
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
     "level5PassScore": 85
+  },
+  "Triads": {
+    "Chords": ["C", "D", "E", "F", "G", "A", "B", "Eb", "Gb", "Ab", "Bb", "Db"],
+    "level1Instructions": [
+      "For this quiz, identify the quality of the chord.",
+      "This level will consist of 12 multiple choice questions.",
+      "You need to score a 10/12 to past the quiz.",
+      "This quiz should be completed using ONLY your ear. No keyboard."
+    ],
+    "level1Answers": ["Major", "Minor", "sus2", "sus4"],
+    "level1PassScore": 83,
+    "level2Instructions": [
+      "For this quiz, identify the quality of the chord.",
+      "This level will consist of 12 multiple choice questions.",
+      "You need to score a 10/12 to past the quiz.",
+      "This quiz should be completed using ONLY your ear. No keyboard."
+    ],
+    "level2Answers": ["Major", "Minor", "sus2", "sus4"],
+    "level2PassScore": 83,
+    "level3Instructions": [
+      "For this quiz, identify the quality of the chord.",
+      "This level will consist of 12 multiple choice questions.",
+      "You need to score a 10/12 to past the quiz.",
+      "This quiz should be completed using ONLY your ear. No keyboard."
+    ],
+    "level3Answers": ["Major", "Minor", "sus2", "sus4", "augmented"],
+    "level3PassScore": 83,
+    "level4Instructions": [
+      "For this quiz, identify the quality of the chord.",
+      "This level will consist of 12 multiple choice questions.",
+      "You need to score a 10/12 to past the quiz.",
+      "This quiz should be completed using ONLY your ear. No keyboard."
+    ],
+    "level4Answers": [
+      "Major",
+      "Minor",
+      "sus2",
+      "sus4",
+      "augmented",
+      "diminished"
+    ],
+    "level4PassScore": 83
   }
 }

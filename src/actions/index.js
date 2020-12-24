@@ -55,6 +55,14 @@ export const setIntervalProgress = (level) => {
   };
 };
 
+export const setTriadsProgress = (level) => {
+  //console.log(`si: ${JSON.stringify(level)}`);
+  return {
+    type: 'SET_TRIADS_PROGRESS',
+    level: level,
+  };
+};
+
 export const resetProgress = () => {
   return {
     type: 'RESET_PROGRESS',

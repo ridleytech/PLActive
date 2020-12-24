@@ -213,7 +213,7 @@ const ResultsViewPitch = ({
                         fontSize: 15,
                         fontFamily: 'Helvetica Neue',
                       }}>
-                      Question {index + 1}
+                      Question {index + 1}.
                     </Text>
                     {ob.Answers.includes(ob.userAnswer) ? (
                       <View
@@ -294,8 +294,10 @@ const ResultsViewPitch = ({
           }}>
           {!loggedIn && passed && accessFeature > 0
             ? ' LOGIN TO START LEVEL ' + (level + 1)
-            : passed
+            : passed && level < 3
             ? ' START LEVEL ' + (level + 1)
+            : passed && level == 3
+            ? 'LEVELS COMPLETED'
             : 'RESTART QUIZ'}
         </Text>
       </TouchableOpacity>

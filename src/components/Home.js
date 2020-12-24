@@ -21,6 +21,7 @@ import {
   setMode,
   setIntervalProgress,
   setPitchProgress,
+  setTriadsProgress,
   manageGraph,
   login,
   showLogin,
@@ -39,6 +40,8 @@ import IntervalLevels from './IntervalLevels';
 import PitchLevels from './PitchLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Footer from './Footer';
+import TriadsLevels from './TriadsLevels';
+import TriadsMenu from './TriadsMenu';
 //https://www.npmjs.com/package/react-native-check-box
 //cant update git
 
@@ -96,6 +99,26 @@ class Home extends Component<Props> {
       // Error retrieving data
     }
 
+    try {
+      var value3 = await AsyncStorage.getItem('highestCompletedTriadsLevel');
+
+      if (value3 !== null) {
+        // We have data!!
+        console.log(`highestCompletedTriadsLevel: ${value3}`);
+      } else {
+        //console.log('save default interval data');
+
+        value3 = 0;
+        this.storeTriadsData(value3);
+      }
+
+      this.props.setTriadsProgress({
+        highestCompletedTriadsLevel: value3,
+      });
+    } catch (error) {
+      // Error retrieving data
+    }
+
     //reset progress data
     // this.storePitchData();
     // this.storeIntervalData();
@@ -130,6 +153,15 @@ class Home extends Component<Props> {
         val.toString(),
       );
       console.log('interval saved storage: ' + val);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  storeTriadsData = async (val) => {
+    try {
+      await AsyncStorage.setItem('highestCompletedTriadsLevel', val.toString());
+      console.log('triads saved storage: ' + val);
     } catch (error) {
       // Error saving data
     }
@@ -459,7 +491,7 @@ class Home extends Component<Props> {
   };
 
   setMode = (mode) => {
-    //console.log('showLevel: ' + level);
+    console.log('setMode: ' + mode);
 
     this.props.setMode(mode);
   };
@@ -500,12 +532,25 @@ class Home extends Component<Props> {
 
           return;
         }
-      } else {
+      } else if (this.props.mode == 2) {
         if (level - 1 > this.props.highestCompletedIntervalLevel) {
           Alert.alert(
             null,
             `Complete level ${
               this.props.highestCompletedIntervalLevel + 1
+            } to proceed`,
+            [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+            {cancelable: false},
+          );
+
+          return;
+        }
+      } else {
+        if (level - 1 > this.props.highestCompletedTriadsLevel) {
+          Alert.alert(
+            null,
+            `Complete level ${
+              this.props.highestCompletedTriadsLevel + 1
             } to proceed`,
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
@@ -557,7 +602,15 @@ class Home extends Component<Props> {
             mode={this.props.mode}
             props={this.props}
           />
-        ) : this.props.mode == 3 ? (
+        ) : this.props.mode == 3 && this.props.level == 0 ? (
+          <TriadsMenu showLevel={this.showLevel} />
+        ) : this.props.mode == 3 && this.props.level > 0 ? (
+          <TriadsLevels
+            level={this.props.level}
+            mode={this.props.mode}
+            props={this.props}
+          />
+        ) : this.props.mode == 4 ? (
           <SignIn />
         ) : null}
 
@@ -580,6 +633,7 @@ const mapStateToProps = (state) => {
     mode: state.mode,
     highestCompletedPitchLevel: state.highestCompletedPitchLevel,
     highestCompletedIntervalLevel: state.highestCompletedIntervalLevel,
+    highestCompletedTriadsLevel: state.highestCompletedTriadsLevel,
     graphStarted: state.graphStarted,
     loggedIn: state.loggedIn,
     username: state.username,
@@ -598,6 +652,7 @@ export default connect(mapStateToProps, {
   setMode,
   setPitchProgress,
   setIntervalProgress,
+  setTriadsProgress,
   getProgressData,
   manageGraph,
   login,

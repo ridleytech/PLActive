@@ -72,6 +72,12 @@ const aspectRatio = height / width;
 const PitchLevels = ({level, mode, props}) => {
   const dispatch = useDispatch();
   const accessFeature = useSelector((state) => state.accessFeature);
+  const highestCompletedPitchLevel = useSelector(
+    (state) => state.highestCompletedPitchLevel,
+  );
+
+  // level = 3;
+  // dispatch({type: 'SET_LEVEL', level: 3});
 
   //console.log('selectedLevel: ' + level);
 
@@ -468,10 +474,18 @@ const PitchLevels = ({level, mode, props}) => {
 
       if (loggedIn) {
         if (passed) {
-          dispatch({type: 'SET_MODE', mode: 1});
-          dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
+          if (currentLevel == 3) {
+            //was last level. go to main menu
+            console.log('last level. go to main');
+            dispatch({type: 'SET_MODE', mode: 0});
+            dispatch({type: 'SET_LEVEL', level: 0});
+            props.navigation.navigate('CHALLENGES');
+          } else {
+            dispatch({type: 'SET_MODE', mode: 1});
+            dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
 
-          console.log(`set level: ${currentLevel + 1}`);
+            console.log(`set level: ${currentLevel + 1}`);
+          }
           //dispatch(saveProgress(level));
         } else {
           console.log('restart quiz');
@@ -494,7 +508,6 @@ const PitchLevels = ({level, mode, props}) => {
         } else {
           dispatch({type: 'SET_MODE', mode: 2});
           dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
-
           console.log(`set level: ${currentLevel + 1}`);
         }
 
@@ -541,6 +554,11 @@ const PitchLevels = ({level, mode, props}) => {
 
   const storeData = async (level) => {
     console.log(`highestCompletedPitchLevel: ${level}`);
+
+    if (level < highestCompletedPitchLevel) {
+      console.log('less than highest level. stop save');
+      return;
+    }
 
     try {
       console.log('try to save');

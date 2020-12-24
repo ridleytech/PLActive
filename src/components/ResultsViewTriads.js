@@ -9,7 +9,7 @@ import {
 
 import {useDispatch, useSelector} from 'react-redux';
 
-const ResultsViewInterval = ({
+const ResultsViewTriads = ({
   correctAnswers,
   total,
   mainMenu,
@@ -194,12 +194,9 @@ const ResultsViewInterval = ({
 
           {showStuff.show === true ? (
             <View style={{marginTop: 20}}>
-              {mode == 1 ? (
-                <Text style={{marginTop: 20}}>
-                  Using your keyboard, listen to the audio below then write the
-                  correct note letter name in the box below.
-                </Text>
-              ) : null}
+              <Text style={{marginTop: 20}}>
+                Identify the quality of the chord.
+              </Text>
 
               {answerList.map((ob, index) => {
                 return (
@@ -211,7 +208,7 @@ const ResultsViewInterval = ({
                         fontSize: 15,
                         fontFamily: 'Helvetica Neue',
                       }}>
-                      {index + 1}. {ob.Question}
+                      Question {index + 1}.
                     </Text>
 
                     {ob.Answer === ob.userAnswer ? (
@@ -321,4 +318,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResultsViewInterval;
+export default ResultsViewTriads;

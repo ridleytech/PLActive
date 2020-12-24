@@ -20,6 +20,7 @@ const inititalState = {
   userid: null,
   highestCompletedIntervalLevel: 0,
   highestCompletedPitchLevel: 0,
+  highestCompletedTriadsLevel: 0,
   loggedIn: false,
   graphStarted: false,
   loginEnabled: true,
@@ -35,7 +36,7 @@ const inititalState = {
   leaderData: [],
   url: url,
   accessFeature: 0,
-  currentVersion: 1.02,
+  currentVersion: 1.03,
   latestVersion: null,
   hasProgress: null,
 };
@@ -250,6 +251,7 @@ export default (state = inititalState, action) => {
         ...state,
         highestCompletedIntervalLevel: parseInt(progressData.ihi),
         highestCompletedPitchLevel: parseInt(progressData.phi),
+        highestCompletedTriadsLevel: parseInt(progressData.thi),
         hasProgress: true,
       };
 
@@ -304,6 +306,21 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         highestCompletedIntervalLevel: levelVal,
+      };
+
+    case 'SET_TRIADS_PROGRESS':
+      //console.log('action: ' + JSON.stringify(action));
+
+      var completedLevel = parseInt(action.level.highestCompletedTriadsLevel);
+      var levelVal = state.highestCompletedTriadsLevel;
+
+      if (completedLevel > state.highestCompletedTriadsLevel) {
+        levelVal = completedLevel;
+      }
+
+      return {
+        ...state,
+        highestCompletedTriadsLevel: levelVal,
       };
 
     case 'RESET_PROGRESS':

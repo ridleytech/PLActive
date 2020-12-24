@@ -15,7 +15,11 @@ import videoImg from '../../images/instructions-placeholder.png';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
 const MainMenu = ({setMode}) => {
-  var levels = ['Pitch Recognition', 'Interval Training'];
+  var levels = [
+    'Pitch Recognition',
+    'Interval Training',
+    'Triads and Sevenths',
+  ];
 
   const opacity = useState(new Animated.Value(0))[0];
 
@@ -157,16 +161,5 @@ const MainMenu = ({setMode}) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  list: {
-    fontSize: 14,
-    fontFamily: 'Helvetica Neue',
-    marginBottom: 8,
-  },
-  listItem: {display: 'flex', flexDirection: 'row'},
-  video: {marginTop: 20, width: '100%'},
-  check: {marginRight: 8},
-});
 
 export default MainMenu;

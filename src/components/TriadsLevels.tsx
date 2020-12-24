@@ -23,7 +23,7 @@ import disabledImg from '../../images/checkbox-disabled.png';
 import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
-import ResultsViewInterval from './ResultsViewInterval';
+import ResultsViewTriads from './ResultsViewTriads';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {saveTestScore, saveProgress} from '../thunks/';
 
@@ -57,11 +57,11 @@ const shuffle = (array) => {
 var Sound = require('react-native-sound');
 var currentNote;
 
-const IntervalLevels = ({level, mode, props}) => {
+const TraidsLevels = ({level, mode, props}) => {
   const dispatch = useDispatch();
   const accessFeature = useSelector((state) => state.accessFeature);
-  const highestCompletedIntervalLevel = useSelector(
-    (state) => state.highestCompletedIntervalLevel,
+  const highestCompletedTriadsLevel = useSelector(
+    (state) => state.highestCompletedTriadsLevel,
   );
 
   //console.log('selectedLevel: ' + level);
@@ -108,7 +108,7 @@ const IntervalLevels = ({level, mode, props}) => {
   const [score, setScore] = useState(0);
 
   useEffect(() => {
-    console.log('interval level changed');
+    console.log('triads level changed');
     populateInstructions();
   }, [level]);
 
@@ -184,28 +184,25 @@ const IntervalLevels = ({level, mode, props}) => {
     if (currentQuestion1 < questionList.length - 1) {
       currentQuestion1 += 1;
 
-      if (level > 1) {
-        setCurrentTrack({
-          name: questionList[currentQuestion1].file,
-          id: currentQuestion1.toString(),
-        });
+      setCurrentTrack({
+        name: questionList[currentQuestion1].file,
+        id: currentQuestion1.toString(),
+      });
 
-        var filename =
-          questionList[currentQuestion1].file.toLowerCase() + '.mp3';
+      var filename = questionList[currentQuestion1].file.toLowerCase() + '.mp3';
 
-        currentNote = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
-          if (error) {
-            console.log('failed to load the sound ' + filename, error);
-            return;
-          }
-          // loaded successfully
-          console.log('file ' + filename + ' loaded');
+      currentNote = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+          console.log('failed to load the sound ' + filename, error);
+          return;
+        }
+        // loaded successfully
+        console.log('file ' + filename + ' loaded');
 
-          //currentNote.play();
+        //currentNote.play();
 
-          currentNote.setCategory('Playback');
-        });
-      }
+        currentNote.setCategory('Playback');
+      });
       setCurrentQuestionInd(currentQuestion1);
       populateAnswers(questionList, currentQuestion1);
     } else {
@@ -234,30 +231,44 @@ const IntervalLevels = ({level, mode, props}) => {
   const populateInstructions = () => {
     console.log('populate instructions: ' + level);
 
-    var instructions; // = data.Interval.level3Instructions;
+    var instructions; // = data.Triads.level3Instructions;
 
     if (level == 1) {
-      instructions = shuffle(data.Interval.level1Instructions);
-      setPassScore(data.Interval.level1PassScore);
+      instructions = shuffle(data.Triads.level1Instructions);
+      setPassScore(data.Triads.level1PassScore);
     } else if (level == 2) {
-      instructions = shuffle(data.Interval.level2Instructions);
-      setPassScore(data.Interval.level2PassScore);
+      instructions = shuffle(data.Triads.level2Instructions);
+      setPassScore(data.Triads.level2PassScore);
     } else if (level == 3) {
-      instructions = shuffle(data.Interval.level3Instructions);
-      setPassScore(data.Interval.level3PassScore);
+      instructions = shuffle(data.Triads.level3Instructions);
+      setPassScore(data.Triads.level3PassScore);
     } else if (level == 4) {
-      instructions = shuffle(data.Interval.level4Instructions);
-      setPassScore(data.Interval.level4PassScore);
+      instructions = shuffle(data.Triads.level4Instructions);
+      setPassScore(data.Triads.level4PassScore);
     } else if (level == 5) {
-      instructions = shuffle(data.Interval.level5Instructions);
-      setPassScore(data.Interval.level5PassScore);
+      instructions = shuffle(data.Triads.level5Instructions);
+      setPassScore(data.Triads.level5PassScore);
+    } else if (level == 6) {
+      instructions = shuffle(data.Triads.level6Instructions);
+      setPassScore(data.Triads.level6PassScore);
+    } else if (level == 7) {
+      instructions = shuffle(data.Triads.level7Instructions);
+      setPassScore(data.Triads.level7PassScore);
+    } else if (level == 8) {
+      instructions = shuffle(data.Triads.level8Instructions);
+      setPassScore(data.Triads.level8PassScore);
+    } else if (level == 9) {
+      instructions = shuffle(data.Triads.level9Instructions);
+      setPassScore(data.Triads.level9PassScore);
     }
 
     setInstructions(instructions);
   };
 
   useEffect(() => {
-    console.log('passScore: ' + passScore);
+    if (passScore > 0) {
+      console.log('passScore: ' + passScore);
+    }
   }, [passScore]);
 
   //console.log('height: ' + Dimensions.get('screen').height);
@@ -286,8 +297,8 @@ const IntervalLevels = ({level, mode, props}) => {
         console.log('store data');
 
         dispatch({
-          type: 'SET_INTERVAL_PROGRESS',
-          level: {highestCompletedIntervalLevel: level.toString()},
+          type: 'SET_TRIADS_PROGRESS',
+          level: {highestCompletedTriadsLevel: level.toString()},
         });
 
         if (!loggedIn) {
@@ -314,7 +325,7 @@ const IntervalLevels = ({level, mode, props}) => {
   }, [quizFinished]);
 
   const postLeaderboard = () => {
-    console.log('postLeaderboard interval');
+    console.log('postLeaderboard triads');
     dispatch(saveTestScore(score, quizTime));
 
     dispatch({type: 'SET_MODE', mode: 0});
@@ -381,7 +392,7 @@ const IntervalLevels = ({level, mode, props}) => {
   const selectAnswer2 = () => {
     var al = answerList.slice();
 
-    console.log('answerList interval: ' + JSON.stringify(al));
+    console.log('answerList triads: ' + JSON.stringify(al));
 
     var currentQuestion = questionList[currentQuestionInd];
 
@@ -424,8 +435,8 @@ const IntervalLevels = ({level, mode, props}) => {
     console.log('debugResults');
 
     dispatch({
-      type: 'SET_INTERVAL_PROGRESS',
-      level: {highestCompletedIntervalLevel: level.toString()},
+      type: 'SET_TRIADS_PROGRESS',
+      level: {highestCompletedTriadsLevel: level.toString()},
     });
 
     setCorrectAnswers(12);
@@ -434,7 +445,7 @@ const IntervalLevels = ({level, mode, props}) => {
   };
 
   const mainMenu = (passed) => {
-    console.log(`main menu interval ${level} passed: ${passed}`);
+    console.log(`main menu triads ${level} passed: ${passed}`);
 
     if (!passed) {
     } else {
@@ -524,41 +535,91 @@ const IntervalLevels = ({level, mode, props}) => {
   };
 
   const storeData = async (level) => {
-    console.log(`highestCompletedIntervalLevel: ${level}`);
+    console.log(`highestCompletedTriadsLevel: ${level}`);
 
-    if (level < highestCompletedIntervalLevel) {
+    if (level < highestCompletedTriadsLevel) {
       console.log('less than highest level. stop save');
       return;
     }
 
     try {
-      console.log('try to save highestCompletedIntervalLevel');
+      console.log('try to save highestCompletedTriadsLevel');
       await AsyncStorage.setItem(
-        'highestCompletedIntervalLevel',
+        'highestCompletedTriadsLevel',
         level.toString(),
       );
 
-      console.log('highestCompletedIntervalLevel saved');
+      console.log('highestCompletedTriadsLevel saved');
     } catch (error) {
-      console.log('highestCompletedIntervalLevel not saved');
+      console.log('highestCompletedTriadsLevel not saved');
       // Error saving data
     }
   };
 
   const populateAnswers = (questions, ind) => {
     //console.log('populateAnswers');
-    var answersData; // = shuffle(data.Interval.level3Answers);
+    var answersData; // = shuffle(data.Triads.level3Answers);
 
     if (level == 1) {
-      answersData = shuffle(data.Interval.level1Answers);
+      answersData = shuffle(data.Triads.level1Answers);
     } else if (level == 2) {
-      answersData = shuffle(data.Interval.level2Answers);
+      answersData = shuffle(data.Triads.level2Answers);
     } else if (level == 3) {
-      answersData = shuffle(data.Interval.level3Answers);
+      answersData = shuffle(data.Triads.level3Answers);
     } else if (level == 4) {
-      answersData = shuffle(data.Interval.level4Answers);
+      answersData = shuffle(data.Triads.level4Answers);
     } else if (level == 5) {
-      answersData = shuffle(data.Interval.level5Answers);
+      answersData = shuffle(data.Triads.level5Answers);
+    }
+
+    //console.log('answersData: ' + answersData);
+
+    // var answer = questions[ind].Answer;
+
+    // //console.log('question answer: ' + answer);
+
+    // var answerInd = answersData.indexOf(answer);
+
+    // //console.log('answerInd: ' + answerInd);
+
+    // var answers = [];
+    // var answerTxt = answersData[answerInd];
+    // answers.push(answerTxt);
+
+    // var ind = 0;
+
+    // for (var i = 0; i < answersData.length; i++) {
+    //   if (ind > 2) {
+    //     break;
+    //   }
+
+    //   if (answersData[i] != answer) {
+    //     answers.push(answersData[i]);
+    //     ind++;
+    //   }
+    // }
+
+    //var shuffledAnswers = shuffle(answers);
+
+    //console.log(`shuffledAnswers: ${shuffledAnswers}`);
+
+    setAnswers(answersData);
+  };
+
+  const populateAnswers1 = (questions, ind) => {
+    //console.log('populateAnswers');
+    var answersData; // = shuffle(data.Triads.level3Answers);
+
+    if (level == 1) {
+      answersData = shuffle(data.Triads.level1Answers);
+    } else if (level == 2) {
+      answersData = shuffle(data.Triads.level2Answers);
+    } else if (level == 3) {
+      answersData = shuffle(data.Triads.level3Answers);
+    } else if (level == 4) {
+      answersData = shuffle(data.Triads.level4Answers);
+    } else if (level == 5) {
+      answersData = shuffle(data.Triads.level5Answers);
     }
 
     //console.log('answersData: ' + answersData);
@@ -600,28 +661,72 @@ const IntervalLevels = ({level, mode, props}) => {
 
     setisQuizTimerActive(true);
 
-    var questions;
+    var questions = shuffle(data.Triads.Chords);
+    var qualites;
 
     if (level == 1) {
-      questions = shuffle(data.Interval.level1Questions);
+      qualites = data.Triads.level1Answers;
     } else if (level == 2) {
-      questions = shuffle(data.Interval.level2Questions);
+      qualites = data.Triads.level2Answers;
     } else if (level == 3) {
-      questions = shuffle(data.Interval.level3Questions);
+      qualites = data.Triads.level3Answers;
     } else if (level == 4) {
-      questions = shuffle(data.Interval.level4Questions);
+      qualites = data.Triads.level4Answers;
     } else if (level == 5) {
-      questions = shuffle(data.Interval.level5Questions);
+      qualites = data.Triads.level5Answers;
+    } else if (level == 6) {
+      qualites = data.Triads.level6Answers;
+    } else if (level == 7) {
+      qualites = data.Triads.level7Answers;
+    } else if (level == 8) {
+      qualites = data.Triads.level8Answers;
+    } else if (level == 9) {
+      qualites = data.Triads.level9Answers;
     }
 
     //console.log('theAnswer: ' + answerInd);
 
-    console.log('interval questions: ' + JSON.stringify(questions));
+    console.log('triads questions: ' + JSON.stringify(questions));
+
+    var newQuestions = [];
+
+    console.log('qualites: ' + JSON.stringify(qualites));
+
+    questions.map((question) => {
+      var randQualityInd;
+
+      if (level == 1) {
+        //if level 1, only choose major and minor
+        randQualityInd = Math.floor(Math.random() * 2);
+      } else {
+        randQualityInd = Math.floor(Math.random() * qualites.length);
+      }
+
+      //console.log('randQualityInd: ' + randQualityInd);
+      //console.log('randQuestionInd: ' + JSON.stringify(randQuestionInd));
+
+      var note = {};
+      var filename = qualites[randQualityInd] + 'triad' + question;
+
+      //console.log('theAnswer: ' + JSON.stringify(note.Answer));
+
+      note.file = filename.toLowerCase();
+      note.note = question;
+      note.Answer = qualites[randQualityInd];
+
+      //console.log('note: ' + JSON.stringify(note));
+
+      newQuestions.push(note);
+    });
+
+    newQuestions = shuffle(newQuestions);
+
+    //return;
 
     setCurrentQuestionInd(0);
     setCurrentAnswer('');
     setCorrectAnswers(0);
-    setQuestionList(questions);
+    setQuestionList(newQuestions);
     setAnswerList([]);
     populateAnswers(questions, 0);
 
@@ -629,64 +734,58 @@ const IntervalLevels = ({level, mode, props}) => {
     setRestarted(false);
     setQuizFinished(false);
 
-    if (level > 1) {
-      var newTracks = [];
+    console.log('newQuestions: ' + JSON.stringify(newQuestions));
 
-      questions.map((question) => {
-        var ob = {
-          file: question.file.toLowerCase() + '.mp3',
-        };
+    //if (level > 1) {
+    var newTracks = [];
 
-        newTracks.push(ob);
-      });
+    newQuestions.map((question) => {
+      var ob = {
+        file: question.file.toLowerCase() + '.mp3',
+      };
 
-      setTrackFile(newTracks[0].file);
+      newTracks.push(ob);
+    });
 
-      console.log('file: ' + newTracks[0].file);
+    setTrackFile(newTracks[0].file);
 
-      console.log('newTracks length interval: ' + newTracks.length);
+    console.log('file: ' + newTracks[0].file);
+    console.log('newTracks length triads: ' + newTracks.length);
 
-      currentNote = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
-        if (error) {
-          console.log('failed to load the sound ' + newTracks[0].file, error);
-          return;
-        }
-        // loaded successfully
-        console.log(
-          'duration in seconds: ' +
-            currentNote.getDuration() +
-            'number of channels: ' +
-            currentNote.getNumberOfChannels(),
-        );
+    currentNote = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound ' + newTracks[0].file, error);
+        return;
+      }
+      // loaded successfully
+      console.log(
+        'duration in seconds: ' +
+          currentNote.getDuration() +
+          'number of channels: ' +
+          currentNote.getNumberOfChannels(),
+      );
 
-        setTrackInfo({position: 0, duration: currentNote.getDuration()});
+      setTrackInfo({position: 0, duration: currentNote.getDuration()});
 
-        //currentNote.play();
-      });
-    }
+      //currentNote.play();
+    });
 
     setCurrentTrack({
-      name: questions[0].file,
+      name: newQuestions[0].file,
     });
+
+    console.log('newTracks: ' + JSON.stringify(newTracks));
+    //}
 
     //console.log('questions: ' + JSON.stringify(questions));
 
-    var question = questions[0];
+    var question = newQuestions[0];
 
     console.log('question: ' + JSON.stringify(question));
-    console.log('newTracks: ' + JSON.stringify(newTracks));
-    console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
+    console.log('theAnswer: ' + JSON.stringify(question.Answer));
   };
 
-  var modename;
-
-  //console.log('IL mode: ' + mode);
-
-  if (mode === 2) {
-    modename = 'Interval Training';
-  } else {
-    modename = 'Pitch Recognition';
-  }
+  var modename = 'Triads and Sevenths';
 
   //console.log('IL modename: ' + modename);
 
@@ -717,7 +816,7 @@ const IntervalLevels = ({level, mode, props}) => {
                 Quiz - Interval Training Level {level}
               </Text>
 
-              <Text style={styles.scaleHeader}>C Major Scale</Text>
+              {/* <Text style={styles.scaleHeader}>C Major Scale</Text> */}
 
               {/* <TouchableOpacity onPress={() => debugResults()}>
                 <Text
@@ -782,59 +881,52 @@ const IntervalLevels = ({level, mode, props}) => {
                   marginBottom: 15,
                   fontFamily: 'Helvetica Neue',
                 }}>
-                {questionList[currentQuestionInd]
-                  ? questionList[currentQuestionInd].Question
-                  : null}
+                Identify the quality of the chord.
               </Text>
 
-              {level > 1 ? (
+              <View
+                style={{
+                  backgroundColor: '#222222',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  paddingLeft: 12,
+                  paddingRight: 12,
+                  marginTop: 10,
+                }}>
                 <View
                   style={{
-                    backgroundColor: '#222222',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    paddingLeft: 12,
-                    paddingRight: 12,
-                    marginTop: 10,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    height: 50,
                   }}>
-                  <View
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      height: 50,
-                    }}>
-                    <TouchableOpacity
-                      onPress={onButtonPressed}
-                      style={{marginRight: 12}}>
-                      {isPlaying ? (
-                        <Image
-                          source={pauseImg}
-                          style={{width: 25, height: 25}}
-                        />
-                      ) : (
-                        <Image
-                          source={playImg}
-                          style={{width: 25, height: 25}}
-                        />
-                      )}
-                    </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={onButtonPressed}
+                    style={{marginRight: 12}}>
+                    {isPlaying ? (
+                      <Image
+                        source={pauseImg}
+                        style={{width: 25, height: 25}}
+                      />
+                    ) : (
+                      <Image source={playImg} style={{width: 25, height: 25}} />
+                    )}
+                  </TouchableOpacity>
 
-                    <Slider
-                      width="85%"
-                      minimumValue={0}
-                      maximumValue={1}
-                      value={sliderValue}
-                      minimumTrackTintColor="#16ADE5"
-                      maximumTrackTintColor="#707070"
-                      onSlidingStart={slidingStarted}
-                      onSlidingComplete={slidingCompleted}
-                      thumbTintColor="#00000000"
-                      //trackImage={track}
-                    />
-                  </View>
+                  <Slider
+                    width="85%"
+                    minimumValue={0}
+                    maximumValue={1}
+                    value={sliderValue}
+                    minimumTrackTintColor="#16ADE5"
+                    maximumTrackTintColor="#707070"
+                    onSlidingStart={slidingStarted}
+                    onSlidingComplete={slidingCompleted}
+                    thumbTintColor="#00000000"
+                    //trackImage={track}
+                  />
                 </View>
-              ) : null}
+              </View>
             </View>
 
             <ScrollView style={{paddingLeft: 20, paddingRight: 20}}>
@@ -904,7 +996,7 @@ const IntervalLevels = ({level, mode, props}) => {
           </View>
         </>
       ) : quizFinished ? (
-        <ResultsViewInterval
+        <ResultsViewTriads
           avgScore={80}
           answerList={answerList}
           correctAnswers={correctAnswers}
@@ -929,9 +1021,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-//export default IntervalLevels;
+//export default TraidsLevels;
 export default connect(mapStateToProps, {saveTestScore, saveProgress})(
-  IntervalLevels,
+  TraidsLevels,
 );
 
 let offset = 100;
