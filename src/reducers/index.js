@@ -16,11 +16,14 @@ const inititalState = {
   a: 1,
   level: 0,
   mode: 0,
+  triadmode: 0,
   previousMode: null,
   userid: null,
   highestCompletedIntervalLevel: 0,
   highestCompletedPitchLevel: 0,
-  highestCompletedTriadsLevel: 0,
+  //highestCompletedTriadsLevel: 0,
+  highestCompletedTriadsBlockedLevel: 0,
+  highestCompletedTriadsBrokenLevel: 0,
   loggedIn: false,
   graphStarted: false,
   loginEnabled: true,
@@ -36,7 +39,7 @@ const inititalState = {
   leaderData: [],
   url: url,
   accessFeature: 0,
-  currentVersion: 1.03,
+  currentVersion: 1.02,
   latestVersion: null,
   hasProgress: null,
 };
@@ -219,7 +222,7 @@ export default (state = inititalState, action) => {
 
       return {
         ...state,
-        mode: 3,
+        mode: 4,
         previousMode: pm,
       };
 
@@ -251,7 +254,9 @@ export default (state = inititalState, action) => {
         ...state,
         highestCompletedIntervalLevel: parseInt(progressData.ihi),
         highestCompletedPitchLevel: parseInt(progressData.phi),
-        highestCompletedTriadsLevel: parseInt(progressData.thi),
+        //highestCompletedTriadsLevel: parseInt(progressData.thi),
+        highestCompletedTriadsBlockedLevel: parseInt(progressData.tblhi),
+        highestCompletedTriadsBrokenLevel: parseInt(progressData.tbrhi),
         hasProgress: true,
       };
 
@@ -308,19 +313,53 @@ export default (state = inititalState, action) => {
         highestCompletedIntervalLevel: levelVal,
       };
 
-    case 'SET_TRIADS_PROGRESS':
+    // case 'SET_TRIADS_PROGRESS':
+    //   //console.log('action: ' + JSON.stringify(action));
+
+    //   var completedLevel = parseInt(action.level.highestCompletedTriadsLevel);
+    //   var levelVal = state.highestCompletedTriadsLevel;
+
+    //   if (completedLevel > state.highestCompletedTriadsLevel) {
+    //     levelVal = completedLevel;
+    //   }
+
+    //   return {
+    //     ...state,
+    //     highestCompletedTriadsLevel: levelVal,
+    //   };
+
+    case 'SET_TRIADS_BLOCKED_PROGRESS':
       //console.log('action: ' + JSON.stringify(action));
 
-      var completedLevel = parseInt(action.level.highestCompletedTriadsLevel);
-      var levelVal = state.highestCompletedTriadsLevel;
+      var completedLevel = parseInt(
+        action.level.highestCompletedTriadsBlockedLevel,
+      );
+      var levelVal = state.highestCompletedTriadsBlockedLevel;
 
-      if (completedLevel > state.highestCompletedTriadsLevel) {
+      if (completedLevel > state.highestCompletedTriadsBlockedLevel) {
         levelVal = completedLevel;
       }
 
       return {
         ...state,
-        highestCompletedTriadsLevel: levelVal,
+        highestCompletedTriadsBlockedLevel: levelVal,
+      };
+
+    case 'SET_TRIADS_BROKEN_PROGRESS':
+      //console.log('action: ' + JSON.stringify(action));
+
+      var completedLevel = parseInt(
+        action.level.highestCompletedTriadsBrokenLevel,
+      );
+      var levelVal = state.highestCompletedTriadsBrokenLevel;
+
+      if (completedLevel > state.highestCompletedTriadsBrokenLevel) {
+        levelVal = completedLevel;
+      }
+
+      return {
+        ...state,
+        highestCompletedTriadsBrokenLevel: levelVal,
       };
 
     case 'RESET_PROGRESS':
@@ -331,6 +370,8 @@ export default (state = inititalState, action) => {
         ...state,
         highestCompletedPitchLevel: 0,
         highestCompletedIntervalLevel: 0,
+        highestCompletedTriadsLevelBlocked: 0,
+        highestCompletedTriadsLevelBroken: 0,
       };
 
     case 'SET_LEVEL':
@@ -343,6 +384,12 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         mode: action.mode,
+      };
+
+    case 'SET_TRIAD_MODE':
+      return {
+        ...state,
+        triadmode: action.mode,
       };
 
     case 'PROGRESS_SAVED':

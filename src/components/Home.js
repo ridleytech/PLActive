@@ -41,7 +41,8 @@ import PitchLevels from './PitchLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Footer from './Footer';
 import TriadsLevels from './TriadsLevels';
-import TriadsMenu from './TriadsMenu';
+import TriadsMenuModes from './TriadsMenuModes';
+import TriadsMenuLevels from './TriadsMenuLevels';
 //https://www.npmjs.com/package/react-native-check-box
 //cant update git
 
@@ -100,20 +101,44 @@ class Home extends Component<Props> {
     }
 
     try {
-      var value3 = await AsyncStorage.getItem('highestCompletedTriadsLevel');
+      var value3 = await AsyncStorage.getItem(
+        'highestCompletedTriadsLevelBlocked',
+      );
 
       if (value3 !== null) {
         // We have data!!
-        console.log(`highestCompletedTriadsLevel: ${value3}`);
+        console.log(`highestCompletedTriadsLevelBlocked: ${value3}`);
       } else {
         //console.log('save default interval data');
 
         value3 = 0;
-        this.storeTriadsData(value3);
+        this.storeTriadsDataBlocked(value3);
       }
 
-      this.props.setTriadsProgress({
-        highestCompletedTriadsLevel: value3,
+      this.props.setTriadsProgressBlocked({
+        highestCompletedTriadsLevelBlocked: value3,
+      });
+    } catch (error) {
+      // Error retrieving data
+    }
+
+    try {
+      var value4 = await AsyncStorage.getItem(
+        'highestCompletedTriadsLevelBroken',
+      );
+
+      if (value4 !== null) {
+        // We have data!!
+        console.log(`highestCompletedTriadsLevelBroken: ${value4}`);
+      } else {
+        //console.log('save default interval data');
+
+        value4 = 0;
+        this.storeTriadsDataBroken(value4);
+      }
+
+      this.props.setTriadsProgressBroken({
+        highestCompletedTriadsLevelBroken: value4,
       });
     } catch (error) {
       // Error retrieving data
@@ -158,10 +183,25 @@ class Home extends Component<Props> {
     }
   };
 
-  storeTriadsData = async (val) => {
+  storeTriadsDataBlocked = async (val) => {
     try {
-      await AsyncStorage.setItem('highestCompletedTriadsLevel', val.toString());
-      console.log('triads saved storage: ' + val);
+      await AsyncStorage.setItem(
+        'highestCompletedTriadsLevelBlocked',
+        val.toString(),
+      );
+      console.log('triads blocked saved storage: ' + val);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  storeTriadsDataBroken = async (val) => {
+    try {
+      await AsyncStorage.setItem(
+        'highestCompletedTriadsLevelBroken',
+        val.toString(),
+      );
+      console.log('triads broken saved storage: ' + val);
     } catch (error) {
       // Error saving data
     }
@@ -602,12 +642,17 @@ class Home extends Component<Props> {
             mode={this.props.mode}
             props={this.props}
           />
+        ) : this.props.mode == 3 &&
+          this.props.level == 0 &&
+          this.props.triadmode == 0 ? (
+          <TriadsMenuModes showLevel={this.showLevel} />
         ) : this.props.mode == 3 && this.props.level == 0 ? (
-          <TriadsMenu showLevel={this.showLevel} />
+          <TriadsMenuLevels showLevel={this.showLevel} />
         ) : this.props.mode == 3 && this.props.level > 0 ? (
           <TriadsLevels
             level={this.props.level}
             mode={this.props.mode}
+            //triadmode={this.props.triadmode}
             props={this.props}
           />
         ) : this.props.mode == 4 ? (
@@ -631,6 +676,7 @@ const mapStateToProps = (state) => {
   return {
     level: state.level,
     mode: state.mode,
+    triadmode: state.triadmode,
     highestCompletedPitchLevel: state.highestCompletedPitchLevel,
     highestCompletedIntervalLevel: state.highestCompletedIntervalLevel,
     highestCompletedTriadsLevel: state.highestCompletedTriadsLevel,

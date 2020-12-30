@@ -12,6 +12,13 @@ export const setMode = (mode) => {
   };
 };
 
+export const setTriadMode = (mode) => {
+  return {
+    type: 'SET_TRIAD_MODE',
+    mode: mode,
+  };
+};
+
 export const manageGraph = (status) => {
   return {
     type: 'MANAGE_GRAPH',
@@ -59,6 +66,22 @@ export const setTriadsProgress = (level) => {
   //console.log(`si: ${JSON.stringify(level)}`);
   return {
     type: 'SET_TRIADS_PROGRESS',
+    level: level,
+  };
+};
+
+export const setTriadsProgressBlocked = (level) => {
+  //console.log(`si: ${JSON.stringify(level)}`);
+  return {
+    type: 'SET_TRIADS_BLOCKED_PROGRESS',
+    level: level,
+  };
+};
+
+export const setTriadsProgressBroken = (level) => {
+  //console.log(`si: ${JSON.stringify(level)}`);
+  return {
+    type: 'SET_TRIADS_BROKEN_PROGRESS',
     level: level,
   };
 };

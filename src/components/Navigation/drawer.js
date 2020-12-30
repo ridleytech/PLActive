@@ -25,6 +25,7 @@ function DrawerContent(props) {
     deletePassword();
     deleteInterval();
     deletePitch();
+    deleteTriads();
     dispatch({type: 'RESET_PROGRESS'});
   };
 
@@ -91,6 +92,24 @@ function DrawerContent(props) {
       await AsyncStorage.removeItem('highestCompletedPitchLevel');
 
       console.log('highestCompletedPitchLevel deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  const deleteTriads = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompletedTriadsLevelBroken');
+
+      console.log('highestCompletedTriadsLevelBroken deleted');
+    } catch (error) {
+      // Error saving data
+    }
+
+    try {
+      await AsyncStorage.removeItem('highestCompletedTriadsLevelBlocked');
+
+      console.log('highestCompletedTriadsLevelBlocked deleted');
     } catch (error) {
       // Error saving data
     }

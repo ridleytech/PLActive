@@ -20,8 +20,8 @@ const Header = (props) => {
 
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.mode);
-
   const level = useSelector((state) => state.level);
+  const triadmode = useSelector((state) => state.triadmode);
 
   const goHome = () => {
     dispatch({type: 'SET_MODE', mode: 0});
@@ -35,6 +35,8 @@ const Header = (props) => {
   }
 
   const manageButton = () => {
+    //console.log('manageButton');
+
     if (mode == 0) {
       props.props.navigation.toggleDrawer();
     } else if (mode == 1 && level > 0) {
@@ -43,9 +45,13 @@ const Header = (props) => {
     } else if (mode == 2 && level > 0) {
       dispatch({type: 'SET_MODE', mode: 2});
       dispatch({type: 'SET_LEVEL', level: 0});
+    } else if (mode == 3 && triadmode > 0) {
+      dispatch({type: 'SET_TRIAD_MODE', mode: 0});
+      dispatch({type: 'SET_LEVEL', level: 0});
     } else {
       dispatch({type: 'SET_MODE', mode: 0});
       dispatch({type: 'SET_LEVEL', level: 0});
+      dispatch({type: 'SET_TRIAD_MODE', mode: 0});
     }
 
     //props.props.navigation.toggleDrawer();

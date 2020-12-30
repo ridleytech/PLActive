@@ -57,7 +57,7 @@ const shuffle = (array) => {
 var Sound = require('react-native-sound');
 var currentNote;
 
-const TraidsLevels = ({level, mode, props}) => {
+const TraidsLevels = ({level, mode, triadmode, props}) => {
   const dispatch = useDispatch();
   const accessFeature = useSelector((state) => state.accessFeature);
   const highestCompletedTriadsLevel = useSelector(
@@ -82,6 +82,7 @@ const TraidsLevels = ({level, mode, props}) => {
   const [passScore, setPassScore] = useState(0);
 
   const [selectionColors, setSelectionColors] = useState([
+    '#EFEFEF',
     '#EFEFEF',
     '#EFEFEF',
     '#EFEFEF',
@@ -179,7 +180,7 @@ const TraidsLevels = ({level, mode, props}) => {
   const nextQuestion = () => {
     var currentQuestion1 = currentQuestionInd;
 
-    setSelectionColors(['#EFEFEF', '#EFEFEF', '#EFEFEF', '#EFEFEF']);
+    setSelectionColors(['#EFEFEF', '#EFEFEF', '#EFEFEF', '#EFEFEF', '#EFEFEF']);
 
     if (currentQuestion1 < questionList.length - 1) {
       currentQuestion1 += 1;
@@ -246,20 +247,20 @@ const TraidsLevels = ({level, mode, props}) => {
       instructions = shuffle(data.Triads.level4Instructions);
       setPassScore(data.Triads.level4PassScore);
     } else if (level == 5) {
-      instructions = shuffle(data.Triads.level5Instructions);
-      setPassScore(data.Triads.level5PassScore);
+      instructions = shuffle(data.Sevenths.level5Instructions);
+      setPassScore(data.Sevenths.level5PassScore);
     } else if (level == 6) {
-      instructions = shuffle(data.Triads.level6Instructions);
-      setPassScore(data.Triads.level6PassScore);
+      instructions = shuffle(data.Sevenths.level6Instructions);
+      setPassScore(data.Sevenths.level6PassScore);
     } else if (level == 7) {
-      instructions = shuffle(data.Triads.level7Instructions);
-      setPassScore(data.Triads.level7PassScore);
+      instructions = shuffle(data.Sevenths.level7Instructions);
+      setPassScore(data.Sevenths.level7PassScore);
     } else if (level == 8) {
-      instructions = shuffle(data.Triads.level8Instructions);
-      setPassScore(data.Triads.level8PassScore);
+      instructions = shuffle(data.Sevenths.level8Instructions);
+      setPassScore(data.Sevenths.level8PassScore);
     } else if (level == 9) {
-      instructions = shuffle(data.Triads.level9Instructions);
-      setPassScore(data.Triads.level9PassScore);
+      instructions = shuffle(data.Sevenths.level9Instructions);
+      setPassScore(data.Sevenths.level9PassScore);
     }
 
     setInstructions(instructions);
@@ -569,7 +570,15 @@ const TraidsLevels = ({level, mode, props}) => {
     } else if (level == 4) {
       answersData = shuffle(data.Triads.level4Answers);
     } else if (level == 5) {
-      answersData = shuffle(data.Triads.level5Answers);
+      answersData = shuffle(data.Sevenths.level5Answers);
+    } else if (level == 6) {
+      answersData = shuffle(data.Sevenths.level2Answers);
+    } else if (level == 7) {
+      answersData = shuffle(data.Sevenths.level3Answers);
+    } else if (level == 8) {
+      answersData = shuffle(data.Sevenths.level4Answers);
+    } else if (level == 9) {
+      answersData = shuffle(data.Sevenths.level5Answers);
     }
 
     //console.log('answersData: ' + answersData);
@@ -673,15 +682,15 @@ const TraidsLevels = ({level, mode, props}) => {
     } else if (level == 4) {
       qualites = data.Triads.level4Answers;
     } else if (level == 5) {
-      qualites = data.Triads.level5Answers;
+      qualites = data.Sevenths.level5Answers;
     } else if (level == 6) {
-      qualites = data.Triads.level6Answers;
+      qualites = data.Sevenths.level6Answers;
     } else if (level == 7) {
-      qualites = data.Triads.level7Answers;
+      qualites = data.Sevenths.level7Answers;
     } else if (level == 8) {
-      qualites = data.Triads.level8Answers;
+      qualites = data.Sevenths.level8Answers;
     } else if (level == 9) {
-      qualites = data.Triads.level9Answers;
+      qualites = data.Sevenths.level9Answers;
     }
 
     //console.log('theAnswer: ' + answerInd);
@@ -706,7 +715,7 @@ const TraidsLevels = ({level, mode, props}) => {
       //console.log('randQuestionInd: ' + JSON.stringify(randQuestionInd));
 
       var note = {};
-      var filename = qualites[randQualityInd] + 'triad' + question;
+      var filename = qualites[randQualityInd] + 'triadblocked' + question;
 
       //console.log('theAnswer: ' + JSON.stringify(note.Answer));
 
@@ -813,7 +822,7 @@ const TraidsLevels = ({level, mode, props}) => {
                   color: '#3AB24A',
                   width: '95%',
                 }}>
-                Quiz - Interval Training Level {level}
+                Quiz - Triads and Sevenths Level {level}
               </Text>
 
               {/* <Text style={styles.scaleHeader}>C Major Scale</Text> */}
@@ -929,7 +938,14 @@ const TraidsLevels = ({level, mode, props}) => {
               </View>
             </View>
 
-            <ScrollView style={{paddingLeft: 20, paddingRight: 20}}>
+            <ScrollView
+              contentContainerStyle={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                paddingLeft: 20,
+                paddingRight: 20,
+                //backgroundColor: 'red',
+              }}>
               {answers
                 ? answers.map((ob, index) => {
                     return (
@@ -942,12 +958,14 @@ const TraidsLevels = ({level, mode, props}) => {
                           backgroundColor: selectionColors[index],
                           marginBottom: 15,
                           borderRadius: 8,
-                          overflow: 'hidden',
+                          //overflow: 'hidden',
                           alignContent: 'center',
                           paddingLeft: 18,
-                          display: 'flex',
+                          //display: 'flex',
                           flexDirection: 'row',
                           alignItems: 'center',
+                          marginRight: 10,
+                          width: '47.3%',
                         }}>
                         <CheckBox
                           style={{paddingRight: 10}}
@@ -1042,6 +1060,12 @@ let offset = 100;
 // }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
   mainContainer: {
     //backgroundColor: 'yellow',
     //position: 'absolute',
