@@ -823,6 +823,7 @@
   },
   "Triads": {
     "Chords": ["C", "D", "E", "F", "G", "A", "B", "Eb", "Gb", "Ab", "Bb", "Db"],
+    //"Chords": ["C"],
     "level1Instructions": [
       "For this quiz, identify the quality of the chord.",
       "This level will consist of 12 multiple choice questions.",
@@ -902,7 +903,7 @@
       "dominant",
       "augmented",
       "diminished",
-      "minor flat 5"
+      "minor b5"
     ],
     "level9PassScore": 83
   }

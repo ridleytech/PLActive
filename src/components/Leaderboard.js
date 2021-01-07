@@ -26,6 +26,7 @@ class Leaderboard extends Component<Props> {
       lastPitchLevel: 0,
       pitchLevels: ['1', '2', '3'],
       intervalLevels: ['1', '2', '3', '4', '5'],
+      triadsLevels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
       currentLevelDisplayLevels: ['1', '2', '3'],
     };
   }
@@ -44,7 +45,7 @@ class Leaderboard extends Component<Props> {
   setOption = (event) => {
     console.log('update UI');
 
-    if (event.nativeEvent.selectedSegmentIndex == 1) {
+    if (event.nativeEvent.selectedSegmentIndex == 0) {
       this.setState({
         currentLevelDisplayLevels: this.state.intervalLevels,
         currentMode: 'Interval Training',
@@ -52,11 +53,19 @@ class Leaderboard extends Component<Props> {
         lastMode: event.nativeEvent.selectedSegmentIndex,
         selectedIndex: event.nativeEvent.selectedSegmentIndex,
       });
-    } else {
+    } else if (event.nativeEvent.selectedSegmentIndex == 1) {
       this.setState({
         currentLevelDisplayLevels: this.state.pitchLevels,
         currentMode: 'Pitch Recognition',
         lastIntervalLevel: 0,
+        lastMode: event.nativeEvent.selectedSegmentIndex,
+        selectedIndex: event.nativeEvent.selectedSegmentIndex,
+      });
+    } else {
+      this.setState({
+        currentLevelDisplayLevels: this.state.triadsLevels,
+        currentMode: 'Triads and Sevenths',
+        lastTriadsLevel: 0,
         lastMode: event.nativeEvent.selectedSegmentIndex,
         selectedIndex: event.nativeEvent.selectedSegmentIndex,
       });
@@ -184,9 +193,9 @@ class Leaderboard extends Component<Props> {
             style={{marginBottom: 10}}
             height={50}
             tintColor={'#3AB24A'}
-            activeFontStyle={{color: 'white', fontSize: 16}}
-            fontStyle={{color: 'black', fontSize: 16}}
-            values={['Pitch Recognition', 'Interval Training']}
+            activeFontStyle={{color: 'white', fontSize: 14}}
+            fontStyle={{color: 'black', fontSize: 14}}
+            values={['Pitch', 'Intervals', 'Triads & 7ths']}
             selectedIndex={this.state.selectedIndex}
             onChange={(event) => {
               this.setOption(event);

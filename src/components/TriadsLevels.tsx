@@ -55,13 +55,19 @@ const shuffle = (array) => {
 // console.log('question: ' + JSON.stringify(question));
 
 var Sound = require('react-native-sound');
-var currentNote;
+var audioClip;
 
-const TraidsLevels = ({level, mode, triadmode, props}) => {
+const TraidsLevels = ({level, mode, props}) => {
   const dispatch = useDispatch();
   const accessFeature = useSelector((state) => state.accessFeature);
-  const highestCompletedTriadsLevel = useSelector(
-    (state) => state.highestCompletedTriadsLevel,
+  const triadmode = useSelector((state) => state.triadmode);
+
+  const highestCompletedTriadsBlockedLevel = useSelector(
+    (state) => state.highestCompletedTriadsBlockedLevel,
+  );
+
+  const highestCompletedTriadsBrokenLevel = useSelector(
+    (state) => state.highestCompletedTriadsBrokenLevel,
   );
 
   //console.log('selectedLevel: ' + level);
@@ -140,12 +146,12 @@ const TraidsLevels = ({level, mode, triadmode, props}) => {
       interval = setInterval(() => {
         //console.log('the seconds: ' + interval);
 
-        currentNote.getCurrentTime((seconds1) => {
+        audioClip.getCurrentTime((seconds1) => {
           //console.log('at ' + seconds1);
 
           setTrackInfo({
             position: seconds1,
-            duration: currentNote.getDuration(),
+            duration: audioClip.getDuration(),
           });
 
           if (seconds1 == 0) {
@@ -192,7 +198,7 @@ const TraidsLevels = ({level, mode, triadmode, props}) => {
 
       var filename = questionList[currentQuestion1].file.toLowerCase() + '.mp3';
 
-      currentNote = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+      audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
         if (error) {
           console.log('failed to load the sound ' + filename, error);
           return;
@@ -200,9 +206,9 @@ const TraidsLevels = ({level, mode, triadmode, props}) => {
         // loaded successfully
         console.log('file ' + filename + ' loaded');
 
-        //currentNote.play();
+        //audioClip.play();
 
-        currentNote.setCategory('Playback');
+        audioClip.setCategory('Playback');
       });
       setCurrentQuestionInd(currentQuestion1);
       populateAnswers(questionList, currentQuestion1);
@@ -297,10 +303,17 @@ const TraidsLevels = ({level, mode, triadmode, props}) => {
       if (per >= passScore) {
         console.log('store data');
 
-        dispatch({
-          type: 'SET_TRIADS_PROGRESS',
-          level: {highestCompletedTriadsLevel: level.toString()},
-        });
+        if (triadmode == 1) {
+          dispatch({
+            type: 'SET_TRIADS_BROKEN_PROGRESS',
+            level: {highestCompletedTriadsBrokenLevel: level.toString()},
+          });
+        } else {
+          dispatch({
+            type: 'SET_TRIADS_BLOCKED_PROGRESS',
+            level: {highestCompletedTriadsBlockedLevel: level.toString()},
+          });
+        }
 
         if (!loggedIn) {
           console.log('quiz finished not logged in');
@@ -342,8 +355,9 @@ const TraidsLevels = ({level, mode, triadmode, props}) => {
 
       setisQuizTimerActive(false);
 
-      if (currentNote) {
-        currentNote.release();
+      if (audioClip) {
+        audioClip.release();
+        audioClip = null;
       }
     },
     [],
@@ -358,11 +372,11 @@ const TraidsLevels = ({level, mode, triadmode, props}) => {
 
   const onButtonPressed = () => {
     if (!isPlaying) {
-      currentNote.play();
+      audioClip.play();
       setIsActive(true);
       setIsPlaying(true);
     } else {
-      currentNote.pause();
+      audioClip.pause();
       setIsPlaying(false);
       setIsActive(false);
     }
@@ -373,7 +387,7 @@ const TraidsLevels = ({level, mode, triadmode, props}) => {
   };
 
   const slidingCompleted = async (value) => {
-    currentNote.setCurrentTime(value * trackInfo.duration);
+    audioClip.setCurrentTime(value * trackInfo.duration);
     setSliderValue(value);
     setIsSeeking(false);
   };
@@ -536,24 +550,46 @@ const TraidsLevels = ({level, mode, triadmode, props}) => {
   };
 
   const storeData = async (level) => {
-    console.log(`highestCompletedTriadsLevel: ${level}`);
+    if (triadmode == 1) {
+      console.log(`highestCompletedTriadsBrokenLevel: ${level}`);
 
-    if (level < highestCompletedTriadsLevel) {
-      console.log('less than highest level. stop save');
-      return;
-    }
+      if (level < highestCompletedTriadsBrokenLevel) {
+        console.log('less than highest level. stop save');
+        return;
+      }
 
-    try {
-      console.log('try to save highestCompletedTriadsLevel');
-      await AsyncStorage.setItem(
-        'highestCompletedTriadsLevel',
-        level.toString(),
-      );
+      try {
+        console.log('try to save highestCompletedTriadsBrokenLevel');
+        await AsyncStorage.setItem(
+          'highestCompletedTriadsBrokenLevel',
+          level.toString(),
+        );
 
-      console.log('highestCompletedTriadsLevel saved');
-    } catch (error) {
-      console.log('highestCompletedTriadsLevel not saved');
-      // Error saving data
+        console.log('highestCompletedTriadsBrokenLevel saved');
+      } catch (error) {
+        console.log('highestCompletedTriadsBrokenLevel not saved');
+        // Error saving data
+      }
+    } else {
+      console.log(`highestCompletedTriadsBlockedLevel: ${level}`);
+
+      if (level < highestCompletedTriadsBlockedLevel) {
+        console.log('less than highest level. stop save');
+        return;
+      }
+
+      try {
+        console.log('try to save highestCompletedTriadsBlockedLevel');
+        await AsyncStorage.setItem(
+          'highestCompletedTriadsBlockedLevel',
+          level.toString(),
+        );
+
+        console.log('highestCompletedTriadsBlockedLevel saved');
+      } catch (error) {
+        console.log('highestCompletedTriadsBlockedLevel not saved');
+        // Error saving data
+      }
     }
   };
 
@@ -715,13 +751,34 @@ const TraidsLevels = ({level, mode, triadmode, props}) => {
       //console.log('randQuestionInd: ' + JSON.stringify(randQuestionInd));
 
       var note = {};
-      var filename = qualites[randQualityInd] + 'triadblocked' + question;
+
+      var chordSequence = 'blocked';
+
+      if (triadmode == 1) {
+        chordSequence = 'broken';
+      }
+
+      var chordType = 'triad';
+
+      if (level > 4) {
+        chordType = 'seventh';
+      }
+
+      var quality = qualites[randQualityInd];
+      var filename = quality + chordType + chordSequence + question;
+
+      // chordType = 'seventh';
+      // quality = 'minor b5';
+
+      if (quality.includes('b5')) {
+        filename = 'minor' + chordType + 'b5' + chordSequence + question;
+      }
 
       //console.log('theAnswer: ' + JSON.stringify(note.Answer));
 
       note.file = filename.toLowerCase();
       note.note = question;
-      note.Answer = qualites[randQualityInd];
+      note.Answer = quality;
 
       //console.log('note: ' + JSON.stringify(note));
 
@@ -761,7 +818,7 @@ const TraidsLevels = ({level, mode, triadmode, props}) => {
     console.log('file: ' + newTracks[0].file);
     console.log('newTracks length triads: ' + newTracks.length);
 
-    currentNote = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
+    audioClip = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
       if (error) {
         console.log('failed to load the sound ' + newTracks[0].file, error);
         return;
@@ -769,14 +826,14 @@ const TraidsLevels = ({level, mode, triadmode, props}) => {
       // loaded successfully
       console.log(
         'duration in seconds: ' +
-          currentNote.getDuration() +
-          'number of channels: ' +
-          currentNote.getNumberOfChannels(),
+          audioClip.getDuration() +
+          ' number of channels: ' +
+          audioClip.getNumberOfChannels(),
       );
 
-      setTrackInfo({position: 0, duration: currentNote.getDuration()});
+      setTrackInfo({position: 0, duration: audioClip.getDuration()});
 
-      //currentNote.play();
+      //audioClip.play();
     });
 
     setCurrentTrack({

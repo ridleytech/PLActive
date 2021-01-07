@@ -307,6 +307,8 @@
 		3F0222CF259BA19C007F2965 /* majortriadblockedc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F0222C9259BA19C007F2965 /* majortriadblockedc.mp3 */; };
 		3F1749AC254FC41B00398DB8 /* PlayKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F1749A9254FC41A00398DB8 /* PlayKey.m */; };
 		3F1749AD254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 3F1749AA254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 */; };
+		3F20B53A25A54C8600192C86 /* fix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20B53925A54C8600192C86 /* fix.swift */; };
+		3F20B53B25A54C8600192C86 /* fix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20B53925A54C8600192C86 /* fix.swift */; };
 		3FA058EB256A1E1100D99CC7 /* minor6thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FA058C5256A1E0A00D99CC7 /* minor6thc.mp3 */; };
 		3FA058EC256A1E1100D99CC7 /* octavec.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FA058C6256A1E0A00D99CC7 /* octavec.mp3 */; };
 		3FA058ED256A1E1100D99CC7 /* gb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FA058C7256A1E0B00D99CC7 /* gb.mp3 */; };
@@ -666,6 +668,9 @@
 		3F1749A9254FC41A00398DB8 /* PlayKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayKey.m; sourceTree = "<group>"; };
 		3F1749AA254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chateau Grand-v1.8.sf2"; sourceTree = "<group>"; };
 		3F1749AB254FC41B00398DB8 /* PlayKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayKey.h; sourceTree = "<group>"; };
+		3F20B53725A54C8500192C86 /* PianoLessons-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PianoLessons-Bridging-Header.h"; sourceTree = "<group>"; };
+		3F20B53825A54C8600192C86 /* PianoLessons-tvOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PianoLessons-tvOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		3F20B53925A54C8600192C86 /* fix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fix.swift; sourceTree = "<group>"; };
 		3FA058C5256A1E0A00D99CC7 /* minor6thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minor6thc.mp3; sourceTree = "<group>"; };
 		3FA058C6256A1E0A00D99CC7 /* octavec.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = octavec.mp3; sourceTree = "<group>"; };
 		3FA058C7256A1E0B00D99CC7 /* gb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gb.mp3; sourceTree = "<group>"; };
@@ -772,6 +777,7 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				3F20B53925A54C8600192C86 /* fix.swift */,
 				3F1749AA254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 */,
 				3F1749AB254FC41B00398DB8 /* PlayKey.h */,
 				3F1749A9254FC41A00398DB8 /* PlayKey.m */,
@@ -779,6 +785,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				3F20B53725A54C8500192C86 /* PianoLessons-Bridging-Header.h */,
+				3F20B53825A54C8600192C86 /* PianoLessons-tvOS-Bridging-Header.h */,
 			);
 			name = PianoLessons;
 			sourceTree = "<group>";
@@ -1871,14 +1879,16 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = QPC42R2G9L;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = QPC42R2G9L;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1230;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 1230;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
@@ -2480,6 +2490,7 @@
 				3F1749AC254FC41B00398DB8 /* PlayKey.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				3F20B53A25A54C8600192C86 /* fix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2487,6 +2498,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F20B53B25A54C8600192C86 /* fix.swift in Sources */,
 				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
 				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
 			);
@@ -2520,7 +2532,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FAA265697F0290FA25B2B8F9 /* Pods-PianoLessons-PianoLessonsTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = QPC42R2G9L;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2543,8 +2557,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EBC61833826E420550BAFE63 /* Pods-PianoLessons-PianoLessonsTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = QPC42R2G9L;
 				INFOPLIST_FILE = PianoLessonsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2565,7 +2581,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = QPC42R2G9L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PianoLessons/Info.plist;
@@ -2578,6 +2594,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pianolesson.ActiveEar;
 				PRODUCT_NAME = ActiveEar;
+				SWIFT_OBJC_BRIDGING_HEADER = "PianoLessons-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2591,7 +2608,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = QPC42R2G9L;
 				INFOPLIST_FILE = PianoLessons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2603,6 +2620,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pianolesson.ActiveEar;
 				PRODUCT_NAME = ActiveEar;
+				SWIFT_OBJC_BRIDGING_HEADER = "PianoLessons-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2613,13 +2631,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9F710B61C2E0D72764B96660 /* Pods-PianoLessons-tvOS.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "PianoLessons-tvOS/Info.plist";
@@ -2629,9 +2648,12 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.PianoLessons-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pianolesson.ActiveEar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = "PianoLessons-tvOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -2641,14 +2663,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 502DD4B115B07F011A162B01 /* Pods-PianoLessons-tvOS.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "PianoLessons-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2657,9 +2680,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.PianoLessons-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pianolesson.ActiveEar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = "PianoLessons-tvOS-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -2669,12 +2694,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED68F004F4706CD4B9BAA88D /* Pods-PianoLessons-tvOSTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "PianoLessons-tvOSTests/Info.plist";
@@ -2696,6 +2723,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8DF4157A0A31A1AA15D27129 /* Pods-PianoLessons-tvOSTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -2703,6 +2731,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "PianoLessons-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

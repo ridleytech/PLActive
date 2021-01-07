@@ -10,8 +10,11 @@ import {
 } from 'react-native';
 import Header from './Header';
 import Hyperlink from 'react-native-hyperlink';
+import {useSelector, useDispatch} from 'react-redux';
 
 import videoImg from '../../images/instructions-placeholder.png';
+import checkIcon from '../../images/check2.png';
+
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
 const MainMenu = ({setMode}) => {
@@ -20,6 +23,21 @@ const MainMenu = ({setMode}) => {
     'Interval Training',
     'Triads and Sevenths',
   ];
+
+  const loggedIn = useSelector((state) => state.loggedIn);
+  const accessFeature = useSelector((state) => state.accessFeature);
+  const highestCompletedPitchLevel = useSelector(
+    (state) => state.highestCompletedPitchLevel,
+  );
+  const highestCompletedIntervalLevel = useSelector(
+    (state) => state.highestCompletedIntervalLevel,
+  );
+  const highestCompletedTriadsBlockedLevel = useSelector(
+    (state) => state.highestCompletedTriadsBlockedLevel,
+  );
+  const highestCompletedTriadsBrokenLevel = useSelector(
+    (state) => state.highestCompletedTriadsBrokenLevel,
+  );
 
   const opacity = useState(new Animated.Value(0))[0];
 
@@ -129,6 +147,31 @@ const MainMenu = ({setMode}) => {
 
           <ScrollView style={{height: '100%'}}>
             {levels.map((level, index) => {
+              var icon;
+
+              if (index == 0) {
+                if (highestCompletedPitchLevel < 3) {
+                  icon = null;
+                } else {
+                  icon = checkIcon;
+                }
+              } else if (index == 1) {
+                if (highestCompletedIntervalLevel < 5) {
+                  icon = null;
+                } else {
+                  icon = checkIcon;
+                }
+              } else if (index == 2) {
+                if (
+                  highestCompletedTriadsBlockedLevel < 9 ||
+                  highestCompletedTriadsBrokenLevel < 9
+                ) {
+                  icon = null;
+                } else {
+                  icon = checkIcon;
+                }
+              }
+
               return (
                 <TouchableOpacity
                   onPress={() => {
@@ -151,6 +194,20 @@ const MainMenu = ({setMode}) => {
                       {level}
                     </Text>
                   </View>
+
+                  {loggedIn && accessFeature == 2 ? (
+                    <Image
+                      source={icon}
+                      style={{position: 'absolute', right: 12, top: 12}}
+                    />
+                  ) : (
+                    <Image
+                      source={
+                        index < highestCompletedPitchLevel ? checkIcon : null
+                      }
+                      style={{position: 'absolute', right: 12, top: 12}}
+                    />
+                  )}
                 </TouchableOpacity>
               );
             })}

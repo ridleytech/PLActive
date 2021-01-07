@@ -95,6 +95,16 @@ const TriadsMenuModes = ({showLevel}) => {
           <Text>Select your mode of exercise below.</Text>
           <Text
             style={{
+              marginTop: 10,
+              display: 'flex',
+              //flexDirection: 'row',
+              //backgroundColor: 'yellow',
+            }}>
+            Both the Blocked and Broken mode must be completed for this Program
+            to be marked as completed.
+          </Text>
+          <Text
+            style={{
               color: 'red',
               fontWeight: 'bold',
               fontSize: 13,
