@@ -26,7 +26,7 @@ class Leaderboard extends Component<Props> {
       lastPitchLevel: 0,
       pitchLevels: ['1', '2', '3'],
       intervalLevels: ['1', '2', '3', '4', '5'],
-      triadsLevels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      triadsLevels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
       currentLevelDisplayLevels: ['1', '2', '3'],
     };
   }

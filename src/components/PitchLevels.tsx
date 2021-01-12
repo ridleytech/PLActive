@@ -181,10 +181,8 @@ const PitchLevels = ({level, mode, props}) => {
             duration: currentNote.getDuration(),
           });
 
-          if (seconds1 == 0) {
-            setIsActive(false);
-            setIsPlaying(false);
-            setSliderValue(0);
+          if (seconds1 == 0 || seconds1 > 5) {
+            stopAudio();
           }
         });
         setSeconds((seconds) => seconds + 1);
@@ -215,6 +213,13 @@ const PitchLevels = ({level, mode, props}) => {
     duration: 1500,
     useNativeDriver: false,
   }).start();
+
+  const stopAudio = () => {
+    setIsActive(false);
+    setIsPlaying(false);
+    setSliderValue(0);
+    audioClip.stop();
+  };
 
   const nextQuestion = () => {
     var currentQuestion1 = currentQuestionInd;

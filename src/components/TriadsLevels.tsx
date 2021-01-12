@@ -149,17 +149,15 @@ const TraidsLevels = ({level, mode, props}) => {
         //console.log('the seconds: ' + interval);
 
         audioClip.getCurrentTime((seconds1) => {
-          //console.log('at ' + seconds1);
+          console.log('at ' + seconds1);
 
           setTrackInfo({
             position: seconds1,
             duration: audioClip.getDuration(),
           });
 
-          if (seconds1 == 0) {
-            setIsActive(false);
-            setIsPlaying(false);
-            setSliderValue(0);
+          if (seconds1 == 0 || seconds1 > 5) {
+            stopAudio();
           }
         });
         setSeconds((seconds) => seconds + 1);
@@ -184,6 +182,13 @@ const TraidsLevels = ({level, mode, props}) => {
       setSliderValue(pos);
     }
   }, [trackInfo]);
+
+  const stopAudio = () => {
+    setIsActive(false);
+    setIsPlaying(false);
+    setSliderValue(0);
+    audioClip.stop();
+  };
 
   const nextQuestion = () => {
     var currentQuestion1 = currentQuestionInd;
@@ -452,6 +457,8 @@ const TraidsLevels = ({level, mode, props}) => {
 
     setCanAnswer(false);
     setCanCheck(false);
+
+    stopAudio();
 
     setTimeout(() => {
       setCurrentAnswer(null);
@@ -722,20 +729,19 @@ const TraidsLevels = ({level, mode, props}) => {
 
     setisQuizTimerActive(true);
 
-    var stuff = data.Triads.Chords;
+    var questions1;
 
-    if (level == 10) {
-      // var newStuff = ['C', 'D', 'E', 'F'];
-
-      // stuff.concat(newStuff);
-
-      stuff.push('C');
-      stuff.push('D');
-      stuff.push('E');
-      stuff.push('F');
+    if (level > 4) {
+      if (level == 10) {
+        questions1 = data.Sevenths.Chords2;
+      } else {
+        questions1 = data.Sevenths.Chords;
+      }
+    } else {
+      questions1 = data.Triads.Chords;
     }
 
-    var questions = shuffle(stuff);
+    var questions = shuffle(questions1);
     var qualites;
 
     if (level == 1) {
@@ -867,6 +873,7 @@ const TraidsLevels = ({level, mode, props}) => {
         console.log('failed to load the sound ' + newTracks[0].file, error);
         return;
       }
+
       // loaded successfully
       console.log(
         'duration in seconds: ' +
