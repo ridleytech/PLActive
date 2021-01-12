@@ -571,7 +571,7 @@
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Augmented 4th",
-        "file": "augmented4thC",
+        "file": "Augmented4thC",
         "id": 4,
         "keys": [0, 3]
       },
@@ -613,7 +613,7 @@
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Augmented 4th",
-        "file": "augmented4thC",
+        "file": "Augmented4thC",
         "id": 10,
         "keys": [0, 4]
       },
@@ -689,7 +689,7 @@
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Augmented 4th",
-        "file": "augmented4thC",
+        "file": "Augmented4thC",
         "id": 6,
         "keys": [0, 3]
       },
@@ -752,7 +752,7 @@
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Augmented 11th",
-        "file": "augmented11thC",
+        "file": "Augmented11thC",
         "id": 15,
         "keys": [0, 4]
       },
@@ -780,7 +780,7 @@
       {
         "Question": "Listen to the audio, what interval is being played?",
         "Answer": "Augmented 11th",
-        "file": "augmented11thC",
+        "file": "Augmented11thC",
         "id": 19,
         "keys": [0, 4]
       },
@@ -846,7 +846,7 @@
       "You need to score a 10/12 to past the quiz.",
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
-    "level3Answers": ["Major", "Minor", "sus4", "augmented"],
+    "level3Answers": ["Major", "Minor", "sus4", "Augmented"],
     "level3PassScore": 83,
     "level4Instructions": [
       "For this quiz, identify the quality of the chord.",
@@ -854,7 +854,7 @@
       "You need to score a 10/12 to past the quiz.",
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
-    "level4Answers": ["Major", "Minor", "sus4", "augmented", "diminished"],
+    "level4Answers": ["Major", "Minor", "sus4", "Augmented", "Diminished"],
     "level4PassScore": 83
   },
   "Sevenths": {
@@ -865,7 +865,7 @@
       "You need to score a 10/12 to past the quiz.",
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
-    "level5Answers": ["Major", "Minor"],
+    "level5Answers": ["Major 7", "Minor 7"],
     "level5PassScore": 83,
     "level6Instructions": [
       "For this quiz, identify the quality of the chord.",
@@ -873,7 +873,7 @@
       "You need to score a 10/12 to past the quiz.",
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
-    "level6Answers": ["Major", "Minor", "dominant"],
+    "level6Answers": ["Major 7", "Minor 7", "Dominant 7"],
     "level6PassScore": 83,
     "level7Instructions": [
       "For this quiz, identify the quality of the chord.",
@@ -881,7 +881,7 @@
       "You need to score a 10/12 to past the quiz.",
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
-    "level7Answers": ["Major", "Minor", "dominant", "augmented"],
+    "level7Answers": ["Major 7", "Minor 7", "Dominant 7", "Augmented 7"],
     "level7PassScore": 83,
     "level8Instructions": [
       "For this quiz, identify the quality of the chord.",
@@ -889,7 +889,13 @@
       "You need to score a 10/12 to past the quiz.",
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
-    "level8Answers": ["Major", "Minor", "dominant", "augmented", "diminished"],
+    "level8Answers": [
+      "Major 7",
+      "Minor 7",
+      "Dominant 7",
+      "Augmented 7",
+      "Diminished 7"
+    ],
     "level8PassScore": 83,
     "level9Instructions": [
       "For this quiz, identify the quality of the chord.",
@@ -898,13 +904,29 @@
       "This quiz should be completed using ONLY your ear. No keyboard."
     ],
     "level9Answers": [
-      "Major",
-      "Minor",
-      "dominant",
-      "augmented",
-      "diminished",
-      "minor b5"
+      "Major 7",
+      "Minor 7",
+      "Dominant 7",
+      "Augmented 7",
+      "Diminished 7",
+      "Minor 7 b5"
     ],
-    "level9PassScore": 83
+    "level9PassScore": 83,
+    "level10Instructions": [
+      "For this quiz, identify the quality of the chord.",
+      "This level will consist of 16 multiple choice questions.",
+      "You need to score a 14/16 to past the quiz.",
+      "This quiz should be completed using ONLY your ear. No keyboard."
+    ],
+    "level10Answers": [
+      "Major 7",
+      "Minor 7",
+      "Dominant 7",
+      "Augmented 7",
+      "Diminished 7",
+      "Minor 7 b5",
+      "Minor Major 7"
+    ],
+    "level10PassScore": 87
   }
 }

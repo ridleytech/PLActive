@@ -20,7 +20,7 @@ import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {setLevel} from '../actions/';
 
 const TraidsMenuLevels = ({showLevel}) => {
-  var levels = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  var levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const loggedIn = useSelector((state) => state.loggedIn);
   const accessFeature = useSelector((state) => state.accessFeature);
@@ -60,6 +60,13 @@ const TraidsMenuLevels = ({showLevel}) => {
   //   dispatch(getAccess());
   // }, []);
 
+  const showLogin = () => {
+    console.log('showLogin');
+    // this.props.showLogin();
+    // console.log('showLogin triad');
+    dispatch({type: 'SHOW_LOGIN'});
+  };
+
   goToLevel = (level) => {
     console.log('show triads level: ' + level);
     // dispatch({type: 'SET_TRIAD_MODE', mode: mode});
@@ -70,7 +77,7 @@ const TraidsMenuLevels = ({showLevel}) => {
         //`Please log in or join the Premium membership to unlock this level.`,
         `Please log in to play Level ${level}.`,
         [
-          {text: 'LOGIN', onPress: () => this.showLogin()},
+          {text: 'LOGIN', onPress: () => showLogin()},
           //{text: 'JOIN MEMBERSHIP', onPress: () => this.upgrade()},
           {text: 'CANCEL', onPress: () => console.log('OK Pressed')},
         ],
@@ -98,18 +105,21 @@ const TraidsMenuLevels = ({showLevel}) => {
           );
 
           return;
-        } else if (level - 1 > highestCompletedTriadsBlockedLevel) {
-          Alert.alert(
-            null,
-            `Complete Blocked Chords Level ${
-              highestCompletedTriadsBlockedLevel + 1
-            } to proceed.`,
-            [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-            {cancelable: false},
-          );
-
-          return;
         }
+
+        // else if (level - 1 > highestCompletedTriadsBlockedLevel) {
+        //   Alert.alert(
+        //     null,
+        //     `Complete Blocked Chords Level ${
+        //       highestCompletedTriadsBlockedLevel + 1
+        //     } to proceed.`,
+        //     [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+        //     {cancelable: false},
+        //   );
+
+        //   return;
+
+        // }
       } else {
         console.log(
           'highestCompletedTriadsBrokenLevel: ' +
@@ -127,18 +137,20 @@ const TraidsMenuLevels = ({showLevel}) => {
           );
 
           return;
-        } else if (level - 1 > highestCompletedTriadsBrokenLevel) {
-          Alert.alert(
-            null,
-            `Complete Broken Chords Level ${
-              highestCompletedTriadsBrokenLevel + 1
-            } to proceed.`,
-            [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-            {cancelable: false},
-          );
-
-          return;
         }
+
+        // else if (level - 1 > highestCompletedTriadsBrokenLevel) {
+        //   Alert.alert(
+        //     null,
+        //     `Complete Broken Chords Level ${
+        //       highestCompletedTriadsBrokenLevel + 1
+        //     } to proceed.`,
+        //     [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+        //     {cancelable: false},
+        //   );
+
+        //   return;
+        // }
       }
     }
 

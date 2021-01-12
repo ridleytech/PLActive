@@ -309,6 +309,30 @@
 		3F1749AD254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 3F1749AA254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 */; };
 		3F20B53A25A54C8600192C86 /* fix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20B53925A54C8600192C86 /* fix.swift */; };
 		3F20B53B25A54C8600192C86 /* fix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20B53925A54C8600192C86 /* fix.swift */; };
+		3F6AA45625ADF6CE0091D8B1 /* minormajorseventhblockedbb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA45525ADF6CD0091D8B1 /* minormajorseventhblockedbb.mp3 */; };
+		3F6AA45C25ADF6DB0091D8B1 /* minormajorseventhbrokenbb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA45B25ADF6DB0091D8B1 /* minormajorseventhbrokenbb.mp3 */; };
+		3F6AA46225ADF6EE0091D8B1 /* minormajorseventhbrokenab.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA46125ADF6EE0091D8B1 /* minormajorseventhbrokenab.mp3 */; };
+		3F6AA46825ADF6FA0091D8B1 /* minormajorseventhblockedab.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA46725ADF6FA0091D8B1 /* minormajorseventhblockedab.mp3 */; };
+		3F6AA46E25ADF70F0091D8B1 /* minormajorseventhblockedeb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA46D25ADF70F0091D8B1 /* minormajorseventhblockedeb.mp3 */; };
+		3F6AA47425ADF71A0091D8B1 /* minormajorseventhbrokeneb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA47325ADF71A0091D8B1 /* minormajorseventhbrokeneb.mp3 */; };
+		3F6AA47A25ADF72A0091D8B1 /* minormajorseventhblockedg.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA47925ADF72A0091D8B1 /* minormajorseventhblockedg.mp3 */; };
+		3F6AA48025ADF7420091D8B1 /* minormajorseventhbrokeng.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA47F25ADF7420091D8B1 /* minormajorseventhbrokeng.mp3 */; };
+		3F6AA48625ADF7590091D8B1 /* minormajorseventhblockeda.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA48525ADF7590091D8B1 /* minormajorseventhblockeda.mp3 */; };
+		3F6AA48C25ADF7640091D8B1 /* minormajorseventhbrokena.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA48B25ADF7640091D8B1 /* minormajorseventhbrokena.mp3 */; };
+		3F6AA49225ADF7710091D8B1 /* minormajorseventhblockedf.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA49125ADF7710091D8B1 /* minormajorseventhblockedf.mp3 */; };
+		3F6AA49825ADF7960091D8B1 /* minormajorseventhbrokenf.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA49725ADF7960091D8B1 /* minormajorseventhbrokenf.mp3 */; };
+		3F6AA49E25ADF7A40091D8B1 /* minormajorseventhblockedgb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA49D25ADF7A40091D8B1 /* minormajorseventhblockedgb.mp3 */; };
+		3F6AA4A425ADF7AD0091D8B1 /* minormajorseventhbrokengb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA4A325ADF7AD0091D8B1 /* minormajorseventhbrokengb.mp3 */; };
+		3F6AA4AA25ADF7C60091D8B1 /* minormajorseventhblockeddb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA4A925ADF7C60091D8B1 /* minormajorseventhblockeddb.mp3 */; };
+		3F6AA4B025ADF7CF0091D8B1 /* minormajorseventhbrokendb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA4AF25ADF7CF0091D8B1 /* minormajorseventhbrokendb.mp3 */; };
+		3F6AA4B625ADF7DB0091D8B1 /* minormajorseventhblockedc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA4B525ADF7DB0091D8B1 /* minormajorseventhblockedc.mp3 */; };
+		3F6AA4BC25ADF7E50091D8B1 /* minormajorseventhbrokenc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA4BB25ADF7E50091D8B1 /* minormajorseventhbrokenc.mp3 */; };
+		3F6AA4C225ADF7F60091D8B1 /* minormajorseventhblockedd.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA4C125ADF7F60091D8B1 /* minormajorseventhblockedd.mp3 */; };
+		3F6AA4C825ADF8030091D8B1 /* minormajorseventhbrokend.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA4C725ADF8030091D8B1 /* minormajorseventhbrokend.mp3 */; };
+		3F6AA4CE25ADF8100091D8B1 /* minormajorseventhblockede.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA4CD25ADF8100091D8B1 /* minormajorseventhblockede.mp3 */; };
+		3F6AA4D425ADF81E0091D8B1 /* minormajorseventhbrokene.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA4D325ADF81E0091D8B1 /* minormajorseventhbrokene.mp3 */; };
+		3F6AA4DA25ADF8340091D8B1 /* minormajorseventhblockedb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA4D925ADF8340091D8B1 /* minormajorseventhblockedb.mp3 */; };
+		3F6AA4E025ADF83D0091D8B1 /* minormajorseventhbrokenb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F6AA4DF25ADF83D0091D8B1 /* minormajorseventhbrokenb.mp3 */; };
 		3FA058EB256A1E1100D99CC7 /* minor6thc.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FA058C5256A1E0A00D99CC7 /* minor6thc.mp3 */; };
 		3FA058EC256A1E1100D99CC7 /* octavec.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FA058C6256A1E0A00D99CC7 /* octavec.mp3 */; };
 		3FA058ED256A1E1100D99CC7 /* gb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FA058C7256A1E0B00D99CC7 /* gb.mp3 */; };
@@ -671,6 +695,30 @@
 		3F20B53725A54C8500192C86 /* PianoLessons-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PianoLessons-Bridging-Header.h"; sourceTree = "<group>"; };
 		3F20B53825A54C8600192C86 /* PianoLessons-tvOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PianoLessons-tvOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		3F20B53925A54C8600192C86 /* fix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fix.swift; sourceTree = "<group>"; };
+		3F6AA45525ADF6CD0091D8B1 /* minormajorseventhblockedbb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockedbb.mp3; sourceTree = "<group>"; };
+		3F6AA45B25ADF6DB0091D8B1 /* minormajorseventhbrokenbb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokenbb.mp3; sourceTree = "<group>"; };
+		3F6AA46125ADF6EE0091D8B1 /* minormajorseventhbrokenab.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokenab.mp3; sourceTree = "<group>"; };
+		3F6AA46725ADF6FA0091D8B1 /* minormajorseventhblockedab.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockedab.mp3; sourceTree = "<group>"; };
+		3F6AA46D25ADF70F0091D8B1 /* minormajorseventhblockedeb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockedeb.mp3; sourceTree = "<group>"; };
+		3F6AA47325ADF71A0091D8B1 /* minormajorseventhbrokeneb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokeneb.mp3; sourceTree = "<group>"; };
+		3F6AA47925ADF72A0091D8B1 /* minormajorseventhblockedg.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockedg.mp3; sourceTree = "<group>"; };
+		3F6AA47F25ADF7420091D8B1 /* minormajorseventhbrokeng.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokeng.mp3; sourceTree = "<group>"; };
+		3F6AA48525ADF7590091D8B1 /* minormajorseventhblockeda.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockeda.mp3; sourceTree = "<group>"; };
+		3F6AA48B25ADF7640091D8B1 /* minormajorseventhbrokena.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokena.mp3; sourceTree = "<group>"; };
+		3F6AA49125ADF7710091D8B1 /* minormajorseventhblockedf.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockedf.mp3; sourceTree = "<group>"; };
+		3F6AA49725ADF7960091D8B1 /* minormajorseventhbrokenf.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokenf.mp3; sourceTree = "<group>"; };
+		3F6AA49D25ADF7A40091D8B1 /* minormajorseventhblockedgb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockedgb.mp3; sourceTree = "<group>"; };
+		3F6AA4A325ADF7AD0091D8B1 /* minormajorseventhbrokengb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokengb.mp3; sourceTree = "<group>"; };
+		3F6AA4A925ADF7C60091D8B1 /* minormajorseventhblockeddb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockeddb.mp3; sourceTree = "<group>"; };
+		3F6AA4AF25ADF7CF0091D8B1 /* minormajorseventhbrokendb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokendb.mp3; sourceTree = "<group>"; };
+		3F6AA4B525ADF7DB0091D8B1 /* minormajorseventhblockedc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockedc.mp3; sourceTree = "<group>"; };
+		3F6AA4BB25ADF7E50091D8B1 /* minormajorseventhbrokenc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokenc.mp3; sourceTree = "<group>"; };
+		3F6AA4C125ADF7F60091D8B1 /* minormajorseventhblockedd.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockedd.mp3; sourceTree = "<group>"; };
+		3F6AA4C725ADF8030091D8B1 /* minormajorseventhbrokend.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokend.mp3; sourceTree = "<group>"; };
+		3F6AA4CD25ADF8100091D8B1 /* minormajorseventhblockede.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockede.mp3; sourceTree = "<group>"; };
+		3F6AA4D325ADF81E0091D8B1 /* minormajorseventhbrokene.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokene.mp3; sourceTree = "<group>"; };
+		3F6AA4D925ADF8340091D8B1 /* minormajorseventhblockedb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhblockedb.mp3; sourceTree = "<group>"; };
+		3F6AA4DF25ADF83D0091D8B1 /* minormajorseventhbrokenb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minormajorseventhbrokenb.mp3; sourceTree = "<group>"; };
 		3FA058C5256A1E0A00D99CC7 /* minor6thc.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minor6thc.mp3; sourceTree = "<group>"; };
 		3FA058C6256A1E0A00D99CC7 /* octavec.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = octavec.mp3; sourceTree = "<group>"; };
 		3FA058C7256A1E0B00D99CC7 /* gb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gb.mp3; sourceTree = "<group>"; };
@@ -835,11 +883,11 @@
 		3F022017259B9C57007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA45B25ADF6DB0091D8B1 /* minormajorseventhbrokenbb.mp3 */,
 				3F022018259B9C57007F2965 /* diminishedseventhbrokenbb.mp3 */,
 				3F022019259B9C57007F2965 /* majorseventhbrokenbb.mp3 */,
 				3F02201A259B9C57007F2965 /* minorseventhb5brokenbb.mp3 */,
 				3F02201B259B9C57007F2965 /* minorseventhbrokenbb.mp3 */,
-				3F02201C259B9C57007F2965 /* augmentedseventhblockedbb.mp3 */,
 				3F02201D259B9C57007F2965 /* augmentedseventhbrokenbb.mp3 */,
 				3F02201E259B9C57007F2965 /* dominantseventhbrokenbb.mp3 */,
 			);
@@ -849,6 +897,8 @@
 		3F02201F259B9C57007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F02201C259B9C57007F2965 /* augmentedseventhblockedbb.mp3 */,
+				3F6AA45525ADF6CD0091D8B1 /* minormajorseventhblockedbb.mp3 */,
 				3F022020259B9C57007F2965 /* dominantseventhblockedbb.mp3 */,
 				3F022021259B9C57007F2965 /* diminishedseventhblockedbb.mp3 */,
 				3F022022259B9C57007F2965 /* minorseventhb5blockedbb.mp3 */,
@@ -870,6 +920,7 @@
 		3F022026259B9C57007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA46125ADF6EE0091D8B1 /* minormajorseventhbrokenab.mp3 */,
 				3F022027259B9C57007F2965 /* dominantseventhbrokenab.mp3 */,
 				3F022028259B9C57007F2965 /* augmentedseventhbrokenab.mp3 */,
 				3F022029259B9C57007F2965 /* minorseventhb5brokenab.mp3 */,
@@ -883,6 +934,7 @@
 		3F02202D259B9C57007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA46725ADF6FA0091D8B1 /* minormajorseventhblockedab.mp3 */,
 				3F02202E259B9C57007F2965 /* minorseventhblockedab.mp3 */,
 				3F02202F259B9C57007F2965 /* majorseventhblockedab.mp3 */,
 				3F022030259B9C57007F2965 /* augmentedseventhblockedab.mp3 */,
@@ -905,6 +957,7 @@
 		3F022035259B9C57007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA47325ADF71A0091D8B1 /* minormajorseventhbrokeneb.mp3 */,
 				3F022036259B9C57007F2965 /* minorseventhbrokeneb.mp3 */,
 				3F022037259B9C57007F2965 /* majorseventhbrokeneb.mp3 */,
 				3F022038259B9C57007F2965 /* majorseventhb5brokeneb.mp3 */,
@@ -918,6 +971,7 @@
 		3F02203C259B9C57007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA46D25ADF70F0091D8B1 /* minormajorseventhblockedeb.mp3 */,
 				3F02203D259B9C57007F2965 /* dominantseventhblockedeb.mp3 */,
 				3F02203E259B9C57007F2965 /* majorseventhblockedeb.mp3 */,
 				3F02203F259B9C57007F2965 /* minorseventhblockedeb.mp3 */,
@@ -940,6 +994,7 @@
 		3F022044259B9C57007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA47F25ADF7420091D8B1 /* minormajorseventhbrokeng.mp3 */,
 				3F022045259B9C57007F2965 /* majorseventhbrokeng.mp3 */,
 				3F022046259B9C57007F2965 /* dominantseventhbrokeng.mp3 */,
 				3F022047259B9C57007F2965 /* minorseventhb5brokeng.mp3 */,
@@ -953,6 +1008,7 @@
 		3F02204B259B9C57007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA47925ADF72A0091D8B1 /* minormajorseventhblockedg.mp3 */,
 				3F02204C259B9C57007F2965 /* augmentedseventhblockedg.mp3 */,
 				3F02204D259B9C57007F2965 /* dominantseventhblockedg.mp3 */,
 				3F02204E259B9C58007F2965 /* diminshedseventhblockedg.mp3 */,
@@ -975,6 +1031,7 @@
 		3F022053259B9C58007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA48B25ADF7640091D8B1 /* minormajorseventhbrokena.mp3 */,
 				3F022054259B9C58007F2965 /* dominantseventhbrokena.mp3 */,
 				3F022055259B9C58007F2965 /* majorseventhbrokena.mp3 */,
 				3F022056259B9C58007F2965 /* augmentedseventhbrokena.mp3 */,
@@ -988,6 +1045,7 @@
 		3F02205A259B9C58007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA48525ADF7590091D8B1 /* minormajorseventhblockeda.mp3 */,
 				3F02205B259B9C58007F2965 /* augmentedseventhblockeda.mp3 */,
 				3F02205C259B9C58007F2965 /* dominantseventhblockeda.mp3 */,
 				3F02205D259B9C58007F2965 /* minorseventhblockeda.mp3 */,
@@ -1010,6 +1068,7 @@
 		3F022062259B9C58007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA49725ADF7960091D8B1 /* minormajorseventhbrokenf.mp3 */,
 				3F022063259B9C58007F2965 /* majorseventhbrokenf.mp3 */,
 				3F022064259B9C58007F2965 /* dominantseventhbrokenf.mp3 */,
 				3F022065259B9C58007F2965 /* diminishedseventhbrokenf.mp3 */,
@@ -1023,6 +1082,7 @@
 		3F022069259B9C58007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA49125ADF7710091D8B1 /* minormajorseventhblockedf.mp3 */,
 				3F02206A259B9C58007F2965 /* augmentedseventhblockedf.mp3 */,
 				3F02206B259B9C58007F2965 /* dominantseventhblockedf.mp3 */,
 				3F02206C259B9C58007F2965 /* minorseventhb5blockedf.mp3 */,
@@ -1045,6 +1105,7 @@
 		3F022071259B9C58007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA4A325ADF7AD0091D8B1 /* minormajorseventhbrokengb.mp3 */,
 				3F022072259B9C58007F2965 /* augmentedseventhbrokengb.mp3 */,
 				3F022073259B9C58007F2965 /* dominantseventhbrokengb.mp3 */,
 				3F022074259B9C58007F2965 /* majorseventhbrokengb.mp3 */,
@@ -1058,6 +1119,7 @@
 		3F022078259B9C58007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA49D25ADF7A40091D8B1 /* minormajorseventhblockedgb.mp3 */,
 				3F022079259B9C58007F2965 /* diminishedseventhblockedgb.mp3 */,
 				3F02207A259B9C58007F2965 /* minorseventhb5blockedgb.mp3 */,
 				3F02207B259B9C58007F2965 /* augmentedseventhblockedgb.mp3 */,
@@ -1080,6 +1142,7 @@
 		3F022080259B9C58007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA4AF25ADF7CF0091D8B1 /* minormajorseventhbrokendb.mp3 */,
 				3F022081259B9C58007F2965 /* minorseventhb5brokendb.mp3 */,
 				3F022082259B9C58007F2965 /* minorseventhbrokendb.mp3 */,
 				3F022083259B9C58007F2965 /* diminishedseventhbrokendb.mp3 */,
@@ -1093,6 +1156,7 @@
 		3F022087259B9C58007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA4A925ADF7C60091D8B1 /* minormajorseventhblockeddb.mp3 */,
 				3F022088259B9C58007F2965 /* dominantseventhblockeddb.mp3 */,
 				3F022089259B9C58007F2965 /* minorseventhblockeddb.mp3 */,
 				3F02208A259B9C58007F2965 /* majorseventhblockeddb.mp3 */,
@@ -1115,6 +1179,7 @@
 		3F02208F259B9C58007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA4BB25ADF7E50091D8B1 /* minormajorseventhbrokenc.mp3 */,
 				3F022090259B9C58007F2965 /* dominantseventhbrokenc.mp3 */,
 				3F022091259B9C58007F2965 /* majorseventhbrokenc.mp3 */,
 				3F022092259B9C58007F2965 /* augmentedseventhbrokenc.mp3 */,
@@ -1128,6 +1193,7 @@
 		3F022096259B9C58007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA4B525ADF7DB0091D8B1 /* minormajorseventhblockedc.mp3 */,
 				3F022097259B9C58007F2965 /* dominantseventhblockedc.mp3 */,
 				3F022098259B9C58007F2965 /* augmentedseventhblockedc.mp3 */,
 				3F022099259B9C58007F2965 /* minorseventhb5blockedc.mp3 */,
@@ -1150,6 +1216,7 @@
 		3F02209E259B9C58007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA4C725ADF8030091D8B1 /* minormajorseventhbrokend.mp3 */,
 				3F02209F259B9C58007F2965 /* majorseventhbrokend.mp3 */,
 				3F0220A0259B9C58007F2965 /* dominantseventhbrokend.mp3 */,
 				3F0220A1259B9C58007F2965 /* minorseventhbrokend.mp3 */,
@@ -1163,6 +1230,7 @@
 		3F0220A5259B9C58007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA4C125ADF7F60091D8B1 /* minormajorseventhblockedd.mp3 */,
 				3F0220A6259B9C58007F2965 /* dominantseventhblockedd.mp3 */,
 				3F0220A7259B9C58007F2965 /* augmentedseventhblockedd.mp3 */,
 				3F0220A8259B9C58007F2965 /* minorseventhd5blockedd.mp3 */,
@@ -1185,6 +1253,7 @@
 		3F0220AD259B9C58007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA4D325ADF81E0091D8B1 /* minormajorseventhbrokene.mp3 */,
 				3F0220AE259B9C58007F2965 /* majorseventhbrokene.mp3 */,
 				3F0220AF259B9C58007F2965 /* dominantseventhbrokene.mp3 */,
 				3F0220B0259B9C58007F2965 /* minorseventhbrokene.mp3 */,
@@ -1198,6 +1267,7 @@
 		3F0220B4259B9C58007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA4CD25ADF8100091D8B1 /* minormajorseventhblockede.mp3 */,
 				3F0220B5259B9C58007F2965 /* dominantseventhblockede.mp3 */,
 				3F0220B6259B9C58007F2965 /* augmentedseventhblockede.mp3 */,
 				3F0220B7259B9C58007F2965 /* minorseventhb5blockede.mp3 */,
@@ -1220,6 +1290,7 @@
 		3F0220BC259B9C58007F2965 /* broken */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA4DF25ADF83D0091D8B1 /* minormajorseventhbrokenb.mp3 */,
 				3F0220BD259B9C58007F2965 /* dominantseventhbrokenb.mp3 */,
 				3F0220BE259B9C58007F2965 /* majorseventhbrokenb.mp3 */,
 				3F0220BF259B9C58007F2965 /* augmentedseventhbrokenb.mp3 */,
@@ -1233,6 +1304,7 @@
 		3F0220C3259B9C58007F2965 /* blocked */ = {
 			isa = PBXGroup;
 			children = (
+				3F6AA4D925ADF8340091D8B1 /* minormajorseventhblockedb.mp3 */,
 				3F0220C4259B9C58007F2965 /* dominantseventhblockedb.mp3 */,
 				3F0220C5259B9C58007F2965 /* augmentedseventhblockedb.mp3 */,
 				3F0220C6259B9C58007F2965 /* minorseventhblockedb.mp3 */,
@@ -1932,12 +2004,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F02215B259B9C5A007F2965 /* majorseventhbrokend.mp3 in Resources */,
+				3F6AA4BC25ADF7E50091D8B1 /* minormajorseventhbrokenc.mp3 in Resources */,
 				3F0222C1259BA0B1007F2965 /* diminishedtriadblockedb.mp3 in Resources */,
 				3F02216B259B9C5A007F2965 /* minorseventhb5brokene.mp3 in Resources */,
 				3F022244259BA0B1007F2965 /* sus4triadbrokenab.mp3 in Resources */,
 				3F022108259B9C59007F2965 /* majorseventhbrokeneb.mp3 in Resources */,
 				3F022285259BA0B1007F2965 /* sus4triadblockedgb.mp3 in Resources */,
 				3F022265259BA0B1007F2965 /* diminishedtriadbrokena.mp3 in Resources */,
+				3F6AA4C225ADF7F60091D8B1 /* minormajorseventhblockedd.mp3 in Resources */,
 				3F0222C0259BA0B1007F2965 /* sus2triadblockedb.mp3 in Resources */,
 				3F0222CC259BA19C007F2965 /* diminshedtriadblockedc.mp3 in Resources */,
 				3F02226E259BA0B1007F2965 /* sus4triadblockeda.mp3 in Resources */,
@@ -1955,20 +2029,25 @@
 				3F022247259BA0B1007F2965 /* minortriadblockedab.mp3 in Resources */,
 				3F022174259B9C5A007F2965 /* majorseventhbrokenb.mp3 in Resources */,
 				3F022110259B9C59007F2965 /* minorseventhb5blockedeb.mp3 in Resources */,
+				3F6AA46825ADF6FA0091D8B1 /* minormajorseventhblockedab.mp3 in Resources */,
 				3F0222CF259BA19C007F2965 /* majortriadblockedc.mp3 in Resources */,
 				3F02223F259BA0B1007F2965 /* augmentedtriadblockedbb.mp3 in Resources */,
 				3F0222AF259BA0B1007F2965 /* augmentedtriadbrokene.mp3 in Resources */,
 				3F02227B259BA0B1007F2965 /* diminishedtriadblockedf.mp3 in Resources */,
 				3F022142259B9C59007F2965 /* dominantseventhblockedgb.mp3 in Resources */,
+				3F6AA46E25ADF70F0091D8B1 /* minormajorseventhblockedeb.mp3 in Resources */,
 				3FA05908256A1E1200D99CC7 /* b.mp3 in Resources */,
+				3F6AA4A425ADF7AD0091D8B1 /* minormajorseventhbrokengb.mp3 in Resources */,
 				3FA05905256A1E1200D99CC7 /* e.mp3 in Resources */,
 				3F0222B0259BA0B1007F2965 /* sus2triadbrokene.mp3 in Resources */,
 				3F022137259B9C59007F2965 /* augmentedseventhbrokengb.mp3 in Resources */,
 				3F02225E259BA0B1007F2965 /* majortriadblockedg.mp3 in Resources */,
+				3F6AA4B025ADF7CF0091D8B1 /* minormajorseventhbrokendb.mp3 in Resources */,
 				3F022178259B9C5A007F2965 /* diminishedseventhbrokenb.mp3 in Resources */,
 				3F022253259BA0B1007F2965 /* majortriadblockedeb.mp3 in Resources */,
 				3F022106259B9C59007F2965 /* dominantseventhblockedab.mp3 in Resources */,
 				3F022269259BA0B1007F2965 /* augmentedtriadbrokena.mp3 in Resources */,
+				3F6AA49225ADF7710091D8B1 /* minormajorseventhblockedf.mp3 in Resources */,
 				3F022175259B9C5A007F2965 /* augmentedseventhbrokenb.mp3 in Resources */,
 				3F0220F8259B9C59007F2965 /* minorseventhb5blockedbb.mp3 in Resources */,
 				3FA058FC256A1E1200D99CC7 /* a2.mp3 in Resources */,
@@ -1978,7 +2057,9 @@
 				3F0222CA259BA19C007F2965 /* sus4triadblockedc.mp3 in Resources */,
 				3F02223D259BA0B1007F2965 /* diminishedtriadblockedbb.mp3 in Resources */,
 				3F02225D259BA0B1007F2965 /* sus2triadbrokeng.mp3 in Resources */,
+				3F6AA47A25ADF72A0091D8B1 /* minormajorseventhblockedg.mp3 in Resources */,
 				3F02212B259B9C59007F2965 /* majorseventhbrokenf.mp3 in Resources */,
+				3F6AA48025ADF7420091D8B1 /* minormajorseventhbrokeng.mp3 in Resources */,
 				3F022271259BA0B1007F2965 /* minortriadbrokenf.mp3 in Resources */,
 				3F022290259BA0B1007F2965 /* sus4triadblockeddb.mp3 in Resources */,
 				3F022179259B9C5A007F2965 /* dominantseventhblockedb.mp3 in Resources */,
@@ -2013,6 +2094,7 @@
 				3FA058F2256A1E1100D99CC7 /* a.mp3 in Resources */,
 				3F022280259BA0B1007F2965 /* sus4triadbrokengb.mp3 in Resources */,
 				3F02227A259BA0B1007F2965 /* sus4triadblockedf.mp3 in Resources */,
+				3F6AA4D425ADF81E0091D8B1 /* minormajorseventhbrokene.mp3 in Resources */,
 				3F02224A259BA0B1007F2965 /* majortriadblockedab.mp3 in Resources */,
 				3F022241259BA0B1007F2965 /* augmentedtriadbrokenab.mp3 in Resources */,
 				3FA058F5256A1E1100D99CC7 /* bb.mp3 in Resources */,
@@ -2029,6 +2111,7 @@
 				3F022117259B9C59007F2965 /* minorseventhbrokeng.mp3 in Resources */,
 				3F022293259BA0B1007F2965 /* augmentedtriadblockeddb.mp3 in Resources */,
 				3F022114259B9C59007F2965 /* dominantseventhbrokeng.mp3 in Resources */,
+				3F6AA48625ADF7590091D8B1 /* minormajorseventhblockeda.mp3 in Resources */,
 				3F022266259BA0B1007F2965 /* minortriadbrokena.mp3 in Resources */,
 				3F0222CE259BA19C007F2965 /* sus2triadblockedc.mp3 in Resources */,
 				3F0220FB259B9C59007F2965 /* dominantseventhbrokenab.mp3 in Resources */,
@@ -2045,7 +2128,9 @@
 				3FA058F6256A1E1100D99CC7 /* minor13thc.mp3 in Resources */,
 				3F02228E259BA0B1007F2965 /* majortriadblockeddb.mp3 in Resources */,
 				3F022155259B9C5A007F2965 /* dominantseventhblockedc.mp3 in Resources */,
+				3F6AA4DA25ADF8340091D8B1 /* minormajorseventhblockedb.mp3 in Resources */,
 				3F022275259BA0B1007F2965 /* sus2triadbrokenf.mp3 in Resources */,
+				3F6AA45C25ADF6DB0091D8B1 /* minormajorseventhbrokenbb.mp3 in Resources */,
 				3F022150259B9C59007F2965 /* majorseventhbrokenc.mp3 in Resources */,
 				3F022145259B9C59007F2965 /* diminishedseventhbrokendb.mp3 in Resources */,
 				3F0222A7259BA0B1007F2965 /* majortriadblockedd.mp3 in Resources */,
@@ -2058,10 +2143,12 @@
 				3F0222AB259BA0B1007F2965 /* diminishedtriadblockedd.mp3 in Resources */,
 				3FA058FF256A1E1200D99CC7 /* f.mp3 in Resources */,
 				3F022250259BA0B1007F2965 /* augmentedtriadbrokeneb.mp3 in Resources */,
+				3F6AA4C825ADF8030091D8B1 /* minormajorseventhbrokend.mp3 in Resources */,
 				3F02214C259B9C59007F2965 /* augmentedseventhblockeddb.mp3 in Resources */,
 				3F1749AD254FC41B00398DB8 /* Chateau Grand-v1.8.sf2 in Resources */,
 				3F022138259B9C59007F2965 /* dominantseventhbrokengb.mp3 in Resources */,
 				3F022164259B9C5A007F2965 /* minorseventhblockedd.mp3 in Resources */,
+				3F6AA45625ADF6CE0091D8B1 /* minormajorseventhblockedbb.mp3 in Resources */,
 				3F02224C259BA0B1007F2965 /* diminishedtriadbrokeneb.mp3 in Resources */,
 				3FA058EE256A1E1100D99CC7 /* minor11thc.mp3 in Resources */,
 				3F02223E259BA0B1007F2965 /* minortriadblockedbb.mp3 in Resources */,
@@ -2075,6 +2162,7 @@
 				3FA0590A256A1E1200D99CC7 /* major3rdc.mp3 in Resources */,
 				3F022112259B9C59007F2965 /* augmentedseventhblockedeb.mp3 in Resources */,
 				3F02217A259B9C5A007F2965 /* augmentedseventhblockedb.mp3 in Resources */,
+				3F6AA49825ADF7960091D8B1 /* minormajorseventhbrokenf.mp3 in Resources */,
 				3F0220EF259B9C59007F2965 /* diminishedseventhbrokenbb.mp3 in Resources */,
 				3F0222A2259BA0B1007F2965 /* sus4triadbrokend.mp3 in Resources */,
 				3F02210B259B9C59007F2965 /* augmentedseventhbrokeneb.mp3 in Resources */,
@@ -2086,6 +2174,7 @@
 				3F022128259B9C59007F2965 /* minorseventhb5blockeda.mp3 in Resources */,
 				3F022115259B9C59007F2965 /* minorseventhb5brokeng.mp3 in Resources */,
 				3F02214B259B9C59007F2965 /* majorseventhblockeddb.mp3 in Resources */,
+				3F6AA4AA25ADF7C60091D8B1 /* minormajorseventhblockeddb.mp3 in Resources */,
 				3F022252259BA0B1007F2965 /* sus2triadblockedeb.mp3 in Resources */,
 				3F022278259BA0B1007F2965 /* sus2triadblockedf.mp3 in Resources */,
 				3F022248259BA0B1007F2965 /* diminishedtriadblockedab.mp3 in Resources */,
@@ -2093,6 +2182,7 @@
 				3F022147259B9C59007F2965 /* dominantseventhbrokendb.mp3 in Resources */,
 				3F02223A259BA0B1007F2965 /* sus4triadblockedbb.mp3 in Resources */,
 				3F022264259BA0B1007F2965 /* sus4triadbrokena.mp3 in Resources */,
+				3F6AA47425ADF71A0091D8B1 /* minormajorseventhbrokeneb.mp3 in Resources */,
 				3F0220F3259B9C59007F2965 /* augmentedseventhblockedbb.mp3 in Resources */,
 				3F0222CD259BA19C007F2965 /* minortriadblockedc.mp3 in Resources */,
 				3F022263259BA0B1007F2965 /* diminishedtriadblockedg.mp3 in Resources */,
@@ -2102,6 +2192,7 @@
 				3F022120259B9C59007F2965 /* majorseventhbrokena.mp3 in Resources */,
 				3F02210E259B9C59007F2965 /* majorseventhblockedeb.mp3 in Resources */,
 				3F022170259B9C5A007F2965 /* minorseventhblockede.mp3 in Resources */,
+				3F6AA48C25ADF7640091D8B1 /* minormajorseventhbrokena.mp3 in Resources */,
 				3F022118259B9C59007F2965 /* augmentedseventhbrokeng.mp3 in Resources */,
 				3F022143259B9C59007F2965 /* minorseventhb5brokendb.mp3 in Resources */,
 				3F022125259B9C59007F2965 /* augmentedseventhblockeda.mp3 in Resources */,
@@ -2126,6 +2217,7 @@
 				3F022274259BA0B1007F2965 /* majortriadbrokenf.mp3 in Resources */,
 				3F0222B1259BA0B1007F2965 /* majortriadbrokene.mp3 in Resources */,
 				3F022234259BA0B1007F2965 /* sus4triadbrokenbb.mp3 in Resources */,
+				3F6AA4B625ADF7DB0091D8B1 /* minormajorseventhblockedc.mp3 in Resources */,
 				3F02224F259BA0B1007F2965 /* majortriadbrokeneb.mp3 in Resources */,
 				3F02216E259B9C5A007F2965 /* augmentedseventhblockede.mp3 in Resources */,
 				3F0222A1259BA0B1007F2965 /* diminishedtriadbrokend.mp3 in Resources */,
@@ -2189,6 +2281,7 @@
 				3F0222B8259BA0B1007F2965 /* sus4triadbrokenb.mp3 in Resources */,
 				3F022268259BA0B1007F2965 /* sus2triadbrokena.mp3 in Resources */,
 				3F022239259BA0B1007F2965 /* majortriadbrokenbb.mp3 in Resources */,
+				3F6AA4E025ADF83D0091D8B1 /* minormajorseventhbrokenb.mp3 in Resources */,
 				3F022261259BA0B1007F2965 /* sus4triadblockedg.mp3 in Resources */,
 				3F022168259B9C5A007F2965 /* dominantseventhbrokene.mp3 in Resources */,
 				3F022166259B9C5A007F2965 /* majorseventhblockedd.mp3 in Resources */,
@@ -2201,6 +2294,7 @@
 				3F0220F1259B9C59007F2965 /* minorseventhb5brokenbb.mp3 in Resources */,
 				3F022281259BA0B1007F2965 /* minortriadbrokengb.mp3 in Resources */,
 				3F022176259B9C5A007F2965 /* minorseventhbrokenb.mp3 in Resources */,
+				3F6AA49E25ADF7A40091D8B1 /* minormajorseventhblockedgb.mp3 in Resources */,
 				3F0222B9259BA0B1007F2965 /* minortriadbrokenb.mp3 in Resources */,
 				3F022277259BA0B1007F2965 /* majortriadblockedf.mp3 in Resources */,
 				3F0220F5259B9C59007F2965 /* dominantseventhbrokenbb.mp3 in Resources */,
@@ -2216,6 +2310,7 @@
 				3F02217C259B9C5A007F2965 /* minorseventhb5blockedb.mp3 in Resources */,
 				3F022284259BA0B1007F2965 /* minortriadblockedgb.mp3 in Resources */,
 				3F022296259BA0B1007F2965 /* diminishedtriadbrokenc.mp3 in Resources */,
+				3F6AA4CE25ADF8100091D8B1 /* minormajorseventhblockede.mp3 in Resources */,
 				3F02226D259BA0B1007F2965 /* diminishedtriadblockeda.mp3 in Resources */,
 				3F022295259BA0B1007F2965 /* minortriadbrokenc.mp3 in Resources */,
 				3F02217B259B9C5A007F2965 /* minorseventhblockedb.mp3 in Resources */,
@@ -2244,6 +2339,7 @@
 				3FA058EC256A1E1100D99CC7 /* octavec.mp3 in Resources */,
 				3F022135259B9C59007F2965 /* diminishedseventhblockedf.mp3 in Resources */,
 				3F022116259B9C59007F2965 /* diminishedseventhbrokeng.mp3 in Resources */,
+				3F6AA46225ADF6EE0091D8B1 /* minormajorseventhbrokenab.mp3 in Resources */,
 				3F0222A6259BA0B1007F2965 /* augmentedtriadblockedd.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3F0220FA259B9C59007F2965 /* minorseventhblockedbb.mp3 in Resources */,
@@ -2581,7 +2677,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = QPC42R2G9L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PianoLessons/Info.plist;
@@ -2608,7 +2704,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = QPC42R2G9L;
 				INFOPLIST_FILE = PianoLessons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

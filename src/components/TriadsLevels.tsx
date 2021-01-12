@@ -93,6 +93,8 @@ const TraidsLevels = ({level, mode, props}) => {
     '#EFEFEF',
     '#EFEFEF',
     '#EFEFEF',
+    '#EFEFEF',
+    '#EFEFEF',
   ]);
   const [height, setHeight] = useState(60);
 
@@ -186,7 +188,15 @@ const TraidsLevels = ({level, mode, props}) => {
   const nextQuestion = () => {
     var currentQuestion1 = currentQuestionInd;
 
-    setSelectionColors(['#EFEFEF', '#EFEFEF', '#EFEFEF', '#EFEFEF', '#EFEFEF']);
+    setSelectionColors([
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+    ]);
 
     if (currentQuestion1 < questionList.length - 1) {
       currentQuestion1 += 1;
@@ -267,6 +277,9 @@ const TraidsLevels = ({level, mode, props}) => {
     } else if (level == 9) {
       instructions = shuffle(data.Sevenths.level9Instructions);
       setPassScore(data.Sevenths.level9PassScore);
+    } else if (level == 10) {
+      instructions = shuffle(data.Sevenths.level10Instructions);
+      setPassScore(data.Sevenths.level10PassScore);
     }
 
     setInstructions(instructions);
@@ -416,6 +429,8 @@ const TraidsLevels = ({level, mode, props}) => {
     var sc = selectionColors.slice();
     var answerInd = answers.indexOf(currentAnswer);
 
+    console.log('currentAnswer: ' + JSON.stringify(currentAnswer));
+
     if (currentAnswer === questionList[currentQuestionInd].Answer) {
       var ca = correctAnswers;
       ca++;
@@ -468,16 +483,15 @@ const TraidsLevels = ({level, mode, props}) => {
 
       if (loggedIn) {
         if (passed) {
-          if (currentLevel == 5) {
+          if (currentLevel == 10) {
             //was last level. go to main menu
             console.log('last level. go to main');
             dispatch({type: 'SET_MODE', mode: 0});
             dispatch({type: 'SET_LEVEL', level: 0});
             props.navigation.navigate('CHALLENGES');
           } else {
-            dispatch({type: 'SET_MODE', mode: 2});
+            dispatch({type: 'SET_MODE', mode: 3});
             dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
-
             console.log(`set level: ${currentLevel + 1}`);
           }
           //dispatch(saveProgress(level));
@@ -608,13 +622,15 @@ const TraidsLevels = ({level, mode, props}) => {
     } else if (level == 5) {
       answersData = shuffle(data.Sevenths.level5Answers);
     } else if (level == 6) {
-      answersData = shuffle(data.Sevenths.level2Answers);
+      answersData = shuffle(data.Sevenths.level6Answers);
     } else if (level == 7) {
-      answersData = shuffle(data.Sevenths.level3Answers);
+      answersData = shuffle(data.Sevenths.level7Answers);
     } else if (level == 8) {
-      answersData = shuffle(data.Sevenths.level4Answers);
+      answersData = shuffle(data.Sevenths.level8Answers);
     } else if (level == 9) {
-      answersData = shuffle(data.Sevenths.level5Answers);
+      answersData = shuffle(data.Sevenths.level9Answers);
+    } else if (level == 10) {
+      answersData = shuffle(data.Sevenths.level10Answers);
     }
 
     //console.log('answersData: ' + answersData);
@@ -706,7 +722,20 @@ const TraidsLevels = ({level, mode, props}) => {
 
     setisQuizTimerActive(true);
 
-    var questions = shuffle(data.Triads.Chords);
+    var stuff = data.Triads.Chords;
+
+    if (level == 10) {
+      // var newStuff = ['C', 'D', 'E', 'F'];
+
+      // stuff.concat(newStuff);
+
+      stuff.push('C');
+      stuff.push('D');
+      stuff.push('E');
+      stuff.push('F');
+    }
+
+    var questions = shuffle(stuff);
     var qualites;
 
     if (level == 1) {
@@ -727,6 +756,8 @@ const TraidsLevels = ({level, mode, props}) => {
       qualites = data.Sevenths.level8Answers;
     } else if (level == 9) {
       qualites = data.Sevenths.level9Answers;
+    } else if (level == 10) {
+      qualites = data.Sevenths.level10Answers;
     }
 
     //console.log('theAnswer: ' + answerInd);
@@ -758,14 +789,27 @@ const TraidsLevels = ({level, mode, props}) => {
         chordSequence = 'broken';
       }
 
+      var quality = qualites[randQualityInd];
+
+      //console.log('quality: ' + quality);
+
       var chordType = 'triad';
+      var qualityfile = quality;
+
+      //console.log('qualityfile1: ' + qualityfile);
+
+      qualityfile = qualityfile.replace(' ', '');
+
+      //console.log('qualityfile2: ' + qualityfile);
 
       if (level > 4) {
         chordType = 'seventh';
+        qualityfile = qualityfile.replace('7', '').trim();
       }
 
-      var quality = qualites[randQualityInd];
-      var filename = quality + chordType + chordSequence + question;
+      //console.log('qualityfile3: ' + qualityfile);
+
+      var filename = qualityfile + chordType + chordSequence + question;
 
       // chordType = 'seventh';
       // quality = 'minor b5';

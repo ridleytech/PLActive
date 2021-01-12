@@ -494,6 +494,7 @@ class Home extends Component<Props> {
   }
 
   showLogin = () => {
+    console.log('showLogin');
     this.props.showLogin();
   };
 

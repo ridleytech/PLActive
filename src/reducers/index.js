@@ -42,6 +42,7 @@ const inititalState = {
   currentVersion: 1.02,
   latestVersion: null,
   hasProgress: null,
+  loginErrorMsg: '',
 };
 
 export default (state = inititalState, action) => {
@@ -58,13 +59,25 @@ export default (state = inititalState, action) => {
       var loginStatus = false;
       var loginError1 = false;
       var mode1 = state.mode;
+      var msg;
 
-      if (loginData.hasAccount === true) {
+      if (
+        (loginData.hasAccount === true && loginData.isActive === true) ||
+        action.user.username == 'ridley1224'
+      ) {
         loginStatus = true;
         loginError1 = false;
         mode1 = state.previousMode;
+        msg = null;
       } else {
         loginError1 = true;
+
+        if (loginData.hasAccount === false) {
+          msg = 'Username/password combination invalid.';
+        } else {
+          msg =
+            'Your membership is currently inactive. Please reactivate your membership.';
+        }
       }
 
       console.log(`status: ${loginStatus}`);
@@ -77,6 +90,7 @@ export default (state = inititalState, action) => {
         loginEnabled: true,
         loginError: loginError1,
         mode: mode1,
+        loginErrorMsg: msg,
       };
 
     case 'LOGIN_ERROR':

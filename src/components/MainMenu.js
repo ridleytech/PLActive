@@ -163,8 +163,8 @@ const MainMenu = ({setMode}) => {
                 }
               } else if (index == 2) {
                 if (
-                  highestCompletedTriadsBlockedLevel < 9 ||
-                  highestCompletedTriadsBrokenLevel < 9
+                  highestCompletedTriadsBlockedLevel < 10 ||
+                  highestCompletedTriadsBrokenLevel < 10
                 ) {
                   icon = null;
                 } else {

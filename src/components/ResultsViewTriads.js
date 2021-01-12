@@ -290,9 +290,9 @@ const ResultsViewTriads = ({
           }}>
           {!loggedIn && passed && accessFeature > 0
             ? ' LOGIN TO START LEVEL ' + (level + 1)
-            : passed && level < 5
+            : passed && level < 10
             ? ' START LEVEL ' + (level + 1)
-            : passed && level == 5
+            : passed && level == 10
             ? 'LEVELS COMPLETED'
             : 'RESTART QUIZ'}
         </Text>

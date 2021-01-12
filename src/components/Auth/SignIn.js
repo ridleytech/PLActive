@@ -131,7 +131,7 @@ class SignIn extends Component<Props> {
 
               {this.props.loginError ? (
                 <Text style={styles.loginError}>
-                  Username/password combination invalid.
+                  {this.props.loginErrorMsg}
                 </Text>
               ) : null}
 
@@ -145,7 +145,7 @@ class SignIn extends Component<Props> {
                       top: 0,
                       left: 0,
                       right: 0,
-                      bottom: 0,
+                      bottom: 35,
                       justifyContent: 'center',
                       alignItems: 'center',
                       zIndex: 3,
@@ -227,6 +227,7 @@ const mapStateToProps = (state) => {
     loginError: state.loginError,
     loggedIn: state.loggedIn,
     accessFeature: state.accessFeature,
+    loginErrorMsg: state.loginErrorMsg,
   };
 };
 
