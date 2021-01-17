@@ -24,6 +24,7 @@ class Leaderboard extends Component<Props> {
       selectedLevelIndex: 0,
       lastIntervalLevel: 0,
       lastPitchLevel: 0,
+      lastTriadsLevel: 0,
       pitchLevels: ['1', '2', '3'],
       intervalLevels: ['1', '2', '3', '4', '5'],
       triadsLevels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
@@ -43,21 +44,21 @@ class Leaderboard extends Component<Props> {
   };
 
   setOption = (event) => {
-    console.log('update UI');
+    console.log('update UI: ' + event.nativeEvent.selectedSegmentIndex);
 
     if (event.nativeEvent.selectedSegmentIndex == 0) {
       this.setState({
-        currentLevelDisplayLevels: this.state.intervalLevels,
-        currentMode: 'Interval Training',
-        lastPitchLevel: 0,
+        currentLevelDisplayLevels: this.state.pitchLevels,
+        currentMode: 'Pitch Recognition',
+        lastIntervalLevel: 0,
         lastMode: event.nativeEvent.selectedSegmentIndex,
         selectedIndex: event.nativeEvent.selectedSegmentIndex,
       });
     } else if (event.nativeEvent.selectedSegmentIndex == 1) {
       this.setState({
-        currentLevelDisplayLevels: this.state.pitchLevels,
-        currentMode: 'Pitch Recognition',
-        lastIntervalLevel: 0,
+        currentLevelDisplayLevels: this.state.intervalLevels,
+        currentMode: 'Interval Training',
+        lastPitchLevel: 0,
         lastMode: event.nativeEvent.selectedSegmentIndex,
         selectedIndex: event.nativeEvent.selectedSegmentIndex,
       });
@@ -84,13 +85,23 @@ class Leaderboard extends Component<Props> {
 
         selectedLevelIndex: event.nativeEvent.selectedSegmentIndex,
       });
-    } else {
+    } else if (this.state.currentMode == 'Interval Training') {
       console.log(
         'set pitch last level to: ' + event.nativeEvent.selectedSegmentIndex,
       );
 
       this.setState({
         lastPitchLevel: event.nativeEvent.selectedSegmentIndex,
+
+        selectedLevelIndex: event.nativeEvent.selectedSegmentIndex,
+      });
+    } else {
+      console.log(
+        'set triad last level to: ' + event.nativeEvent.selectedSegmentIndex,
+      );
+
+      this.setState({
+        lastTriadsLevel: event.nativeEvent.selectedSegmentIndex,
 
         selectedLevelIndex: event.nativeEvent.selectedSegmentIndex,
       });
@@ -101,7 +112,8 @@ class Leaderboard extends Component<Props> {
     if (
       this.state.lastMode != nextState.lastMode ||
       this.state.lastIntervalLevel != nextState.lastIntervalLevel ||
-      this.state.lastPitchLevel != nextState.lastPitchLevel
+      this.state.lastPitchLevel != nextState.lastPitchLevel ||
+      this.state.lastTriadsLevel != nextState.lastTriadsLevel
     ) {
       console.log('get new data: ' + JSON.stringify(nextState));
       //console.log('index: ' + this.state.selectedLevelIndex);
@@ -110,8 +122,10 @@ class Leaderboard extends Component<Props> {
 
       if (this.state.lastIntervalLevel != nextState.lastIntervalLevel) {
         level = parseInt(this.state.lastIntervalLevel) + 1;
-      } else {
+      } else if (this.state.lastPitchLevel != nextState.lastPitchLevel) {
         level = parseInt(this.state.lastPitchLevel) + 1;
+      } else {
+        level = parseInt(this.state.lastTriadsLevel) + 1;
       }
       var mode = parseInt(this.state.lastMode) + 1;
 

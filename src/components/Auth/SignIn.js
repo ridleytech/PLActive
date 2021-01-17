@@ -118,12 +118,14 @@ class SignIn extends Component<Props> {
               <Text style={[styles.txtHeader, {marginTop: 20}]}>Username</Text>
               <TextInput
                 autoCapitalize="none"
+                autoCompleteType="off"
                 style={styles.inputTxt}
                 value={this.state.usernameVal}
                 onChangeText={(text) => this.changeVal(text)}></TextInput>
               <Text style={styles.txtHeader}>Password</Text>
               <TextInput
                 autoCapitalize="none"
+                autoCompleteType="off"
                 secureTextEntry={true}
                 style={styles.inputTxt}
                 value={this.state.passwordVal}

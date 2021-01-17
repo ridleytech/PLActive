@@ -181,6 +181,7 @@ class Support extends Component<Props> {
               <Text style={styles.txtHeader}>Name</Text>
 
               <TextInput
+                autoCompleteType="off"
                 autoCapitalize="none"
                 style={styles.inputTxt1}
                 onChangeText={(text) => this.changeVal4(text)}
@@ -189,6 +190,7 @@ class Support extends Component<Props> {
 
               <TextInput
                 autoCapitalize="none"
+                autoCompleteType="off"
                 style={styles.inputTxt1}
                 onChangeText={(text) => this.changeVal1(text)}
                 value={this.state.email}></TextInput>
@@ -196,6 +198,7 @@ class Support extends Component<Props> {
 
               <TextInput
                 autoCapitalize="none"
+                autoCompleteType="off"
                 style={styles.inputTxt1}
                 onChangeText={(text) => this.changeVal2(text)}
                 value={this.state.subject}></TextInput>
@@ -203,6 +206,7 @@ class Support extends Component<Props> {
 
               <TextInput
                 autoCapitalize="none"
+                autoCompleteType="off"
                 multiline={true}
                 style={styles.inputTxt}
                 onChangeText={(text) => this.changeVal(text)}

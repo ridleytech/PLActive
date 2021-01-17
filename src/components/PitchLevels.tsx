@@ -64,7 +64,7 @@ const shuffle = (array) => {
 //https://github.com/zmxv/react-native-sound
 
 var Sound = require('react-native-sound');
-var currentNote;
+var audioClip;
 
 const {height, width} = Dimensions.get('window');
 const aspectRatio = height / width;
@@ -80,6 +80,7 @@ const PitchLevels = ({level, mode, props}) => {
   // dispatch({type: 'SET_LEVEL', level: 3});
 
   //console.log('selectedLevel: ' + level);
+  const [canPlay, setCanPlay] = useState(false);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
@@ -173,15 +174,16 @@ const PitchLevels = ({level, mode, props}) => {
       interval = setInterval(() => {
         //console.log('the seconds: ' + interval);
 
-        currentNote.getCurrentTime((seconds1) => {
+        audioClip.getCurrentTime((seconds1) => {
           //console.log('at ' + seconds1);
 
           setTrackInfo({
             position: seconds1,
-            duration: currentNote.getDuration(),
+            duration: audioClip.getDuration(),
           });
 
-          if (seconds1 == 0 || seconds1 > 5) {
+          //if (seconds1 == 0 || seconds1 > 5) {
+          if (seconds1 == 0) {
             stopAudio();
           }
         });
@@ -217,8 +219,19 @@ const PitchLevels = ({level, mode, props}) => {
   const stopAudio = () => {
     setIsActive(false);
     setIsPlaying(false);
+
+    // audioClip.pause();
+    // audioClip.stop();
+
+    audioClip.stop(() => {
+      // Note: If you want to play a sound after stopping and rewinding it,
+      // it is important to call play() in a callback.
+      //whoosh.play();
+
+      console.log('stop');
+    });
+
     setSliderValue(0);
-    audioClip.stop();
   };
 
   const nextQuestion = () => {
@@ -234,15 +247,16 @@ const PitchLevels = ({level, mode, props}) => {
 
       var filename = questionList[currentQuestion1].file.toLowerCase() + '.mp3';
 
-      currentNote = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+      audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
         if (error) {
           console.log('failed to load the sound ' + filename, error);
+
           return;
         }
         // loaded successfully
         console.log('file ' + filename + ' loaded');
 
-        //currentNote.play();
+        //audioClip.play();
       });
 
       setCurrentQuestionInd(currentQuestion1);
@@ -370,8 +384,8 @@ const PitchLevels = ({level, mode, props}) => {
       setIsActive(false);
       setisQuizTimerActive(false);
 
-      if (currentNote) {
-        currentNote.release();
+      if (audioClip) {
+        audioClip.release();
       }
     },
     [],
@@ -386,11 +400,19 @@ const PitchLevels = ({level, mode, props}) => {
 
   const onButtonPressed = () => {
     if (!isPlaying) {
-      currentNote.play();
+      audioClip.play((success) => {
+        if (success) {
+          console.log('successfully finished playing');
+          setIsActive(false);
+
+          setIsPlaying(false);
+          setSliderValue(0);
+        }
+      });
       setIsActive(true);
       setIsPlaying(true);
     } else {
-      currentNote.pause();
+      audioClip.pause();
       setIsPlaying(false);
       setIsActive(false);
     }
@@ -401,7 +423,7 @@ const PitchLevels = ({level, mode, props}) => {
   };
 
   const slidingCompleted = async (value) => {
-    currentNote.setCurrentTime(value * trackInfo.duration);
+    audioClip.setCurrentTime(value * trackInfo.duration);
     setSliderValue(value);
     setIsSeeking(false);
   };
@@ -445,11 +467,16 @@ const PitchLevels = ({level, mode, props}) => {
 
     setAnswerList(al);
     setCanAnswer(false);
+    setCanPlay(false);
+
     Keyboard.dismiss();
+
+    stopAudio();
 
     setTimeout(() => {
       setCurrentAnswer(null);
       nextQuestion();
+      setCanPlay(true);
 
       setAnswerState('#E2E7ED');
     }, 2000);
@@ -631,11 +658,11 @@ const PitchLevels = ({level, mode, props}) => {
 
     setisQuizTimerActive(true);
 
-    //currentNote.play();
+    //audioClip.play();
 
     //setIsActive(true);
 
-    var questions;
+    var questions = [];
 
     if (level == 1) {
       questions = shuffle(data.Pitch.level1Questions);
@@ -670,25 +697,25 @@ const PitchLevels = ({level, mode, props}) => {
     console.log('newTracks: ' + JSON.stringify(newTracks));
     console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
 
-    currentNote = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
+    audioClip = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
       if (error) {
         console.log('failed to load the sound ' + newTracks[0].file, error);
         return;
       }
       // loaded successfully
 
-      currentNote.setCategory('Playback');
+      audioClip.setCategory('Playback');
 
       console.log(
         'duration in seconds: ' +
-          currentNote.getDuration() +
+          audioClip.getDuration() +
           ' number of channels: ' +
-          currentNote.getNumberOfChannels(),
+          audioClip.getNumberOfChannels(),
       );
 
-      setTrackInfo({position: 0, duration: currentNote.getDuration()});
+      setTrackInfo({position: 0, duration: audioClip.getDuration()});
 
-      //currentNote.play();
+      //audioClip.play();
     });
 
     setCurrentQuestionInd(0);
@@ -708,6 +735,8 @@ const PitchLevels = ({level, mode, props}) => {
 
     //console.log('questions: ' + JSON.stringify(questions));
 
+    setCanPlay(true);
+
     var question = questions[0];
 
     console.log('question: ' + JSON.stringify(question));
@@ -716,6 +745,52 @@ const PitchLevels = ({level, mode, props}) => {
     // setRestarted(false);
     // setQuizFinished(true);
     // setQuizStarted(false);
+  };
+
+  const debugAudio = () => {
+    console.log('debugAudio');
+
+    setisQuizTimerActive(true);
+
+    var questions = [];
+
+    if (level == 1) {
+      questions = shuffle(data.Pitch.level1Questions);
+    } else if (level == 2) {
+      questions = shuffle(data.Pitch.level2Questions);
+    } else if (level == 3) {
+      questions = shuffle(data.Pitch.level3Questions);
+    } else if (level == 4) {
+      questions = shuffle(data.Pitch.level4Questions);
+    } else if (level == 5) {
+      questions = shuffle(data.Pitch.level5Questions);
+    }
+
+    //console.log('theAnswer: ' + answerInd);
+
+    console.log('interval questions: ' + JSON.stringify(questions));
+
+    if (level > 1) {
+      questions.map((question) => {
+        var filename = question.file.toLowerCase() + '.mp3';
+        console.log('filename: ' + filename);
+
+        audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+          if (error) {
+            console.log('failed to load the sound ' + filename, error);
+            return;
+          }
+          // loaded successfully
+          console.log('file ' + filename + ' loaded');
+          audioClip.setCategory('Playback');
+
+          //setTrackInfo({position: 0, duration: audioClip.getDuration()});
+          //audioClip.play();
+        });
+      });
+
+      //setCanPlay(true);
+    }
   };
 
   const changeVal = (val) => {
@@ -913,6 +988,7 @@ const PitchLevels = ({level, mode, props}) => {
                       paddingBottom: Platform.OS === 'android' ? 10 : 0,
                     }}>
                     <TouchableOpacity
+                      disabled={!canPlay}
                       onPress={onButtonPressed}
                       style={{marginRight: Platform.OS === 'ios' ? 12 : 10}}>
                       {isPlaying ? (
@@ -944,6 +1020,8 @@ const PitchLevels = ({level, mode, props}) => {
                 </View>
               </View>
               <TextInput
+                autoCapitalize="none"
+                autoCompleteType="off"
                 style={{
                   width: 70,
                   height: 70,

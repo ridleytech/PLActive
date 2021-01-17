@@ -56,6 +56,7 @@ const shuffle = (array) => {
 
 var Sound = require('react-native-sound');
 var audioClip;
+const {height, width} = Dimensions.get('window');
 
 const TraidsLevels = ({level, mode, props}) => {
   const dispatch = useDispatch();
@@ -72,6 +73,7 @@ const TraidsLevels = ({level, mode, props}) => {
 
   //console.log('selectedLevel: ' + level);
 
+  const [canPlay, setCanPlay] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
   const [loadCount, setLoadCount] = useState(0);
@@ -156,7 +158,8 @@ const TraidsLevels = ({level, mode, props}) => {
             duration: audioClip.getDuration(),
           });
 
-          if (seconds1 == 0 || seconds1 > 5) {
+          //if (seconds1 == 0 || seconds1 >= 5) {
+          if (seconds1 == 0) {
             stopAudio();
           }
         });
@@ -186,8 +189,19 @@ const TraidsLevels = ({level, mode, props}) => {
   const stopAudio = () => {
     setIsActive(false);
     setIsPlaying(false);
+
+    // audioClip.pause();
+    // audioClip.stop();
+
+    audioClip.stop(() => {
+      // Note: If you want to play a sound after stopping and rewinding it,
+      // it is important to call play() in a callback.
+      //whoosh.play();
+
+      console.log('stop');
+    });
+
     setSliderValue(0);
-    audioClip.stop();
   };
 
   const nextQuestion = () => {
@@ -220,9 +234,6 @@ const TraidsLevels = ({level, mode, props}) => {
         }
         // loaded successfully
         console.log('file ' + filename + ' loaded');
-
-        //audioClip.play();
-
         audioClip.setCategory('Playback');
       });
       setCurrentQuestionInd(currentQuestion1);
@@ -388,9 +399,283 @@ const TraidsLevels = ({level, mode, props}) => {
     // console.log('add track: ' + currentTrack.name);
   }, [currentTrack]);
 
+  const debugAudio = () => {
+    console.log('debugAudio');
+
+    setisQuizTimerActive(true);
+
+    var questions1 = [];
+
+    if (level > 4) {
+      if (level == 10) {
+        questions1 = data.Sevenths.Chords2;
+      } else {
+        questions1 = data.Sevenths.Chords;
+      }
+    } else {
+      questions1 = data.Triads.Chords;
+    }
+
+    var questions = shuffle(questions1);
+    var qualites;
+
+    if (level == 1) {
+      qualites = data.Triads.level1Answers;
+    } else if (level == 2) {
+      qualites = data.Triads.level2Answers;
+    } else if (level == 3) {
+      qualites = data.Triads.level3Answers;
+    } else if (level == 4) {
+      qualites = data.Triads.level4Answers;
+    } else if (level == 5) {
+      qualites = data.Sevenths.level5Answers;
+    } else if (level == 6) {
+      qualites = data.Sevenths.level6Answers;
+    } else if (level == 7) {
+      qualites = data.Sevenths.level7Answers;
+    } else if (level == 8) {
+      qualites = data.Sevenths.level8Answers;
+    } else if (level == 9) {
+      qualites = data.Sevenths.level9Answers;
+    } else if (level == 10) {
+      qualites = data.Sevenths.level10Answers;
+    }
+
+    //console.log('theAnswer: ' + answerInd);
+
+    console.log('triads questions: ' + JSON.stringify(questions));
+
+    var newQuestions = [];
+
+    console.log('qualites: ' + JSON.stringify(qualites));
+
+    questions.map((question) => {
+      var randQualityInd;
+
+      // if (level == 1) {
+      //   //if level 1, only choose major and minor
+      //   randQualityInd = Math.floor(Math.random() * 2);
+      // } else {
+      //   randQualityInd = Math.floor(Math.random() * qualites.length);
+      // }
+
+      //console.log('randQualityInd: ' + randQualityInd);
+      //console.log('randQuestionInd: ' + JSON.stringify(randQuestionInd));
+
+      var chordSequence = 'blocked';
+
+      if (triadmode == 1) {
+        chordSequence = 'broken';
+      }
+
+      qualites.map((quality) => {
+        //var quality = qualites[index];
+
+        var note = {};
+
+        console.log('quality: ' + quality);
+
+        var chordType = 'triad';
+        var qualityfile = quality;
+
+        //console.log('qualityfile1: ' + qualityfile);
+
+        qualityfile = qualityfile.replace(' ', '');
+
+        //console.log('qualityfile2: ' + qualityfile);
+
+        if (level > 4) {
+          chordType = 'seventh';
+          qualityfile = qualityfile.replace('7', '').trim();
+        }
+
+        //console.log('qualityfile3: ' + qualityfile);
+
+        var filename = qualityfile + chordType + chordSequence + question;
+
+        // chordType = 'seventh';
+        // quality = 'minor b5';
+
+        if (quality.includes('b5')) {
+          filename = 'minor' + chordType + 'b5' + chordSequence + question;
+        }
+
+        //console.log('filename: ' + filename);
+
+        filename = filename.toLowerCase();
+
+        note.file = filename;
+        note.note = question;
+        note.Answer = quality;
+
+        audioClip = new Sound(filename + '.mp3', Sound.MAIN_BUNDLE, (error) => {
+          if (error) {
+            console.log('failed to load the sound ' + filename, error);
+            return;
+          }
+          // loaded successfully
+          console.log('file ' + filename + ' loaded');
+          audioClip.setCategory('Playback');
+        });
+
+        //console.log('theAnswer: ' + JSON.stringify(note.Answer));
+
+        //console.log('note: ' + JSON.stringify(note));
+
+        newQuestions.push(note);
+      });
+    });
+
+    //newQuestions = shuffle(newQuestions);
+
+    //return;
+
+    setCurrentQuestionInd(0);
+    setCurrentAnswer('');
+    setCorrectAnswers(0);
+    setQuestionList(newQuestions);
+    setAnswerList([]);
+    populateAnswers(questions, 0);
+
+    setQuizStarted(true);
+    setRestarted(false);
+    setQuizFinished(false);
+
+    console.log('newQuestions: ' + JSON.stringify(newQuestions));
+
+    //if (level > 1) {
+    var newTracks = [];
+
+    newQuestions.map((question) => {
+      var ob = {
+        file: question.file.toLowerCase() + '.mp3',
+      };
+
+      newTracks.push(ob);
+    });
+
+    setTrackFile(newTracks[0].file);
+
+    console.log('file: ' + newTracks[0].file);
+    console.log('newTracks length triads: ' + newTracks.length);
+
+    audioClip = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound ' + newTracks[0].file, error);
+        return;
+      }
+
+      // loaded successfully
+      console.log(
+        'duration in seconds: ' +
+          audioClip.getDuration() +
+          ' number of channels: ' +
+          audioClip.getNumberOfChannels(),
+      );
+
+      setTrackInfo({position: 0, duration: audioClip.getDuration()});
+
+      //audioClip.play();
+    });
+
+    setCurrentTrack({
+      name: newQuestions[0].file,
+    });
+
+    console.log('newTracks: ' + JSON.stringify(newTracks));
+    //}
+
+    setCanPlay(true);
+
+    //console.log('questions: ' + JSON.stringify(questions));
+
+    var question = newQuestions[0];
+
+    console.log('question: ' + JSON.stringify(question));
+    console.log('theAnswer: ' + JSON.stringify(question.Answer));
+  };
+
+  const playClip = () => {
+    if (!isPlaying) {
+      audioClip.play((success) => {});
+    }
+
+    setTimeout(() => {
+      audioClip.stop(() => {});
+      setIsActive(false);
+      setIsPlaying(false);
+      setSliderValue(0);
+      setCanPlay(true);
+      nextQuestionDebugAudio();
+      setAnswerState('#E2E7ED');
+    }, 2000);
+  };
+
+  const nextQuestionDebugAudio = () => {
+    var currentQuestion1 = currentQuestionInd;
+
+    setSelectionColors([
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+    ]);
+
+    //onsole.log('questionList.length: ' + questionList.length);
+
+    if (currentQuestion1 < questionList.length - 1) {
+      currentQuestion1 += 1;
+
+      console.log('currentQuestion1: ' + currentQuestion1);
+
+      setCurrentTrack({
+        name: questionList[currentQuestion1].file,
+        id: currentQuestion1.toString(),
+      });
+
+      var filename = questionList[currentQuestion1].file.toLowerCase() + '.mp3';
+
+      setCurrentQuestionInd(currentQuestion1);
+      populateAnswers(questionList, currentQuestion1);
+
+      audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+          console.log('failed to load the sound ' + filename, error);
+          return;
+        }
+        // loaded successfully
+        console.log('file ' + filename + ' loaded');
+        audioClip.setCategory('Playback');
+
+        setTimeout(() => {
+          playClip();
+        }, 1000);
+      });
+    } else {
+      console.log('set quiz finished');
+      setisQuizTimerActive(false);
+      setQuizFinished(true);
+      setQuizStarted(false);
+    }
+  };
+
   const onButtonPressed = () => {
     if (!isPlaying) {
-      audioClip.play();
+      //audioClip.play();
+
+      audioClip.play((success) => {
+        if (success) {
+          console.log('successfully finished playing');
+          setIsActive(false);
+
+          setIsPlaying(false);
+          setSliderValue(0);
+        }
+      });
+
       setIsActive(true);
       setIsPlaying(true);
     } else {
@@ -457,12 +742,14 @@ const TraidsLevels = ({level, mode, props}) => {
 
     setCanAnswer(false);
     setCanCheck(false);
+    setCanPlay(false);
 
     stopAudio();
 
     setTimeout(() => {
       setCurrentAnswer(null);
       setCanCheck(true);
+      setCanPlay(true);
       nextQuestion();
       setAnswerState('#E2E7ED');
     }, 2000);
@@ -729,7 +1016,7 @@ const TraidsLevels = ({level, mode, props}) => {
 
     setisQuizTimerActive(true);
 
-    var questions1;
+    var questions1 = [];
 
     if (level > 4) {
       if (level == 10) {
@@ -894,6 +1181,8 @@ const TraidsLevels = ({level, mode, props}) => {
     console.log('newTracks: ' + JSON.stringify(newTracks));
     //}
 
+    setCanPlay(true);
+
     //console.log('questions: ' + JSON.stringify(questions));
 
     var question = newQuestions[0];
@@ -1018,6 +1307,7 @@ const TraidsLevels = ({level, mode, props}) => {
                     height: 50,
                   }}>
                   <TouchableOpacity
+                    disabled={!canPlay}
                     onPress={onButtonPressed}
                     style={{marginRight: 12}}>
                     {isPlaying ? (
@@ -1050,9 +1340,11 @@ const TraidsLevels = ({level, mode, props}) => {
               contentContainerStyle={{
                 flexDirection: 'row',
                 flexWrap: 'wrap',
-                paddingLeft: 20,
-                paddingRight: 20,
+                //paddingLeft: width > 450 ? '3%' : '3%',
+                paddingLeft: '3%',
+                //paddingRight: '7%',
                 //backgroundColor: 'red',
+                width: '100%',
               }}>
               {answers
                 ? answers.map((ob, index) => {
@@ -1073,7 +1365,7 @@ const TraidsLevels = ({level, mode, props}) => {
                           flexDirection: 'row',
                           alignItems: 'center',
                           marginRight: 10,
-                          width: '47.3%',
+                          width: width > 450 ? '48%' : '47%',
                         }}>
                         <CheckBox
                           style={{paddingRight: 10}}

@@ -55,7 +55,7 @@ const shuffle = (array) => {
 // console.log('question: ' + JSON.stringify(question));
 
 var Sound = require('react-native-sound');
-var currentNote;
+var audioClip;
 
 const IntervalLevels = ({level, mode, props}) => {
   const dispatch = useDispatch();
@@ -65,6 +65,7 @@ const IntervalLevels = ({level, mode, props}) => {
   );
 
   //console.log('selectedLevel: ' + level);
+  const [canPlay, setCanPlay] = useState(false);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
@@ -139,15 +140,16 @@ const IntervalLevels = ({level, mode, props}) => {
       interval = setInterval(() => {
         //console.log('the seconds: ' + interval);
 
-        currentNote.getCurrentTime((seconds1) => {
+        audioClip.getCurrentTime((seconds1) => {
           //console.log('at ' + seconds1);
 
           setTrackInfo({
             position: seconds1,
-            duration: currentNote.getDuration(),
+            duration: audioClip.getDuration(),
           });
 
-          if (seconds1 == 0 || seconds1 > 5) {
+          //if (seconds1 == 0 || seconds1 > 5) {
+          if (seconds1 == 0) {
             stopAudio();
           }
         });
@@ -177,8 +179,19 @@ const IntervalLevels = ({level, mode, props}) => {
   const stopAudio = () => {
     setIsActive(false);
     setIsPlaying(false);
+
+    // audioClip.pause();
+    // audioClip.stop();
+
+    audioClip.stop(() => {
+      // Note: If you want to play a sound after stopping and rewinding it,
+      // it is important to call play() in a callback.
+      //whoosh.play();
+
+      console.log('stop');
+    });
+
     setSliderValue(0);
-    audioClip.stop();
   };
 
   const nextQuestion = () => {
@@ -198,7 +211,7 @@ const IntervalLevels = ({level, mode, props}) => {
         var filename =
           questionList[currentQuestion1].file.toLowerCase() + '.mp3';
 
-        currentNote = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+        audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
           if (error) {
             console.log('failed to load the sound ' + filename, error);
             return;
@@ -206,9 +219,9 @@ const IntervalLevels = ({level, mode, props}) => {
           // loaded successfully
           console.log('file ' + filename + ' loaded');
 
-          //currentNote.play();
+          //audioClip.play();
 
-          currentNote.setCategory('Playback');
+          audioClip.setCategory('Playback');
         });
       }
       setCurrentQuestionInd(currentQuestion1);
@@ -217,6 +230,7 @@ const IntervalLevels = ({level, mode, props}) => {
       console.log('set quiz finished');
       setisQuizTimerActive(false);
       setQuizFinished(true);
+      //setQuestionList([])
       setQuizStarted(false);
     }
   };
@@ -335,8 +349,8 @@ const IntervalLevels = ({level, mode, props}) => {
 
       setisQuizTimerActive(false);
 
-      if (currentNote) {
-        currentNote.release();
+      if (audioClip) {
+        audioClip.release();
       }
     },
     [],
@@ -351,11 +365,19 @@ const IntervalLevels = ({level, mode, props}) => {
 
   const onButtonPressed = () => {
     if (!isPlaying) {
-      currentNote.play();
+      audioClip.play((success) => {
+        if (success) {
+          console.log('successfully finished playing');
+          setIsActive(false);
+
+          setIsPlaying(false);
+          setSliderValue(0);
+        }
+      });
       setIsActive(true);
       setIsPlaying(true);
     } else {
-      currentNote.pause();
+      audioClip.pause();
       setIsPlaying(false);
       setIsActive(false);
     }
@@ -366,7 +388,7 @@ const IntervalLevels = ({level, mode, props}) => {
   };
 
   const slidingCompleted = async (value) => {
-    currentNote.setCurrentTime(value * trackInfo.duration);
+    audioClip.setCurrentTime(value * trackInfo.duration);
     setSliderValue(value);
     setIsSeeking(false);
   };
@@ -416,10 +438,15 @@ const IntervalLevels = ({level, mode, props}) => {
 
     setCanAnswer(false);
     setCanCheck(false);
+    setCanPlay(false);
+
+    stopAudio();
 
     setTimeout(() => {
       setCurrentAnswer(null);
       setCanCheck(true);
+      setCanPlay(true);
+
       nextQuestion();
       setAnswerState('#E2E7ED');
     }, 2000);
@@ -605,7 +632,7 @@ const IntervalLevels = ({level, mode, props}) => {
 
     setisQuizTimerActive(true);
 
-    var questions;
+    var questions = [];
 
     if (level == 1) {
       questions = shuffle(data.Interval.level1Questions);
@@ -651,7 +678,7 @@ const IntervalLevels = ({level, mode, props}) => {
 
       console.log('newTracks length interval: ' + newTracks.length);
 
-      currentNote = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
+      audioClip = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
         if (error) {
           console.log('failed to load the sound ' + newTracks[0].file, error);
           return;
@@ -659,15 +686,17 @@ const IntervalLevels = ({level, mode, props}) => {
         // loaded successfully
         console.log(
           'duration in seconds: ' +
-            currentNote.getDuration() +
+            audioClip.getDuration() +
             'number of channels: ' +
-            currentNote.getNumberOfChannels(),
+            audioClip.getNumberOfChannels(),
         );
 
-        setTrackInfo({position: 0, duration: currentNote.getDuration()});
+        setTrackInfo({position: 0, duration: audioClip.getDuration()});
 
-        //currentNote.play();
+        //audioClip.play();
       });
+
+      setCanPlay(true);
     }
 
     setCurrentTrack({
@@ -681,6 +710,88 @@ const IntervalLevels = ({level, mode, props}) => {
     console.log('question: ' + JSON.stringify(question));
     console.log('newTracks: ' + JSON.stringify(newTracks));
     console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
+  };
+
+  const debugAudio = () => {
+    console.log('debugAudio');
+
+    setisQuizTimerActive(true);
+
+    var questions = [];
+
+    if (level == 1) {
+      questions = shuffle(data.Interval.level1Questions);
+    } else if (level == 2) {
+      questions = shuffle(data.Interval.level2Questions);
+    } else if (level == 3) {
+      questions = shuffle(data.Interval.level3Questions);
+    } else if (level == 4) {
+      questions = shuffle(data.Interval.level4Questions);
+    } else if (level == 5) {
+      questions = shuffle(data.Interval.level5Questions);
+    }
+
+    //console.log('theAnswer: ' + answerInd);
+
+    console.log('interval questions: ' + JSON.stringify(questions));
+
+    setCurrentQuestionInd(0);
+    setCurrentAnswer('');
+    setCorrectAnswers(0);
+    setQuestionList(questions);
+    setAnswerList([]);
+    populateAnswers(questions, 0);
+
+    setQuizStarted(true);
+    setRestarted(false);
+    setQuizFinished(false);
+
+    if (level > 1) {
+      var newTracks = [];
+
+      questions.map((question) => {
+        // var ob = {
+        //   file: question.file.toLowerCase() + '.mp3',
+        // };
+
+        //newTracks.push(ob);
+
+        //setTrackFile(newTracks[0].file);
+
+        // console.log('file: ' + newTracks[0].file);
+        // console.log('newTracks length interval: ' + newTracks.length);
+
+        var filename = question.file.toLowerCase() + '.mp3';
+        console.log('filename: ' + filename);
+
+        audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+          if (error) {
+            console.log('failed to load the sound ' + filename, error);
+            return;
+          }
+          // loaded successfully
+          console.log('file ' + filename + ' loaded');
+          audioClip.setCategory('Playback');
+
+          //setTrackInfo({position: 0, duration: audioClip.getDuration()});
+          //audioClip.play();
+        });
+      });
+
+      //setCanPlay(true);
+    }
+
+    // setCurrentTrack({
+    //   name: questions[0].file,
+    // });
+
+    // //console.log('questions: ' + JSON.stringify(questions));
+
+    // var question = questions[0];
+
+    // console.log('question: ' + JSON.stringify(question));
+    // console.log('newTracks: ' + JSON.stringify(newTracks));
+    // console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
   };
 
   var modename;
@@ -810,6 +921,7 @@ const IntervalLevels = ({level, mode, props}) => {
                       height: 50,
                     }}>
                     <TouchableOpacity
+                      disabled={!canPlay}
                       onPress={onButtonPressed}
                       style={{marginRight: 12}}>
                       {isPlaying ? (
