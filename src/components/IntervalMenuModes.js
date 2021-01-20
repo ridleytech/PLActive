@@ -9,24 +9,11 @@ import {
 } from 'react-native';
 import Header from './Header';
 import {useSelector, useDispatch} from 'react-redux';
-import {getAccess} from '../thunks/';
-
-import videoImg from '../../images/instructions-placeholder.png';
-import lockIcon from '../../images/lock-icon.png';
-import checkIcon from '../../images/check2.png';
-
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
-const IntervalMenu = ({showLevel}) => {
-  var levels = [1, 2, 3, 4, 5];
-
-  const loggedIn = useSelector((state) => state.loggedIn);
-  const accessFeature = useSelector((state) => state.accessFeature);
+const IntervalMenuModes = ({showLevel}) => {
+  var modes = ['Broken', 'Blocked'];
   const dispatch = useDispatch();
-
-  const highestCompletedIntervalBrokenLevel = useSelector(
-    (state) => state.highestCompletedIntervalBrokenLevel,
-  );
 
   const opacity = useState(new Animated.Value(0))[0];
 
@@ -36,9 +23,10 @@ const IntervalMenu = ({showLevel}) => {
     useNativeDriver: false,
   }).start();
 
-  // useEffect(() => {
-  //   dispatch(getAccess());
-  // }, []);
+  showLevels = (mode) => {
+    console.log('show Interval mode: ' + mode);
+    dispatch({type: 'SET_INTERVAL_MODE', mode: mode});
+  };
 
   const listItem = (level) => {
     console.log('level: ' + JSON.stringify(level.item));
@@ -79,6 +67,36 @@ const IntervalMenu = ({showLevel}) => {
           }}>
           Interval Training
         </Text>
+
+        <View
+          style={{
+            marginTop: 10,
+            display: 'flex',
+            //flexDirection: 'row',
+            //backgroundColor: 'yellow',
+          }}>
+          <Text>Select your mode of exercise below.</Text>
+          <Text
+            style={{
+              marginTop: 10,
+              display: 'flex',
+              //flexDirection: 'row',
+              //backgroundColor: 'yellow',
+            }}>
+            Both the Blocked and Broken mode must be completed for this Program
+            to be marked as completed.
+          </Text>
+          <Text
+            style={{
+              color: 'red',
+              fontWeight: 'bold',
+              fontSize: 13,
+              marginTop: 5,
+            }}>
+            We Recommend doing the broken chords first.
+          </Text>
+        </View>
+
         {/* <Image source={videoImg} style={styles.video} /> */}
         <Animated.View style={{marginTop: 30, opacity: opacity}}>
           <View
@@ -108,13 +126,12 @@ const IntervalMenu = ({showLevel}) => {
           /> */}
 
           <ScrollView style={{height: '100%'}}>
-            {levels.map((level, index) => {
+            {modes.map((level, index) => {
               return (
                 <>
                   <TouchableOpacity
-                    //disabled={index > highestCompletedIntervalBrokenLevel ? true : false}
                     onPress={() => {
-                      showLevel(level);
+                      showLevels(index + 1);
                     }}
                     key={index}>
                     <View
@@ -130,31 +147,9 @@ const IntervalMenu = ({showLevel}) => {
                           padding: 20,
                           textAlign: 'center',
                         }}>
-                        Level {level}
+                        {level}
                       </Text>
                     </View>
-
-                    {!loggedIn && accessFeature == 2 ? (
-                      <Image
-                        source={
-                          index < highestCompletedIntervalBrokenLevel
-                            ? checkIcon
-                            : index > 0
-                            ? lockIcon
-                            : null
-                        }
-                        style={{position: 'absolute', right: 12, top: 12}}
-                      />
-                    ) : (
-                      <Image
-                        source={
-                          index < highestCompletedIntervalBrokenLevel
-                            ? checkIcon
-                            : null
-                        }
-                        style={{position: 'absolute', right: 12, top: 12}}
-                      />
-                    )}
                   </TouchableOpacity>
                 </>
               );
@@ -167,15 +162,4 @@ const IntervalMenu = ({showLevel}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  list: {
-    fontSize: 14,
-    fontFamily: 'Helvetica Neue',
-    marginBottom: 8,
-  },
-  listItem: {display: 'flex', flexDirection: 'row'},
-  video: {marginTop: 20, width: '100%'},
-  check: {marginRight: 8},
-});
-
-export default IntervalMenu;
+export default IntervalMenuModes;

@@ -15,13 +15,16 @@ import Header from './Header';
 import MainMenu from './MainMenu';
 import PitchMenu from './PitchMenu';
 import SignIn from './Auth/SignIn';
-import IntervalMenu from './IntervalMenu';
+//import IntervalMenu from './IntervalMenu';
 import {
   setLevel,
   setMode,
-  setIntervalProgress,
+  setIntervalBrokenProgress,
+  setIntervalBlockedProgress,
   setPitchProgress,
   setTriadsProgress,
+  setTriadsBrokenProgress,
+  setTriadsBlockedProgress,
   manageGraph,
   login,
   showLogin,
@@ -37,6 +40,8 @@ import {
   saveProgress,
 } from '../thunks/';
 import IntervalLevels from './IntervalLevels';
+import IntervalMenuModes from './IntervalMenuModes';
+import IntervalMenuLevels from './IntervalMenuLevels';
 import PitchLevels from './PitchLevels';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Footer from './Footer';
@@ -81,20 +86,44 @@ class Home extends Component<Props> {
     }
 
     try {
-      var value2 = await AsyncStorage.getItem('highestCompletedIntervalLevel');
+      var value2 = await AsyncStorage.getItem(
+        'highestCompletedIntervalBrokenLevel',
+      );
 
       if (value2 !== null) {
         // We have data!!
-        console.log(`highestCompletedIntervalLevel: ${value2}`);
+        console.log(`highestCompletedIntervalBrokenLevel: ${value2}`);
       } else {
         //console.log('save default interval data');
 
         value2 = 0;
-        this.storeIntervalData(value2);
+        this.storeIntervalDataBroken(value2);
       }
 
-      this.props.setIntervalProgress({
-        highestCompletedIntervalLevel: value2,
+      this.props.setIntervalBrokenProgress({
+        highestCompletedIntervalBrokenLevel: value2,
+      });
+    } catch (error) {
+      // Error retrieving data
+    }
+
+    try {
+      var value2 = await AsyncStorage.getItem(
+        'highestCompletedIntervalBlockedLevel',
+      );
+
+      if (value2 !== null) {
+        // We have data!!
+        console.log(`highestCompletedIntervalBlockedLevel: ${value2}`);
+      } else {
+        //console.log('save default interval data');
+
+        value2 = 0;
+        this.storeIntervalDataBroken(value2);
+      }
+
+      this.props.setIntervalBlockedProgress({
+        highestCompletedIntervalBlockedLevel: value2,
       });
     } catch (error) {
       // Error retrieving data
@@ -146,7 +175,7 @@ class Home extends Component<Props> {
 
     //reset progress data
     // this.storePitchData();
-    // this.storeIntervalData();
+    // this.storeIntervalDataBroken();
   };
 
   storeNewAppUserData = async () => {
@@ -171,13 +200,25 @@ class Home extends Component<Props> {
     }
   };
 
-  storeIntervalData = async (val) => {
+  storeIntervalDataBroken = async (val) => {
     try {
       await AsyncStorage.setItem(
-        'highestCompletedIntervalLevel',
+        'highestCompletedIntervalBrokenLevel',
         val.toString(),
       );
-      console.log('interval saved storage: ' + val);
+      console.log('interval broken saved storage: ' + val);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  storeIntervalDataBlocked = async (val) => {
+    try {
+      await AsyncStorage.setItem(
+        'highestCompletedIntervalBlockedLevel',
+        val.toString(),
+      );
+      console.log('interval blocked saved storage: ' + val);
     } catch (error) {
       // Error saving data
     }
@@ -317,7 +358,7 @@ class Home extends Component<Props> {
             //   console.log('cant delete 2');
             // }
           } else {
-            console.log('save default interval data new user');
+            console.log('save default data new user');
 
             this.storeNewAppUserData();
           }
@@ -441,8 +482,12 @@ class Home extends Component<Props> {
       console.log('hasProgress changed');
 
       this.storePitchData(this.props.highestCompletedPitchLevel.toString());
-      this.storeIntervalData(
-        this.props.highestCompletedIntervalLevel.toString(),
+      this.storeIntervalDataBroken(
+        this.props.highestCompletedIntervalBrokenLevel.toString(),
+      );
+
+      this.storeIntervalDataBlocked(
+        this.props.highestCompletedIntervalBlockedLevel.toString(),
       );
     }
   }
@@ -450,7 +495,7 @@ class Home extends Component<Props> {
   componentDidMount() {
     //start debug
     // this.props.setIntervalProgress({
-    //   highestCompletedIntervalLevel: 5,
+    //   highestCompletedIntervalBrokenLevel: 5,
     // });
 
     // this.props.setPitchProgress({
@@ -574,11 +619,11 @@ class Home extends Component<Props> {
           return;
         }
       } else if (this.props.mode == 2) {
-        if (level - 1 > this.props.highestCompletedIntervalLevel) {
+        if (level - 1 > this.props.highestCompletedIntervalBrokenLevel) {
           Alert.alert(
             null,
             `Complete level ${
-              this.props.highestCompletedIntervalLevel + 1
+              this.props.highestCompletedIntervalBrokenLevel + 1
             } to proceed`,
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
@@ -635,8 +680,12 @@ class Home extends Component<Props> {
             mode={this.props.mode}
             props={this.props}
           />
+        ) : this.props.mode == 2 &&
+          this.props.level == 0 &&
+          this.props.intervalmode == 0 ? (
+          <IntervalMenuModes showLevel={this.showLevel} />
         ) : this.props.mode == 2 && this.props.level == 0 ? (
-          <IntervalMenu showLevel={this.showLevel} />
+          <IntervalMenuLevels showLevel={this.showLevel} />
         ) : this.props.mode == 2 && this.props.level > 0 ? (
           <IntervalLevels
             level={this.props.level}
@@ -678,8 +727,12 @@ const mapStateToProps = (state) => {
     level: state.level,
     mode: state.mode,
     triadmode: state.triadmode,
+    intervalmode: state.intervalmode,
     highestCompletedPitchLevel: state.highestCompletedPitchLevel,
-    highestCompletedIntervalLevel: state.highestCompletedIntervalLevel,
+    highestCompletedIntervalBrokenLevel:
+      state.highestCompletedIntervalBrokenLevel,
+    highestCompletedIntervalBlockedLevel:
+      state.highestCompletedIntervalBlockedLevel,
     highestCompletedTriadsLevel: state.highestCompletedTriadsLevel,
     graphStarted: state.graphStarted,
     loggedIn: state.loggedIn,
@@ -698,7 +751,10 @@ export default connect(mapStateToProps, {
   setLevel,
   setMode,
   setPitchProgress,
-  setIntervalProgress,
+  setIntervalBrokenProgress,
+  setIntervalBlockedProgress,
+  setTriadsBrokenProgress,
+  setTriadsBlockedProgress,
   setTriadsProgress,
   getProgressData,
   manageGraph,

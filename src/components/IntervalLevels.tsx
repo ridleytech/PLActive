@@ -60,8 +60,14 @@ var audioClip;
 const IntervalLevels = ({level, mode, props}) => {
   const dispatch = useDispatch();
   const accessFeature = useSelector((state) => state.accessFeature);
-  const highestCompletedIntervalLevel = useSelector(
-    (state) => state.highestCompletedIntervalLevel,
+  const intervalmode = useSelector((state) => state.intervalmode);
+
+  const highestCompletedIntervalBrokenLevel = useSelector(
+    (state) => state.highestCompletedIntervalBrokenLevel,
+  );
+
+  const highestCompletedIntervalBlockedLevel = useSelector(
+    (state) => state.highestCompletedIntervalBlockedLevel,
   );
 
   //console.log('selectedLevel: ' + level);
@@ -211,6 +217,8 @@ const IntervalLevels = ({level, mode, props}) => {
         var filename =
           questionList[currentQuestion1].file.toLowerCase() + '.mp3';
 
+        console.log('filename next: ' + filename);
+
         audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
           if (error) {
             console.log('failed to load the sound ' + filename, error);
@@ -304,10 +312,17 @@ const IntervalLevels = ({level, mode, props}) => {
       if (per >= passScore) {
         console.log('store data');
 
-        dispatch({
-          type: 'SET_INTERVAL_PROGRESS',
-          level: {highestCompletedIntervalLevel: level.toString()},
-        });
+        if (intervalmode == 1) {
+          dispatch({
+            type: 'SET_INTERVAL_BROKEN_PROGRESS',
+            level: {highestCompletedIntervalBrokenLevel: level.toString()},
+          });
+        } else {
+          dispatch({
+            type: 'SET_INTERVAL_BLOCKED_PROGRESS',
+            level: {highestCompletedIntervalBlockedLevel: level.toString()},
+          });
+        }
 
         if (!loggedIn) {
           console.log('quiz finished not logged in');
@@ -457,7 +472,7 @@ const IntervalLevels = ({level, mode, props}) => {
 
     dispatch({
       type: 'SET_INTERVAL_PROGRESS',
-      level: {highestCompletedIntervalLevel: level.toString()},
+      level: {highestCompletedIntervalBrokenLevel: level.toString()},
     });
 
     setCorrectAnswers(12);
@@ -556,24 +571,46 @@ const IntervalLevels = ({level, mode, props}) => {
   };
 
   const storeData = async (level) => {
-    console.log(`highestCompletedIntervalLevel: ${level}`);
+    if (intervalmode == 1) {
+      console.log(`highestCompletedIntervalBrokenLevel: ${level}`);
 
-    if (level < highestCompletedIntervalLevel) {
-      console.log('less than highest level. stop save');
-      return;
-    }
+      if (level < highestCompletedIntervalBrokenLevel) {
+        console.log('less than highest level. stop save');
+        return;
+      }
 
-    try {
-      console.log('try to save highestCompletedIntervalLevel');
-      await AsyncStorage.setItem(
-        'highestCompletedIntervalLevel',
-        level.toString(),
-      );
+      try {
+        console.log('try to save highestCompletedIntervalBrokenLevel');
+        await AsyncStorage.setItem(
+          'highestCompletedIntervalBrokenLevel',
+          level.toString(),
+        );
 
-      console.log('highestCompletedIntervalLevel saved');
-    } catch (error) {
-      console.log('highestCompletedIntervalLevel not saved');
-      // Error saving data
+        console.log('highestCompletedIntervalBrokenLevel saved');
+      } catch (error) {
+        console.log('highestCompletedIntervalBrokenLevel not saved');
+        // Error saving data
+      }
+    } else {
+      console.log(`highestCompletedIntervalBlockedLevel: ${level}`);
+
+      if (level < highestCompletedIntervalBlockedLevel) {
+        console.log('less than highest level. stop save');
+        return;
+      }
+
+      try {
+        console.log('try to save highestCompletedIntervalBlockedLevel');
+        await AsyncStorage.setItem(
+          'highestCompletedIntervalBlockedLevel',
+          level.toString(),
+        );
+
+        console.log('highestCompletedIntervalBlockedLevel saved');
+      } catch (error) {
+        console.log('highestCompletedIntervalBlockedLevel not saved');
+        // Error saving data
+      }
     }
   };
 
@@ -648,12 +685,12 @@ const IntervalLevels = ({level, mode, props}) => {
 
     //console.log('theAnswer: ' + answerInd);
 
-    console.log('interval questions: ' + JSON.stringify(questions));
+    //console.log('interval questions: ' + JSON.stringify(questions));
 
     setCurrentQuestionInd(0);
     setCurrentAnswer('');
     setCorrectAnswers(0);
-    setQuestionList(questions);
+    //setQuestionList(questions);
     setAnswerList([]);
     populateAnswers(questions, 0);
 
@@ -664,13 +701,27 @@ const IntervalLevels = ({level, mode, props}) => {
     if (level > 1) {
       var newTracks = [];
 
+      var chordSequence = 'blocked';
+
+      if (intervalmode == 1) {
+        chordSequence = 'broken';
+      }
+
       questions.map((question) => {
+        var filename = question.file.toLowerCase() + chordSequence;
+
+        console.log('filename: ' + filename);
+
         var ob = {
-          file: question.file.toLowerCase() + '.mp3',
+          file: filename + '.mp3',
         };
+
+        question.file = filename;
 
         newTracks.push(ob);
       });
+
+      console.log('interval questions2: ' + JSON.stringify(questions));
 
       setTrackFile(newTracks[0].file);
 
@@ -697,18 +748,21 @@ const IntervalLevels = ({level, mode, props}) => {
       });
 
       setCanPlay(true);
+
+      setCurrentTrack({
+        name: questions[0].file,
+      });
+
+      console.log('newTracks: ' + JSON.stringify(newTracks));
     }
 
-    setCurrentTrack({
-      name: questions[0].file,
-    });
+    setQuestionList(questions);
 
     //console.log('questions: ' + JSON.stringify(questions));
 
     var question = questions[0];
 
     console.log('question: ' + JSON.stringify(question));
-    console.log('newTracks: ' + JSON.stringify(newTracks));
     console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
   };
 

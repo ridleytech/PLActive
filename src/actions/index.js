@@ -19,6 +19,13 @@ export const setTriadMode = (mode) => {
   };
 };
 
+export const setIntervalMode = (mode) => {
+  return {
+    type: 'SET_INTERVAL_MODE',
+    mode: mode,
+  };
+};
+
 export const manageGraph = (status) => {
   return {
     type: 'MANAGE_GRAPH',
@@ -54,10 +61,18 @@ export const setPitchProgress = (level) => {
   };
 };
 
-export const setIntervalProgress = (level) => {
+export const setIntervalProgressBlocked = (level) => {
   //console.log(`si: ${JSON.stringify(level)}`);
   return {
-    type: 'SET_INTERVAL_PROGRESS',
+    type: 'SET_INTERVAL_BLOCKED_PROGRESS',
+    level: level,
+  };
+};
+
+export const setIntervalProgressBroken = (level) => {
+  //console.log(`si: ${JSON.stringify(level)}`);
+  return {
+    type: 'SET_INTERVAL_BROKEN_PROGRESS',
     level: level,
   };
 };

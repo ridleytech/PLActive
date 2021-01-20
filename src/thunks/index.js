@@ -4,7 +4,7 @@ export const getProgressData = () => (dispatch, getState) => {
 
   console.log('get progress:' + url + 'get-progress.php ' + username);
 
-  fetch(url + 'get-progress.php', {
+  fetch(url + 'get-progress3.php', {
     method: 'POST',
     body: JSON.stringify({
       username: username,
@@ -124,7 +124,7 @@ export const saveTestScore = (score, duration) => (dispatch, getState) => {
 };
 
 export const saveProgress = () => (dispatch, getState) => {
-  let highestInterval = getState().highestCompletedIntervalLevel;
+  let highestInterval = getState().highestCompletedIntervalBrokenLevel;
   let highestPitch = getState().highestCompletedPitchLevel;
   let highestlevelcompletedblocked = getState()
     .highestCompletedTriadsBlockedLevel;
@@ -214,7 +214,7 @@ export const userAuth = (username) => (dispatch, getState) => {
   let url = getState().url;
   let deviceUsername = getState().deviceUsername;
   let username = getState().username;
-  let highestInterval = getState().highestCompletedIntervalLevel;
+  let highestInterval = getState().highestCompletedIntervalBrokenLevel;
   let highestPitch = getState().highestCompletedPitchLevel;
 
   fetch(url + 'user-auth.php', {

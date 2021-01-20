@@ -67,9 +67,9 @@ class Logout extends Component<Props> {
 
   deleteInterval = async () => {
     try {
-      await AsyncStorage.removeItem('highestCompletedIntervalLevel');
+      await AsyncStorage.removeItem('highestCompletedIntervalBrokenLevel');
 
-      console.log('highestCompletedIntervalLevel deleted');
+      console.log('highestCompletedIntervalBrokenLevel deleted');
     } catch (error) {
       // Error saving data
     }

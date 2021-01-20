@@ -19,7 +19,9 @@ const inititalState = {
   triadmode: 0,
   previousMode: null,
   userid: null,
-  highestCompletedIntervalLevel: 0,
+  intervalmode: 0,
+  highestCompletedIntervalBrokenLevel: 0,
+  highestCompletedIntervalBlockedLevel: 0,
   highestCompletedPitchLevel: 0,
   //highestCompletedTriadsLevel: 0,
   highestCompletedTriadsBlockedLevel: 0,
@@ -39,7 +41,7 @@ const inititalState = {
   leaderData: [],
   url: url,
   accessFeature: 0,
-  currentVersion: 1.02,
+  currentVersion: 1.04,
   latestVersion: null,
   hasProgress: null,
   loginErrorMsg: '',
@@ -266,7 +268,8 @@ export default (state = inititalState, action) => {
 
       return {
         ...state,
-        highestCompletedIntervalLevel: parseInt(progressData.ihi),
+        highestCompletedIntervalBrokenLevel: parseInt(progressData.ibrhi),
+        highestCompletedIntervalBlockedLevel: parseInt(progressData.iblhi),
         highestCompletedPitchLevel: parseInt(progressData.phi),
         //highestCompletedTriadsLevel: parseInt(progressData.thi),
         highestCompletedTriadsBlockedLevel: parseInt(progressData.tblhi),
@@ -312,19 +315,38 @@ export default (state = inititalState, action) => {
         highestCompletedPitchLevel: levelVal,
       };
 
-    case 'SET_INTERVAL_PROGRESS':
+    case 'SET_INTERVAL_BROKEN_PROGRESS':
       //console.log('action: ' + JSON.stringify(action));
 
-      var completedLevel = parseInt(action.level.highestCompletedIntervalLevel);
-      var levelVal = state.highestCompletedIntervalLevel;
+      var completedLevel = parseInt(
+        action.level.highestCompletedIntervalBrokenLevel,
+      );
+      var levelVal = state.highestCompletedIntervalBrokenLevel;
 
-      if (completedLevel > state.highestCompletedIntervalLevel) {
+      if (completedLevel > state.highestCompletedIntervalBrokenLevel) {
         levelVal = completedLevel;
       }
 
       return {
         ...state,
-        highestCompletedIntervalLevel: levelVal,
+        highestCompletedIntervalBrokenLevel: levelVal,
+      };
+
+    case 'SET_INTERVAL_BLOCKED_PROGRESS':
+      //console.log('action: ' + JSON.stringify(action));
+
+      var completedLevel = parseInt(
+        action.level.highestCompletedIntervalBlockedLevel,
+      );
+      var levelVal = state.highestCompletedIntervalBlockedLevel;
+
+      if (completedLevel > state.highestCompletedIntervalBlockedLevel) {
+        levelVal = completedLevel;
+      }
+
+      return {
+        ...state,
+        highestCompletedIntervalBlockedLevel: levelVal,
       };
 
     // case 'SET_TRIADS_PROGRESS':
@@ -383,7 +405,8 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         highestCompletedPitchLevel: 0,
-        highestCompletedIntervalLevel: 0,
+        highestCompletedIntervalBlockedLevel: 0,
+        highestCompletedIntervalBrokenLevel: 0,
         highestCompletedTriadsLevelBlocked: 0,
         highestCompletedTriadsLevelBroken: 0,
       };
@@ -404,6 +427,12 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         triadmode: action.mode,
+      };
+
+    case 'SET_INTERVAL_MODE':
+      return {
+        ...state,
+        intervalmode: action.mode,
       };
 
     case 'PROGRESS_SAVED':

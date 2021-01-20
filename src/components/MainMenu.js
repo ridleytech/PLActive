@@ -29,8 +29,11 @@ const MainMenu = ({setMode}) => {
   const highestCompletedPitchLevel = useSelector(
     (state) => state.highestCompletedPitchLevel,
   );
-  const highestCompletedIntervalLevel = useSelector(
-    (state) => state.highestCompletedIntervalLevel,
+  const highestCompletedIntervalBrokenLevel = useSelector(
+    (state) => state.highestCompletedIntervalBrokenLevel,
+  );
+  const highestCompletedIntervalBlockedLevel = useSelector(
+    (state) => state.highestCompletedIntervalBlockedLevel,
   );
   const highestCompletedTriadsBlockedLevel = useSelector(
     (state) => state.highestCompletedTriadsBlockedLevel,
@@ -156,7 +159,10 @@ const MainMenu = ({setMode}) => {
                   icon = checkIcon;
                 }
               } else if (index == 1) {
-                if (highestCompletedIntervalLevel < 5) {
+                if (
+                  highestCompletedIntervalBrokenLevel < 5 ||
+                  highestCompletedIntervalBlockedLevel < 5
+                ) {
                   icon = null;
                 } else {
                   icon = checkIcon;

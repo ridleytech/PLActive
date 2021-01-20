@@ -9,24 +9,11 @@ import {
 } from 'react-native';
 import Header from './Header';
 import {useSelector, useDispatch} from 'react-redux';
-import {getAccess} from '../thunks/';
-
-import videoImg from '../../images/instructions-placeholder.png';
-import lockIcon from '../../images/lock-icon.png';
-import checkIcon from '../../images/check2.png';
-
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
 const TriadsMenuModes = ({showLevel}) => {
   var modes = ['Broken', 'Blocked'];
-
-  const loggedIn = useSelector((state) => state.loggedIn);
-  const accessFeature = useSelector((state) => state.accessFeature);
   const dispatch = useDispatch();
-
-  const highestCompletedTriadsLevel = useSelector(
-    (state) => state.highestCompletedTriadsLevel,
-  );
 
   const opacity = useState(new Animated.Value(0))[0];
 
@@ -40,10 +27,6 @@ const TriadsMenuModes = ({showLevel}) => {
     console.log('show triads mode: ' + mode);
     dispatch({type: 'SET_TRIAD_MODE', mode: mode});
   };
-
-  // useEffect(() => {
-  //   dispatch(getAccess());
-  // }, []);
 
   const listItem = (level) => {
     console.log('level: ' + JSON.stringify(level.item));
@@ -147,7 +130,6 @@ const TriadsMenuModes = ({showLevel}) => {
               return (
                 <>
                   <TouchableOpacity
-                    //disabled={index > highestCompletedTriadsLevel ? true : false}
                     onPress={() => {
                       showLevels(index + 1);
                     }}
@@ -168,26 +150,6 @@ const TriadsMenuModes = ({showLevel}) => {
                         {level}
                       </Text>
                     </View>
-
-                    {/* {!loggedIn && accessFeature == 2 ? (
-                      <Image
-                        source={
-                          index < highestCompletedTriadsLevel
-                            ? checkIcon
-                            : index > 0
-                            ? lockIcon
-                            : null
-                        }
-                        style={{position: 'absolute', right: 12, top: 12}}
-                      />
-                    ) : (
-                      <Image
-                        source={
-                          index < highestCompletedTriadsLevel ? checkIcon : null
-                        }
-                        style={{position: 'absolute', right: 12, top: 12}}
-                      />
-                    )} */}
                   </TouchableOpacity>
                 </>
               );
