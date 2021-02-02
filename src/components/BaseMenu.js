@@ -6,67 +6,39 @@ import {
   StyleSheet,
   Image,
   Animated,
-  Linking,
 } from 'react-native';
 import Header from './Header';
-import Hyperlink from 'react-native-hyperlink';
 import {useSelector, useDispatch} from 'react-redux';
+import {getAccess} from '../thunks/';
 
 import videoImg from '../../images/instructions-placeholder.png';
+import lockIcon from '../../images/lock-icon.png';
 import checkIcon from '../../images/check2.png';
 
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
-import * as Sentry from '@sentry/react-native';
 
-const MainMenu = ({setMode}) => {
-  var levels = [
-    'Pitch Recognition',
-    'Interval Training',
-    'Triads and Sevenths',
-    'Bassline Training',
-  ];
+const BaseMenu = ({showLevel}) => {
+  var levels = [1, 2, 3, 4];
 
   const loggedIn = useSelector((state) => state.loggedIn);
   const accessFeature = useSelector((state) => state.accessFeature);
-  const highestCompletedPitchLevel = useSelector(
-    (state) => state.highestCompletedPitchLevel,
-  );
-  const highestCompletedIntervalBrokenLevel = useSelector(
-    (state) => state.highestCompletedIntervalBrokenLevel,
-  );
-  const highestCompletedIntervalBlockedLevel = useSelector(
-    (state) => state.highestCompletedIntervalBlockedLevel,
-  );
-  const highestCompletedTriadsBlockedLevel = useSelector(
-    (state) => state.highestCompletedTriadsBlockedLevel,
-  );
-  const highestCompletedTriadsBrokenLevel = useSelector(
-    (state) => state.highestCompletedTriadsBrokenLevel,
-  );
+  const dispatch = useDispatch();
+
   const highestCompletedBaselineBrokenLevel = useSelector(
     (state) => state.highestCompletedBaselineBrokenLevel,
   );
 
   const opacity = useState(new Animated.Value(0))[0];
 
-  useEffect(() => {
-    console.log('main menu load');
-
-    //Sentry.nativeCrash();
-    //throw new Error('My first Sentry error RR!');
-
-    // Sentry.captureMessage('TEST message on crash');
-    // Sentry.nativeCrash();
-
-    // var eventId = Sentry.captureException(new Error('Testing 2'));
-    // console.log('test errorID: ' + eventId);
-  }, []);
-
   Animated.timing(opacity, {
     toValue: 1,
     duration: 500,
     useNativeDriver: false,
   }).start();
+
+  // useEffect(() => {
+  //   dispatch(getAccess());
+  // }, []);
 
   const listItem = (level) => {
     console.log('level: ' + JSON.stringify(level.item));
@@ -90,19 +62,6 @@ const MainMenu = ({setMode}) => {
     );
   };
 
-  viewCourse = () => {
-    let url =
-      'https://pianolessonwithwarren.com/courses/the-ear-training-regimen-for-beginners-and-intermediates/';
-
-    Linking.canOpenURL(url).then((supported) => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log("Don't know how to open URI: " + url);
-      }
-    });
-  };
-
   return (
     <>
       <View
@@ -118,26 +77,8 @@ const MainMenu = ({setMode}) => {
             fontWeight: 'bold',
             color: '#3AB24A',
           }}>
-          Active Ear Programs
+          Baseline Training
         </Text>
-
-        <View
-          style={{
-            marginTop: 10,
-            display: 'flex',
-            //flexDirection: 'row',
-            //backgroundColor: 'yellow',
-          }}>
-          <Hyperlink
-            linkDefault
-            linkStyle={{color: '#3AB24A', fontSize: 15}}
-            linkText="Click here">
-            <Text style={{fontSize: 15}}>
-              For More Detail on these exercises, visit the full course
-              https://pianolessonwithwarren.com/courses/the-ear-training-regimen-for-beginners-and-intermediates/.
-            </Text>
-          </Hyperlink>
-        </View>
         {/* <Image source={videoImg} style={styles.video} /> */}
         <Animated.View style={{marginTop: 30, opacity: opacity}}>
           <View
@@ -155,7 +96,7 @@ const MainMenu = ({setMode}) => {
                 padding: 20,
                 textAlign: 'center',
               }}>
-              Choose Program
+              Choose Level
             </Text>
           </View>
 
@@ -168,44 +109,11 @@ const MainMenu = ({setMode}) => {
 
           <ScrollView style={{height: '100%'}}>
             {levels.map((level, index) => {
-              var icon;
-
-              if (index == 0) {
-                if (highestCompletedPitchLevel < 3) {
-                  icon = null;
-                } else {
-                  icon = checkIcon;
-                }
-              } else if (index == 1) {
-                if (
-                  highestCompletedIntervalBrokenLevel < 5 ||
-                  highestCompletedIntervalBlockedLevel < 5
-                ) {
-                  icon = null;
-                } else {
-                  icon = checkIcon;
-                }
-              } else if (index == 2) {
-                if (
-                  highestCompletedTriadsBlockedLevel < 10 ||
-                  highestCompletedTriadsBrokenLevel < 10
-                ) {
-                  icon = null;
-                } else {
-                  icon = checkIcon;
-                }
-              } else if (index == 3) {
-                if (highestCompletedBaselineBrokenLevel < 5) {
-                  icon = null;
-                } else {
-                  icon = checkIcon;
-                }
-              }
-
               return (
                 <TouchableOpacity
+                  //disabled={index > highestCompletedBaselineBrokenLevel ? true : false}
                   onPress={() => {
-                    setMode(index + 1);
+                    showLevel(level);
                   }}
                   key={index}>
                   <View
@@ -221,19 +129,27 @@ const MainMenu = ({setMode}) => {
                         padding: 20,
                         textAlign: 'center',
                       }}>
-                      {level}
+                      Level {level}
                     </Text>
                   </View>
 
-                  {loggedIn && accessFeature == 2 ? (
+                  {!loggedIn && accessFeature == 2 ? (
                     <Image
-                      source={icon}
+                      source={
+                        index < highestCompletedBaselineBrokenLevel
+                          ? checkIcon
+                          : index > 0
+                          ? lockIcon
+                          : null
+                      }
                       style={{position: 'absolute', right: 12, top: 12}}
                     />
                   ) : (
                     <Image
                       source={
-                        index < highestCompletedPitchLevel ? checkIcon : null
+                        index < highestCompletedBaselineBrokenLevel
+                          ? checkIcon
+                          : null
                       }
                       style={{position: 'absolute', right: 12, top: 12}}
                     />
@@ -249,4 +165,4 @@ const MainMenu = ({setMode}) => {
   );
 };
 
-export default MainMenu;
+export default BaseMenu;

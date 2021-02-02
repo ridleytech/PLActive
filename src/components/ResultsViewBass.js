@@ -9,7 +9,7 @@ import {
 
 import {useDispatch, useSelector} from 'react-redux';
 
-const ResultsViewTriads = ({
+const ResultsViewBass = ({
   correctAnswers,
   total,
   mainMenu,
@@ -39,7 +39,7 @@ const ResultsViewTriads = ({
 
   // ' + JSON.stringify(answerList));
 
-  //console.log('per: ' + per);
+  // console.log('answerList1: ' + JSON.stringify(answerList));
 
   //per = 80;
 
@@ -197,7 +197,7 @@ const ResultsViewTriads = ({
           {showStuff.show === true ? (
             <View style={{marginTop: 20}}>
               <Text style={{marginTop: 20}}>
-                Identify the quality of the chord.
+                Fill in the rest of the notes in the progression.
               </Text>
 
               {answerList.map((ob, index) => {
@@ -213,27 +213,14 @@ const ResultsViewTriads = ({
                       Question {index + 1}.
                     </Text>
 
-                    {ob.Answer === ob.userAnswer ? (
-                      <View
-                        style={[
-                          styles.correct,
-                          {marginTop: 10, borderRadius: 8, height: 50},
-                        ]}>
-                        <Text
-                          style={{
-                            color: 'white',
-                            fontSize: 15,
-                            fontFamily: 'Helvetica Neue',
-                            fontWeight: 'bold',
-                          }}>
-                          Correct: {ob.Answer}
-                        </Text>
-                      </View>
-                    ) : (
-                      <>
+                    {
+                      //ob.Answers.join().toLowerCase() ===
+                      //ob.userAnswer.join().toLowerCase()
+
+                      ob.isCorrect ? (
                         <View
                           style={[
-                            styles.incorrect,
+                            styles.correct,
                             {marginTop: 10, borderRadius: 8, height: 50},
                           ]}>
                           <Text
@@ -243,26 +230,44 @@ const ResultsViewTriads = ({
                               fontFamily: 'Helvetica Neue',
                               fontWeight: 'bold',
                             }}>
-                            Your Answer: {ob.userAnswer}
+                            Correct: {ob.userAnswer.join()}
                           </Text>
                         </View>
-                        <View
-                          style={[
-                            styles.correct,
-                            {marginTop: 5, borderRadius: 8, height: 50},
-                          ]}>
-                          <Text
-                            style={{
-                              color: 'white',
-                              fontSize: 15,
-                              fontFamily: 'Helvetica Neue',
-                              fontWeight: 'bold',
-                            }}>
-                            Correct Answer: {ob.Answer}
-                          </Text>
-                        </View>
-                      </>
-                    )}
+                      ) : (
+                        <>
+                          <View
+                            style={[
+                              styles.incorrect,
+                              {marginTop: 10, borderRadius: 8, height: 50},
+                            ]}>
+                            <Text
+                              style={{
+                                color: 'white',
+                                fontSize: 15,
+                                fontFamily: 'Helvetica Neue',
+                                fontWeight: 'bold',
+                              }}>
+                              Your Answer: {ob.userAnswer.join()}
+                            </Text>
+                          </View>
+                          <View
+                            style={[
+                              styles.correct,
+                              {marginTop: 5, borderRadius: 8, height: 50},
+                            ]}>
+                            <Text
+                              style={{
+                                color: 'white',
+                                fontSize: 15,
+                                fontFamily: 'Helvetica Neue',
+                                fontWeight: 'bold',
+                              }}>
+                              Correct Answer: {ob.Answers.join()}
+                            </Text>
+                          </View>
+                        </>
+                      )
+                    }
                   </View>
                 );
               })}
@@ -320,4 +325,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResultsViewTriads;
+export default ResultsViewBass;

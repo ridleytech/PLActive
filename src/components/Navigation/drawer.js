@@ -159,7 +159,7 @@ function DrawerContent(props) {
           />
         </Drawer.Section>
 
-        {accessFeature > 0 ? (
+        {loggedIn && accessFeature > 0 ? (
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
               label="LEADER BOARD"

@@ -26,6 +26,7 @@ const inititalState = {
   //highestCompletedTriadsLevel: 0,
   highestCompletedTriadsBlockedLevel: 0,
   highestCompletedTriadsBrokenLevel: 0,
+  highestCompletedBaselineBrokenLevel: 0,
   loggedIn: false,
   graphStarted: false,
   loginEnabled: true,
@@ -41,7 +42,7 @@ const inititalState = {
   leaderData: [],
   url: url,
   accessFeature: 0,
-  currentVersion: 1.04,
+  currentVersion: 1.1,
   latestVersion: null,
   hasProgress: null,
   loginErrorMsg: '',
@@ -238,7 +239,7 @@ export default (state = inititalState, action) => {
 
       return {
         ...state,
-        mode: 4,
+        mode: 5,
         previousMode: pm,
       };
 

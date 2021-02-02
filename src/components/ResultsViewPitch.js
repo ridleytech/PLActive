@@ -29,7 +29,7 @@ const ResultsViewPitch = ({
   var per = parseInt((correctAnswers / total) * 100);
 
   const viewResults = () => {
-    console.log('viewResults');
+    console.log('viewResults pitch');
     setResults({show: true});
   };
 
@@ -170,29 +170,31 @@ const ResultsViewPitch = ({
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => postLeaderboard()}
-            style={{
-              height: 60,
-              backgroundColor: '#3AB24A',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 10,
-              width: '100%',
-              maxWidth: 280,
-              marginLeft: 'auto',
-              marginRight: 'auto',
-            }}>
-            <Text
+          {per >= passScore ? (
+            <TouchableOpacity
+              onPress={() => postLeaderboard()}
               style={{
-                fontSize: 20,
-                fontFamily: 'Helvetica Neue',
-                fontWeight: 'bold',
-                color: 'white',
+                height: 60,
+                backgroundColor: '#3AB24A',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 10,
+                width: '100%',
+                maxWidth: 280,
+                marginLeft: 'auto',
+                marginRight: 'auto',
               }}>
-              Post to Leader Board
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: 'Helvetica Neue',
+                  fontWeight: 'bold',
+                  color: 'white',
+                }}>
+                Post to Leader Board
+              </Text>
+            </TouchableOpacity>
+          ) : null}
 
           {showStuff.show === true ? (
             <View style={{marginTop: 20}}>
@@ -205,7 +207,7 @@ const ResultsViewPitch = ({
 
               {answerList.map((ob, index) => {
                 return (
-                  <View key={ob}>
+                  <View key={index}>
                     <Text
                       style={{
                         marginTop: 10,
@@ -215,7 +217,10 @@ const ResultsViewPitch = ({
                       }}>
                       Question {index + 1}.
                     </Text>
-                    {ob.Answers.includes(ob.userAnswer) ? (
+                    {ob.Answers.includes(
+                      ob.userAnswer.charAt(0).toUpperCase() +
+                        ob.userAnswer.slice(1),
+                    ) ? (
                       <View
                         style={[
                           styles.correct,
@@ -260,7 +265,7 @@ const ResultsViewPitch = ({
                               fontFamily: 'Helvetica Neue',
                               fontWeight: 'bold',
                             }}>
-                            Correct Answer: {ob.file}
+                            Correct Answer: {ob.file.replace('2', '')}
                           </Text>
                         </View>
                       </>

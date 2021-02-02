@@ -151,7 +151,7 @@ const TraidsLevels = ({level, mode, props}) => {
         //console.log('the seconds: ' + interval);
 
         audioClip.getCurrentTime((seconds1) => {
-          console.log('at ' + seconds1);
+          //console.log('at ' + seconds1);
 
           setTrackInfo({
             position: seconds1,
@@ -197,8 +197,7 @@ const TraidsLevels = ({level, mode, props}) => {
       // Note: If you want to play a sound after stopping and rewinding it,
       // it is important to call play() in a callback.
       //whoosh.play();
-
-      console.log('stop');
+      //console.log('stop');
     });
 
     setSliderValue(0);
@@ -606,7 +605,7 @@ const TraidsLevels = ({level, mode, props}) => {
       setIsPlaying(false);
       setSliderValue(0);
       setCanPlay(true);
-      nextQuestionDebugAudio();
+      nextQuestion();
       setAnswerState('#E2E7ED');
     }, 2000);
   };

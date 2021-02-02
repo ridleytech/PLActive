@@ -29,7 +29,7 @@ const ResultsViewInterval = ({
   var per = parseInt((correctAnswers / total) * 100);
 
   const viewResults = () => {
-    console.log('go');
+    console.log('viewResults interval');
     setResults({show: true});
   };
 
@@ -168,29 +168,31 @@ const ResultsViewInterval = ({
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => postLeaderboard()}
-            style={{
-              height: 60,
-              backgroundColor: '#3AB24A',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 10,
-              width: '100%',
-              maxWidth: 280,
-              marginLeft: 'auto',
-              marginRight: 'auto',
-            }}>
-            <Text
+          {per >= passScore ? (
+            <TouchableOpacity
+              onPress={() => postLeaderboard()}
               style={{
-                fontSize: 20,
-                fontFamily: 'Helvetica Neue',
-                fontWeight: 'bold',
-                color: 'white',
+                height: 60,
+                backgroundColor: '#3AB24A',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 10,
+                width: '100%',
+                maxWidth: 280,
+                marginLeft: 'auto',
+                marginRight: 'auto',
               }}>
-              Post to Leader Board
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: 'Helvetica Neue',
+                  fontWeight: 'bold',
+                  color: 'white',
+                }}>
+                Post to Leader Board
+              </Text>
+            </TouchableOpacity>
+          ) : null}
 
           {showStuff.show === true ? (
             <View style={{marginTop: 20}}>
@@ -203,7 +205,7 @@ const ResultsViewInterval = ({
 
               {answerList.map((ob, index) => {
                 return (
-                  <View key={ob}>
+                  <View key={index}>
                     <Text
                       style={{
                         marginTop: 10,

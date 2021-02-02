@@ -8,12 +8,12 @@ import SplashScreen from 'react-native-splash-screen';
 
 //const store = createStore(reducers, applyMiddleware(thunk));
 
-// import * as Sentry from '@sentry/react-native';
+import * as Sentry from '@sentry/react-native';
 
-// Sentry.init({
-//   dsn:
-//     'https://8e978838f1e14f1ab77426edb43367ba@o427372.ingest.sentry.io/5371313',
-// });
+Sentry.init({
+  dsn:
+    'https://405ec551dfb843fbbb29c87007a110d4@o427372.ingest.sentry.io/5608301',
+});
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__

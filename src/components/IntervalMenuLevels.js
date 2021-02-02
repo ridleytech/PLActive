@@ -90,8 +90,8 @@ const IntervalMenuLevels = ({showLevel}) => {
         //check if blocked level is equivalent to go to next level
 
         console.log(
-          'highestCompletedIntervalBlockedLevel: ' +
-            highestCompletedIntervalBlockedLevel,
+          'highestCompletedIntervalBrokenLevel: ' +
+            highestCompletedIntervalBrokenLevel,
         );
 
         if (level - 1 > highestCompletedIntervalBrokenLevel) {
@@ -122,8 +122,8 @@ const IntervalMenuLevels = ({showLevel}) => {
         // }
       } else {
         console.log(
-          'highestCompletedIntervalBrokenLevel: ' +
-            highestCompletedIntervalBrokenLevel,
+          'highestCompletedIntervalBlockedLevel: ' +
+            highestCompletedIntervalBlockedLevel,
         );
 
         if (level - 1 > highestCompletedIntervalBlockedLevel) {

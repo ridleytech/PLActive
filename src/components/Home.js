@@ -12,9 +12,7 @@ import {
 import {connect} from 'react-redux';
 import Header from './Header';
 //import PlayerMidi from './PlayerMidi';
-import MainMenu from './MainMenu';
-import PitchMenu from './PitchMenu';
-import SignIn from './Auth/SignIn';
+
 //import IntervalMenu from './IntervalMenu';
 import {
   setLevel,
@@ -39,6 +37,9 @@ import {
   userAuth,
   saveProgress,
 } from '../thunks/';
+import MainMenu from './MainMenu';
+import PitchMenu from './PitchMenu';
+import SignIn from './Auth/SignIn';
 import IntervalLevels from './IntervalLevels';
 import IntervalMenuModes from './IntervalMenuModes';
 import IntervalMenuLevels from './IntervalMenuLevels';
@@ -48,6 +49,8 @@ import Footer from './Footer';
 import TriadsLevels from './TriadsLevels';
 import TriadsMenuModes from './TriadsMenuModes';
 import TriadsMenuLevels from './TriadsMenuLevels';
+import BaseMenu from './BaseMenu';
+import BaseLevels from './BaseLevels';
 //https://www.npmjs.com/package/react-native-check-box
 //cant update git
 
@@ -631,7 +634,7 @@ class Home extends Component<Props> {
 
           return;
         }
-      } else {
+      } else if (this.props.mode == 3) {
         if (level - 1 > this.props.highestCompletedTriadsLevel) {
           Alert.alert(
             null,
@@ -642,6 +645,18 @@ class Home extends Component<Props> {
             {cancelable: false},
           );
 
+          return;
+        }
+      } else if (this.props.mode == 4) {
+        if (level - 1 > this.props.highestCompletedBaselineBrokenLevel) {
+          Alert.alert(
+            null,
+            `Complete level ${
+              this.props.highestCompletedBaselineBrokenLevel + 1
+            } to proceed`,
+            [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+            {cancelable: false},
+          );
           return;
         }
       }
@@ -705,6 +720,14 @@ class Home extends Component<Props> {
             //triadmode={this.props.triadmode}
             props={this.props}
           />
+        ) : this.props.mode == 4 && this.props.level == 0 ? (
+          <BaseMenu showLevel={this.showLevel} />
+        ) : this.props.mode == 4 && this.props.level > 0 ? (
+          <BaseLevels
+            level={this.props.level}
+            mode={this.props.mode}
+            props={this.props}
+          />
         ) : this.props.mode == 4 ? (
           <SignIn />
         ) : null}
@@ -734,6 +757,8 @@ const mapStateToProps = (state) => {
     highestCompletedIntervalBlockedLevel:
       state.highestCompletedIntervalBlockedLevel,
     highestCompletedTriadsLevel: state.highestCompletedTriadsLevel,
+    highestCompletedBaselineBrokenLevel:
+      state.highestCompletedBaselineBrokenLevel,
     graphStarted: state.graphStarted,
     loggedIn: state.loggedIn,
     username: state.username,

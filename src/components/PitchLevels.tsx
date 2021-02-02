@@ -227,8 +227,7 @@ const PitchLevels = ({level, mode, props}) => {
       // Note: If you want to play a sound after stopping and rewinding it,
       // it is important to call play() in a callback.
       //whoosh.play();
-
-      console.log('stop');
+      //console.log('stop');
     });
 
     setSliderValue(0);

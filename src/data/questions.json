@@ -946,5 +946,238 @@
       "Minor Major 7"
     ],
     "level10PassScore": 87
+  },
+  "Bass": {
+    "Scales": ["C", "D", "E", "F", "G", "A", "B", "Eb", "Gb", "Ab", "Bb", "Db"],
+    "Question": "For the key of %, fill in the remaining missing notes.",
+    "level1Questions": [
+      {
+        "Answers": ["C", "F", "C"],
+        "file": "b11"
+      },
+      {
+        "Answers": ["C", "G", "C"],
+        "file": "b12"
+      },
+      {
+        "Answers": ["D", "G", "C"],
+        "file": "b13"
+      },
+      {
+        "Answers": ["A", "G", "C"],
+        "file": "b14"
+      },
+      {
+        "Answers": ["F", "G", "C"],
+        "file": "b15"
+      },
+      {
+        "Answers": ["G", "F", "C"],
+        "file": "b16"
+      },
+      {
+        "Answers": ["A", "F", "C"],
+        "file": "b17"
+      },
+      {
+        "Answers": ["E", "F", "C"],
+        "file": "b18"
+      },
+      {
+        "Answers": ["D", "E", "C"],
+        "file": "b19"
+      },
+      {
+        "Answers": ["B", "G", "C"],
+        "file": "b110"
+      },
+      {
+        "Answers": ["B", "E", "A"],
+        "file": "b111"
+      },
+      {
+        "Answers": ["D", "G", "A"],
+        "file": "b112"
+      }
+    ],
+    "level1Instructions": [
+      "Listen to the audio and fill in the correct letter name of the notes for the given key.",
+      "This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level1PassScore": 91,
+    "level1Answers": [],
+    "level2Questions": [
+      {
+        "Answers": ["A", "D", "G", "C"],
+        "file": "b21"
+      },
+      {
+        "Answers": ["D", "G", "A", "C"],
+        "file": "b22"
+      },
+      {
+        "Answers": ["E", "D", "F", "E"],
+        "file": "b23"
+      },
+      {
+        "Answers": ["F", "E", "D", "C"],
+        "file": "b24"
+      },
+      {
+        "Answers": ["C", "G", "A", "F"],
+        "file": "b25"
+      },
+      {
+        "Answers": ["A", "F", "G", "C"],
+        "file": "b26"
+      },
+      {
+        "Answers": ["G", "B", "C", "D"],
+        "file": "b27"
+      },
+      {
+        "Answers": ["B", "D", "F", "A"],
+        "file": "b28"
+      },
+      {
+        "Answers": ["B", "E", "A", "C"],
+        "file": "b29"
+      },
+      {
+        "Answers": ["C", "A", "D", "G"],
+        "file": "b210"
+      },
+      {
+        "Answers": ["G", "E", "A", "D"],
+        "file": "b211"
+      },
+      {
+        "Answers": ["C", "C", "F", "E"],
+        "file": "b212"
+      }
+    ],
+    "level2Instructions": [
+      "Listen to the audio and fill in the correct letter name of the notes for the given key.",
+      "This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level2PassScore": 91,
+    "level2Answers": [],
+    "level3Questions": [
+      {
+        "Answers": ["C", "F", "D", "G", "C"],
+        "file": "b31"
+      },
+      {
+        "Answers": ["C", "A", "D", "G", "C"],
+        "file": "b32"
+      },
+      {
+        "Answers": ["E", "A", "D", "G", "C"],
+        "file": "b33"
+      },
+      {
+        "Answers": ["C", "B", "E", "A", "G"],
+        "file": "b34"
+      },
+      {
+        "Answers": ["D", "B", "C", "G", "F"],
+        "file": "b35"
+      },
+      {
+        "Answers": ["G", "F", "D", "G", "C"],
+        "file": "b36"
+      },
+      {
+        "Answers": ["F", "G", "A", "G", "C"],
+        "file": "b37"
+      },
+      {
+        "Answers": ["A", "B", "C", "D", "E"],
+        "file": "b38"
+      },
+      {
+        "Answers": ["B", "E", "A", "D", "G"],
+        "file": "b39"
+      },
+      {
+        "Answers": ["C", "F", "D", "G", "C"],
+        "file": "b31"
+      },
+      {
+        "Answers": ["C", "E", "D", "A", "G"],
+        "file": "b311"
+      },
+      {
+        "Answers": ["C", "D", "F", "E", "A"],
+        "file": "b312"
+      }
+    ],
+    "level3Instructions": [
+      "Listen to the audio and fill in the correct letter name of the notes for the given key.",
+      "This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level3PassScore": 91,
+    "level3Answers": [],
+
+    "level4Questions": [
+      {
+        "Answers": ["C", "F", "F#", "G", "C"],
+        "file": "b41"
+      },
+      {
+        "Answers": ["C", "Bb", "A", "C#", "D"],
+        "file": "b42"
+      },
+      {
+        "Answers": ["C", "A", "F#", "D", "G"],
+        "file": "b43"
+      },
+      {
+        "Answers": ["C", "B", "E", "G#", "A"],
+        "file": "b44"
+      },
+      {
+        "Answers": ["C", "E", "G", "Bb", "A"],
+        "file": "b45"
+      },
+      {
+        "Answers": ["G", "Bb", "D", "C", "F"],
+        "file": "b46"
+      },
+      {
+        "Answers": ["C", "G", "E", "G#", "A"],
+        "file": "b47"
+      },
+      {
+        "Answers": ["C", "E", "Eb", "D", "F#", "G"],
+        "file": "b48"
+      },
+      {
+        "Answers": ["F", "C#", "D", "G", "C"],
+        "file": "b49"
+      },
+      {
+        "Answers": ["E", "G#", "A", "C#", "D", "B", "C"],
+        "file": "b410"
+      },
+      {
+        "Answers": ["C", "B", "D#", "E", "D", "F#", "G"],
+        "file": "b411"
+      },
+      {
+        "Answers": ["C", "Bb", "A", "C#", "D", "F#", "G", "B", "C"],
+        "file": "b412"
+      }
+    ],
+    "level4Instructions": [
+      "Listen to the audio and fill in the correct letter name of the notes for the given key.",
+      "This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level4PassScore": 91,
+    "level4Answers": []
   }
 }
