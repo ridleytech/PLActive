@@ -61,6 +61,14 @@ export const setPitchProgress = (level) => {
   };
 };
 
+export const setBassProgress = (level) => {
+  //console.log(`sp: ${JSON.stringify(level)}`);
+  return {
+    type: 'SET_BASS_PROGRESS',
+    level: level,
+  };
+};
+
 export const setIntervalProgressBlocked = (level) => {
   //console.log(`si: ${JSON.stringify(level)}`);
   return {

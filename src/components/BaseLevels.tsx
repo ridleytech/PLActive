@@ -66,12 +66,8 @@ const BaseLevels = ({level, mode, props}) => {
   const accessFeature = useSelector((state) => state.accessFeature);
   const basemode = useSelector((state) => state.basemode);
 
-  const highestCompletedBassBrokenLevel = useSelector(
-    (state) => state.highestCompletedBassBrokenLevel,
-  );
-
-  const highestCompletedBassBlockedLevel = useSelector(
-    (state) => state.highestCompletedBassBlockedLevel,
+  const highestCompletedBassLevel = useSelector(
+    (state) => state.highestCompletedBassLevel,
   );
 
   //console.log('selectedLevel: ' + level);
@@ -352,17 +348,10 @@ const BaseLevels = ({level, mode, props}) => {
       if (per >= passScore) {
         console.log('store data');
 
-        if (basemode == 1) {
-          dispatch({
-            type: 'SET_INTERVAL_BROKEN_PROGRESS',
-            level: {highestCompletedBassBrokenLevel: level.toString()},
-          });
-        } else {
-          dispatch({
-            type: 'SET_INTERVAL_BLOCKED_PROGRESS',
-            level: {highestCompletedBassBlockedLevel: level.toString()},
-          });
-        }
+        dispatch({
+          type: 'SET_BASS_PROGRESS',
+          level: {highestCompletedBassLevel: level.toString()},
+        });
 
         if (!loggedIn) {
           console.log('quiz finished not logged in');
@@ -552,7 +541,7 @@ const BaseLevels = ({level, mode, props}) => {
 
     setAnswerList(al);
 
-    //setCanAnswer(false);
+    setCanAnswer(false);
     setCanCheck(false);
     setCanPlay(false);
 
@@ -573,7 +562,7 @@ const BaseLevels = ({level, mode, props}) => {
 
     dispatch({
       type: 'SET_INTERVAL_PROGRESS',
-      level: {highestCompletedBassBrokenLevel: level.toString()},
+      level: {highestCompletedBassLevel: level.toString()},
     });
 
     setCorrectAnswers(12);
@@ -638,46 +627,21 @@ const BaseLevels = ({level, mode, props}) => {
   };
 
   const storeData = async (level) => {
-    if (basemode == 1) {
-      console.log(`highestCompletedBassBrokenLevel: ${level}`);
+    console.log(`highestCompletedBassLevel: ${level}`);
 
-      if (level < highestCompletedBassBrokenLevel) {
-        console.log('less than highest level. stop save');
-        return;
-      }
+    if (level < highestCompletedBassLevel) {
+      console.log('less than highest level. stop save');
+      return;
+    }
 
-      try {
-        console.log('try to save highestCompletedBassBrokenLevel');
-        await AsyncStorage.setItem(
-          'highestCompletedBassBrokenLevel',
-          level.toString(),
-        );
+    try {
+      console.log('try to save highestCompletedBassLevel');
+      await AsyncStorage.setItem('highestCompletedBassLevel', level.toString());
 
-        console.log('highestCompletedBassBrokenLevel saved');
-      } catch (error) {
-        console.log('highestCompletedBassBrokenLevel not saved');
-        // Error saving data
-      }
-    } else {
-      console.log(`highestCompletedBassBlockedLevel: ${level}`);
-
-      if (level < highestCompletedBassBlockedLevel) {
-        console.log('less than highest level. stop save');
-        return;
-      }
-
-      try {
-        console.log('try to save highestCompletedBassBlockedLevel');
-        await AsyncStorage.setItem(
-          'highestCompletedBassBlockedLevel',
-          level.toString(),
-        );
-
-        console.log('highestCompletedBassBlockedLevel saved');
-      } catch (error) {
-        console.log('highestCompletedBassBlockedLevel not saved');
-        // Error saving data
-      }
+      console.log('highestCompletedBassLevel saved');
+    } catch (error) {
+      console.log('highestCompletedBassLevel not saved');
+      // Error saving data
     }
   };
 
@@ -1030,7 +994,8 @@ const BaseLevels = ({level, mode, props}) => {
                   marginBottom: 15,
                   fontFamily: 'Helvetica Neue',
                 }}>
-                Fill in the rest of the notes in the progression.
+                Using only your ear, fill in the notes played in the audio
+                below. You are given the first note for reference.
               </Text>
 
               {level > 0 ? (

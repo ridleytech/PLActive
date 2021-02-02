@@ -20,6 +20,7 @@ import {
   setIntervalBrokenProgress,
   setIntervalBlockedProgress,
   setPitchProgress,
+  setBassProgress,
   setTriadsProgress,
   setTriadsBrokenProgress,
   setTriadsBlockedProgress,
@@ -83,6 +84,26 @@ class Home extends Component<Props> {
 
       this.props.setPitchProgress({
         highestCompletedPitchLevel: value,
+      });
+    } catch (error) {
+      // Error retrieving data
+    }
+
+    try {
+      var value = await AsyncStorage.getItem('highestCompletedBassLevel');
+
+      if (value !== null) {
+        // We have data!!
+        console.log(`highestCompletedBassLevel: ${value}`);
+      } else {
+        //console.log('save default Bass data');
+
+        value = 0;
+        this.storeBassData(value);
+      }
+
+      this.props.setBassProgress({
+        highestCompletedBassLevel: value,
       });
     } catch (error) {
       // Error retrieving data
@@ -198,6 +219,16 @@ class Home extends Component<Props> {
       await AsyncStorage.setItem('highestCompletedPitchLevel', val.toString());
 
       console.log('pitch saved storage: ' + val);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  storeBassData = async (val) => {
+    try {
+      await AsyncStorage.setItem('highestCompletedBassLevel', val.toString());
+
+      console.log('bass saved storage: ' + val);
     } catch (error) {
       // Error saving data
     }
@@ -484,6 +515,7 @@ class Home extends Component<Props> {
     if (prevProps.hasProgress != this.props.hasProgress && this.props.userid) {
       console.log('hasProgress changed');
 
+      this.storeBassData(this.props.highestCompletedBassLevel.toString());
       this.storePitchData(this.props.highestCompletedPitchLevel.toString());
       this.storeIntervalDataBroken(
         this.props.highestCompletedIntervalBrokenLevel.toString(),
@@ -491,6 +523,14 @@ class Home extends Component<Props> {
 
       this.storeIntervalDataBlocked(
         this.props.highestCompletedIntervalBlockedLevel.toString(),
+      );
+
+      this.storeTriadsDataBlocked(
+        this.props.highestCompletedTriadsBlockedLevel.toString(),
+      );
+
+      this.storeTriadsDataBroken(
+        this.props.highestCompletedTriadsBlockedLevel.toString(),
       );
     }
   }
@@ -648,11 +688,11 @@ class Home extends Component<Props> {
           return;
         }
       } else if (this.props.mode == 4) {
-        if (level - 1 > this.props.highestCompletedBaselineBrokenLevel) {
+        if (level - 1 > this.props.highestCompletedBassLevel) {
           Alert.alert(
             null,
             `Complete level ${
-              this.props.highestCompletedBaselineBrokenLevel + 1
+              this.props.highestCompletedBassLevel + 1
             } to proceed`,
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
@@ -728,7 +768,7 @@ class Home extends Component<Props> {
             mode={this.props.mode}
             props={this.props}
           />
-        ) : this.props.mode == 4 ? (
+        ) : this.props.mode == 5 ? (
           <SignIn />
         ) : null}
 
@@ -757,8 +797,10 @@ const mapStateToProps = (state) => {
     highestCompletedIntervalBlockedLevel:
       state.highestCompletedIntervalBlockedLevel,
     highestCompletedTriadsLevel: state.highestCompletedTriadsLevel,
-    highestCompletedBaselineBrokenLevel:
-      state.highestCompletedBaselineBrokenLevel,
+    highestCompletedBassLevel: state.highestCompletedBassLevel,
+    highestCompletedTriadsBlockedLevel:
+      state.highestCompletedTriadsBlockedLevel,
+    highestCompletedTriadsBrokenLevel: state.highestCompletedTriadsBrokenLevel,
     graphStarted: state.graphStarted,
     loggedIn: state.loggedIn,
     username: state.username,
@@ -776,6 +818,7 @@ export default connect(mapStateToProps, {
   setLevel,
   setMode,
   setPitchProgress,
+  setBassProgress,
   setIntervalBrokenProgress,
   setIntervalBlockedProgress,
   setTriadsBrokenProgress,

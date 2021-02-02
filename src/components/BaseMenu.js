@@ -24,8 +24,8 @@ const BaseMenu = ({showLevel}) => {
   const accessFeature = useSelector((state) => state.accessFeature);
   const dispatch = useDispatch();
 
-  const highestCompletedBaselineBrokenLevel = useSelector(
-    (state) => state.highestCompletedBaselineBrokenLevel,
+  const highestCompletedBassLevel = useSelector(
+    (state) => state.highestCompletedBassLevel,
   );
 
   const opacity = useState(new Animated.Value(0))[0];
@@ -111,7 +111,7 @@ const BaseMenu = ({showLevel}) => {
             {levels.map((level, index) => {
               return (
                 <TouchableOpacity
-                  //disabled={index > highestCompletedBaselineBrokenLevel ? true : false}
+                  //disabled={index > highestCompletedBassLevel ? true : false}
                   onPress={() => {
                     showLevel(level);
                   }}
@@ -136,7 +136,7 @@ const BaseMenu = ({showLevel}) => {
                   {!loggedIn && accessFeature == 2 ? (
                     <Image
                       source={
-                        index < highestCompletedBaselineBrokenLevel
+                        index < highestCompletedBassLevel
                           ? checkIcon
                           : index > 0
                           ? lockIcon
@@ -147,9 +147,7 @@ const BaseMenu = ({showLevel}) => {
                   ) : (
                     <Image
                       source={
-                        index < highestCompletedBaselineBrokenLevel
-                          ? checkIcon
-                          : null
+                        index < highestCompletedBassLevel ? checkIcon : null
                       }
                       style={{position: 'absolute', right: 12, top: 12}}
                     />

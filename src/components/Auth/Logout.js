@@ -25,6 +25,8 @@ class Logout extends Component<Props> {
     this.deleteUser();
     this.deleteInterval();
     this.deletePitch();
+    this.deleteBass();
+    this.deleteTriads();
   };
 
   deleteUsername = async () => {
@@ -80,6 +82,34 @@ class Logout extends Component<Props> {
       await AsyncStorage.removeItem('highestCompletedPitchLevel');
 
       console.log('highestCompletedPitchLevel deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  deleteTriads = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompletedTriadsLevelBroken');
+
+      console.log('highestCompletedTriadsLevelBroken deleted');
+    } catch (error) {
+      // Error saving data
+    }
+
+    try {
+      await AsyncStorage.removeItem('highestCompletedTriadsLevelBlocked');
+
+      console.log('highestCompletedTriadsLevelBlocked deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  deleteBass = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompletedBassLevel');
+
+      console.log('highestCompletedBassLevel deleted');
     } catch (error) {
       // Error saving data
     }

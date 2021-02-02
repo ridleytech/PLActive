@@ -126,6 +126,7 @@ export const saveTestScore = (score, duration) => (dispatch, getState) => {
 export const saveProgress = () => (dispatch, getState) => {
   let highestInterval = getState().highestCompletedIntervalBrokenLevel;
   let highestPitch = getState().highestCompletedPitchLevel;
+  let highestBass = getState().highestCompletedBassLevel;
   let highestlevelcompletedblocked = getState()
     .highestCompletedTriadsBlockedLevel;
   let highestlevelcompletedbroken = getState()
@@ -138,6 +139,7 @@ export const saveProgress = () => (dispatch, getState) => {
       JSON.stringify({
         highestInterval: highestInterval,
         highestPitch: highestPitch,
+        highestBass: highestBass,
         highestlevelcompletedblocked: highestlevelcompletedblocked,
         highestlevelcompletedbroken: highestlevelcompletedbroken,
         userid: userid,
@@ -151,6 +153,7 @@ export const saveProgress = () => (dispatch, getState) => {
     body: JSON.stringify({
       highestInterval: highestInterval,
       highestPitch: highestPitch,
+      highestBass: highestBass,
       highestlevelcompletedblocked: highestlevelcompletedblocked,
       highestlevelcompletedbroken: highestlevelcompletedbroken,
       userid: userid,

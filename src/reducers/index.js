@@ -23,10 +23,10 @@ const inititalState = {
   highestCompletedIntervalBrokenLevel: 0,
   highestCompletedIntervalBlockedLevel: 0,
   highestCompletedPitchLevel: 0,
+  highestCompletedBassLevel: 0,
   //highestCompletedTriadsLevel: 0,
   highestCompletedTriadsBlockedLevel: 0,
   highestCompletedTriadsBrokenLevel: 0,
-  highestCompletedBaselineBrokenLevel: 0,
   loggedIn: false,
   graphStarted: false,
   loginEnabled: true,
@@ -272,6 +272,8 @@ export default (state = inititalState, action) => {
         highestCompletedIntervalBrokenLevel: parseInt(progressData.ibrhi),
         highestCompletedIntervalBlockedLevel: parseInt(progressData.iblhi),
         highestCompletedPitchLevel: parseInt(progressData.phi),
+        highestCompletedBassLevel: parseInt(progressData.bhi),
+
         //highestCompletedTriadsLevel: parseInt(progressData.thi),
         highestCompletedTriadsBlockedLevel: parseInt(progressData.tblhi),
         highestCompletedTriadsBrokenLevel: parseInt(progressData.tbrhi),
@@ -314,6 +316,24 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         highestCompletedPitchLevel: levelVal,
+      };
+
+    case 'SET_BASS_PROGRESS':
+      //console.log('action: ' + JSON.stringify(action));
+
+      var completedLevel = parseInt(action.level.highestCompletedBassLevel);
+      var levelVal = state.highestCompletedBassLevel;
+
+      // console.log(`sp completed: ${completedLevel}
+      // levelVal: ${levelVal}`);
+
+      if (completedLevel > state.highestCompletedBassLevel) {
+        levelVal = completedLevel;
+      }
+
+      return {
+        ...state,
+        highestCompletedBassLevel: levelVal,
       };
 
     case 'SET_INTERVAL_BROKEN_PROGRESS':
@@ -406,6 +426,7 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         highestCompletedPitchLevel: 0,
+        highestCompletedBassLevel: 0,
         highestCompletedIntervalBlockedLevel: 0,
         highestCompletedIntervalBrokenLevel: 0,
         highestCompletedTriadsLevelBlocked: 0,

@@ -43,8 +43,8 @@ const MainMenu = ({setMode}) => {
   const highestCompletedTriadsBrokenLevel = useSelector(
     (state) => state.highestCompletedTriadsBrokenLevel,
   );
-  const highestCompletedBaselineBrokenLevel = useSelector(
-    (state) => state.highestCompletedBaselineBrokenLevel,
+  const highestCompletedBassLevel = useSelector(
+    (state) => state.highestCompletedBassLevel,
   );
 
   const opacity = useState(new Animated.Value(0))[0];
@@ -195,7 +195,7 @@ const MainMenu = ({setMode}) => {
                   icon = checkIcon;
                 }
               } else if (index == 3) {
-                if (highestCompletedBaselineBrokenLevel < 5) {
+                if (highestCompletedBassLevel < 4) {
                   icon = null;
                 } else {
                   icon = checkIcon;
