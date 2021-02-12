@@ -370,6 +370,8 @@ const PitchLevels = ({level, mode, props}) => {
 
     dispatch({type: 'SET_MODE', mode: 0});
     dispatch({type: 'SET_LEVEL', level: 0});
+    dispatch({type: 'SET_LEADERBOARD_MODE', mode: 1});
+
     props.navigation.navigate('LEADER BOARD');
   };
 

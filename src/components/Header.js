@@ -23,6 +23,7 @@ const Header = (props) => {
   const level = useSelector((state) => state.level);
   const triadmode = useSelector((state) => state.triadmode);
   const intervalmode = useSelector((state) => state.intervalmode);
+  const leaderboardMode = useSelector((state) => state.leaderboardMode);
 
   const goHome = () => {
     dispatch({type: 'SET_MODE', mode: 0});
@@ -31,14 +32,16 @@ const Header = (props) => {
 
   var showMenu = false;
 
-  if (mode == 0) {
+  if (mode == 0 && leaderboardMode == 0) {
     showMenu = true;
   }
 
   const manageButton = () => {
     //console.log('manageButton');
 
-    if (mode == 0) {
+    if (leaderboardMode > 0) {
+      dispatch({type: 'SET_LEADERBOARD_MODE', mode: 0});
+    } else if (mode == 0) {
       props.props.navigation.toggleDrawer();
     } else if (mode == 1 && level > 0) {
       dispatch({type: 'SET_MODE', mode: 1});
@@ -54,6 +57,7 @@ const Header = (props) => {
       dispatch({type: 'SET_LEVEL', level: 0});
       dispatch({type: 'SET_TRIAD_MODE', mode: 0});
       dispatch({type: 'SET_INTERVAL_MODE', mode: 0});
+      dispatch({type: 'SET_LEADERBOARD_MODE', mode: 0});
     }
 
     //props.props.navigation.toggleDrawer();

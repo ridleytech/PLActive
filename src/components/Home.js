@@ -66,6 +66,9 @@ class Home extends Component<Props> {
     this.retrieveData();
     this.retrieveUserData();
     //console.log('home props: ' + JSON.stringify(props));
+
+    //this.storeTestData();
+    //this.retrieveTestData();
   }
 
   retrieveData = async () => {
@@ -626,7 +629,7 @@ class Home extends Component<Props> {
   };
 
   showLevel = (level) => {
-    console.log('showLevel: ' + level);
+    console.log('showLevel home: ' + level);
 
     // //debug
     // this.props.setLevel(level);

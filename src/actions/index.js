@@ -19,6 +19,13 @@ export const setTriadMode = (mode) => {
   };
 };
 
+export const setLeaderboardMode = (mode) => {
+  return {
+    type: 'SET_LEADERBOARD_MODE',
+    mode: mode,
+  };
+};
+
 export const setIntervalMode = (mode) => {
   return {
     type: 'SET_INTERVAL_MODE',

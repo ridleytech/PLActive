@@ -87,6 +87,7 @@ const TraidsLevels = ({level, mode, props}) => {
   const [answerList, setAnswerList] = useState(null);
   const [answers, setAnswers] = useState(null);
   const [instructions, setInstructions] = useState(null);
+  const [storedData, setStoredData] = useState(null);
   const [passScore, setPassScore] = useState(0);
 
   const [selectionColors, setSelectionColors] = useState([
@@ -258,7 +259,22 @@ const TraidsLevels = ({level, mode, props}) => {
     }
 
     populateInstructions();
+
+    retrieveTestData();
   }, []);
+
+  useEffect(() => {
+    if (quizStarted) {
+      storeTestData();
+    }
+  }, [answerList]);
+
+  useEffect(() => {
+    if (storedData != null) {
+      console.log('got the test data. resume quiz');
+      resumeQuiz();
+    }
+  }, [storedData]);
 
   const populateInstructions = () => {
     console.log('populate instructions: ' + level);
@@ -328,6 +344,8 @@ const TraidsLevels = ({level, mode, props}) => {
 
       console.log(`per levels: ${per} passScore: ${passScore}`);
 
+      removeTestData();
+
       if (per >= passScore) {
         console.log('store data');
 
@@ -368,10 +386,13 @@ const TraidsLevels = ({level, mode, props}) => {
 
   const postLeaderboard = () => {
     console.log('postLeaderboard triads');
+
     dispatch(saveTestScore(score, quizTime));
 
     dispatch({type: 'SET_MODE', mode: 0});
     dispatch({type: 'SET_LEVEL', level: 0});
+    dispatch({type: 'SET_LEADERBOARD_MODE', mode: 3});
+
     props.navigation.navigate('LEADER BOARD');
   };
 
@@ -1010,7 +1031,181 @@ const TraidsLevels = ({level, mode, props}) => {
     setAnswers(shuffledAnswers);
   };
 
+  // restore current test
+
+  const retrieveTestData = async () => {
+    try {
+      var value = await AsyncStorage.getItem('triadTestProgress' + level);
+
+      if (value !== null) {
+        // We have data!!
+        console.log(`triadTestProgress${level}: ${value}`);
+
+        Alert.alert(
+          null,
+          `You currently have Level ${level} quiz in progress. Would you like to resume?`,
+          [
+            {text: 'YES', onPress: () => setStoredData(value)},
+            //{text: 'JOIN MEMBERSHIP', onPress: () => this.upgrade()},
+            {
+              text: 'CANCEL',
+              onPress: () => {
+                removeTestData();
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+
+        //setStoredData(value);
+      } else {
+        console.log(`no saved triadTestProgress${level} data`);
+
+        value = 0;
+        //this.storePitchData(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
+  const removeTestData = async () => {
+    try {
+      await AsyncStorage.removeItem('triadTestProgress' + level);
+
+      console.log(`triadTestProgress${level} deleted`);
+    } catch (error) {
+      // Error saving data
+      console.log(`cant delete triadTestProgress${level}`);
+    }
+  };
+
+  const storeTestData = async () => {
+    var testData = {
+      correctAnswers: correctAnswers,
+      quizTime: quizTime,
+      level: level,
+      mode: mode,
+      answerList: answerList,
+      questionList: questionList,
+    };
+
+    var formatted = JSON.stringify(testData);
+
+    console.log('storeTestData: ' + formatted);
+
+    try {
+      await AsyncStorage.setItem('triadTestProgress' + level, formatted);
+
+      console.log(`triadTestProgress${level} stored`);
+    } catch (error) {
+      // Error saving data
+      console.log(`cant create triadTestProgress${level}: ` + error);
+    }
+  };
+
+  const resumeQuiz = () => {
+    console.log('resumeQuiz');
+
+    setisQuizTimerActive(true);
+
+    //console.log('theAnswer: ' + answerInd);
+
+    //console.log('storedData: ' + storedData);
+
+    var json = JSON.parse(storedData);
+
+    var newQuestions = json.questionList;
+
+    //console.log('newQuestions: ' + newQuestions);
+
+    //return;
+
+    console.log('answerList: ' + JSON.stringify(json.answerList));
+
+    var currentTestIndex = json.answerList.length;
+
+    console.log('currentTestIndex: ' + currentTestIndex);
+
+    setCurrentQuestionInd(currentTestIndex);
+
+    setCurrentAnswer('');
+    setCorrectAnswers(json.correctAnswers);
+
+    setQuestionList(newQuestions);
+    setAnswerList(json.answerList);
+    populateAnswers(newQuestions[currentTestIndex], 0);
+
+    setQuizTime(json.quizTime);
+
+    setQuizStarted(true);
+    setRestarted(false);
+    setQuizFinished(false);
+
+    //return;
+
+    console.log('newQuestions: ' + JSON.stringify(newQuestions));
+
+    //if (level > 1) {
+    var newTracks = [];
+
+    newQuestions.map((question) => {
+      var ob = {
+        file: question.file.toLowerCase() + '.mp3',
+      };
+
+      newTracks.push(ob);
+    });
+
+    var file = newTracks[currentTestIndex].file;
+
+    setTrackFile(file);
+
+    console.log('file: ' + file);
+    console.log('newTracks length triads: ' + newTracks.length);
+
+    audioClip = new Sound(file, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound ' + file, error);
+        return;
+      }
+      console.log('file loaded successfully: ' + file);
+
+      // loaded successfully
+      console.log(
+        'duration in seconds: ' +
+          audioClip.getDuration() +
+          ' number of channels: ' +
+          audioClip.getNumberOfChannels(),
+      );
+
+      setTrackInfo({position: 0, duration: audioClip.getDuration()});
+
+      //audioClip.play();
+    });
+
+    setCurrentTrack({
+      name: newQuestions[currentTestIndex].file,
+    });
+
+    console.log('newTracks: ' + JSON.stringify(newTracks));
+    //}
+
+    setCanPlay(true);
+
+    //console.log('questions: ' + JSON.stringify(questions));
+
+    var question = newQuestions[currentTestIndex];
+
+    console.log('question: ' + JSON.stringify(question));
+    console.log('theAnswer: ' + JSON.stringify(question.Answer));
+  };
+
   const startQuiz = () => {
+    // retrieveTestData();
+
+    // return;
+
     console.log('startQuiz');
 
     setisQuizTimerActive(true);

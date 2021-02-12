@@ -297,9 +297,9 @@ const ResultsViewBass = ({
           }}>
           {!loggedIn && passed && accessFeature > 0
             ? ' LOGIN TO START LEVEL ' + (level + 1)
-            : passed && level < 10
+            : passed && level < 4
             ? ' START LEVEL ' + (level + 1)
-            : passed && level == 10
+            : passed && level == 4
             ? 'LEVELS COMPLETED'
             : 'RESTART QUIZ'}
         </Text>

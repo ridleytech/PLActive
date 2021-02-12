@@ -93,7 +93,7 @@ export const saveTestScore = (score, duration) => (dispatch, getState) => {
   let level = getState().level;
 
   console.log(
-    `saveTestScore: username: ${username} loggedIn: ${loggedIn} mode: ${mode} duration: ${duration} score: ${score} level: ${level}`,
+    `saveTestScore username: ${username} loggedIn: ${loggedIn} mode: ${mode} duration: ${duration} score: ${score} level: ${level}`,
   );
 
   fetch(url + 'add-results.php', {
@@ -112,6 +112,7 @@ export const saveTestScore = (score, duration) => (dispatch, getState) => {
     },
   })
     .then((res) => {
+      //console.log(`data: ${JSON.stringify(res.json())}`);
       return res.json();
     })
     .then((data) => {

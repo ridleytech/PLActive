@@ -13,6 +13,7 @@ import {
   Alert,
   Linking,
   TouchableNativeFeedbackBase,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import {useDispatch, useSelector, connect} from 'react-redux';
@@ -142,10 +143,10 @@ const BaseLevels = ({level, mode, props}) => {
 
     if (isQuizTimerActive) {
       //console.log('start quiz timer');
-      // interval = setInterval(() => {
-      //   //console.log('the seconds: ' + quizTime);
-      //   setQuizTime((quizTime) => quizTime + 1);
-      // }, 1000);
+      interval = setInterval(() => {
+        //console.log('the seconds: ' + quizTime);
+        setQuizTime((quizTime) => quizTime + 1);
+      }, 1000);
     } else if (!isQuizTimerActive && quizTime !== 0) {
       clearInterval(interval);
     }
@@ -232,6 +233,11 @@ const BaseLevels = ({level, mode, props}) => {
 
     if (currentQuestion1 < questionList.length - 1) {
       currentQuestion1 += 1;
+
+      console.log(
+        'currentQuestion next: ' +
+          JSON.stringify(questionList[currentQuestion1]),
+      );
 
       if (level > 0) {
         setCurrentTrack({
@@ -382,6 +388,7 @@ const BaseLevels = ({level, mode, props}) => {
 
     dispatch({type: 'SET_MODE', mode: 0});
     dispatch({type: 'SET_LEVEL', level: 0});
+    dispatch({type: 'SET_LEADERBOARD_MODE', mode: 4});
     props.navigation.navigate('LEADER BOARD');
   };
 
@@ -541,7 +548,7 @@ const BaseLevels = ({level, mode, props}) => {
 
     setAnswerList(al);
 
-    setCanAnswer(false);
+    //setCanAnswer(false);
     setCanCheck(false);
     setCanPlay(false);
 
@@ -586,7 +593,7 @@ const BaseLevels = ({level, mode, props}) => {
             dispatch({type: 'SET_LEVEL', level: 0});
             props.navigation.navigate('CHALLENGES');
           } else {
-            dispatch({type: 'SET_MODE', mode: 2});
+            dispatch({type: 'SET_MODE', mode: 4});
             dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
 
             console.log(`set level: ${currentLevel + 1}`);
@@ -611,7 +618,7 @@ const BaseLevels = ({level, mode, props}) => {
           dispatch({type: 'SHOW_LOGIN'});
           props.navigation.navigate('CHALLENGES');
         } else {
-          dispatch({type: 'SET_MODE', mode: 2});
+          dispatch({type: 'SET_MODE', mode: 4});
           dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
 
           console.log(`set level: ${currentLevel + 1}`);
@@ -881,13 +888,50 @@ const BaseLevels = ({level, mode, props}) => {
     // console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
   };
 
+  const hasLetter = (inputtxt) => {
+    console.log('inputtxt: ' + inputtxt);
+
+    //[a-gA-G]{1}[bB|#]
+
+    var letters = /[a-zA-Z]/g;
+
+    var count = (inputtxt.match(letters) || []).length;
+
+    console.log('count: ' + count);
+
+    return count;
+
+    // if (inputtxt.match(letters)) {
+    //   return true;
+    // } else {
+    //   //alert('message');
+    //   return false;
+    // }
+  };
+
   const changeVal = (val, index) => {
     console.log('val: ' + val + ' index: ' + index);
     if (val) {
       var cal = currentAnswerList;
 
+      // if (cal[index]) {
+      //   console.log('has letter: ' + hasLetter(cal[index]));
+      // }
+
+      //console.log('has letter: ' + hasLetter(cal[index]));
+
+      //var count = hasLetter(cal[index]);
+
+      // console.log('count: ' + count);
+
+      // if (count > 1) {
+      //   return;
+      // }
+
       cal[index] = val;
       console.log('updated cal: ' + cal);
+
+      //return if val contains letter and not "b" or "#"
 
       setCurrentAnswerList(cal);
     } else {
@@ -1048,155 +1092,172 @@ const BaseLevels = ({level, mode, props}) => {
                 </View>
               ) : null}
             </View>
-
-            <View
-              style={{
-                paddingLeft: '5%',
-                paddingRight: '5%',
-                //height: '100%',
-                //backgroundColor: 'pink',
-                paddingTop: 20,
-              }}>
+            <ScrollView
+              style={
+                {
+                  //backgroundColor: 'red'
+                }
+              }>
               <View
                 style={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  //backgroundColor: 'yellow',
+                  paddingLeft: '5%',
+                  paddingRight: '5%',
+                  //height: '100%',
+                  //backgroundColor: 'pink',
+                  paddingTop: 20,
                 }}>
-                <TextInput
-                  ref={txt0}
-                  onChangeText={(text) => changeVal(text, 0)}
-                  style={[
-                    styles.inputTxt,
-                    {marginRight: 10, backgroundColor: selectionColors[0]},
-                  ]}
-                  key={questionList[currentQuestionInd].Answers[0]}>
-                  {questionList[currentQuestionInd].Answers[0]}
-                </TextInput>
-                <TextInput
-                  ref={txt1}
-                  onChangeText={(text) => changeVal(text, 1)}
-                  style={[
-                    styles.inputTxt,
-                    {
-                      marginRight: 10,
-                      backgroundColor: selectionColors[1],
-                    },
-                  ]}
-                  key={1}>
-                  {currentAnswerList[1]}
-                </TextInput>
-                <TextInput
-                  ref={txt2}
-                  onChangeText={(text) => changeVal(text, 2)}
-                  style={[
-                    styles.inputTxt,
-                    {
-                      //backgroundColor: 'green'
-                      backgroundColor: selectionColors[2],
-                    },
-                  ]}
-                  key={2}>
-                  {currentAnswerList[2]}
-                </TextInput>
+                <View
+                  style={{
+                    width: '100%',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    //backgroundColor: 'yellow',
+                  }}>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt0}
+                    onChangeText={(text) => changeVal(text, 0)}
+                    style={[
+                      styles.inputTxt,
+                      {marginRight: 10, backgroundColor: selectionColors[0]},
+                    ]}
+                    key={questionList[currentQuestionInd].Answers[0]}>
+                    {questionList[currentQuestionInd].Answers[0]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt1}
+                    onChangeText={(text) => changeVal(text, 1)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        marginRight: 10,
+                        backgroundColor: selectionColors[1],
+                      },
+                    ]}
+                    key={1}>
+                    {currentAnswerList[1]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt2}
+                    onChangeText={(text) => changeVal(text, 2)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        //backgroundColor: 'green'
+                        backgroundColor: selectionColors[2],
+                      },
+                    ]}
+                    key={2}>
+                    {currentAnswerList[2]}
+                  </TextInput>
 
-                <TextInput
-                  ref={txt3}
-                  onChangeText={(text) => changeVal(text, 3)}
-                  style={[
-                    styles.inputTxt,
-                    {
-                      marginRight: 10,
-                      display: questionList[currentQuestionInd].Answers[3]
-                        ? 'flex'
-                        : 'none',
-                      backgroundColor: selectionColors[3],
-                    },
-                  ]}
-                  key={3}>
-                  {currentAnswerList[3]}
-                </TextInput>
-                <TextInput
-                  ref={txt4}
-                  onChangeText={(text) => changeVal(text, 4)}
-                  style={[
-                    styles.inputTxt,
-                    {
-                      marginRight: 10,
-                      display: questionList[currentQuestionInd].Answers[4]
-                        ? 'flex'
-                        : 'none',
-                      backgroundColor: selectionColors[4],
-                    },
-                  ]}
-                  key={4}>
-                  {currentAnswerList[4]}
-                </TextInput>
-                <TextInput
-                  ref={txt5}
-                  onChangeText={(text) => changeVal(text, 5)}
-                  style={[
-                    styles.inputTxt,
-                    {
-                      display: questionList[currentQuestionInd].Answers[5]
-                        ? 'flex'
-                        : 'none',
-                      backgroundColor: selectionColors[5],
-                    },
-                  ]}
-                  key={5}>
-                  {currentAnswerList[5]}
-                </TextInput>
-                <TextInput
-                  ref={txt6}
-                  onChangeText={(text) => changeVal(text, 6)}
-                  style={[
-                    styles.inputTxt,
-                    {
-                      marginRight: 10,
-                      display: questionList[currentQuestionInd].Answers[6]
-                        ? 'flex'
-                        : 'none',
-                      backgroundColor: selectionColors[6],
-                    },
-                  ]}
-                  key={6}>
-                  {currentAnswerList[6]}
-                </TextInput>
-                <TextInput
-                  ref={txt7}
-                  onChangeText={(text) => changeVal(text, 7)}
-                  style={[
-                    styles.inputTxt,
-                    {
-                      marginRight: 10,
-                      display: questionList[currentQuestionInd].Answers[7]
-                        ? 'flex'
-                        : 'none',
-                      backgroundColor: selectionColors[7],
-                    },
-                  ]}
-                  key={7}>
-                  {currentAnswerList[7]}
-                </TextInput>
-                <TextInput
-                  ref={txt8}
-                  onChangeText={(text) => changeVal(text, 8)}
-                  style={[
-                    styles.inputTxt,
-                    {
-                      display: questionList[currentQuestionInd].Answers[8]
-                        ? 'flex'
-                        : 'none',
-                      backgroundColor: selectionColors[8],
-                    },
-                  ]}
-                  key={8}>
-                  {currentAnswerList[8]}
-                </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt3}
+                    onChangeText={(text) => changeVal(text, 3)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        marginRight: 10,
+                        display: questionList[currentQuestionInd].Answers[3]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[3],
+                      },
+                    ]}
+                    key={3}>
+                    {currentAnswerList[3]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt4}
+                    onChangeText={(text) => changeVal(text, 4)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        marginRight: 10,
+                        display: questionList[currentQuestionInd].Answers[4]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[4],
+                      },
+                    ]}
+                    key={4}>
+                    {currentAnswerList[4]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt5}
+                    onChangeText={(text) => changeVal(text, 5)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        display: questionList[currentQuestionInd].Answers[5]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[5],
+                      },
+                    ]}
+                    key={5}>
+                    {currentAnswerList[5]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt6}
+                    onChangeText={(text) => changeVal(text, 6)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        marginRight: 10,
+                        display: questionList[currentQuestionInd].Answers[6]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[6],
+                      },
+                    ]}
+                    key={6}>
+                    {currentAnswerList[6]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt7}
+                    onChangeText={(text) => changeVal(text, 7)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        marginRight: 10,
+                        display: questionList[currentQuestionInd].Answers[7]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[7],
+                      },
+                    ]}
+                    key={7}>
+                    {currentAnswerList[7]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt8}
+                    onChangeText={(text) => changeVal(text, 8)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        display: questionList[currentQuestionInd].Answers[8]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[8],
+                      },
+                    ]}
+                    key={8}>
+                    {currentAnswerList[8]}
+                  </TextInput>
+                  <View style={{height: 500, width: 20}} />
+                </View>
               </View>
-            </View>
+            </ScrollView>
+
             <TouchableOpacity
               onPress={() => selectAnswer2()}
               disabled={!canAnswer}

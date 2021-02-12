@@ -106,20 +106,6 @@ const TraidsMenuLevels = ({showLevel}) => {
 
           return;
         }
-
-        // else if (level - 1 > highestCompletedTriadsBlockedLevel) {
-        //   Alert.alert(
-        //     null,
-        //     `Complete Blocked Chords Level ${
-        //       highestCompletedTriadsBlockedLevel + 1
-        //     } to proceed.`,
-        //     [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-        //     {cancelable: false},
-        //   );
-
-        //   return;
-
-        // }
       } else {
         console.log(
           'highestCompletedTriadsBrokenLevel: ' +
@@ -138,19 +124,6 @@ const TraidsMenuLevels = ({showLevel}) => {
 
           return;
         }
-
-        // else if (level - 1 > highestCompletedTriadsBrokenLevel) {
-        //   Alert.alert(
-        //     null,
-        //     `Complete Broken Chords Level ${
-        //       highestCompletedTriadsBrokenLevel + 1
-        //     } to proceed.`,
-        //     [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-        //     {cancelable: false},
-        //   );
-
-        //   return;
-        // }
       }
     }
 

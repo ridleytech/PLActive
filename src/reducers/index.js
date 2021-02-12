@@ -17,6 +17,7 @@ const inititalState = {
   level: 0,
   mode: 0,
   triadmode: 0,
+  leaderboardMode: 0,
   previousMode: null,
   userid: null,
   intervalmode: 0,
@@ -101,6 +102,13 @@ export default (state = inititalState, action) => {
         ...state,
         loginError: true,
         loginEnabled: true,
+      };
+
+    case 'RESET_LEADER_DATA':
+      console.log('RESET_LEADER_DATA');
+      return {
+        ...state,
+        leaderData: [],
       };
 
     case 'AUTH_SITE_DATA':
@@ -443,6 +451,12 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         mode: action.mode,
+      };
+
+    case 'SET_LEADERBOARD_MODE':
+      return {
+        ...state,
+        leaderboardMode: action.mode,
       };
 
     case 'SET_TRIAD_MODE':

@@ -15,6 +15,7 @@ import {authUser, login} from '../../actions';
 import menuIcon from '../../../images/menu-icon.png';
 import DrawerContent from './drawer';
 import Leaderboard from '../Leaderboard';
+import LeaderboardMenu from '../LeaderboardMenu';
 
 const menuBtn = (props) => {
   return (
@@ -62,7 +63,7 @@ const AppDrawerScreen = () => (
     />
     <AppDrawer.Screen
       name="LEADER BOARD"
-      component={Leaderboard}
+      component={LeaderboardMenu}
       options={{drawerLabel: 'LEADER BOARD'}}
     />
     <AppDrawer.Screen name="LOG OUT" component={Logout} />

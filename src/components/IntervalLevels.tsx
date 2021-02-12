@@ -352,6 +352,8 @@ const IntervalLevels = ({level, mode, props}) => {
 
     dispatch({type: 'SET_MODE', mode: 0});
     dispatch({type: 'SET_LEVEL', level: 0});
+    dispatch({type: 'SET_LEADERBOARD_MODE', mode: 2});
+
     props.navigation.navigate('LEADER BOARD');
   };
 
@@ -822,7 +824,13 @@ const IntervalLevels = ({level, mode, props}) => {
         // console.log('file: ' + newTracks[0].file);
         // console.log('newTracks length interval: ' + newTracks.length);
 
-        var filename = question.file.toLowerCase() + '.mp3';
+        var chordSequence = 'blocked';
+
+        if (intervalmode == 1) {
+          chordSequence = 'broken';
+        }
+
+        var filename = question.file.toLowerCase() + chordSequence + '.mp3';
         console.log('filename: ' + filename);
 
         audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {

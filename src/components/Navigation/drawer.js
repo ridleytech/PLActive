@@ -16,115 +16,115 @@ function DrawerContent(props) {
   const username = useSelector((state) => state.username);
   const accessFeature = useSelector((state) => state.accessFeature);
 
-  // const removeUserInfo = () => {
-  //   console.log('removeUserInfo drawer');
+  const removeUserInfo = () => {
+    console.log('removeUserInfo drawer');
 
-  //   deleteUser();
-  //   deleteUserID();
-  //   deleteUsername();
-  //   deletePassword();
-  //   deleteInterval();
-  //   deletePitch();
-  //   deleteBass();
-  //   deleteTriads();
-  //   dispatch({type: 'RESET_PROGRESS'});
-  // };
+    deleteUser();
+    deleteUserID();
+    deleteUsername();
+    deletePassword();
+    deleteInterval();
+    deletePitch();
+    deleteBass();
+    deleteTriads();
+    dispatch({type: 'RESET_PROGRESS'});
+  };
 
-  // const deleteUsername = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem('username');
+  const deleteUsername = async () => {
+    try {
+      await AsyncStorage.removeItem('username');
 
-  //     console.log('username deleted');
-  //   } catch (error) {
-  //     // Error saving data
-  //   }
+      console.log('username deleted');
+    } catch (error) {
+      // Error saving data
+    }
 
-  //   try {
-  //     await AsyncStorage.removeItem('user');
+    try {
+      await AsyncStorage.removeItem('user');
 
-  //     console.log('user deleted');
-  //   } catch (error) {
-  //     // Error saving data
-  //   }
-  // };
+      console.log('user deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
 
-  // const deletePassword = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem('password');
+  const deletePassword = async () => {
+    try {
+      await AsyncStorage.removeItem('password');
 
-  //     console.log('password deleted');
-  //   } catch (error) {
-  //     // Error saving data
-  //   }
-  // };
+      console.log('password deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
 
-  // const deleteUser = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem('hasUser');
+  const deleteUser = async () => {
+    try {
+      await AsyncStorage.removeItem('hasUser');
 
-  //     console.log('user deleted');
-  //   } catch (error) {
-  //     // Error saving data
-  //   }
-  // };
+      console.log('user deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
 
-  // const deleteUserID = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem('userid');
+  const deleteUserID = async () => {
+    try {
+      await AsyncStorage.removeItem('userid');
 
-  //     console.log('userid deleted');
-  //   } catch (error) {
-  //     // Error saving data
-  //   }
-  // };
+      console.log('userid deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
 
-  // const deleteInterval = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem('highestCompletedIntervalBrokenLevel');
+  const deleteInterval = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompletedIntervalBrokenLevel');
 
-  //     console.log('highestCompletedIntervalBrokenLevel deleted');
-  //   } catch (error) {
-  //     // Error saving data
-  //   }
-  // };
+      console.log('highestCompletedIntervalBrokenLevel deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
 
-  // const deletePitch = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem('highestCompletedPitchLevel');
+  const deletePitch = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompletedPitchLevel');
 
-  //     console.log('highestCompletedPitchLevel deleted');
-  //   } catch (error) {
-  //     // Error saving data
-  //   }
-  // };
+      console.log('highestCompletedPitchLevel deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
 
-  // const deleteBass = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem('highestCompletedBassLevel');
+  const deleteBass = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompletedBassLevel');
 
-  //     console.log('highestCompletedBassLevel deleted');
-  //   } catch (error) {
-  //     // Error saving data
-  //   }
-  // };
+      console.log('highestCompletedBassLevel deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
 
-  // const deleteTriads = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem('highestCompletedTriadsLevelBroken');
+  const deleteTriads = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompletedTriadsLevelBroken');
 
-  //     console.log('highestCompletedTriadsLevelBroken deleted');
-  //   } catch (error) {
-  //     // Error saving data
-  //   }
+      console.log('highestCompletedTriadsLevelBroken deleted');
+    } catch (error) {
+      // Error saving data
+    }
 
-  //   try {
-  //     await AsyncStorage.removeItem('highestCompletedTriadsLevelBlocked');
+    try {
+      await AsyncStorage.removeItem('highestCompletedTriadsLevelBlocked');
 
-  //     console.log('highestCompletedTriadsLevelBlocked deleted');
-  //   } catch (error) {
-  //     // Error saving data
-  //   }
-  // };
+      console.log('highestCompletedTriadsLevelBlocked deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
 
   //const {signOut, toggleTheme} = React.useContext(AuthContext);
 
@@ -155,6 +155,7 @@ function DrawerContent(props) {
             onPress={() => {
               dispatch({type: 'SET_MODE', mode: 0});
               dispatch({type: 'SET_LEVEL', level: 0});
+
               props.navigation.navigate('CHALLENGES');
             }}
           />

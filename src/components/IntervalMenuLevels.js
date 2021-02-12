@@ -106,20 +106,6 @@ const IntervalMenuLevels = ({showLevel}) => {
 
           return;
         }
-
-        // else if (level - 1 > highestCompletedIntervalBlockedLevel) {
-        //   Alert.alert(
-        //     null,
-        //     `Complete Blocked Chords Level ${
-        //       highestCompletedIntervalBlockedLevel + 1
-        //     } to proceed.`,
-        //     [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-        //     {cancelable: false},
-        //   );
-
-        //   return;
-
-        // }
       } else {
         console.log(
           'highestCompletedIntervalBlockedLevel: ' +
@@ -138,19 +124,6 @@ const IntervalMenuLevels = ({showLevel}) => {
 
           return;
         }
-
-        // else if (level - 1 > highestCompletedIntervalBrokenLevel) {
-        //   Alert.alert(
-        //     null,
-        //     `Complete Broken Chords Level ${
-        //       highestCompletedIntervalBrokenLevel + 1
-        //     } to proceed.`,
-        //     [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-        //     {cancelable: false},
-        //   );
-
-        //   return;
-        // }
       }
     }
 
