@@ -26,6 +26,7 @@ function DrawerContent(props) {
     deleteInterval();
     deletePitch();
     deleteBass();
+    deleteProgression();
     deleteTriads();
     dispatch({type: 'RESET_PROGRESS'});
   };
@@ -103,6 +104,16 @@ function DrawerContent(props) {
       await AsyncStorage.removeItem('highestCompletedBassLevel');
 
       console.log('highestCompletedBassLevel deleted');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  const deleteProgression = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompleteProgressionLevel');
+
+      console.log('highestCompleteProgressionLevel deleted drawer');
     } catch (error) {
       // Error saving data
     }

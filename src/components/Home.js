@@ -21,6 +21,7 @@ import {
   setIntervalBlockedProgress,
   setPitchProgress,
   setBassProgress,
+  setProgressionProgress,
   setTriadsProgress,
   setTriadsBrokenProgress,
   setTriadsBlockedProgress,
@@ -50,8 +51,10 @@ import Footer from './Footer';
 import TriadsLevels from './TriadsLevels';
 import TriadsMenuModes from './TriadsMenuModes';
 import TriadsMenuLevels from './TriadsMenuLevels';
-import BaseMenu from './BaseMenu';
-import BaseLevels from './BaseLevels';
+import BassMenu from './BassMenu';
+import BassLevels from './BassLevels';
+import ProgressionMenu from './ProgressionMenu';
+import ProgressionLevels from './ProgressionLevels';
 //https://www.npmjs.com/package/react-native-check-box
 //cant update git
 
@@ -107,6 +110,28 @@ class Home extends Component<Props> {
 
       this.props.setBassProgress({
         highestCompletedBassLevel: value,
+      });
+    } catch (error) {
+      // Error retrieving data
+    }
+
+    try {
+      var value = await AsyncStorage.getItem(
+        'highestCompletedProgressionLevel',
+      );
+
+      if (value !== null) {
+        // We have data!!
+        console.log(`highestCompletedProgressionLevel: ${value}`);
+      } else {
+        //console.log('save default Bass data');
+
+        value = 0;
+        this.storeProgressionData(value);
+      }
+
+      this.props.setProgressionProgress({
+        highestCompletedProgressionLevel: value,
       });
     } catch (error) {
       // Error retrieving data
@@ -232,6 +257,19 @@ class Home extends Component<Props> {
       await AsyncStorage.setItem('highestCompletedBassLevel', val.toString());
 
       console.log('bass saved storage: ' + val);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  storeProgressionData = async (val) => {
+    try {
+      await AsyncStorage.setItem(
+        'highestCompletedProgressionLevel',
+        val.toString(),
+      );
+
+      console.log('progression saved storage: ' + val);
     } catch (error) {
       // Error saving data
     }
@@ -518,6 +556,10 @@ class Home extends Component<Props> {
     if (prevProps.hasProgress != this.props.hasProgress && this.props.userid) {
       console.log('hasProgress changed');
 
+      this.storeProgressionData(
+        this.props.highestCompletedProgressionLevel.toString(),
+      );
+
       this.storeBassData(this.props.highestCompletedBassLevel.toString());
       this.storePitchData(this.props.highestCompletedPitchLevel.toString());
       this.storeIntervalDataBroken(
@@ -661,7 +703,6 @@ class Home extends Component<Props> {
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
           );
-
           return;
         }
       } else if (this.props.mode == 2) {
@@ -674,7 +715,6 @@ class Home extends Component<Props> {
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
           );
-
           return;
         }
       } else if (this.props.mode == 3) {
@@ -687,7 +727,6 @@ class Home extends Component<Props> {
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
           );
-
           return;
         }
       } else if (this.props.mode == 4) {
@@ -696,6 +735,18 @@ class Home extends Component<Props> {
             null,
             `Complete level ${
               this.props.highestCompletedBassLevel + 1
+            } to proceed`,
+            [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+            {cancelable: false},
+          );
+          return;
+        }
+      } else if (this.props.mode == 5) {
+        if (level - 1 > this.props.highestCompletedProgressionLevel) {
+          Alert.alert(
+            null,
+            `Complete level ${
+              this.props.highestCompletedProgressionLevel + 1
             } to proceed`,
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
@@ -741,7 +792,7 @@ class Home extends Component<Props> {
         ) : this.props.mode == 2 &&
           this.props.level == 0 &&
           this.props.intervalmode == 0 ? (
-          <IntervalMenuModes showLevel={this.showLevel} />
+          <IntervalMenuModes showLevel={this.showLevel} key={44444} />
         ) : this.props.mode == 2 && this.props.level == 0 ? (
           <IntervalMenuLevels showLevel={this.showLevel} />
         ) : this.props.mode == 2 && this.props.level > 0 ? (
@@ -764,14 +815,22 @@ class Home extends Component<Props> {
             props={this.props}
           />
         ) : this.props.mode == 4 && this.props.level == 0 ? (
-          <BaseMenu showLevel={this.showLevel} />
+          <BassMenu showLevel={this.showLevel} />
         ) : this.props.mode == 4 && this.props.level > 0 ? (
-          <BaseLevels
+          <BassLevels
             level={this.props.level}
             mode={this.props.mode}
             props={this.props}
           />
-        ) : this.props.mode == 5 ? (
+        ) : this.props.mode == 5 && this.props.level == 0 ? (
+          <ProgressionMenu showLevel={this.showLevel} />
+        ) : this.props.mode == 5 && this.props.level > 0 ? (
+          <ProgressionLevels
+            level={this.props.level}
+            mode={this.props.mode}
+            props={this.props}
+          />
+        ) : this.props.mode == 6 ? (
           <SignIn />
         ) : null}
 
@@ -801,6 +860,7 @@ const mapStateToProps = (state) => {
       state.highestCompletedIntervalBlockedLevel,
     highestCompletedTriadsLevel: state.highestCompletedTriadsLevel,
     highestCompletedBassLevel: state.highestCompletedBassLevel,
+    highestCompletedProgressionLevel: state.highestCompletedProgressionLevel,
     highestCompletedTriadsBlockedLevel:
       state.highestCompletedTriadsBlockedLevel,
     highestCompletedTriadsBrokenLevel: state.highestCompletedTriadsBrokenLevel,
@@ -821,12 +881,14 @@ export default connect(mapStateToProps, {
   setLevel,
   setMode,
   setPitchProgress,
+  setProgressionProgress,
   setBassProgress,
   setIntervalBrokenProgress,
   setIntervalBlockedProgress,
   setTriadsBrokenProgress,
   setTriadsBlockedProgress,
   setTriadsProgress,
+
   getProgressData,
   manageGraph,
   login,

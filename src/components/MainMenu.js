@@ -24,6 +24,7 @@ const MainMenu = ({setMode}) => {
     'Interval Training',
     'Triads and Sevenths',
     'Bassline Training',
+    'Progression Training',
   ];
 
   const loggedIn = useSelector((state) => state.loggedIn);
@@ -45,6 +46,9 @@ const MainMenu = ({setMode}) => {
   );
   const highestCompletedBassLevel = useSelector(
     (state) => state.highestCompletedBassLevel,
+  );
+  const highestCompletedProgressionLevel = useSelector(
+    (state) => state.highestCompletedProgressionLevel,
   );
 
   const opacity = useState(new Animated.Value(0))[0];
@@ -196,6 +200,12 @@ const MainMenu = ({setMode}) => {
                 }
               } else if (index == 3) {
                 if (highestCompletedBassLevel < 4) {
+                  icon = null;
+                } else {
+                  icon = checkIcon;
+                }
+              } else if (index == 4) {
+                if (highestCompletedProgressionLevel < 4) {
                   icon = null;
                 } else {
                   icon = checkIcon;

@@ -26,6 +26,7 @@ class Logout extends Component<Props> {
     this.deleteInterval();
     this.deletePitch();
     this.deleteBass();
+    this.deleteProgression();
     this.deleteTriads();
   };
 
@@ -109,7 +110,17 @@ class Logout extends Component<Props> {
     try {
       await AsyncStorage.removeItem('highestCompletedBassLevel');
 
-      console.log('highestCompletedBassLevel deleted');
+      console.log('highestCompletedBassLevel deleted logout');
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  deleteProgression = async () => {
+    try {
+      await AsyncStorage.removeItem('highestCompleteProgressionLevel');
+
+      console.log('highestCompleteProgressionLevel deleted logout');
     } catch (error) {
       // Error saving data
     }

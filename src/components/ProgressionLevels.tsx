@@ -19,14 +19,11 @@ import {
 import {useDispatch, useSelector, connect} from 'react-redux';
 import Slider from '@react-native-community/slider';
 //import styles from './styles';
-import CheckBox from 'react-native-check-box';
 import data from '../data/questions.json';
-import enabledImg from '../../images/checkbox-enabled.png';
-import disabledImg from '../../images/checkbox-disabled.png';
 import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
-import ResultsViewBass from './ResultsViewBass';
+import ResultsViewProgression from './ResultsViewProgression';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {saveTestScore, saveProgress} from '../thunks/';
 
@@ -62,13 +59,11 @@ var audioClip;
 
 const {height, width} = Dimensions.get('window');
 
-const BaseLevels = ({level, mode, props}) => {
+const ProgressionLevels = ({level, mode, props}) => {
   const dispatch = useDispatch();
   const accessFeature = useSelector((state) => state.accessFeature);
-  const basemode = useSelector((state) => state.basemode);
-
-  const highestCompletedBassLevel = useSelector(
-    (state) => state.highestCompletedBassLevel,
+  const highestCompletedProgressionLevel = useSelector(
+    (state) => state.highestCompletedProgressionLevel,
   );
 
   //console.log('selectedLevel: ' + level);
@@ -88,6 +83,7 @@ const BaseLevels = ({level, mode, props}) => {
   const [answers, setAnswers] = useState(null);
   const [instructions, setInstructions] = useState(null);
   const [currentAnswerList, setCurrentAnswerList] = useState([null]);
+  const [storedData, setStoredData] = useState(null);
   const [passScore, setPassScore] = useState(0);
 
   const [selectionColors, setSelectionColors] = useState([
@@ -216,6 +212,10 @@ const BaseLevels = ({level, mode, props}) => {
   };
 
   const nextQuestion = () => {
+    if (audioClip) {
+      audioClip.release();
+    }
+
     var currentQuestion1 = currentQuestionInd;
 
     setSelectionColors([
@@ -260,7 +260,7 @@ const BaseLevels = ({level, mode, props}) => {
 
           //audioClip.play();
 
-          audioClip.setCategory('Playback');
+          //audioClip.setCategory('Playback');
         });
       }
       setCurrentAnswerList([
@@ -275,7 +275,7 @@ const BaseLevels = ({level, mode, props}) => {
         '',
       ]);
       setCurrentQuestionInd(currentQuestion1);
-      populateAnswers(questionList, currentQuestion1);
+      //populateAnswers(questionList, currentQuestion1);
     } else {
       console.log('set quiz finished');
       setisQuizTimerActive(false);
@@ -287,17 +287,34 @@ const BaseLevels = ({level, mode, props}) => {
   //init load
 
   useEffect(() => {
-    if (level > 0) {
-      // console.log('on load int');
-      // console.log('loadCount int: ' + loadCount);
+    // if (level > 0) {
+    //   // console.log('on load int');
+    //   // console.log('loadCount int: ' + loadCount);
 
-      var lc = loadCount;
-      lc++;
-      setLoadCount(lc);
-    }
+    // }
+
+    // var lc = loadCount;
+    // lc++;
+    // setLoadCount(lc);
+
+    Sound.setCategory('Playback');
 
     populateInstructions();
+    retrieveTestData();
   }, []);
+
+  useEffect(() => {
+    if (quizStarted) {
+      storeTestData();
+    }
+  }, [answerList]);
+
+  useEffect(() => {
+    if (storedData != null) {
+      console.log('got the test data. resume quiz');
+      resumeQuiz();
+    }
+  }, [storedData]);
 
   useEffect(() => {
     console.log('currentAnswerList: ' + currentAnswerList);
@@ -306,20 +323,29 @@ const BaseLevels = ({level, mode, props}) => {
   const populateInstructions = () => {
     console.log('populate instructions: ' + level);
 
-    var instructions; // = data.Bass.level3Instructions;
+    var instructions; // = data.Progression.level3Instructions;
 
     if (level == 1) {
-      instructions = shuffle(data.Bass.level1Instructions);
-      setPassScore(data.Bass.level1PassScore);
+      instructions = data.Progression.level1Instructions;
+      setPassScore(data.Progression.level1PassScore);
     } else if (level == 2) {
-      instructions = shuffle(data.Bass.level2Instructions);
-      setPassScore(data.Bass.level2PassScore);
+      instructions = data.Progression.level2Instructions;
+      setPassScore(data.Progression.level2PassScore);
     } else if (level == 3) {
-      instructions = shuffle(data.Bass.level3Instructions);
-      setPassScore(data.Bass.level3PassScore);
+      instructions = data.Progression.level3Instructions;
+      setPassScore(data.Progression.level3PassScore);
     } else if (level == 4) {
-      instructions = shuffle(data.Bass.level4Instructions);
-      setPassScore(data.Bass.level4PassScore);
+      instructions = data.Progression.level4Instructions;
+      setPassScore(data.Progression.level4PassScore);
+    } else if (level == 5) {
+      instructions = data.Progression.level5Instructions;
+      setPassScore(data.Progression.level5PassScore);
+    } else if (level == 6) {
+      instructions = data.Progression.level6Instructions;
+      setPassScore(data.Progression.level6PassScore);
+    } else if (level == 7) {
+      instructions = data.Progression.level7Instructions;
+      setPassScore(data.Progression.level7PassScore);
     }
 
     setInstructions(instructions);
@@ -351,12 +377,14 @@ const BaseLevels = ({level, mode, props}) => {
 
       console.log(`per levels: ${per} passScore: ${passScore}`);
 
+      removeTestData();
+
       if (per >= passScore) {
         console.log('store data');
 
         dispatch({
-          type: 'SET_BASS_PROGRESS',
-          level: {highestCompletedBassLevel: level.toString()},
+          type: 'SET_PROGRESSION_PROGRESS',
+          level: {highestCompletedProgressionLevel: level.toString()},
         });
 
         if (!loggedIn) {
@@ -388,7 +416,7 @@ const BaseLevels = ({level, mode, props}) => {
 
     dispatch({type: 'SET_MODE', mode: 0});
     dispatch({type: 'SET_LEVEL', level: 0});
-    dispatch({type: 'SET_LEADERBOARD_MODE', mode: 4});
+    dispatch({type: 'SET_LEADERBOARD_MODE', mode: 5});
     props.navigation.navigate('LEADER BOARD');
   };
 
@@ -469,7 +497,7 @@ const BaseLevels = ({level, mode, props}) => {
 
     var fca = currentAnswerList.filter(filterBlanks);
 
-    //console.log('fca: ' + fca);
+    console.log('fca: ' + fca);
 
     currentQuestion.userAnswer = fca;
 
@@ -569,7 +597,7 @@ const BaseLevels = ({level, mode, props}) => {
 
     dispatch({
       type: 'SET_INTERVAL_PROGRESS',
-      level: {highestCompletedBassLevel: level.toString()},
+      level: {highestCompletedProgressionLevel: level.toString()},
     });
 
     setCorrectAnswers(12);
@@ -593,7 +621,7 @@ const BaseLevels = ({level, mode, props}) => {
             dispatch({type: 'SET_LEVEL', level: 0});
             props.navigation.navigate('CHALLENGES');
           } else {
-            dispatch({type: 'SET_MODE', mode: 4});
+            dispatch({type: 'SET_MODE', mode: 5});
             dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
 
             console.log(`set level: ${currentLevel + 1}`);
@@ -604,12 +632,6 @@ const BaseLevels = ({level, mode, props}) => {
         }
       } else {
         //upgrade();
-
-        // setTimeout(() => {
-        //   dispatch({type: 'SET_MODE', mode: 0});
-        //   dispatch({type: 'SET_LEVEL', level: 0});
-        // }, 1000);
-
         //show login
 
         if (accessFeature > 0) {
@@ -618,7 +640,7 @@ const BaseLevels = ({level, mode, props}) => {
           dispatch({type: 'SHOW_LOGIN'});
           props.navigation.navigate('CHALLENGES');
         } else {
-          dispatch({type: 'SET_MODE', mode: 4});
+          dispatch({type: 'SET_MODE', mode: 5});
           dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
 
           console.log(`set level: ${currentLevel + 1}`);
@@ -634,51 +656,58 @@ const BaseLevels = ({level, mode, props}) => {
   };
 
   const storeData = async (level) => {
-    console.log(`highestCompletedBassLevel: ${level}`);
+    console.log(`highestCompletedProgressionLevel: ${level}`);
 
-    if (level < highestCompletedBassLevel) {
+    if (level < highestCompletedProgressionLevel) {
       console.log('less than highest level. stop save');
       return;
     }
 
     try {
-      console.log('try to save highestCompletedBassLevel');
-      await AsyncStorage.setItem('highestCompletedBassLevel', level.toString());
+      console.log('try to save highestCompletedProgressionLevel');
+      await AsyncStorage.setItem(
+        'highestCompletedProgressionLevel',
+        level.toString(),
+      );
 
-      console.log('highestCompletedBassLevel saved');
+      console.log('highestCompletedProgressionLevel saved');
     } catch (error) {
-      console.log('highestCompletedBassLevel not saved');
+      console.log('highestCompletedProgressionLevel not saved');
       // Error saving data
     }
   };
 
   const populateAnswers = (questions, ind) => {
-    //console.log('populateAnswers');
-    var answersData; // = shuffle(data.Bass.level3Answers);
+    console.log('populateAnswers');
+    var answersData; // = shuffle(data.Progression.level3Answers);
 
     if (level == 1) {
-      answersData = shuffle(data.Bass.level1Answers);
+      answersData = shuffle(data.Progression.level1Answers);
     } else if (level == 2) {
-      answersData = shuffle(data.Bass.level2Answers);
+      answersData = shuffle(data.Progression.level2Answers);
     } else if (level == 3) {
-      answersData = shuffle(data.Bass.level3Answers);
+      answersData = shuffle(data.Progression.level3Answers);
     } else if (level == 4) {
-      answersData = shuffle(data.Bass.level4Answers);
+      answersData = shuffle(data.Progression.level4Answers);
     }
 
-    //console.log('answersData: ' + answersData);
+    console.log('answersData: ' + JSON.stringify(answersData));
 
-    var answer = questions[ind].Answer;
+    console.log('questions: ' + JSON.stringify(questions));
 
-    //console.log('question answer: ' + answer);
+    console.log('questions[ind]: ' + JSON.stringify(questions[ind]));
 
-    var answerInd = answersData.indexOf(answer);
+    // var answer = questions[ind].Answer;
 
-    //console.log('answerInd: ' + answerInd);
+    // console.log('question answer: ' + answer);
+
+    // var answerInd = answersData.indexOf(answer);
+
+    // console.log('answerInd: ' + answerInd);
 
     var answers = [];
-    var answerTxt = answersData[answerInd];
-    answers.push(answerTxt);
+    // var answerTxt = answersData[answerInd];
+    // answers.push(answerTxt);
 
     var ind = 0;
 
@@ -709,13 +738,13 @@ const BaseLevels = ({level, mode, props}) => {
     var questions = [];
 
     if (level == 1) {
-      questions = shuffle(data.Bass.level1Questions);
+      questions = shuffle(data.Progression.level1Questions);
     } else if (level == 2) {
-      questions = shuffle(data.Bass.level2Questions);
+      questions = shuffle(data.Progression.level2Questions);
     } else if (level == 3) {
-      questions = shuffle(data.Bass.level3Questions);
+      questions = shuffle(data.Progression.level3Questions);
     } else if (level == 4) {
-      questions = shuffle(data.Bass.level4Questions);
+      questions = shuffle(data.Progression.level4Questions);
     }
 
     //console.log('theAnswer: ' + answerInd);
@@ -726,7 +755,7 @@ const BaseLevels = ({level, mode, props}) => {
     setCurrentAnswer('');
     setCorrectAnswers(0);
     setAnswerList([]);
-    populateAnswers(questions, 0);
+    //populateAnswers(questions, 0);
 
     setQuizStarted(true);
     setRestarted(false);
@@ -765,10 +794,12 @@ const BaseLevels = ({level, mode, props}) => {
           return;
         }
         // loaded successfully
+        //audioClip.setCategory('Playback');
+
         console.log(
           'duration in seconds: ' +
             audioClip.getDuration() +
-            'number of channels: ' +
+            ' number of channels: ' +
             audioClip.getNumberOfChannels(),
         );
 
@@ -808,85 +839,260 @@ const BaseLevels = ({level, mode, props}) => {
     console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
   };
 
-  const debugAudio = () => {
-    console.log('debugAudio');
+  // restore current test
+
+  const retrieveTestData = async () => {
+    try {
+      var value = await AsyncStorage.getItem('progressionTestProgress' + level);
+
+      if (value !== null) {
+        // We have data!!
+        console.log(`progressionTestProgress${level}: ${value}`);
+
+        Alert.alert(
+          null,
+          `You currently have Level ${level} quiz in progress. Would you like to resume?`,
+          [
+            {text: 'YES', onPress: () => setStoredData(value)},
+            //{text: 'JOIN MEMBERSHIP', onPress: () => this.upgrade()},
+            {
+              text: 'CANCEL',
+              onPress: () => {
+                removeTestData();
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+
+        //setStoredData(value);
+      } else {
+        console.log(`no saved progressionTestProgress${level} data`);
+
+        value = 0;
+        //this.storePitchData(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
+  const removeTestData = async () => {
+    try {
+      await AsyncStorage.removeItem('progressionTestProgress' + level);
+
+      console.log(`progressionTestProgress${level} deleted`);
+    } catch (error) {
+      // Error saving data
+      console.log(`cant delete progressionTestProgress${level}`);
+    }
+  };
+
+  const storeTestData = async () => {
+    var testData = {
+      correctAnswers: correctAnswers,
+      quizTime: quizTime,
+      level: level,
+      mode: mode,
+      answerList: answerList,
+      questionList: questionList,
+    };
+
+    var formatted = JSON.stringify(testData);
+
+    console.log('storeTestData: ' + formatted);
+
+    try {
+      await AsyncStorage.setItem('progressionTestProgress' + level, formatted);
+
+      console.log(`progressionTestProgress${level} stored`);
+    } catch (error) {
+      // Error saving data
+      console.log(`cant create progressionTestProgress${level}: ` + error);
+    }
+  };
+
+  const resumeQuiz = () => {
+    console.log('resumeQuiz');
 
     setisQuizTimerActive(true);
 
-    var questions = [];
-
-    if (level == 1) {
-      questions = shuffle(data.Bass.level1Questions);
-    } else if (level == 2) {
-      questions = shuffle(data.Bass.level2Questions);
-    } else if (level == 3) {
-      questions = shuffle(data.Bass.level3Questions);
-    } else if (level == 4) {
-      questions = shuffle(data.Bass.level4Questions);
-    }
-
     //console.log('theAnswer: ' + answerInd);
 
-    console.log('base questions: ' + JSON.stringify(questions));
+    //console.log('storedData: ' + storedData);
 
-    setCurrentQuestionInd(0);
+    var json = JSON.parse(storedData);
+
+    var newQuestions = json.questionList;
+
+    //console.log('newQuestions: ' + newQuestions);
+
+    //return;
+
+    console.log('answerList: ' + JSON.stringify(json.answerList));
+
+    var currentTestIndex = json.answerList.length;
+
+    console.log('currentTestIndex: ' + currentTestIndex);
+
+    setCurrentQuestionInd(currentTestIndex);
+
     setCurrentAnswer('');
-    setCorrectAnswers(0);
-    setQuestionList(questions);
-    setAnswerList([]);
-    populateAnswers(questions, 0);
+    setCorrectAnswers(json.correctAnswers);
+
+    setQuestionList(newQuestions);
+    setAnswerList(json.answerList);
+    //populateAnswers(newQuestions[currentTestIndex], 0);
+
+    setQuizTime(json.quizTime);
 
     setQuizStarted(true);
     setRestarted(false);
     setQuizFinished(false);
 
-    if (level > 0) {
-      var newTracks = [];
+    //return;
 
-      questions.map((question) => {
-        // var ob = {
-        //   file: question.file.toLowerCase() + '.mp3',
-        // };
+    console.log('newQuestions: ' + JSON.stringify(newQuestions));
 
-        //newTracks.push(ob);
+    //if (level > 1) {
+    var newTracks = [];
 
-        //setTrackFile(newTracks[0].file);
+    newQuestions.map((question) => {
+      var ob = {
+        file: question.file.toLowerCase() + '.mp3',
+      };
 
-        // console.log('file: ' + newTracks[0].file);
-        // console.log('newTracks length base: ' + newTracks.length);
+      newTracks.push(ob);
+    });
 
-        var filename = question.file.toLowerCase() + '.mp3';
-        console.log('filename: ' + filename);
+    var file = newTracks[currentTestIndex].file;
 
-        audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
-          if (error) {
-            console.log('failed to load the sound ' + filename, error);
-            return;
-          }
-          // loaded successfully
-          console.log('file ' + filename + ' loaded');
-          audioClip.setCategory('Playback');
+    setTrackFile(file);
 
-          //setTrackInfo({position: 0, duration: audioClip.getDuration()});
-          //audioClip.play();
-        });
-      });
+    console.log('file: ' + file);
+    console.log('newTracks length triads: ' + newTracks.length);
 
-      //setCanPlay(true);
-    }
+    audioClip = new Sound(file, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound ' + file, error);
+        return;
+      }
+      console.log('file loaded successfully: ' + file);
 
-    // setCurrentTrack({
-    //   name: questions[0].file,
-    // });
+      //audioClip.setCategory('Playback');
 
-    // //console.log('questions: ' + JSON.stringify(questions));
+      // loaded successfully
+      console.log(
+        'duration in seconds: ' +
+          audioClip.getDuration() +
+          ' number of channels: ' +
+          audioClip.getNumberOfChannels(),
+      );
 
-    // var question = questions[0];
+      setTrackInfo({position: 0, duration: audioClip.getDuration()});
 
-    // console.log('question: ' + JSON.stringify(question));
-    // console.log('newTracks: ' + JSON.stringify(newTracks));
-    // console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
+      //audioClip.play();
+    });
+
+    setCurrentTrack({
+      name: newQuestions[currentTestIndex].file,
+    });
+
+    console.log('newTracks: ' + JSON.stringify(newTracks));
+    //}
+
+    setCanPlay(true);
+
+    //console.log('questions: ' + JSON.stringify(questions));
+
+    var question = newQuestions[currentTestIndex];
+
+    console.log('question: ' + JSON.stringify(question));
+    console.log('theAnswer: ' + JSON.stringify(question.Answer));
+
+    setCurrentAnswerList([question.Answers[0], '', '', '', '', '', '', '', '']);
   };
+
+  // const debugAudio = () => {
+  //   console.log('debugAudio');
+
+  //   setisQuizTimerActive(true);
+
+  //   var questions = [];
+
+  //   if (level == 1) {
+  //     questions = shuffle(data.Progression.level1Questions);
+  //   } else if (level == 2) {
+  //     questions = shuffle(data.Progression.level2Questions);
+  //   } else if (level == 3) {
+  //     questions = shuffle(data.Progression.level3Questions);
+  //   } else if (level == 4) {
+  //     questions = shuffle(data.Progression.level4Questions);
+  //   }
+
+  //   //console.log('theAnswer: ' + answerInd);
+
+  //   console.log('base questions: ' + JSON.stringify(questions));
+
+  //   setCurrentQuestionInd(0);
+  //   setCurrentAnswer('');
+  //   setCorrectAnswers(0);
+  //   setQuestionList(questions);
+  //   setAnswerList([]);
+  //   //populateAnswers(questions, 0);
+
+  //   setQuizStarted(true);
+  //   setRestarted(false);
+  //   setQuizFinished(false);
+
+  //   if (level > 0) {
+  //     var newTracks = [];
+
+  //     questions.map((question) => {
+  //       // var ob = {
+  //       //   file: question.file.toLowerCase() + '.mp3',
+  //       // };
+
+  //       //newTracks.push(ob);
+
+  //       //setTrackFile(newTracks[0].file);
+
+  //       // console.log('file: ' + newTracks[0].file);
+  //       // console.log('newTracks length base: ' + newTracks.length);
+
+  //       var filename = question.file.toLowerCase() + '.mp3';
+  //       console.log('filename: ' + filename);
+
+  //       audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+  //         if (error) {
+  //           console.log('failed to load the sound ' + filename, error);
+  //           return;
+  //         }
+  //         // loaded successfully
+  //         console.log('file ' + filename + ' loaded');
+
+  //         //audioClip.setCategory('Playback');
+
+  //         //setTrackInfo({position: 0, duration: audioClip.getDuration()});
+  //         //audioClip.play();
+  //       });
+  //     });
+
+  //     //setCanPlay(true);
+  //   }
+
+  //   // setCurrentTrack({
+  //   //   name: questions[0].file,
+  //   // });
+
+  //   // //console.log('questions: ' + JSON.stringify(questions));
+
+  //   // var question = questions[0];
+
+  //   // console.log('question: ' + JSON.stringify(question));
+  //   // console.log('newTracks: ' + JSON.stringify(newTracks));
+  //   // console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
+  // };
 
   const hasLetter = (inputtxt) => {
     console.log('inputtxt: ' + inputtxt);
@@ -942,7 +1148,7 @@ const BaseLevels = ({level, mode, props}) => {
     setCanAnswer(true);
   };
 
-  var modename = 'Baseline Training';
+  var modename = 'Progression Training';
 
   //console.log('IL modename: ' + modename);
 
@@ -970,7 +1176,7 @@ const BaseLevels = ({level, mode, props}) => {
                   color: '#3AB24A',
                   width: '95%',
                 }}>
-                Quiz - Bassline Training Level {level}
+                Quiz - Progression Training Level {level}
               </Text>
 
               {/* <Text style={styles.scaleHeader}>C Major Scale</Text> */}
@@ -1038,8 +1244,8 @@ const BaseLevels = ({level, mode, props}) => {
                   marginBottom: 15,
                   fontFamily: 'Helvetica Neue',
                 }}>
-                Using only your ear, fill in the notes played in the audio
-                below. You are given the first note for reference.
+                Listen to the audio and write the progression below using the
+                number system; write one number per box.
               </Text>
 
               {level > 0 ? (
@@ -1114,7 +1320,7 @@ const BaseLevels = ({level, mode, props}) => {
                     //backgroundColor: 'yellow',
                   }}>
                   <TextInput
-                    maxLength={2}
+                    maxLength={4}
                     ref={txt0}
                     onChangeText={(text) => changeVal(text, 0)}
                     style={[
@@ -1125,7 +1331,7 @@ const BaseLevels = ({level, mode, props}) => {
                     {questionList[currentQuestionInd].Answers[0]}
                   </TextInput>
                   <TextInput
-                    maxLength={2}
+                    maxLength={4}
                     ref={txt1}
                     onChangeText={(text) => changeVal(text, 1)}
                     style={[
@@ -1135,11 +1341,11 @@ const BaseLevels = ({level, mode, props}) => {
                         backgroundColor: selectionColors[1],
                       },
                     ]}
-                    key={1}>
+                    key={'1a'}>
                     {currentAnswerList[1]}
                   </TextInput>
                   <TextInput
-                    maxLength={2}
+                    maxLength={4}
                     ref={txt2}
                     onChangeText={(text) => changeVal(text, 2)}
                     style={[
@@ -1149,12 +1355,12 @@ const BaseLevels = ({level, mode, props}) => {
                         backgroundColor: selectionColors[2],
                       },
                     ]}
-                    key={2}>
+                    key={'2a'}>
                     {currentAnswerList[2]}
                   </TextInput>
 
                   <TextInput
-                    maxLength={2}
+                    maxLength={4}
                     ref={txt3}
                     onChangeText={(text) => changeVal(text, 3)}
                     style={[
@@ -1167,11 +1373,11 @@ const BaseLevels = ({level, mode, props}) => {
                         backgroundColor: selectionColors[3],
                       },
                     ]}
-                    key={3}>
+                    key={'3a'}>
                     {currentAnswerList[3]}
                   </TextInput>
                   <TextInput
-                    maxLength={2}
+                    maxLength={4}
                     ref={txt4}
                     onChangeText={(text) => changeVal(text, 4)}
                     style={[
@@ -1184,11 +1390,11 @@ const BaseLevels = ({level, mode, props}) => {
                         backgroundColor: selectionColors[4],
                       },
                     ]}
-                    key={4}>
+                    key={'4a'}>
                     {currentAnswerList[4]}
                   </TextInput>
                   <TextInput
-                    maxLength={2}
+                    maxLength={4}
                     ref={txt5}
                     onChangeText={(text) => changeVal(text, 5)}
                     style={[
@@ -1200,11 +1406,11 @@ const BaseLevels = ({level, mode, props}) => {
                         backgroundColor: selectionColors[5],
                       },
                     ]}
-                    key={5}>
+                    key={'5a'}>
                     {currentAnswerList[5]}
                   </TextInput>
                   <TextInput
-                    maxLength={2}
+                    maxLength={4}
                     ref={txt6}
                     onChangeText={(text) => changeVal(text, 6)}
                     style={[
@@ -1217,11 +1423,11 @@ const BaseLevels = ({level, mode, props}) => {
                         backgroundColor: selectionColors[6],
                       },
                     ]}
-                    key={6}>
+                    key={'6a'}>
                     {currentAnswerList[6]}
                   </TextInput>
                   <TextInput
-                    maxLength={2}
+                    maxLength={4}
                     ref={txt7}
                     onChangeText={(text) => changeVal(text, 7)}
                     style={[
@@ -1234,11 +1440,11 @@ const BaseLevels = ({level, mode, props}) => {
                         backgroundColor: selectionColors[7],
                       },
                     ]}
-                    key={7}>
+                    key={'7a'}>
                     {currentAnswerList[7]}
                   </TextInput>
                   <TextInput
-                    maxLength={2}
+                    maxLength={4}
                     ref={txt8}
                     onChangeText={(text) => changeVal(text, 8)}
                     style={[
@@ -1250,7 +1456,7 @@ const BaseLevels = ({level, mode, props}) => {
                         backgroundColor: selectionColors[8],
                       },
                     ]}
-                    key={8}>
+                    key={'8a'}>
                     {currentAnswerList[8]}
                   </TextInput>
                   <View style={{height: 500, width: 20}} />
@@ -1283,7 +1489,7 @@ const BaseLevels = ({level, mode, props}) => {
           </View>
         </>
       ) : quizFinished ? (
-        <ResultsViewBass
+        <ResultsViewProgression
           avgScore={80}
           answerList={answerList}
           correctAnswers={correctAnswers}
@@ -1308,9 +1514,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-//export default BaseLevels;
+//export default ProgressionLevels;
 export default connect(mapStateToProps, {saveTestScore, saveProgress})(
-  BaseLevels,
+  ProgressionLevels,
 );
 
 const styles = StyleSheet.create({
@@ -1335,7 +1541,8 @@ const styles = StyleSheet.create({
   inputTxt: {
     height: 50,
     //backgroundColor: 'lightgray',
-    width: width > 450 ? '32.5%' : '31.5%',
+    //width: width > 450 ? '32.5%' : '31.5%',
+    width: width > 450 ? '32.5%' : width < 400 ? '30.5%' : '31.5%',
     textAlign: 'center',
     fontSize: 30,
     marginBottom: 10,

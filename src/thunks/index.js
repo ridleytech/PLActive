@@ -125,7 +125,10 @@ export const saveTestScore = (score, duration) => (dispatch, getState) => {
 };
 
 export const saveProgress = () => (dispatch, getState) => {
-  let highestInterval = getState().highestCompletedIntervalBrokenLevel;
+  let highestcompletedintervalbroken = getState()
+    .highestCompletedIntervalBrokenLevel;
+  let highestcompletedintervalblocked = getState()
+    .highestCompletedIntervalBlockedLevel;
   let highestPitch = getState().highestCompletedPitchLevel;
   let highestBass = getState().highestCompletedBassLevel;
   let highestlevelcompletedblocked = getState()
@@ -138,7 +141,9 @@ export const saveProgress = () => (dispatch, getState) => {
   console.log(
     'saveProgress: ' +
       JSON.stringify({
-        highestInterval: highestInterval,
+        //highestInterval: highestInterval,
+        highestcompletedintervalbroken: highestcompletedintervalbroken,
+        highestcompletedintervalblocked: highestcompletedintervalblocked,
         highestPitch: highestPitch,
         highestBass: highestBass,
         highestlevelcompletedblocked: highestlevelcompletedblocked,
@@ -152,7 +157,9 @@ export const saveProgress = () => (dispatch, getState) => {
   fetch(url + 'save-progress.php', {
     method: 'POST',
     body: JSON.stringify({
-      highestInterval: highestInterval,
+      //highestInterval: highestInterval,
+      highestcompletedintervalbroken: highestcompletedintervalbroken,
+      highestcompletedintervalblocked: highestcompletedintervalblocked,
       highestPitch: highestPitch,
       highestBass: highestBass,
       highestlevelcompletedblocked: highestlevelcompletedblocked,

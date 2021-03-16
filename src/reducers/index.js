@@ -25,6 +25,7 @@ const inititalState = {
   highestCompletedIntervalBlockedLevel: 0,
   highestCompletedPitchLevel: 0,
   highestCompletedBassLevel: 0,
+  highestCompletedProgressionLevel: 0,
   //highestCompletedTriadsLevel: 0,
   highestCompletedTriadsBlockedLevel: 0,
   highestCompletedTriadsBrokenLevel: 0,
@@ -43,7 +44,7 @@ const inititalState = {
   leaderData: [],
   url: url,
   accessFeature: 0,
-  currentVersion: 1.1,
+  currentVersion: 1.14,
   latestVersion: null,
   hasProgress: null,
   loginErrorMsg: '',
@@ -247,7 +248,7 @@ export default (state = inititalState, action) => {
 
       return {
         ...state,
-        mode: 5,
+        mode: 6,
         previousMode: pm,
       };
 
@@ -342,6 +343,26 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         highestCompletedBassLevel: levelVal,
+      };
+
+    case 'SET_PROGRESSION_PROGRESS':
+      //console.log('action: ' + JSON.stringify(action));
+
+      var completedLevel = parseInt(
+        action.level.highestCompletedProgressionLevel,
+      );
+      var levelVal = state.highestCompletedProgressionLevel;
+
+      // console.log(`sp completed: ${completedLevel}
+      // levelVal: ${levelVal}`);
+
+      if (completedLevel > state.highestCompletedProgressionLevel) {
+        levelVal = completedLevel;
+      }
+
+      return {
+        ...state,
+        highestCompletedProgressionLevel: levelVal,
       };
 
     case 'SET_INTERVAL_BROKEN_PROGRESS':

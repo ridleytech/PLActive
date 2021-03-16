@@ -152,6 +152,10 @@ const PlayerMidi = () => {
   };
 
   const nextQuestion = () => {
+    if (audioClip) {
+      audioClip.release();
+    }
+
     var currentQuestion1 = currentQuestionInd;
 
     if (currentQuestion1 < questionList.length - 1) {

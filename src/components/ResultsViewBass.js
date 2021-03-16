@@ -29,7 +29,7 @@ const ResultsViewBass = ({
   var per = parseInt((correctAnswers / total) * 100);
 
   const viewResults = () => {
-    console.log('viewersults triads');
+    console.log('viewresults bass');
     setResults({show: true});
   };
 

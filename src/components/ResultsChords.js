@@ -9,7 +9,7 @@ import {
 
 import {useDispatch, useSelector} from 'react-redux';
 
-const ResultsViewTriads = ({
+const ResultsChords = ({
   correctAnswers,
   total,
   mainMenu,
@@ -29,7 +29,7 @@ const ResultsViewTriads = ({
   var per = parseInt((correctAnswers / total) * 100);
 
   const viewResults = () => {
-    console.log('viewresults triads');
+    console.log('viewResults pitch');
     setResults({show: true});
   };
 
@@ -39,7 +39,9 @@ const ResultsViewTriads = ({
 
   // ' + JSON.stringify(answerList));
 
-  //console.log('per: ' + per);
+  console.log('answers: ' + JSON.stringify(answerList));
+
+  console.log('per: ' + per);
 
   //per = 80;
 
@@ -196,9 +198,12 @@ const ResultsViewTriads = ({
 
           {showStuff.show === true ? (
             <View style={{marginTop: 20}}>
-              <Text style={{marginTop: 20}}>
-                Identify the quality of the chord.
-              </Text>
+              {mode == 1 ? (
+                <Text style={{marginTop: 20}}>
+                  Using your keyboard, listen to the audio below then write the
+                  correct note letter name in the box below.
+                </Text>
+              ) : null}
 
               {answerList.map((ob, index) => {
                 return (
@@ -212,8 +217,10 @@ const ResultsViewTriads = ({
                       }}>
                       Question {index + 1}.
                     </Text>
-
-                    {ob.Answer === ob.userAnswer ? (
+                    {ob.Answers.includes(
+                      ob.userAnswer.charAt(0).toUpperCase() +
+                        ob.userAnswer.slice(1),
+                    ) ? (
                       <View
                         style={[
                           styles.correct,
@@ -226,7 +233,7 @@ const ResultsViewTriads = ({
                             fontFamily: 'Helvetica Neue',
                             fontWeight: 'bold',
                           }}>
-                          Correct: {ob.Answer}
+                          Correct: {ob.userAnswer}
                         </Text>
                       </View>
                     ) : (
@@ -258,7 +265,7 @@ const ResultsViewTriads = ({
                               fontFamily: 'Helvetica Neue',
                               fontWeight: 'bold',
                             }}>
-                            Correct Answer: {ob.Answer}
+                            Correct Answer: {ob.file.replace('2', '')}
                           </Text>
                         </View>
                       </>
@@ -292,9 +299,9 @@ const ResultsViewTriads = ({
           }}>
           {!loggedIn && passed && accessFeature > 0
             ? ' LOGIN TO START LEVEL ' + (level + 1)
-            : passed && level < 10
+            : passed && level < 3
             ? ' START LEVEL ' + (level + 1)
-            : passed && level == 10
+            : passed && level == 3
             ? 'LEVELS COMPLETED'
             : 'RESTART QUIZ'}
         </Text>
@@ -320,4 +327,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResultsViewTriads;
+export default ResultsChords;

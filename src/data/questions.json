@@ -1179,5 +1179,428 @@
     ],
     "level4PassScore": 91,
     "level4Answers": []
+  },
+  "Progression": {
+    "level1Questions": [
+      {
+        "Answers": ["1", "4", "1"],
+        "file": "p11"
+      },
+      {
+        "Answers": ["2", "5", "1"],
+        "file": "p12"
+      },
+      {
+        "Answers": ["1", "5", "1"],
+        "file": "p13"
+      },
+      {
+        "Answers": ["4", "5", "1"],
+        "file": "p14"
+      },
+      {
+        "Answers": ["4", "5", "6"],
+        "file": "p15"
+      },
+      {
+        "Answers": ["5", "4", "1"],
+        "file": "p16"
+      },
+      {
+        "Answers": ["3", "2", "1"],
+        "file": "p17"
+      },
+      {
+        "Answers": ["2", "3", "1"],
+        "file": "p18"
+      },
+      {
+        "Answers": ["1", "2", "5"],
+        "file": "p19"
+      },
+      {
+        "Answers": ["4", "3", "2"],
+        "file": "p110"
+      },
+      {
+        "Answers": ["1", "7", "6"],
+        "file": "p111"
+      },
+      {
+        "Answers": ["4", "2", "1"],
+        "file": "p112"
+      }
+    ],
+    "level1Instructions": [
+      "Using only your ear, fill in the numbers for the progressions played in the audio. You will be given the first chord for reference.",
+      "This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level1PassScore": 91,
+    "level1Answers": [],
+    "level2Questions": [
+      {
+        "Answers": ["1", "4", "5", "1"],
+        "file": "p21"
+      },
+      {
+        "Answers": ["1", "5", "4", "5"],
+        "file": "p22"
+      },
+      {
+        "Answers": ["1", "6", "2", "5"],
+        "file": "p23"
+      },
+      {
+        "Answers": ["1", "3", "2", "5"],
+        "file": "p24"
+      },
+      {
+        "Answers": ["1", "5", "6", "4"],
+        "file": "p25"
+      },
+      {
+        "Answers": ["4", "6", "5", "1"],
+        "file": "p26"
+      },
+      {
+        "Answers": ["6", "4", "5", "1"],
+        "file": "p27"
+      },
+      {
+        "Answers": ["2", "6", "4", "5"],
+        "file": "p28"
+      },
+      {
+        "Answers": ["3", "2", "6", "5"],
+        "file": "p29"
+      },
+      {
+        "Answers": ["5", "2", "4", "1"],
+        "file": "p210"
+      },
+      {
+        "Answers": ["7", "1", "2", "6"],
+        "file": "p211"
+      },
+      {
+        "Answers": ["4", "2", "3", "6"],
+        "file": "p212"
+      }
+    ],
+    "level2Instructions": [
+      "Using only your ear, fill in the numbers for the progressions played in the audio. You will be given the first chord for reference.",
+      "This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level2PassScore": 91,
+    "level2Answers": [],
+    "level3Questions": [
+      {
+        "Answers": ["1", "3", "6", "2", "5"],
+        "file": "p31"
+      },
+      {
+        "Answers": ["1", "5", "4", "5", "1"],
+        "file": "p32"
+      },
+      {
+        "Answers": ["1", "4", "2", "5", "1"],
+        "file": "p33"
+      },
+      {
+        "Answers": ["1", "2", "3", "6", "4"],
+        "file": "p34"
+      },
+      {
+        "Answers": ["1", "6", "5", "4", "1"],
+        "file": "p35"
+      },
+      {
+        "Answers": ["1", "7", "6", "4", "1"],
+        "file": "p36"
+      },
+      {
+        "Answers": ["2", "5", "3", "6", "4"],
+        "file": "p37"
+      },
+      {
+        "Answers": ["2", "3", "5", "2", "4"],
+        "file": "p38"
+      },
+      {
+        "Answers": ["2", "4", "3", "7", "1"],
+        "file": "p39"
+      },
+      {
+        "Answers": ["3", "5", "2", "4", "1"],
+        "file": "p310"
+      },
+      {
+        "Answers": ["3", "6", "2", "5", "1"],
+        "file": "p311"
+      },
+      {
+        "Answers": ["3", "2", "6", "4", "5"],
+        "file": "p312"
+      }
+    ],
+    "level3Instructions": [
+      "Using only your ear, fill in the numbers for the progressions played in the audio. You will be given the first chord for reference.",
+      "This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level3PassScore": 91,
+    "level3Answers": [],
+    "level4Questions": [
+      {
+        "Answers": ["Cmaj7", "Fmaj7", "Cmaj7"],
+        "file": "p41"
+      },
+      {
+        "Answers": ["Dm7", "G7", "Cmaj7"],
+        "file": "p42"
+      },
+      {
+        "Answers": ["Cmaj7", "G7", "Cmaj7"],
+        "file": "p43"
+      },
+      {
+        "Answers": ["Fmaj7", "G7", "Cmaj7"],
+        "file": "p44"
+      },
+      {
+        "Answers": ["Fmaj7", "G7", "Am7"],
+        "file": "p45"
+      },
+      {
+        "Answers": ["G7", "Fmaj7", "Cmaj7"],
+        "file": "p46"
+      },
+      {
+        "Answers": ["Em7", "Dm7", "Cmaj7"],
+        "file": "p47"
+      },
+      {
+        "Answers": ["Dm7", "Em7", "Cmaj7"],
+        "file": "p48"
+      },
+      {
+        "Answers": ["Cmaj7", "Dm7", "G7"],
+        "file": "p49"
+      },
+      {
+        "Answers": ["Fmaj7", "Em7", "Dm7"],
+        "file": "p410"
+      },
+      {
+        "Answers": ["Cmaj7", "Bm7b5", "Am7"],
+        "file": "p411"
+      },
+      {
+        "Answers": ["Fmaj7", "Dm7", "Cmaj7"],
+        "file": "p412"
+      }
+    ],
+    "level4Instructions": [
+      "Listen to the chord progression below, then write the chord name and quality in the boxes.",
+      "Here are examples of how the chords should be written ( C7, Cmaj7, Cm7, Cm7b5)",
+      "You're given the first chord as a reference.",
+      "This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level4PassScore": 91,
+    "level4Answers": [],
+    "level5Questions": [
+      {
+        "Answers": ["Gmaj7", "Cmaj7", "D7", "Cmaj7"],
+        "file": "p51"
+      },
+      {
+        "Answers": ["Gmaj7", "D7", "Cmaj7", "D7"],
+        "file": "p52"
+      },
+      {
+        "Answers": ["Gmaj7", "Em7", "Am7", "D7"],
+        "file": "p53"
+      },
+      {
+        "Answers": ["Gmaj7", "Bm7", "Am7", "D7"],
+        "file": "p54"
+      },
+      {
+        "Answers": ["Gmaj7", "D7", "Em7", "Cmaj7"],
+        "file": "p55"
+      },
+      {
+        "Answers": ["Cmaj7", "Em7", "D7", "Gmaj7"],
+        "file": "p56"
+      },
+      {
+        "Answers": ["Em7", "Cmaj7", "D7", "Gmaj7"],
+        "file": "p57"
+      },
+      {
+        "Answers": ["Am7", "Em7", "Cmaj7", "D7"],
+        "file": "p58"
+      },
+      {
+        "Answers": ["Bm7", "Am7", "Em7", "D7"],
+        "file": "p59"
+      },
+      {
+        "Answers": ["D7", "Am7", "Cmaj7", "Gmaj7"],
+        "file": "p510"
+      },
+      {
+        "Answers": ["F#m7b5", "Gmaj7", "Am7", "Em7"],
+        "file": "p511"
+      },
+      {
+        "Answers": ["Cmaj7", "Am7", "Bm7", "Em7"],
+        "file": "p512"
+      }
+    ],
+    "level5Instructions": [
+      "Listen to the chord progression below, then write the chord name and quality in the boxes.",
+      "Here are examples of how the chords should be written ( C7, Cmaj7, Cm7, Cm7b5)",
+      "You're given the first chord as a reference.",
+      "This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level5PassScore": 91,
+    "level5Answers": [],
+    "level6Questions": [
+      {
+        "Answers": ["Emaj7", "G#m7", "C#m7", "F#m7", "B7"],
+        "file": "p61"
+      },
+      {
+        "Answers": ["Emaj7", "B7", "Amaj7", "B7", "Emaj7"],
+        "file": "p62"
+      },
+      {
+        "Answers": ["Emaj7", "Amaj7", "F#m7", "B7", "Emaj7"],
+        "file": "p63"
+      },
+      {
+        "Answers": ["Emaj7", "F#m7", "G#m7", "C#m7", "Amaj7"],
+        "file": "p64"
+      },
+      {
+        "Answers": ["Emaj7", "C#m7", "B7", "Amaj7", "Emaj7"],
+        "file": "p65"
+      },
+      {
+        "Answers": ["Emaj7", "D#dim", "C#m7", "Amaj7", "F#m7"],
+        "file": "p66"
+      },
+      {
+        "Answers": ["F#m7", "B7", "G#m7", "C#m7", "Amaj7"],
+        "file": "p67"
+      },
+      {
+        "Answers": ["F#m7", "G#m7", "B7", "F#m7", "Amaj7"],
+        "file": "p68"
+      },
+      {
+        "Answers": ["F#m7", "Amaj", "G#m7", "Ddim7", "Emaj7"],
+        "file": "p69"
+      },
+      {
+        "Answers": ["G#m7", "B7", "F#m7", "Amaj7", "Emaj7"],
+        "file": "p610"
+      },
+      {
+        "Answers": ["G#m7", "C#m7", "F#m7", "B7", "Emaj7"],
+        "file": "p611"
+      },
+      {
+        "Answers": ["G#m7", "G#m7", "C#m7", "Amaj7", "B7"],
+        "file": "p612"
+      }
+    ],
+    "level6Instructions": [
+      "Listen to the chord progression below, then write the chord name and quality in the boxes.",
+      "Here are examples of how the chords should be written ( C7, Cmaj7, Cm7, Cm7b5)",
+      "You're given the first chord as a reference.",
+      "This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level6PassScore": 91,
+    "level6Answers": [],
+    "level7Questions": [
+      {
+        "Answers": ["Cmaj7", "E7", "A7", "D7", "G7", "Cmaj7"],
+        "file": "p71"
+      },
+      {
+        "Answers": ["C7", "G7", "F7", "G7", "Cmaj7", "A7"],
+        "file": "p72"
+      },
+      {
+        "Answers": ["Cmaj7", "F7", "D7", "G7", "Cmaj7", "E7"],
+        "file": "p73"
+      },
+      {
+        "Answers": ["C7", "D7", "E7", "A7", "F7", "G7"],
+        "file": "p74"
+      },
+      {
+        "Answers": ["C7", "A7", "G7", "F7", "Cmaj7", "D7"],
+        "file": "p75"
+      },
+      {
+        "Answers": ["Cmaj7", "Bm7b5", "E7", "A7", "F7", "D7"],
+        "file": "p76"
+      },
+      {
+        "Answers": ["Dm7", "Gmaj7", "Em7", "Am7", "Fmaj7", "Cmaj7"],
+        "file": "p77"
+      },
+      {
+        "Answers": ["Dm7", "G7", "E7", "A7", "Fmaj7", "C7"],
+        "file": "p78"
+      },
+      {
+        "Answers": ["Dm7", "F7", "Bm7b5", "E7", "A7", "G7"],
+        "file": "p79"
+      },
+      {
+        "Answers": ["Em7", "G7", "Dm7", "F7", "Cmaj7", "A7"],
+        "file": "p710"
+      },
+      {
+        "Answers": ["E7", "A7", "D7", "G7", "C7", "Bm7b5"],
+        "file": "p711"
+      },
+      {
+        "Answers": ["E7", "D7", "A7", "F7", "G7", "C7"],
+        "file": "p712"
+      }
+    ],
+    "level7Instructions": [
+      "Listen to the chord progression below, then write the chord name and quality in the boxes.",
+      "Here are examples of how the chords should be written ( C7, Cmaj7, Cm7, Cm7b5)",
+      "You're given the first chord as a reference.",
+      "This level will consist of twelve 12 questions.",
+      "You need to score a 11/12 to past the quiz."
+    ],
+    "level7PassScore": 91,
+    "level7Answers": []
+  },
+  "Chords": {
+    "C": ["C", "D", "E", "F", "G", "A", "B", "Eb", "Gb", "Ab", "Bb", "Db"],
+    "D": ["D", "E", "F", "G", "A", "B", "Eb", "Gb", "Ab", "Bb", "Db", "C"],
+    "E": ["E", "F", "G", "A", "B", "Eb", "Gb", "Ab", "Bb", "Db", "C", "D"],
+    "F": ["F", "G", "A", "B", "Eb", "Gb", "Ab", "Bb", "Db", "C", "D", "E"],
+    "G": ["G", "A", "B", "Eb", "Gb", "Ab", "Bb", "Db", "C", "D", "E", "F"],
+    "A": ["A", "B", "Eb", "Gb", "Ab", "Bb", "Db", "C", "D", "E", "F", "G"],
+    "B": ["B", "Eb", "Gb", "Ab", "Bb", "Db", "C", "D", "E", "F", "G", "A"],
+    "Eb": ["Eb", "Gb", "Ab", "Bb", "Db", "C", "D", "E", "F", "G", "A", "B"],
+    "Gb": ["Gb", "Ab", "Bb", "Db", "C", "D", "E", "F", "G", "A", "B", "Eb"],
+    "Ab": ["Ab", "Bb", "Db", "C", "D", "E", "F", "G", "A", "B", "Eb", "Gb"],
+    "Bb": ["Bb", "Db", "C", "D", "E", "F", "G", "A", "B", "Eb", "Gb", "Ab"],
+    "Db": ["Db", "C", "D", "E", "F", "G", "A", "B", "Eb", "Gb", "Ab", "Bb"]
   }
 }

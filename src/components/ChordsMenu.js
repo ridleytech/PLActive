@@ -17,15 +17,15 @@ import checkIcon from '../../images/check2.png';
 
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
-const BaseMenu = ({showLevel}) => {
-  var levels = [1, 2, 3, 4];
+const ChordsMenu = ({showLevel}) => {
+  var levels = [1, 2, 3];
 
   const loggedIn = useSelector((state) => state.loggedIn);
   const accessFeature = useSelector((state) => state.accessFeature);
   const dispatch = useDispatch();
 
-  const highestCompletedBassLevel = useSelector(
-    (state) => state.highestCompletedBassLevel,
+  const highestCompletedPitchLevel = useSelector(
+    (state) => state.highestCompletedPitchLevel,
   );
 
   const opacity = useState(new Animated.Value(0))[0];
@@ -77,7 +77,7 @@ const BaseMenu = ({showLevel}) => {
             fontWeight: 'bold',
             color: '#3AB24A',
           }}>
-          Baseline Training
+          Pitch Recognition
         </Text>
         {/* <Image source={videoImg} style={styles.video} /> */}
         <Animated.View style={{marginTop: 30, opacity: opacity}}>
@@ -111,7 +111,7 @@ const BaseMenu = ({showLevel}) => {
             {levels.map((level, index) => {
               return (
                 <TouchableOpacity
-                  //disabled={index > highestCompletedBassLevel ? true : false}
+                  //disabled={index > highestCompletedPitchLevel ? true : false}
                   onPress={() => {
                     showLevel(level);
                   }}
@@ -136,7 +136,7 @@ const BaseMenu = ({showLevel}) => {
                   {!loggedIn && accessFeature == 2 ? (
                     <Image
                       source={
-                        index < highestCompletedBassLevel
+                        index < highestCompletedPitchLevel
                           ? checkIcon
                           : index > 0
                           ? lockIcon
@@ -147,7 +147,7 @@ const BaseMenu = ({showLevel}) => {
                   ) : (
                     <Image
                       source={
-                        index < highestCompletedBassLevel ? checkIcon : null
+                        index < highestCompletedPitchLevel ? checkIcon : null
                       }
                       style={{position: 'absolute', right: 12, top: 12}}
                     />
@@ -163,4 +163,15 @@ const BaseMenu = ({showLevel}) => {
   );
 };
 
-export default BaseMenu;
+const styles = StyleSheet.create({
+  list: {
+    fontSize: 14,
+    fontFamily: 'Helvetica Neue',
+    marginBottom: 8,
+  },
+  listItem: {display: 'flex', flexDirection: 'row'},
+  video: {marginTop: 20, width: '100%'},
+  check: {marginRight: 8},
+});
+
+export default ChordsMenu;

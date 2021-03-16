@@ -205,6 +205,10 @@ const TraidsLevels = ({level, mode, props}) => {
   };
 
   const nextQuestion = () => {
+    if (audioClip) {
+      audioClip.release();
+    }
+
     var currentQuestion1 = currentQuestionInd;
 
     setSelectionColors([
@@ -234,7 +238,8 @@ const TraidsLevels = ({level, mode, props}) => {
         }
         // loaded successfully
         console.log('file ' + filename + ' loaded');
-        audioClip.setCategory('Playback');
+
+        //audioClip.setCategory('Playback');
       });
       setCurrentQuestionInd(currentQuestion1);
       populateAnswers(questionList, currentQuestion1);
@@ -249,17 +254,18 @@ const TraidsLevels = ({level, mode, props}) => {
   //init load
 
   useEffect(() => {
-    if (level > 1) {
-      // console.log('on load int');
-      // console.log('loadCount int: ' + loadCount);
+    // if (level > 1) {
+    //   // console.log('on load int');
+    //   // console.log('loadCount int: ' + loadCount);
 
-      var lc = loadCount;
-      lc++;
-      setLoadCount(lc);
-    }
+    // }
+    // var lc = loadCount;
+    // lc++;
+    // setLoadCount(lc);
+
+    Sound.setCategory('Playback');
 
     populateInstructions();
-
     retrieveTestData();
   }, []);
 
@@ -282,34 +288,34 @@ const TraidsLevels = ({level, mode, props}) => {
     var instructions; // = data.Triads.level3Instructions;
 
     if (level == 1) {
-      instructions = shuffle(data.Triads.level1Instructions);
+      instructions = data.Triads.level1Instructions;
       setPassScore(data.Triads.level1PassScore);
     } else if (level == 2) {
-      instructions = shuffle(data.Triads.level2Instructions);
+      instructions = data.Triads.level2Instructions;
       setPassScore(data.Triads.level2PassScore);
     } else if (level == 3) {
-      instructions = shuffle(data.Triads.level3Instructions);
+      instructions = data.Triads.level3Instructions;
       setPassScore(data.Triads.level3PassScore);
     } else if (level == 4) {
-      instructions = shuffle(data.Triads.level4Instructions);
+      instructions = data.Triads.level4Instructions;
       setPassScore(data.Triads.level4PassScore);
     } else if (level == 5) {
-      instructions = shuffle(data.Sevenths.level5Instructions);
+      instructions = data.Sevenths.level5Instructions;
       setPassScore(data.Sevenths.level5PassScore);
     } else if (level == 6) {
-      instructions = shuffle(data.Sevenths.level6Instructions);
+      instructions = data.Sevenths.level6Instructions;
       setPassScore(data.Sevenths.level6PassScore);
     } else if (level == 7) {
-      instructions = shuffle(data.Sevenths.level7Instructions);
+      instructions = data.Sevenths.level7Instructions;
       setPassScore(data.Sevenths.level7PassScore);
     } else if (level == 8) {
-      instructions = shuffle(data.Sevenths.level8Instructions);
+      instructions = data.Sevenths.level8Instructions;
       setPassScore(data.Sevenths.level8PassScore);
     } else if (level == 9) {
-      instructions = shuffle(data.Sevenths.level9Instructions);
+      instructions = data.Sevenths.level9Instructions;
       setPassScore(data.Sevenths.level9PassScore);
     } else if (level == 10) {
-      instructions = shuffle(data.Sevenths.level10Instructions);
+      instructions = data.Sevenths.level10Instructions;
       setPassScore(data.Sevenths.level10PassScore);
     }
 
@@ -403,8 +409,10 @@ const TraidsLevels = ({level, mode, props}) => {
       //console.log('unmount');
 
       setisQuizTimerActive(false);
+      console.log('try release audio');
 
       if (audioClip) {
+        console.log('released audio');
         audioClip.release();
         audioClip = null;
       }
@@ -535,7 +543,8 @@ const TraidsLevels = ({level, mode, props}) => {
           }
           // loaded successfully
           console.log('file ' + filename + ' loaded');
-          audioClip.setCategory('Playback');
+
+          //audioClip.setCategory('Playback');
         });
 
         //console.log('theAnswer: ' + JSON.stringify(note.Answer));
@@ -586,6 +595,8 @@ const TraidsLevels = ({level, mode, props}) => {
       }
 
       // loaded successfully
+      //audioClip.setCategory('Playback');
+
       console.log(
         'duration in seconds: ' +
           audioClip.getDuration() +
@@ -668,7 +679,8 @@ const TraidsLevels = ({level, mode, props}) => {
         }
         // loaded successfully
         console.log('file ' + filename + ' loaded');
-        audioClip.setCategory('Playback');
+
+        //audioClip.setCategory('Playback');
 
         setTimeout(() => {
           playClip();
@@ -1035,11 +1047,13 @@ const TraidsLevels = ({level, mode, props}) => {
 
   const retrieveTestData = async () => {
     try {
-      var value = await AsyncStorage.getItem('triadTestProgress' + level);
+      var value = await AsyncStorage.getItem(
+        'triadTestProgress' + triadmode + level,
+      );
 
       if (value !== null) {
         // We have data!!
-        console.log(`triadTestProgress${level}: ${value}`);
+        console.log(`triadTestProgress${triadmode}${level}: ${value}`);
 
         Alert.alert(
           null,
@@ -1059,7 +1073,7 @@ const TraidsLevels = ({level, mode, props}) => {
 
         //setStoredData(value);
       } else {
-        console.log(`no saved triadTestProgress${level} data`);
+        console.log(`no saved triadTestProgress${triadmode}${level} data`);
 
         value = 0;
         //this.storePitchData(value);
@@ -1071,12 +1085,12 @@ const TraidsLevels = ({level, mode, props}) => {
 
   const removeTestData = async () => {
     try {
-      await AsyncStorage.removeItem('triadTestProgress' + level);
+      await AsyncStorage.removeItem('triadTestProgress' + triadmode + level);
 
-      console.log(`triadTestProgress${level} deleted`);
+      console.log(`triadTestProgress${triadmode}${level} deleted`);
     } catch (error) {
       // Error saving data
-      console.log(`cant delete triadTestProgress${level}`);
+      console.log(`cant delete triadTestProgress${triadmode}${level}`);
     }
   };
 
@@ -1095,12 +1109,17 @@ const TraidsLevels = ({level, mode, props}) => {
     console.log('storeTestData: ' + formatted);
 
     try {
-      await AsyncStorage.setItem('triadTestProgress' + level, formatted);
+      await AsyncStorage.setItem(
+        'triadTestProgress' + triadmode + level,
+        formatted,
+      );
 
-      console.log(`triadTestProgress${level} stored`);
+      console.log(`triadTestProgress${triadmode}${level} stored`);
     } catch (error) {
       // Error saving data
-      console.log(`cant create triadTestProgress${level}: ` + error);
+      console.log(
+        `cant create triadTestProgress${triadmode}${level}: ` + error,
+      );
     }
   };
 
@@ -1170,6 +1189,8 @@ const TraidsLevels = ({level, mode, props}) => {
         return;
       }
       console.log('file loaded successfully: ' + file);
+
+      //audioClip.setCategory('Playback');
 
       // loaded successfully
       console.log(
@@ -1356,6 +1377,8 @@ const TraidsLevels = ({level, mode, props}) => {
       }
 
       // loaded successfully
+      //audioClip.setCategory('Playback');
+
       console.log(
         'duration in seconds: ' +
           audioClip.getDuration() +

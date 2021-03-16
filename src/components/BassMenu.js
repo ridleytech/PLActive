@@ -9,11 +9,24 @@ import {
 } from 'react-native';
 import Header from './Header';
 import {useSelector, useDispatch} from 'react-redux';
+import {getAccess} from '../thunks/';
+
+import videoImg from '../../images/instructions-placeholder.png';
+import lockIcon from '../../images/lock-icon.png';
+import checkIcon from '../../images/check2.png';
+
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
-const IntervalMenuModes = ({showLevel}) => {
-  var modes = ['Broken', 'Blocked'];
+const BassMenu = ({showLevel}) => {
+  var levels = [1, 2, 3, 4];
+
+  const loggedIn = useSelector((state) => state.loggedIn);
+  const accessFeature = useSelector((state) => state.accessFeature);
   const dispatch = useDispatch();
+
+  const highestCompletedBassLevel = useSelector(
+    (state) => state.highestCompletedBassLevel,
+  );
 
   const opacity = useState(new Animated.Value(0))[0];
 
@@ -23,10 +36,9 @@ const IntervalMenuModes = ({showLevel}) => {
     useNativeDriver: false,
   }).start();
 
-  showLevels = (mode) => {
-    console.log('show Interval mode: ' + mode);
-    dispatch({type: 'SET_INTERVAL_MODE', mode: mode});
-  };
+  // useEffect(() => {
+  //   dispatch(getAccess());
+  // }, []);
 
   const listItem = (level) => {
     console.log('level: ' + JSON.stringify(level.item));
@@ -65,38 +77,8 @@ const IntervalMenuModes = ({showLevel}) => {
             fontWeight: 'bold',
             color: '#3AB24A',
           }}>
-          Interval Training
+          Bassline Training
         </Text>
-
-        <View
-          style={{
-            marginTop: 10,
-            display: 'flex',
-            //flexDirection: 'row',
-            //backgroundColor: 'yellow',
-          }}>
-          <Text>Select your mode of exercise below.</Text>
-          <Text
-            style={{
-              marginTop: 10,
-              display: 'flex',
-              //flexDirection: 'row',
-              //backgroundColor: 'yellow',
-            }}>
-            Both the Blocked and Broken mode must be completed for this Program
-            to be marked as completed.
-          </Text>
-          <Text
-            style={{
-              color: 'red',
-              fontWeight: 'bold',
-              fontSize: 13,
-              marginTop: 5,
-            }}>
-            We Recommend doing the broken chords first.
-          </Text>
-        </View>
-
         {/* <Image source={videoImg} style={styles.video} /> */}
         <Animated.View style={{marginTop: 30, opacity: opacity}}>
           <View
@@ -126,36 +108,54 @@ const IntervalMenuModes = ({showLevel}) => {
           /> */}
 
           <ScrollView style={{height: '100%'}}>
-            {modes.map((level, index) => {
-              console.log('index: ' + index);
+            {levels.map((level, index) => {
               return (
-                <>
-                  <TouchableOpacity
-                    onPress={() => {
-                      showLevels(index + 1);
-                    }}
-                    key={index}>
-                    <View
+                <TouchableOpacity
+                  //disabled={index > highestCompletedBassLevel ? true : false}
+                  onPress={() => {
+                    showLevel(level);
+                  }}
+                  key={index}>
+                  <View
+                    style={{
+                      backgroundColor: '#F6FA43',
+                      height: 65,
+                      marginBottom: 2,
+                    }}>
+                    <Text
                       style={{
-                        backgroundColor: '#F6FA43',
-                        height: 65,
-                        marginBottom: 2,
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        padding: 20,
+                        textAlign: 'center',
                       }}>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: 'bold',
-                          padding: 20,
-                          textAlign: 'center',
-                        }}>
-                        {level}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </>
+                      Level {level}
+                    </Text>
+                  </View>
+
+                  {!loggedIn && accessFeature == 2 ? (
+                    <Image
+                      source={
+                        index < highestCompletedBassLevel
+                          ? checkIcon
+                          : index > 0
+                          ? lockIcon
+                          : null
+                      }
+                      style={{position: 'absolute', right: 12, top: 12}}
+                    />
+                  ) : (
+                    <Image
+                      source={
+                        index < highestCompletedBassLevel ? checkIcon : null
+                      }
+                      style={{position: 'absolute', right: 12, top: 12}}
+                    />
+                  )}
+                </TouchableOpacity>
               );
             })}
-            <View style={{height: 100}} />
+            <View style={{height: 270}} />
           </ScrollView>
         </Animated.View>
       </View>
@@ -163,4 +163,4 @@ const IntervalMenuModes = ({showLevel}) => {
   );
 };
 
-export default IntervalMenuModes;
+export default BassMenu;

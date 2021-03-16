@@ -139,6 +139,7 @@ const PitchLevels = ({level, mode, props}) => {
 
   const [quizTime, setQuizTime] = useState(0);
   const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
+  const [storedData, setStoredData] = useState(null);
   const [passScore, setPassScore] = useState(0);
   const [score, setScore] = useState(0);
 
@@ -234,6 +235,10 @@ const PitchLevels = ({level, mode, props}) => {
   };
 
   const nextQuestion = () => {
+    if (audioClip) {
+      audioClip.release();
+    }
+
     var currentQuestion1 = currentQuestionInd;
 
     if (currentQuestion1 < questionList.length - 1) {
@@ -255,11 +260,13 @@ const PitchLevels = ({level, mode, props}) => {
         // loaded successfully
         console.log('file ' + filename + ' loaded');
 
+        //audioClip.setCategory('Playback');
+
         //audioClip.play();
       });
 
       setCurrentQuestionInd(currentQuestion1);
-      populateAnswers(questionList, currentQuestion1);
+      //populateAnswers(questionList, currentQuestion1);
     } else {
       setisQuizTimerActive(false);
 
@@ -278,30 +285,46 @@ const PitchLevels = ({level, mode, props}) => {
 
     //dispatch(saveProgress());
 
-    var lc = loadCount;
-    lc++;
-    setLoadCount(lc);
+    // var lc = loadCount;
+    // lc++;
+    // setLoadCount(lc);
+
+    Sound.setCategory('Playback');
 
     populateInstructions();
+    retrieveTestData();
   }, []);
+
+  useEffect(() => {
+    if (quizStarted) {
+      storeTestData();
+    }
+  }, [answerList]);
+
+  useEffect(() => {
+    if (storedData != null) {
+      console.log('got the test data. resume quiz');
+      resumeQuiz();
+    }
+  }, [storedData]);
 
   const populateInstructions = () => {
     var instructions; // = data.Interval.level3Instructions;
 
     if (level == 1) {
-      instructions = shuffle(data.Pitch.level1Instructions);
+      instructions = data.Pitch.level1Instructions;
       setPassScore(data.Pitch.level1PassScore);
     } else if (level == 2) {
-      instructions = shuffle(data.Pitch.level2Instructions);
+      instructions = data.Pitch.level2Instructions;
       setPassScore(data.Pitch.level2PassScore);
     } else if (level == 3) {
-      instructions = shuffle(data.Pitch.level3Instructions);
+      instructions = data.Pitch.level3Instructions;
       setPassScore(data.Pitch.level3PassScore);
     } else if (level == 4) {
-      instructions = shuffle(data.Pitch.level4Instructions);
+      instructions = data.Pitch.level4Instructions;
       setPassScore(data.Pitch.level4PassScore);
     } else if (level == 5) {
-      instructions = shuffle(data.Pitch.level5Instructions);
+      instructions = data.Pitch.level5Instructions;
       setPassScore(data.Pitch.level5PassScore);
     }
 
@@ -335,6 +358,8 @@ const PitchLevels = ({level, mode, props}) => {
       setScore(per);
 
       console.log(`per levels: ${per}`);
+
+      removeTestData();
 
       if (per >= passScore) {
         console.log('store data');
@@ -705,7 +730,7 @@ const PitchLevels = ({level, mode, props}) => {
       }
       // loaded successfully
 
-      audioClip.setCategory('Playback');
+      //audioClip.setCategory('Playback');
 
       console.log(
         'duration in seconds: ' +
@@ -724,7 +749,7 @@ const PitchLevels = ({level, mode, props}) => {
     setCorrectAnswers(0);
     setQuestionList(questions);
     setAnswerList([]);
-    populateAnswers(questions, 0);
+    //populateAnswers(questions, 0);
 
     setQuizStarted(true);
     setRestarted(false);
@@ -746,6 +771,178 @@ const PitchLevels = ({level, mode, props}) => {
     // setRestarted(false);
     // setQuizFinished(true);
     // setQuizStarted(false);
+  };
+
+  // restore current test
+
+  const retrieveTestData = async () => {
+    try {
+      var value = await AsyncStorage.getItem('pitchTestProgress' + level);
+
+      if (value !== null) {
+        // We have data!!
+        console.log(`pitchTestProgress${level}: ${value}`);
+
+        Alert.alert(
+          null,
+          `You currently have Level ${level} quiz in progress. Would you like to resume?`,
+          [
+            {text: 'YES', onPress: () => setStoredData(value)},
+            //{text: 'JOIN MEMBERSHIP', onPress: () => this.upgrade()},
+            {
+              text: 'CANCEL',
+              onPress: () => {
+                removeTestData();
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+
+        //setStoredData(value);
+      } else {
+        console.log(`no saved pitchTestProgress${level} data`);
+
+        value = 0;
+        //this.storePitchData(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
+  const removeTestData = async () => {
+    try {
+      await AsyncStorage.removeItem('pitchTestProgress' + level);
+
+      console.log(`pitchTestProgress${level} deleted`);
+    } catch (error) {
+      // Error saving data
+      console.log(`cant delete pitchTestProgress${level}`);
+    }
+  };
+
+  const storeTestData = async () => {
+    var testData = {
+      correctAnswers: correctAnswers,
+      quizTime: quizTime,
+      level: level,
+      mode: mode,
+      answerList: answerList,
+      questionList: questionList,
+    };
+
+    var formatted = JSON.stringify(testData);
+
+    console.log('storeTestData: ' + formatted);
+
+    try {
+      await AsyncStorage.setItem('pitchTestProgress' + level, formatted);
+
+      console.log(`pitchTestProgress${level} stored`);
+    } catch (error) {
+      // Error saving data
+      console.log(`cant create pitchTestProgress${level}: ` + error);
+    }
+  };
+
+  const resumeQuiz = () => {
+    console.log('resumeQuiz');
+
+    setisQuizTimerActive(true);
+
+    //console.log('theAnswer: ' + answerInd);
+
+    //console.log('storedData: ' + storedData);
+
+    var json = JSON.parse(storedData);
+
+    var newQuestions = json.questionList;
+
+    //console.log('newQuestions: ' + newQuestions);
+
+    //return;
+
+    console.log('answerList: ' + JSON.stringify(json.answerList));
+
+    var currentTestIndex = json.answerList.length;
+
+    console.log('currentTestIndex: ' + currentTestIndex);
+
+    setCurrentQuestionInd(currentTestIndex);
+
+    setCurrentAnswer('');
+    setCorrectAnswers(json.correctAnswers);
+
+    setQuestionList(newQuestions);
+    setAnswerList(json.answerList);
+    //populateAnswers(newQuestions[currentTestIndex], 0);
+
+    setQuizTime(json.quizTime);
+
+    setQuizStarted(true);
+    setRestarted(false);
+    setQuizFinished(false);
+
+    //return;
+
+    console.log('newQuestions: ' + JSON.stringify(newQuestions));
+
+    //if (level > 1) {
+    var newTracks = [];
+
+    newQuestions.map((question) => {
+      var ob = {
+        file: question.file.toLowerCase() + '.mp3',
+      };
+
+      newTracks.push(ob);
+    });
+
+    var file = newTracks[currentTestIndex].file;
+
+    setTrackFile(file);
+
+    console.log('file: ' + file);
+    console.log('newTracks length triads: ' + newTracks.length);
+
+    audioClip = new Sound(file, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound ' + file, error);
+        return;
+      }
+      console.log('file loaded successfully: ' + file);
+
+      //audioClip.setCategory('Playback');
+
+      // loaded successfully
+      console.log(
+        'duration in seconds: ' +
+          audioClip.getDuration() +
+          ' number of channels: ' +
+          audioClip.getNumberOfChannels(),
+      );
+
+      setTrackInfo({position: 0, duration: audioClip.getDuration()});
+
+      //audioClip.play();
+    });
+
+    setCurrentTrack({
+      name: newQuestions[currentTestIndex].file,
+    });
+
+    console.log('newTracks: ' + JSON.stringify(newTracks));
+    //}
+
+    setCanPlay(true);
+
+    //console.log('questions: ' + JSON.stringify(questions));
+
+    var question = newQuestions[currentTestIndex];
+
+    console.log('question: ' + JSON.stringify(question));
+    console.log('theAnswer: ' + JSON.stringify(question.Answer));
   };
 
   const debugAudio = () => {
@@ -783,7 +980,8 @@ const PitchLevels = ({level, mode, props}) => {
           }
           // loaded successfully
           console.log('file ' + filename + ' loaded');
-          audioClip.setCategory('Playback');
+
+          //audioClip.setCategory('Playback');
 
           //setTrackInfo({position: 0, duration: audioClip.getDuration()});
           //audioClip.play();
@@ -1021,7 +1219,7 @@ const PitchLevels = ({level, mode, props}) => {
                 </View>
               </View>
               <TextInput
-                autoCapitalize="none"
+                //autoCapitalize="none"
                 autoCompleteType="off"
                 style={{
                   width: 70,

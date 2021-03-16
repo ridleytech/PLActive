@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   Text,
   Button,
@@ -6,11 +6,14 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  TextInput,
   ScrollView,
   Dimensions,
   Animated,
   Alert,
   Linking,
+  TouchableNativeFeedbackBase,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import {useDispatch, useSelector, connect} from 'react-redux';
@@ -23,7 +26,7 @@ import disabledImg from '../../images/checkbox-disabled.png';
 import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Instructions from './Instructions';
-import ResultsViewInterval from './ResultsViewInterval';
+import ResultsViewBass from './ResultsViewBass';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {saveTestScore, saveProgress} from '../thunks/';
 
@@ -57,17 +60,15 @@ const shuffle = (array) => {
 var Sound = require('react-native-sound');
 var audioClip;
 
-const IntervalLevels = ({level, mode, props}) => {
+const {height, width} = Dimensions.get('window');
+
+const BassLevels = ({level, mode, props}) => {
   const dispatch = useDispatch();
   const accessFeature = useSelector((state) => state.accessFeature);
-  const intervalmode = useSelector((state) => state.intervalmode);
+  const basemode = useSelector((state) => state.basemode);
 
-  const highestCompletedIntervalBrokenLevel = useSelector(
-    (state) => state.highestCompletedIntervalBrokenLevel,
-  );
-
-  const highestCompletedIntervalBlockedLevel = useSelector(
-    (state) => state.highestCompletedIntervalBlockedLevel,
+  const highestCompletedBassLevel = useSelector(
+    (state) => state.highestCompletedBassLevel,
   );
 
   //console.log('selectedLevel: ' + level);
@@ -86,6 +87,7 @@ const IntervalLevels = ({level, mode, props}) => {
   const [answerList, setAnswerList] = useState(null);
   const [answers, setAnswers] = useState(null);
   const [instructions, setInstructions] = useState(null);
+  const [currentAnswerList, setCurrentAnswerList] = useState([null]);
   const [storedData, setStoredData] = useState(null);
   const [passScore, setPassScore] = useState(0);
 
@@ -94,15 +96,20 @@ const IntervalLevels = ({level, mode, props}) => {
     '#EFEFEF',
     '#EFEFEF',
     '#EFEFEF',
+    '#EFEFEF',
+    '#EFEFEF',
+    '#EFEFEF',
+    '#EFEFEF',
+    '#EFEFEF',
   ]);
-  const [height, setHeight] = useState(60);
+  //const [height, setHeight] = useState(60);
 
   const [currentTrack, setCurrentTrack] = useState(null);
   const [trackFile, setTrackFile] = useState(null);
 
   const [trackInfo, setTrackInfo] = useState({position: 0, duration: 0});
   const [restarted, setRestarted] = useState(true);
-  const [canAnswer, setCanAnswer] = useState(false);
+  const [canAnswer, setCanAnswer] = useState(true);
   const [canCheck, setCanCheck] = useState(true);
 
   const [answerState, setAnswerState] = useState('#E2E7ED');
@@ -115,8 +122,18 @@ const IntervalLevels = ({level, mode, props}) => {
   const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
   const [score, setScore] = useState(0);
 
+  const txt0 = useRef(null);
+  const txt1 = useRef(null);
+  const txt2 = useRef(null);
+  const txt3 = useRef(null);
+  const txt4 = useRef(null);
+  const txt5 = useRef(null);
+  const txt6 = useRef(null);
+  const txt7 = useRef(null);
+  const txt8 = useRef(null);
+
   useEffect(() => {
-    console.log('interval level changed');
+    console.log('base level changed');
     populateInstructions();
   }, [level]);
 
@@ -129,7 +146,6 @@ const IntervalLevels = ({level, mode, props}) => {
       //console.log('start quiz timer');
       interval = setInterval(() => {
         //console.log('the seconds: ' + quizTime);
-
         setQuizTime((quizTime) => quizTime + 1);
       }, 1000);
     } else if (!isQuizTimerActive && quizTime !== 0) {
@@ -207,19 +223,35 @@ const IntervalLevels = ({level, mode, props}) => {
 
     var currentQuestion1 = currentQuestionInd;
 
-    setSelectionColors(['#EFEFEF', '#EFEFEF', '#EFEFEF', '#EFEFEF']);
+    setSelectionColors([
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+      '#EFEFEF',
+    ]);
+    setCurrentAnswerList([]);
 
     if (currentQuestion1 < questionList.length - 1) {
       currentQuestion1 += 1;
 
-      if (level > 1) {
+      console.log(
+        'currentQuestion next: ' +
+          JSON.stringify(questionList[currentQuestion1]),
+      );
+
+      if (level > 0) {
         setCurrentTrack({
-          name: questionList[currentQuestion1].tempfile,
+          name: questionList[currentQuestion1].file,
           id: currentQuestion1.toString(),
         });
 
         var filename =
-          questionList[currentQuestion1].tempfile.toLowerCase() + '.mp3';
+          questionList[currentQuestion1].file.toLowerCase() + '.mp3';
 
         console.log('filename next: ' + filename);
 
@@ -236,13 +268,23 @@ const IntervalLevels = ({level, mode, props}) => {
           //audioClip.setCategory('Playback');
         });
       }
+      setCurrentAnswerList([
+        questionList[currentQuestion1].Answers[0],
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+      ]);
       setCurrentQuestionInd(currentQuestion1);
-      populateAnswers(questionList, currentQuestion1);
+      //populateAnswers(questionList, currentQuestion1);
     } else {
       console.log('set quiz finished');
       setisQuizTimerActive(false);
       setQuizFinished(true);
-      //setQuestionList([])
       setQuizStarted(false);
     }
   };
@@ -250,16 +292,17 @@ const IntervalLevels = ({level, mode, props}) => {
   //init load
 
   useEffect(() => {
-    if (level > 1) {
-      // console.log('on load int');
-      // console.log('loadCount int: ' + loadCount);
+    // if (level > 0) {
+    //   // console.log('on load int');
+    //   // console.log('loadCount int: ' + loadCount);
 
-      // var lc = loadCount;
-      // lc++;
-      // setLoadCount(lc);
+    // }
 
-      Sound.setCategory('Playback');
-    }
+    // var lc = loadCount;
+    // lc++;
+    // setLoadCount(lc);
+
+    Sound.setCategory('Playback');
 
     populateInstructions();
     retrieveTestData();
@@ -278,26 +321,27 @@ const IntervalLevels = ({level, mode, props}) => {
     }
   }, [storedData]);
 
+  useEffect(() => {
+    console.log('currentAnswerList: ' + currentAnswerList);
+  }, [currentAnswerList]);
+
   const populateInstructions = () => {
     console.log('populate instructions: ' + level);
 
-    var instructions; // = data.Interval.level3Instructions;
+    var instructions; // = data.Bass.level3Instructions;
 
     if (level == 1) {
-      instructions = data.Interval.level1Instructions;
-      setPassScore(data.Interval.level1PassScore);
+      instructions = data.Bass.level1Instructions;
+      setPassScore(data.Bass.level1PassScore);
     } else if (level == 2) {
-      instructions = data.Interval.level2Instructions;
-      setPassScore(data.Interval.level2PassScore);
+      instructions = data.Bass.level2Instructions;
+      setPassScore(data.Bass.level2PassScore);
     } else if (level == 3) {
-      instructions = data.Interval.level3Instructions;
-      setPassScore(data.Interval.level3PassScore);
+      instructions = data.Bass.level3Instructions;
+      setPassScore(data.Bass.level3PassScore);
     } else if (level == 4) {
-      instructions = data.Interval.level4Instructions;
-      setPassScore(data.Interval.level4PassScore);
-    } else if (level == 5) {
-      instructions = data.Interval.level5Instructions;
-      setPassScore(data.Interval.level5PassScore);
+      instructions = data.Bass.level4Instructions;
+      setPassScore(data.Bass.level4PassScore);
     }
 
     setInstructions(instructions);
@@ -334,17 +378,10 @@ const IntervalLevels = ({level, mode, props}) => {
       if (per >= passScore) {
         console.log('store data');
 
-        if (intervalmode == 1) {
-          dispatch({
-            type: 'SET_INTERVAL_BROKEN_PROGRESS',
-            level: {highestCompletedIntervalBrokenLevel: level.toString()},
-          });
-        } else {
-          dispatch({
-            type: 'SET_INTERVAL_BLOCKED_PROGRESS',
-            level: {highestCompletedIntervalBlockedLevel: level.toString()},
-          });
-        }
+        dispatch({
+          type: 'SET_BASS_PROGRESS',
+          level: {highestCompletedBassLevel: level.toString()},
+        });
 
         if (!loggedIn) {
           console.log('quiz finished not logged in');
@@ -370,13 +407,12 @@ const IntervalLevels = ({level, mode, props}) => {
   }, [quizFinished]);
 
   const postLeaderboard = () => {
-    console.log('postLeaderboard interval');
+    console.log('postLeaderboard base');
     dispatch(saveTestScore(score, quizTime));
 
     dispatch({type: 'SET_MODE', mode: 0});
     dispatch({type: 'SET_LEVEL', level: 0});
-    dispatch({type: 'SET_LEADERBOARD_MODE', mode: 2});
-
+    dispatch({type: 'SET_LEADERBOARD_MODE', mode: 4});
     props.navigation.navigate('LEADER BOARD');
   };
 
@@ -432,41 +468,102 @@ const IntervalLevels = ({level, mode, props}) => {
     setIsSeeking(false);
   };
 
-  const setChecked = (ob) => {
-    if (ob === currentAnswer) {
-      setCurrentAnswer(null);
-      setCanAnswer(false);
-    } else {
-      setCurrentAnswer(ob);
-      setCanAnswer(true);
-    }
-
-    //console.log('ob: ' + JSON.stringify(ob));
+  const filterBlanks = (ob) => {
+    return ob != '';
   };
 
   const selectAnswer2 = () => {
     var al = answerList.slice();
 
-    console.log('answerList interval: ' + JSON.stringify(al));
+    txt0.current.blur();
+    txt1.current.blur();
+    txt2.current.blur();
+    txt3.current.blur();
+    txt4.current.blur();
+    txt5.current.blur();
+    txt6.current.blur();
+    txt7.current.blur();
+    txt8.current.blur();
+
+    console.log('answerList: ' + JSON.stringify(al));
 
     var currentQuestion = questionList[currentQuestionInd];
 
-    currentQuestion.userAnswer = currentAnswer;
+    console.log('currentQuestion: ' + JSON.stringify(currentQuestion));
 
+    var fca = currentAnswerList.filter(filterBlanks);
+
+    console.log('fca: ' + fca);
+
+    currentQuestion.userAnswer = fca;
+
+    console.log('current answer: ' + currentQuestion.Answers);
+
+    var isCorrect = true;
     var sc = selectionColors.slice();
-    var answerInd = answers.indexOf(currentAnswer);
 
-    if (currentAnswer === questionList[currentQuestionInd].Answer) {
+    var lookup = {
+      db: 'c#',
+      eb: 'd#',
+      gb: 'f#',
+      ab: 'g#',
+      bb: 'a#',
+    };
+
+    currentQuestion.Answers.map((answer, index) => {
+      console.log(
+        'answer' + index + ':' + answer + ' user: ' + currentAnswerList[index],
+      );
+
+      // if(answer == "Db" || answer == "C#")
+      // {
+      //   currentAnswerList[index]
+      // }
+
+      var hasAccidental = lookup[currentAnswerList[index].toLowerCase()];
+
+      if (hasAccidental) {
+        console.log('hasAccidental: ' + hasAccidental);
+      } else {
+        hasAccidental = '';
+      }
+
+      if (
+        answer.toLowerCase() == currentAnswerList[index].toLowerCase() ||
+        answer.toLowerCase() == hasAccidental.toLowerCase()
+      ) {
+        console.log('correct');
+        sc[index] = 'rgb( 114,255,133)';
+      } else {
+        //console.log('correct');
+        isCorrect = false;
+        sc[index] = 'rgb(255,93,93)';
+      }
+    });
+
+    currentQuestion.isCorrect = isCorrect;
+
+    console.log('result: ' + isCorrect);
+
+    // console.log(
+    //   'currentQuestion.userAnswer: ' +
+    //     JSON.stringify(currentQuestion.userAnswer),
+    // );
+
+    // var sc = selectionColors.slice();
+    // var answerInd = answers.indexOf(currentAnswer);
+
+    if (isCorrect) {
       var ca = correctAnswers;
       ca++;
       setCorrectAnswers(ca);
 
-      sc[answerInd] = 'rgb( 114,255,133)';
+      //sc[answerInd] = 'rgb( 114,255,133)';
 
       console.log('correct');
     } else {
       console.log('not');
-      sc[answerInd] = 'rgb(255,93,93)';
+      //sc[answerInd] = 'rgb(255,93,93)';
     }
 
     setSelectionColors(sc);
@@ -475,18 +572,17 @@ const IntervalLevels = ({level, mode, props}) => {
 
     setAnswerList(al);
 
-    setCanAnswer(false);
+    //setCanAnswer(false);
     setCanCheck(false);
     setCanPlay(false);
 
-    if (level > 1) {
-      stopAudio();
-    }
+    stopAudio();
 
     setTimeout(() => {
       setCurrentAnswer(null);
       setCanCheck(true);
       setCanPlay(true);
+
       nextQuestion();
       setAnswerState('#E2E7ED');
     }, 2000);
@@ -497,7 +593,7 @@ const IntervalLevels = ({level, mode, props}) => {
 
     dispatch({
       type: 'SET_INTERVAL_PROGRESS',
-      level: {highestCompletedIntervalBrokenLevel: level.toString()},
+      level: {highestCompletedBassLevel: level.toString()},
     });
 
     setCorrectAnswers(12);
@@ -506,7 +602,7 @@ const IntervalLevels = ({level, mode, props}) => {
   };
 
   const mainMenu = (passed) => {
-    console.log(`main menu interval ${level} passed: ${passed}`);
+    console.log(`main menu base ${level} passed: ${passed}`);
 
     if (!passed) {
     } else {
@@ -514,14 +610,14 @@ const IntervalLevels = ({level, mode, props}) => {
 
       if (loggedIn) {
         if (passed) {
-          if (currentLevel == 5) {
+          if (currentLevel == 4) {
             //was last level. go to main menu
             console.log('last level. go to main');
             dispatch({type: 'SET_MODE', mode: 0});
             dispatch({type: 'SET_LEVEL', level: 0});
             props.navigation.navigate('CHALLENGES');
           } else {
-            dispatch({type: 'SET_MODE', mode: 2});
+            dispatch({type: 'SET_MODE', mode: 4});
             dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
 
             console.log(`set level: ${currentLevel + 1}`);
@@ -546,33 +642,11 @@ const IntervalLevels = ({level, mode, props}) => {
           dispatch({type: 'SHOW_LOGIN'});
           props.navigation.navigate('CHALLENGES');
         } else {
-          dispatch({type: 'SET_MODE', mode: 2});
+          dispatch({type: 'SET_MODE', mode: 4});
           dispatch({type: 'SET_LEVEL', level: currentLevel + 1});
 
           console.log(`set level: ${currentLevel + 1}`);
         }
-
-        // return;
-
-        // Alert.alert(
-        //   null,
-        //   //`Please log in or join the Premium membership to unlock this level.`,
-        //   `Please log in to unlock this level.`,
-        //   [
-        //     //{text: 'JOIN MEMBERSHIP', onPress: () => upgrade()},
-        //     {text: 'LOGIN', onPress: () => upgrade()},
-        //     {
-        //       text: 'GO TO MAIN MENU',
-        //       onPress: () => {
-        //         console.log('main menu');
-        //         dispatch({type: 'SET_MODE', mode: 0});
-        //         dispatch({type: 'SET_LEVEL', level: 0});
-        //       },
-        //     },
-        //     {text: 'CANCEL', onPress: () => {}},
-        //   ],
-        //   {cancelable: false},
-        // );
       }
     }
 
@@ -583,91 +657,56 @@ const IntervalLevels = ({level, mode, props}) => {
     setCorrectAnswers(0);
   };
 
-  const upgrade = () => {
-    let url = 'http://pianolessonwithwarren.com/memberships/';
-
-    Linking.canOpenURL(url).then((supported) => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log("Don't know how to open URI: " + url);
-      }
-    });
-  };
-
   const storeData = async (level) => {
-    if (intervalmode == 1) {
-      console.log(`highestCompletedIntervalBrokenLevel: ${level}`);
+    console.log(`highestCompletedBassLevel: ${level}`);
 
-      if (level < highestCompletedIntervalBrokenLevel) {
-        console.log('less than highest level. stop save');
-        return;
-      }
+    if (level < highestCompletedBassLevel) {
+      console.log('less than highest level. stop save');
+      return;
+    }
 
-      try {
-        console.log('try to save highestCompletedIntervalBrokenLevel');
-        await AsyncStorage.setItem(
-          'highestCompletedIntervalBrokenLevel',
-          level.toString(),
-        );
+    try {
+      console.log('try to save highestCompletedBassLevel');
+      await AsyncStorage.setItem('highestCompletedBassLevel', level.toString());
 
-        console.log('highestCompletedIntervalBrokenLevel saved');
-      } catch (error) {
-        console.log('highestCompletedIntervalBrokenLevel not saved');
-        // Error saving data
-      }
-    } else {
-      console.log(`highestCompletedIntervalBlockedLevel: ${level}`);
-
-      if (level < highestCompletedIntervalBlockedLevel) {
-        console.log('less than highest level. stop save');
-        return;
-      }
-
-      try {
-        console.log('try to save highestCompletedIntervalBlockedLevel');
-        await AsyncStorage.setItem(
-          'highestCompletedIntervalBlockedLevel',
-          level.toString(),
-        );
-
-        console.log('highestCompletedIntervalBlockedLevel saved');
-      } catch (error) {
-        console.log('highestCompletedIntervalBlockedLevel not saved');
-        // Error saving data
-      }
+      console.log('highestCompletedBassLevel saved');
+    } catch (error) {
+      console.log('highestCompletedBassLevel not saved');
+      // Error saving data
     }
   };
 
   const populateAnswers = (questions, ind) => {
-    //console.log('populateAnswers');
-    var answersData; // = shuffle(data.Interval.level3Answers);
+    console.log('populateAnswers');
+    var answersData; // = shuffle(data.Bass.level3Answers);
 
     if (level == 1) {
-      answersData = shuffle(data.Interval.level1Answers);
+      answersData = shuffle(data.Bass.level1Answers);
     } else if (level == 2) {
-      answersData = shuffle(data.Interval.level2Answers);
+      answersData = shuffle(data.Bass.level2Answers);
     } else if (level == 3) {
-      answersData = shuffle(data.Interval.level3Answers);
+      answersData = shuffle(data.Bass.level3Answers);
     } else if (level == 4) {
-      answersData = shuffle(data.Interval.level4Answers);
-    } else if (level == 5) {
-      answersData = shuffle(data.Interval.level5Answers);
+      answersData = shuffle(data.Bass.level4Answers);
     }
 
-    //console.log('answersData: ' + answersData);
+    console.log('answersData: ' + JSON.stringify(answersData));
 
-    var answer = questions[ind].Answer;
+    console.log('questions: ' + JSON.stringify(questions));
 
-    //console.log('question answer: ' + answer);
+    console.log('questions[ind]: ' + JSON.stringify(questions[ind]));
 
-    var answerInd = answersData.indexOf(answer);
+    // var answer = questions[ind].Answer;
 
-    //console.log('answerInd: ' + answerInd);
+    // console.log('question answer: ' + answer);
+
+    // var answerInd = answersData.indexOf(answer);
+
+    // console.log('answerInd: ' + answerInd);
 
     var answers = [];
-    var answerTxt = answersData[answerInd];
-    answers.push(answerTxt);
+    // var answerTxt = answersData[answerInd];
+    // answers.push(answerTxt);
 
     var ind = 0;
 
@@ -691,101 +730,88 @@ const IntervalLevels = ({level, mode, props}) => {
 
   const startQuiz = () => {
     console.log('startQuiz');
+    console.log('window width: ' + width);
+    console.log('window height: ' + height);
 
     setisQuizTimerActive(true);
 
     var questions = [];
 
     if (level == 1) {
-      questions = shuffle(data.Interval.level1Questions);
+      questions = shuffle(data.Bass.level1Questions);
     } else if (level == 2) {
-      questions = shuffle(data.Interval.level2Questions);
+      questions = shuffle(data.Bass.level2Questions);
     } else if (level == 3) {
-      questions = shuffle(data.Interval.level3Questions);
+      questions = shuffle(data.Bass.level3Questions);
     } else if (level == 4) {
-      questions = shuffle(data.Interval.level4Questions);
-    } else if (level == 5) {
-      questions = shuffle(data.Interval.level5Questions);
+      questions = shuffle(data.Bass.level4Questions);
     }
 
     //console.log('theAnswer: ' + answerInd);
 
-    console.log('interval questions: ' + JSON.stringify(questions));
+    console.log('base questions: ' + JSON.stringify(questions));
 
     setCurrentQuestionInd(0);
     setCurrentAnswer('');
     setCorrectAnswers(0);
-    //setQuestionList(questions);
     setAnswerList([]);
-    populateAnswers(questions, 0);
+    //populateAnswers(questions, 0);
 
     setQuizStarted(true);
     setRestarted(false);
     setQuizFinished(false);
 
-    if (level > 1) {
+    if (level > 0) {
+      console.log('level: ' + JSON.stringify(level));
+
       var newTracks = [];
 
-      var chordSequence = 'blocked';
-
-      if (intervalmode == 1) {
-        chordSequence = 'broken';
-      }
-
       questions.map((question) => {
-        var filename = question.file.toLowerCase() + chordSequence;
+        var filename = question.file.toLowerCase();
 
         console.log('filename: ' + filename);
 
         var ob = {
-          tempfile: filename + '.mp3',
+          file: filename + '.mp3',
         };
 
-        question.tempfile = filename;
+        question.file = filename;
 
         newTracks.push(ob);
       });
 
-      console.log('interval questions2: ' + JSON.stringify(questions));
+      console.log('base questions2: ' + JSON.stringify(questions));
 
-      setTrackFile(newTracks[0].tempfile);
+      setTrackFile(newTracks[0].file);
 
-      console.log('file: ' + newTracks[0].tempfile);
+      console.log('file: ' + newTracks[0].file);
 
-      console.log('newTracks length interval: ' + newTracks.length);
+      console.log('newTracks length base: ' + newTracks.length);
 
-      audioClip = new Sound(
-        newTracks[0].tempfile,
-        Sound.MAIN_BUNDLE,
-        (error) => {
-          if (error) {
-            console.log(
-              'failed to load the sound ' + newTracks[0].tempfile,
-              error,
-            );
-            return;
-          }
-          // loaded successfully
+      audioClip = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+          console.log('failed to load the sound ' + newTracks[0].file, error);
+          return;
+        }
+        // loaded successfully
+        //audioClip.setCategory('Playback');
 
-          //audioClip.setCategory('Playback');
+        console.log(
+          'duration in seconds: ' +
+            audioClip.getDuration() +
+            ' number of channels: ' +
+            audioClip.getNumberOfChannels(),
+        );
 
-          console.log(
-            'duration in seconds: ' +
-              audioClip.getDuration() +
-              ' number of channels: ' +
-              audioClip.getNumberOfChannels(),
-          );
+        setTrackInfo({position: 0, duration: audioClip.getDuration()});
 
-          setTrackInfo({position: 0, duration: audioClip.getDuration()});
-
-          //audioClip.play();
-        },
-      );
+        //audioClip.play();
+      });
 
       setCanPlay(true);
 
       setCurrentTrack({
-        name: questions[0].tempfile,
+        name: questions[0].file,
       });
 
       console.log('newTracks: ' + JSON.stringify(newTracks));
@@ -797,6 +823,18 @@ const IntervalLevels = ({level, mode, props}) => {
 
     var question = questions[0];
 
+    setCurrentAnswerList([
+      questions[0].Answers[0],
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+    ]);
+
     console.log('question: ' + JSON.stringify(question));
     console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
   };
@@ -805,13 +843,11 @@ const IntervalLevels = ({level, mode, props}) => {
 
   const retrieveTestData = async () => {
     try {
-      var value = await AsyncStorage.getItem(
-        'intervalTestProgress' + intervalmode + level,
-      );
+      var value = await AsyncStorage.getItem('bassTestProgress' + level);
 
       if (value !== null) {
         // We have data!!
-        console.log(`intervalTestProgress${intervalmode}${level}: ${value}`);
+        console.log(`bassTestProgress${level}: ${value}`);
 
         Alert.alert(
           null,
@@ -831,9 +867,7 @@ const IntervalLevels = ({level, mode, props}) => {
 
         //setStoredData(value);
       } else {
-        console.log(
-          `no saved intervalTestProgress${intervalmode}${level} data`,
-        );
+        console.log(`no saved bassTestProgress${level} data`);
 
         value = 0;
         //this.storePitchData(value);
@@ -845,14 +879,12 @@ const IntervalLevels = ({level, mode, props}) => {
 
   const removeTestData = async () => {
     try {
-      await AsyncStorage.removeItem(
-        'intervalTestProgress' + intervalmode + level,
-      );
+      await AsyncStorage.removeItem('bassTestProgress' + level);
 
-      console.log(`intervalTestProgress${intervalmode}${level} deleted`);
+      console.log(`bassTestProgress${level} deleted`);
     } catch (error) {
       // Error saving data
-      console.log(`cant delete intervalTestProgress${intervalmode}${level}`);
+      console.log(`cant delete bassTestProgress${level}`);
     }
   };
 
@@ -871,17 +903,12 @@ const IntervalLevels = ({level, mode, props}) => {
     console.log('storeTestData: ' + formatted);
 
     try {
-      await AsyncStorage.setItem(
-        'intervalTestProgress' + intervalmode + level,
-        formatted,
-      );
+      await AsyncStorage.setItem('bassTestProgress' + level, formatted);
 
-      console.log(`intervalTestProgress${intervalmode}${level} stored`);
+      console.log(`bassTestProgress${level} stored`);
     } catch (error) {
       // Error saving data
-      console.log(
-        `cant create intervalTestProgress${intervalmode}${level}: ` + error,
-      );
+      console.log(`cant create bassTestProgress${level}: ` + error);
     }
   };
 
@@ -913,14 +940,9 @@ const IntervalLevels = ({level, mode, props}) => {
     setCurrentAnswer('');
     setCorrectAnswers(json.correctAnswers);
 
-    console.log(
-      'currentQuestion: ' + JSON.stringify(newQuestions[currentTestIndex]),
-    );
-
     setQuestionList(newQuestions);
     setAnswerList(json.answerList);
-    populateAnswers(newQuestions, currentTestIndex);
-    //setAnswers(newQuestions[currentTestIndex].Answers);
+    //populateAnswers(newQuestions[currentTestIndex], 0);
 
     setQuizTime(json.quizTime);
 
@@ -932,162 +954,201 @@ const IntervalLevels = ({level, mode, props}) => {
 
     console.log('newQuestions: ' + JSON.stringify(newQuestions));
 
-    if (level > 1) {
-      var newTracks = [];
+    //if (level > 1) {
+    var newTracks = [];
 
-      newQuestions.map((question) => {
-        var ob = {
-          tempfile: question.tempfile.toLowerCase() + '.mp3',
-        };
+    newQuestions.map((question) => {
+      var ob = {
+        file: question.file.toLowerCase() + '.mp3',
+      };
 
-        newTracks.push(ob);
-      });
+      newTracks.push(ob);
+    });
 
-      var file = newTracks[currentTestIndex].tempfile;
+    var file = newTracks[currentTestIndex].file;
 
-      setTrackFile(file);
+    setTrackFile(file);
 
-      console.log('file: ' + file);
-      console.log('newTracks length triads: ' + newTracks.length);
+    console.log('file: ' + file);
+    console.log('newTracks length triads: ' + newTracks.length);
 
-      audioClip = new Sound(file, Sound.MAIN_BUNDLE, (error) => {
-        if (error) {
-          console.log('failed to load the sound ' + file, error);
-          return;
-        }
-        console.log('file loaded successfully: ' + file);
+    audioClip = new Sound(file, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound ' + file, error);
+        return;
+      }
+      console.log('file loaded successfully: ' + file);
 
-        //audioClip.setCategory('Playback');
+      //audioClip.setCategory('Playback');
 
-        // loaded successfully
-        console.log(
-          'duration in seconds: ' +
-            audioClip.getDuration() +
-            ' number of channels: ' +
-            audioClip.getNumberOfChannels(),
-        );
+      // loaded successfully
+      console.log(
+        'duration in seconds: ' +
+          audioClip.getDuration() +
+          ' number of channels: ' +
+          audioClip.getNumberOfChannels(),
+      );
 
-        setTrackInfo({position: 0, duration: audioClip.getDuration()});
+      setTrackInfo({position: 0, duration: audioClip.getDuration()});
 
-        //audioClip.play();
-      });
+      //audioClip.play();
+    });
 
-      setCurrentTrack({
-        name: newQuestions[currentTestIndex].file,
-      });
+    setCurrentTrack({
+      name: newQuestions[currentTestIndex].file,
+    });
 
-      console.log('newTracks: ' + JSON.stringify(newTracks));
-      //}
+    console.log('newTracks: ' + JSON.stringify(newTracks));
+    //}
 
-      setCanPlay(true);
+    setCanPlay(true);
 
-      //console.log('questions: ' + JSON.stringify(questions));
+    //console.log('questions: ' + JSON.stringify(questions));
 
-      var question = newQuestions[currentTestIndex];
+    var question = newQuestions[currentTestIndex];
 
-      console.log('question: ' + JSON.stringify(question));
-      console.log('theAnswer: ' + JSON.stringify(question.Answer));
-    }
+    console.log('question: ' + JSON.stringify(question));
+    console.log('theAnswer: ' + JSON.stringify(question.Answer));
+
+    setCurrentAnswerList([question.Answers[0], '', '', '', '', '', '', '', '']);
   };
 
-  const debugAudio = () => {
-    console.log('debugAudio');
+  // const debugAudio = () => {
+  //   console.log('debugAudio');
 
-    setisQuizTimerActive(true);
+  //   setisQuizTimerActive(true);
 
-    var questions = [];
+  //   var questions = [];
 
-    if (level == 1) {
-      questions = shuffle(data.Interval.level1Questions);
-    } else if (level == 2) {
-      questions = shuffle(data.Interval.level2Questions);
-    } else if (level == 3) {
-      questions = shuffle(data.Interval.level3Questions);
-    } else if (level == 4) {
-      questions = shuffle(data.Interval.level4Questions);
-    } else if (level == 5) {
-      questions = shuffle(data.Interval.level5Questions);
-    }
+  //   if (level == 1) {
+  //     questions = shuffle(data.Bass.level1Questions);
+  //   } else if (level == 2) {
+  //     questions = shuffle(data.Bass.level2Questions);
+  //   } else if (level == 3) {
+  //     questions = shuffle(data.Bass.level3Questions);
+  //   } else if (level == 4) {
+  //     questions = shuffle(data.Bass.level4Questions);
+  //   }
 
-    //console.log('theAnswer: ' + answerInd);
+  //   //console.log('theAnswer: ' + answerInd);
 
-    console.log('interval questions: ' + JSON.stringify(questions));
+  //   console.log('base questions: ' + JSON.stringify(questions));
 
-    setCurrentQuestionInd(0);
-    setCurrentAnswer('');
-    setCorrectAnswers(0);
-    setQuestionList(questions);
-    setAnswerList([]);
-    populateAnswers(questions, 0);
+  //   setCurrentQuestionInd(0);
+  //   setCurrentAnswer('');
+  //   setCorrectAnswers(0);
+  //   setQuestionList(questions);
+  //   setAnswerList([]);
+  //   //populateAnswers(questions, 0);
 
-    setQuizStarted(true);
-    setRestarted(false);
-    setQuizFinished(false);
+  //   setQuizStarted(true);
+  //   setRestarted(false);
+  //   setQuizFinished(false);
 
-    if (level > 1) {
-      var newTracks = [];
+  //   if (level > 0) {
+  //     var newTracks = [];
 
-      questions.map((question) => {
-        // var ob = {
-        //   file: question.file.toLowerCase() + '.mp3',
-        // };
+  //     questions.map((question) => {
+  //       // var ob = {
+  //       //   file: question.file.toLowerCase() + '.mp3',
+  //       // };
 
-        //newTracks.push(ob);
+  //       //newTracks.push(ob);
 
-        //setTrackFile(newTracks[0].file);
+  //       //setTrackFile(newTracks[0].file);
 
-        // console.log('file: ' + newTracks[0].file);
-        // console.log('newTracks length interval: ' + newTracks.length);
+  //       // console.log('file: ' + newTracks[0].file);
+  //       // console.log('newTracks length base: ' + newTracks.length);
 
-        var chordSequence = 'blocked';
+  //       var filename = question.file.toLowerCase() + '.mp3';
+  //       console.log('filename: ' + filename);
 
-        if (intervalmode == 1) {
-          chordSequence = 'broken';
-        }
+  //       audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+  //         if (error) {
+  //           console.log('failed to load the sound ' + filename, error);
+  //           return;
+  //         }
+  //         // loaded successfully
+  //         console.log('file ' + filename + ' loaded');
 
-        var filename = question.file.toLowerCase() + chordSequence + '.mp3';
-        console.log('filename: ' + filename);
+  //         //audioClip.setCategory('Playback');
 
-        audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
-          if (error) {
-            console.log('failed to load the sound ' + filename, error);
-            return;
-          }
-          // loaded successfully
-          console.log('file ' + filename + ' loaded');
+  //         //setTrackInfo({position: 0, duration: audioClip.getDuration()});
+  //         //audioClip.play();
+  //       });
+  //     });
 
-          //audioClip.setCategory('Playback');
+  //     //setCanPlay(true);
+  //   }
 
-          //setTrackInfo({position: 0, duration: audioClip.getDuration()});
-          //audioClip.play();
-        });
-      });
+  //   // setCurrentTrack({
+  //   //   name: questions[0].file,
+  //   // });
 
-      //setCanPlay(true);
-    }
+  //   // //console.log('questions: ' + JSON.stringify(questions));
 
-    // setCurrentTrack({
-    //   name: questions[0].file,
-    // });
+  //   // var question = questions[0];
 
-    // //console.log('questions: ' + JSON.stringify(questions));
+  //   // console.log('question: ' + JSON.stringify(question));
+  //   // console.log('newTracks: ' + JSON.stringify(newTracks));
+  //   // console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
+  // };
 
-    // var question = questions[0];
+  const hasLetter = (inputtxt) => {
+    console.log('inputtxt: ' + inputtxt);
 
-    // console.log('question: ' + JSON.stringify(question));
-    // console.log('newTracks: ' + JSON.stringify(newTracks));
-    // console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
+    //[a-gA-G]{1}[bB|#]
+
+    var letters = /[a-zA-Z]/g;
+
+    var count = (inputtxt.match(letters) || []).length;
+
+    console.log('count: ' + count);
+
+    return count;
+
+    // if (inputtxt.match(letters)) {
+    //   return true;
+    // } else {
+    //   //alert('message');
+    //   return false;
+    // }
   };
 
-  var modename;
+  const changeVal = (val, index) => {
+    console.log('val: ' + val + ' index: ' + index);
+    if (val) {
+      var cal = currentAnswerList;
 
-  //console.log('IL mode: ' + mode);
+      // if (cal[index]) {
+      //   console.log('has letter: ' + hasLetter(cal[index]));
+      // }
 
-  if (mode === 2) {
-    modename = 'Interval Training';
-  } else {
-    modename = 'Pitch Recognition';
-  }
+      //console.log('has letter: ' + hasLetter(cal[index]));
+
+      //var count = hasLetter(cal[index]);
+
+      // console.log('count: ' + count);
+
+      // if (count > 1) {
+      //   return;
+      // }
+
+      cal[index] = val;
+      console.log('updated cal: ' + cal);
+
+      //return if val contains letter and not "b" or "#"
+
+      setCurrentAnswerList(cal);
+    } else {
+      // setCurrentAnswer(null);
+      // setCanAnswer(false);
+    }
+
+    setCanAnswer(true);
+  };
+
+  var modename = 'Bassline Training';
 
   //console.log('IL modename: ' + modename);
 
@@ -1115,10 +1176,10 @@ const IntervalLevels = ({level, mode, props}) => {
                   color: '#3AB24A',
                   width: '95%',
                 }}>
-                Quiz - Interval Training Level {level}
+                Quiz - Bassline Training Level {level}
               </Text>
 
-              <Text style={styles.scaleHeader}>C Major Scale</Text>
+              {/* <Text style={styles.scaleHeader}>C Major Scale</Text> */}
 
               {/* <TouchableOpacity onPress={() => debugResults()}>
                 <Text
@@ -1183,12 +1244,11 @@ const IntervalLevels = ({level, mode, props}) => {
                   marginBottom: 15,
                   fontFamily: 'Helvetica Neue',
                 }}>
-                {questionList[currentQuestionInd]
-                  ? questionList[currentQuestionInd].Question
-                  : null}
+                Using only your ear, fill in the notes played in the audio
+                below. You are given the first note for reference.
               </Text>
 
-              {level > 1 ? (
+              {level > 0 ? (
                 <View
                   style={{
                     backgroundColor: '#222222',
@@ -1238,51 +1298,172 @@ const IntervalLevels = ({level, mode, props}) => {
                 </View>
               ) : null}
             </View>
+            <ScrollView
+              style={
+                {
+                  //backgroundColor: 'red'
+                }
+              }>
+              <View
+                style={{
+                  paddingLeft: '5%',
+                  paddingRight: '5%',
+                  //height: '100%',
+                  //backgroundColor: 'pink',
+                  paddingTop: 20,
+                }}>
+                <View
+                  style={{
+                    width: '100%',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    //backgroundColor: 'yellow',
+                  }}>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt0}
+                    onChangeText={(text) => changeVal(text, 0)}
+                    style={[
+                      styles.inputTxt,
+                      {marginRight: 10, backgroundColor: selectionColors[0]},
+                    ]}
+                    key={questionList[currentQuestionInd].Answers[0]}>
+                    {questionList[currentQuestionInd].Answers[0]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt1}
+                    onChangeText={(text) => changeVal(text, 1)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        marginRight: 10,
+                        backgroundColor: selectionColors[1],
+                      },
+                    ]}
+                    key={1}>
+                    {currentAnswerList[1]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt2}
+                    onChangeText={(text) => changeVal(text, 2)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        //backgroundColor: 'green'
+                        backgroundColor: selectionColors[2],
+                      },
+                    ]}
+                    key={2}>
+                    {currentAnswerList[2]}
+                  </TextInput>
 
-            <ScrollView style={{paddingLeft: 20, paddingRight: 20}}>
-              {answers
-                ? answers.map((ob, index) => {
-                    return (
-                      // <TouchableOpacity
-                      //   onPress={() => selectAnswer2('Perfect 4th')}>
-                      <View
-                        key={index}
-                        style={{
-                          height: 65,
-                          backgroundColor: selectionColors[index],
-                          marginBottom: 15,
-                          borderRadius: 8,
-                          overflow: 'hidden',
-                          alignContent: 'center',
-                          paddingLeft: 18,
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}>
-                        <CheckBox
-                          style={{paddingRight: 10}}
-                          disabled={!canCheck}
-                          onClick={() => {
-                            setChecked(ob);
-                          }}
-                          isChecked={currentAnswer === ob}
-                          checkedImage={
-                            <Image source={enabledImg} style={styles.enabled} />
-                          }
-                          unCheckedImage={
-                            <Image
-                              source={disabledImg}
-                              style={styles.disabled}
-                            />
-                          }
-                        />
-                        <Text key={ob}>{ob}</Text>
-                      </View>
-                      //</TouchableOpacity>
-                    );
-                  })
-                : null}
+                  <TextInput
+                    maxLength={2}
+                    ref={txt3}
+                    onChangeText={(text) => changeVal(text, 3)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        marginRight: 10,
+                        display: questionList[currentQuestionInd].Answers[3]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[3],
+                      },
+                    ]}
+                    key={3}>
+                    {currentAnswerList[3]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt4}
+                    onChangeText={(text) => changeVal(text, 4)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        marginRight: 10,
+                        display: questionList[currentQuestionInd].Answers[4]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[4],
+                      },
+                    ]}
+                    key={4}>
+                    {currentAnswerList[4]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt5}
+                    onChangeText={(text) => changeVal(text, 5)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        display: questionList[currentQuestionInd].Answers[5]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[5],
+                      },
+                    ]}
+                    key={5}>
+                    {currentAnswerList[5]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt6}
+                    onChangeText={(text) => changeVal(text, 6)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        marginRight: 10,
+                        display: questionList[currentQuestionInd].Answers[6]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[6],
+                      },
+                    ]}
+                    key={6}>
+                    {currentAnswerList[6]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt7}
+                    onChangeText={(text) => changeVal(text, 7)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        marginRight: 10,
+                        display: questionList[currentQuestionInd].Answers[7]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[7],
+                      },
+                    ]}
+                    key={7}>
+                    {currentAnswerList[7]}
+                  </TextInput>
+                  <TextInput
+                    maxLength={2}
+                    ref={txt8}
+                    onChangeText={(text) => changeVal(text, 8)}
+                    style={[
+                      styles.inputTxt,
+                      {
+                        display: questionList[currentQuestionInd].Answers[8]
+                          ? 'flex'
+                          : 'none',
+                        backgroundColor: selectionColors[8],
+                      },
+                    ]}
+                    key={8}>
+                    {currentAnswerList[8]}
+                  </TextInput>
+                  <View style={{height: 500, width: 20}} />
+                </View>
+              </View>
             </ScrollView>
+
             <TouchableOpacity
               onPress={() => selectAnswer2()}
               disabled={!canAnswer}
@@ -1291,7 +1472,9 @@ const IntervalLevels = ({level, mode, props}) => {
                 backgroundColor: canAnswer === true ? '#3AB24A' : 'gray',
                 justifyContent: 'center',
                 alignItems: 'center',
+                bottom: 0,
                 width: '100%',
+                position: 'absolute',
               }}>
               <Text
                 style={{
@@ -1306,7 +1489,7 @@ const IntervalLevels = ({level, mode, props}) => {
           </View>
         </>
       ) : quizFinished ? (
-        <ResultsViewInterval
+        <ResultsViewBass
           avgScore={80}
           answerList={answerList}
           correctAnswers={correctAnswers}
@@ -1331,25 +1514,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-//export default IntervalLevels;
+//export default BassLevels;
 export default connect(mapStateToProps, {saveTestScore, saveProgress})(
-  IntervalLevels,
+  BassLevels,
 );
-
-let offset = 100;
-
-// var sh = Dimensions.get('screen').height;
-// var h;
-
-// if (sh == 896) {
-//   //11
-//   h = sh - 145;
-// }
-// else if (sh == 667) {
-
-//   //SE
-//   h = sh - 120;
-// }
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -1370,4 +1538,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
   },
+  inputTxt: {
+    height: 50,
+    //backgroundColor: 'lightgray',
+    //width: width > 450 ? '32.5%' : '31.5%',
+    width: width > 450 ? '32.5%' : width < 400 ? '30.5%' : '31.5%',
+    textAlign: 'center',
+    fontSize: 30,
+    marginBottom: 10,
+  },
 });
+
+//iphone 7 plus
+//window width: 414
+//height: 736
+
+// SE
+// width: 375
+// height: 667
