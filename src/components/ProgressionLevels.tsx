@@ -116,6 +116,7 @@ const ProgressionLevels = ({level, mode, props}) => {
   const [quizTime, setQuizTime] = useState(0);
   const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
   const [score, setScore] = useState(0);
+  const [hasAudio, setHasAudio] = useState(false);
 
   const txt0 = useRef(null);
   const txt1 = useRef(null);
@@ -594,6 +595,7 @@ const ProgressionLevels = ({level, mode, props}) => {
 
   const debugResults = () => {
     console.log('debugResults');
+    setHasAudio(true);
     setCorrectAnswers(0);
     setRestarted(false);
     setQuizFinished(true);
@@ -804,61 +806,60 @@ const ProgressionLevels = ({level, mode, props}) => {
     setRestarted(false);
     setQuizFinished(false);
 
-    if (level > 0) {
-      console.log('level: ' + JSON.stringify(level));
+    console.log('level: ' + JSON.stringify(level));
+    setHasAudio(true);
 
-      var newTracks = [];
+    var newTracks = [];
 
-      questions.map((question) => {
-        var filename = question.file.toLowerCase();
+    questions.map((question) => {
+      var filename = question.file.toLowerCase();
 
-        console.log('filename: ' + filename);
+      console.log('filename: ' + filename);
 
-        var ob = {
-          file: filename + '.mp3',
-        };
+      var ob = {
+        file: filename + '.mp3',
+      };
 
-        question.file = filename;
+      question.file = filename;
 
-        newTracks.push(ob);
-      });
+      newTracks.push(ob);
+    });
 
-      console.log('base questions2: ' + JSON.stringify(questions));
+    console.log('base questions2: ' + JSON.stringify(questions));
 
-      setTrackFile(newTracks[0].file);
+    setTrackFile(newTracks[0].file);
 
-      console.log('file: ' + newTracks[0].file);
+    console.log('file: ' + newTracks[0].file);
 
-      console.log('newTracks length base: ' + newTracks.length);
+    console.log('newTracks length base: ' + newTracks.length);
 
-      audioClip = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
-        if (error) {
-          console.log('failed to load the sound ' + newTracks[0].file, error);
-          return;
-        }
-        // loaded successfully
-        //audioClip.setCategory('Playback');
+    audioClip = new Sound(newTracks[0].file, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound ' + newTracks[0].file, error);
+        return;
+      }
+      // loaded successfully
+      //audioClip.setCategory('Playback');
 
-        console.log(
-          'duration in seconds: ' +
-            audioClip.getDuration() +
-            ' number of channels: ' +
-            audioClip.getNumberOfChannels(),
-        );
+      console.log(
+        'duration in seconds: ' +
+          audioClip.getDuration() +
+          ' number of channels: ' +
+          audioClip.getNumberOfChannels(),
+      );
 
-        setTrackInfo({position: 0, duration: audioClip.getDuration()});
+      setTrackInfo({position: 0, duration: audioClip.getDuration()});
 
-        //audioClip.play();
-      });
+      //audioClip.play();
+    });
 
-      setCanPlay(true);
+    setCanPlay(true);
 
-      setCurrentTrack({
-        name: questions[0].file,
-      });
+    setCurrentTrack({
+      name: questions[0].file,
+    });
 
-      console.log('newTracks: ' + JSON.stringify(newTracks));
-    }
+    console.log('newTracks: ' + JSON.stringify(newTracks));
 
     setQuestionList(questions);
 
@@ -1230,20 +1231,6 @@ const ProgressionLevels = ({level, mode, props}) => {
 
               {/* <Text style={styles.scaleHeader}>C Major Scale</Text> */}
 
-              {/* <TouchableOpacity onPress={() => debugResults()}>
-                <Text
-                  style={{
-                    height: 35,
-                    width: 100,
-                    backgroundColor: 'green',
-                    color: 'white',
-                    textAlign: 'center',
-                    paddingTop: 7,
-                  }}>
-                  Debug
-                </Text>
-              </TouchableOpacity> */}
-
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text
                   style={{
@@ -1333,6 +1320,7 @@ const ProgressionLevels = ({level, mode, props}) => {
                     </TouchableOpacity>
 
                     <Slider
+                      disabled={!canPlay}
                       width="85%"
                       minimumValue={0}
                       maximumValue={1}
@@ -1559,7 +1547,7 @@ const ProgressionLevels = ({level, mode, props}) => {
           mode={mode}
           passScore={passScore}
           postLeaderboard={postLeaderboard}
-          hasAudio={true}
+          hasAudio={hasAudio}
         />
       ) : null}
     </>

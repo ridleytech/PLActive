@@ -121,6 +121,7 @@ const BassLevels = ({level, mode, props}) => {
   const [quizTime, setQuizTime] = useState(0);
   const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
   const [score, setScore] = useState(0);
+  const [hasAudio, setHasAudio] = useState(false);
 
   const txt0 = useRef(null);
   const txt1 = useRef(null);
@@ -590,6 +591,44 @@ const BassLevels = ({level, mode, props}) => {
 
   const debugResults = () => {
     console.log('debugResults');
+    setHasAudio(true);
+    setCorrectAnswers(0);
+    setRestarted(false);
+    setQuizFinished(true);
+    setQuizStarted(false);
+
+    setAnswerList([
+      {
+        Answers: ['2', '5', '1'],
+        file: 'p12',
+        userAnswer: ['2'],
+        isCorrect: false,
+      },
+      {
+        Answers: ['1', '4', '1'],
+        file: 'p11',
+        userAnswer: ['1'],
+        isCorrect: false,
+      },
+    ]);
+    setQuestionList([
+      {
+        Answers: ['2', '5', '1'],
+        file: 'p12',
+        userAnswer: ['2'],
+        isCorrect: false,
+      },
+      {
+        Answers: ['1', '4', '1'],
+        file: 'p11',
+        userAnswer: ['1'],
+        isCorrect: false,
+      },
+    ]);
+  };
+
+  const debugResults1 = () => {
+    console.log('debugResults');
 
     dispatch({
       type: 'SET_INTERVAL_PROGRESS',
@@ -763,6 +802,7 @@ const BassLevels = ({level, mode, props}) => {
 
     if (level > 0) {
       console.log('level: ' + JSON.stringify(level));
+      setHasAudio(true);
 
       var newTracks = [];
 
@@ -1283,6 +1323,7 @@ const BassLevels = ({level, mode, props}) => {
                     </TouchableOpacity>
 
                     <Slider
+                      disabled={!canPlay}
                       width="85%"
                       minimumValue={0}
                       maximumValue={1}
@@ -1500,6 +1541,7 @@ const BassLevels = ({level, mode, props}) => {
           mode={mode}
           passScore={passScore}
           postLeaderboard={postLeaderboard}
+          hasAudio={hasAudio}
         />
       ) : null}
     </>

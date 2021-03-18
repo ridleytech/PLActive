@@ -118,6 +118,7 @@ const TraidsLevels = ({level, mode, props}) => {
   const [quizTime, setQuizTime] = useState(0);
   const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
   const [score, setScore] = useState(0);
+  const [hasAudio, setHasAudio] = useState(false);
 
   useEffect(() => {
     console.log('triads level changed');
@@ -790,6 +791,48 @@ const TraidsLevels = ({level, mode, props}) => {
   const debugResults = () => {
     console.log('debugResults');
 
+    if (level > 1) {
+      setHasAudio(true);
+    }
+
+    setCorrectAnswers(0);
+    setRestarted(false);
+    setQuizFinished(true);
+    setQuizStarted(false);
+
+    setAnswerList([
+      {
+        Answers: ['2', '5', '1'],
+        file: 'p12',
+        userAnswer: ['2'],
+        isCorrect: false,
+      },
+      {
+        Answers: ['1', '4', '1'],
+        file: 'p11',
+        userAnswer: ['1'],
+        isCorrect: false,
+      },
+    ]);
+    setQuestionList([
+      {
+        Answers: ['2', '5', '1'],
+        file: 'p12',
+        userAnswer: ['2'],
+        isCorrect: false,
+      },
+      {
+        Answers: ['1', '4', '1'],
+        file: 'p11',
+        userAnswer: ['1'],
+        isCorrect: false,
+      },
+    ]);
+  };
+
+  const debugResults1 = () => {
+    console.log('debugResults');
+
     dispatch({
       type: 'SET_TRIADS_PROGRESS',
       level: {highestCompletedTriadsLevel: level.toString()},
@@ -1355,6 +1398,8 @@ const TraidsLevels = ({level, mode, props}) => {
     console.log('newQuestions: ' + JSON.stringify(newQuestions));
 
     //if (level > 1) {
+    setHasAudio(true);
+
     var newTracks = [];
 
     newQuestions.map((question) => {
@@ -1441,20 +1486,6 @@ const TraidsLevels = ({level, mode, props}) => {
 
               {/* <Text style={styles.scaleHeader}>C Major Scale</Text> */}
 
-              {/* <TouchableOpacity onPress={() => debugResults()}>
-                <Text
-                  style={{
-                    height: 35,
-                    width: 100,
-                    backgroundColor: 'green',
-                    color: 'white',
-                    textAlign: 'center',
-                    paddingTop: 7,
-                  }}>
-                  Debug
-                </Text>
-              </TouchableOpacity> */}
-
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text
                   style={{
@@ -1538,6 +1569,7 @@ const TraidsLevels = ({level, mode, props}) => {
                   </TouchableOpacity>
 
                   <Slider
+                    disabled={!canPlay}
                     width="85%"
                     minimumValue={0}
                     maximumValue={1}
@@ -1642,6 +1674,7 @@ const TraidsLevels = ({level, mode, props}) => {
           mode={mode}
           passScore={passScore}
           postLeaderboard={postLeaderboard}
+          hasAudio={hasAudio}
         />
       ) : null}
     </>

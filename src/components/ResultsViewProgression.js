@@ -7,12 +7,14 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import playImg from '../../images/play-btn2.png';
-import pauseImg from '../../images/pause-btn2.png';
-import Slider from '@react-native-community/slider';
+
 //import useDynamicRefs from 'use-dynamic-refs';
 import {useDispatch, useSelector} from 'react-redux';
 import {create} from 'react-test-renderer';
+
+import playImg from '../../images/play-btn2.png';
+import pauseImg from '../../images/pause-btn2.png';
+import Slider from '@react-native-community/slider';
 var Sound = require('react-native-sound');
 var audioClip;
 
@@ -37,7 +39,6 @@ const ResultsViewProgression = ({
   const [isActive, setIsActive] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [currentButtonInd, setCurrentButtonInd] = useState(null);
-
   const [trackInfo, setTrackInfo] = useState({position: 0, duration: 0});
   //const [getRef, setRef] = useDynamicRefs();
 
@@ -350,7 +351,9 @@ const ResultsViewProgression = ({
           {showStuff.show === true ? (
             <View style={{marginTop: 20}}>
               <Text style={{marginTop: 20}}>
-                Fill in the rest of the notes in the progression.
+                {level < 4
+                  ? 'Listen to the chord progression below, then write the chord (using the number system) in the boxes.'
+                  : 'Listen to the chord progression below, then write the chord name and quality in the boxes.'}
               </Text>
 
               {answerList.map((ob, index) => {

@@ -20,7 +20,148 @@ const ResultsChords = ({
   mode,
   passScore,
   postLeaderboard,
+  hasAudio,
 }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const [sliderValue, setSliderValue] = useState(0);
+  const [isSeeking, setIsSeeking] = useState(false);
+  const [currentFile, setCurrentFile] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+  const [currentButtonInd, setCurrentButtonInd] = useState(null);
+  const [trackInfo, setTrackInfo] = useState({position: 0, duration: 0});
+  //const [getRef, setRef] = useDynamicRefs();
+
+  const onButtonPressed = (file, index) => {
+    //console.log('selectedFile: ' + file);
+    //console.log('currentFile: ' + currentFile);
+
+    setCurrentButtonInd(index);
+
+    if (file != currentFile) {
+      //stop current clip
+
+      if (audioClip) {
+        stopAudio();
+      }
+      setCurrentFile(file);
+
+      //load new clip
+    } else {
+      //return;
+      if (!isPlaying) {
+        audioClip.play((success) => {
+          if (success) {
+            console.log('successfully finished playing');
+            setIsActive(false);
+
+            setIsPlaying(false);
+            setSliderValue(0);
+          }
+        });
+        setIsActive(true);
+        setIsPlaying(true);
+      } else {
+        audioClip.pause();
+        setIsPlaying(false);
+        setIsActive(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (currentFile) {
+      console.log('newCurrentFile: ' + currentFile);
+
+      var filename = currentFile.toLowerCase() + '.mp3';
+
+      console.log('filename next: ' + filename);
+
+      audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+          console.log('failed to load the sound ' + filename, error);
+          return;
+        }
+        // loaded successfully
+        console.log('file ' + filename + ' loaded');
+
+        audioClip.play();
+        setIsActive(true);
+        setIsPlaying(true);
+      });
+    }
+  }, [currentFile]);
+
+  //audio playhead
+
+  useEffect(() => {
+    let interval = null;
+
+    if (isActive) {
+      interval = setInterval(() => {
+        //console.log('the seconds: ' + interval);
+
+        audioClip.getCurrentTime((seconds1) => {
+          //console.log('at ' + seconds1);
+
+          setTrackInfo({
+            position: seconds1,
+            duration: audioClip.getDuration(),
+          });
+
+          //if (seconds1 == 0 || seconds1 > 5) {
+          if (seconds1 == 0) {
+            stopAudio();
+          }
+        });
+        setSeconds((seconds) => seconds + 1);
+      }, 250);
+    } else if (!isActive && seconds !== 0) {
+      clearInterval(interval);
+      setIsPlaying(false);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, seconds]);
+
+  //track info changed
+
+  useEffect(() => {
+    //console.log('track info changed: ' + JSON.stringify(trackInfo));
+
+    var pos = trackInfo.position / trackInfo.duration;
+
+    //console.log('slider val: ' + pos);
+
+    if (pos > 0) {
+      setSliderValue(pos);
+    }
+  }, [trackInfo]);
+
+  const stopAudio = () => {
+    setIsActive(false);
+    setIsPlaying(false);
+
+    audioClip.stop(() => {
+      // Note: If you want to play a sound after stopping and rewinding it,
+      // it is important to call play() in a callback.
+      //whoosh.play();
+      //console.log('stop');
+    });
+
+    setSliderValue(0);
+  };
+
+  const slidingStarted = () => {
+    setIsSeeking(true);
+  };
+
+  const slidingCompleted = async (value) => {
+    audioClip.setCurrentTime(value * trackInfo.duration);
+    setSliderValue(value);
+    setIsSeeking(false);
+  };
+
   const accessFeature = useSelector((state) => state.accessFeature);
 
   const [showStuff, setResults] = useState({show: false});

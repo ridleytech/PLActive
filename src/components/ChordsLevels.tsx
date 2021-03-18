@@ -142,6 +142,7 @@ const ChordsLevels = ({level, mode, props}) => {
   const [storedData, setStoredData] = useState(null);
   const [passScore, setPassScore] = useState(0);
   const [score, setScore] = useState(0);
+  const [hasAudio, setHasAudio] = useState(false);
 
   useEffect(() => {
     //console.log('pitch level changed');
@@ -510,6 +511,44 @@ const ChordsLevels = ({level, mode, props}) => {
 
   const debugResults = () => {
     console.log('debugResults');
+    setHasAudio(true);
+    setCorrectAnswers(0);
+    setRestarted(false);
+    setQuizFinished(true);
+    setQuizStarted(false);
+
+    setAnswerList([
+      {
+        Answers: ['2', '5', '1'],
+        file: 'p12',
+        userAnswer: ['2'],
+        isCorrect: false,
+      },
+      {
+        Answers: ['1', '4', '1'],
+        file: 'p11',
+        userAnswer: ['1'],
+        isCorrect: false,
+      },
+    ]);
+    setQuestionList([
+      {
+        Answers: ['2', '5', '1'],
+        file: 'p12',
+        userAnswer: ['2'],
+        isCorrect: false,
+      },
+      {
+        Answers: ['1', '4', '1'],
+        file: 'p11',
+        userAnswer: ['1'],
+        isCorrect: false,
+      },
+    ]);
+  };
+
+  const debugResults1 = () => {
+    console.log('debugResults');
 
     storeData(level);
 
@@ -683,6 +722,7 @@ const ChordsLevels = ({level, mode, props}) => {
     console.log('startQuiz');
 
     setisQuizTimerActive(true);
+    
 
     //audioClip.play();
 
@@ -703,6 +743,8 @@ const ChordsLevels = ({level, mode, props}) => {
     }
 
     questions = questions.slice(0, 12);
+
+    setHasAudio(true);
 
     var newTracks = [];
 
@@ -1293,6 +1335,7 @@ const ChordsLevels = ({level, mode, props}) => {
           mode={mode}
           passScore={passScore}
           postLeaderboard={postLeaderboard}
+          hasAudio={hasAudio}
         />
       ) : null}
     </>
