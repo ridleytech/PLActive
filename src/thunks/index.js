@@ -131,6 +131,8 @@ export const saveProgress = () => (dispatch, getState) => {
     .highestCompletedIntervalBlockedLevel;
   let highestPitch = getState().highestCompletedPitchLevel;
   let highestBass = getState().highestCompletedBassLevel;
+  let highestProgression = getState().highestCompletedProgressionLevel;
+
   let highestlevelcompletedblocked = getState()
     .highestCompletedTriadsBlockedLevel;
   let highestlevelcompletedbroken = getState()
@@ -146,6 +148,7 @@ export const saveProgress = () => (dispatch, getState) => {
         highestcompletedintervalblocked: highestcompletedintervalblocked,
         highestPitch: highestPitch,
         highestBass: highestBass,
+        highestProgression: highestProgression,
         highestlevelcompletedblocked: highestlevelcompletedblocked,
         highestlevelcompletedbroken: highestlevelcompletedbroken,
         userid: userid,
@@ -162,6 +165,7 @@ export const saveProgress = () => (dispatch, getState) => {
       highestcompletedintervalblocked: highestcompletedintervalblocked,
       highestPitch: highestPitch,
       highestBass: highestBass,
+      highestProgression: highestProgression,
       highestlevelcompletedblocked: highestlevelcompletedblocked,
       highestlevelcompletedbroken: highestlevelcompletedbroken,
       userid: userid,

@@ -20,6 +20,7 @@ const LeaderboardModes = ({setMode}) => {
     'Interval Training',
     'Triads and Sevenths',
     'Bassline Training',
+    'Progression Training',
   ];
 
   const loggedIn = useSelector((state) => state.loggedIn);
@@ -57,8 +58,6 @@ const LeaderboardModes = ({setMode}) => {
           }}>
           Leaderboards
         </Text>
-
-        {/* <Image source={videoImg} style={styles.video} /> */}
         <Animated.View style={{marginTop: 30, opacity: opacity}}>
           <View
             style={{
@@ -81,40 +80,6 @@ const LeaderboardModes = ({setMode}) => {
 
           <ScrollView style={{height: '100%'}}>
             {levels.map((level, index) => {
-              // var icon;
-
-              // if (index == 0) {
-              //   if (highestCompletedPitchLevel < 3) {
-              //     icon = null;
-              //   } else {
-              //     icon = checkIcon;
-              //   }
-              // } else if (index == 1) {
-              //   if (
-              //     highestCompletedIntervalBrokenLevel < 5 ||
-              //     highestCompletedIntervalBlockedLevel < 5
-              //   ) {
-              //     icon = null;
-              //   } else {
-              //     icon = checkIcon;
-              //   }
-              // } else if (index == 2) {
-              //   if (
-              //     highestCompletedTriadsBlockedLevel < 10 ||
-              //     highestCompletedTriadsBrokenLevel < 10
-              //   ) {
-              //     icon = null;
-              //   } else {
-              //     icon = checkIcon;
-              //   }
-              // } else if (index == 3) {
-              //   if (highestCompletedBassLevel < 4) {
-              //     icon = null;
-              //   } else {
-              //     icon = checkIcon;
-              //   }
-              // }
-
               return (
                 <TouchableOpacity
                   onPress={() => {
@@ -137,20 +102,6 @@ const LeaderboardModes = ({setMode}) => {
                       {level}
                     </Text>
                   </View>
-
-                  {/* {loggedIn && accessFeature == 2 ? (
-                    <Image
-                      source={icon}
-                      style={{position: 'absolute', right: 12, top: 12}}
-                    />
-                  ) : (
-                    <Image
-                      source={
-                        index < highestCompletedPitchLevel ? checkIcon : null
-                      }
-                      style={{position: 'absolute', right: 12, top: 12}}
-                    />
-                  )} */}
                 </TouchableOpacity>
               );
             })}

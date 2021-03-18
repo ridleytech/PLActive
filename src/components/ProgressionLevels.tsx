@@ -594,6 +594,43 @@ const ProgressionLevels = ({level, mode, props}) => {
 
   const debugResults = () => {
     console.log('debugResults');
+    setCorrectAnswers(0);
+    setRestarted(false);
+    setQuizFinished(true);
+    setQuizStarted(false);
+
+    setAnswerList([
+      {
+        Answers: ['2', '5', '1'],
+        file: 'p12',
+        userAnswer: ['2'],
+        isCorrect: false,
+      },
+      {
+        Answers: ['1', '4', '1'],
+        file: 'p11',
+        userAnswer: ['1'],
+        isCorrect: false,
+      },
+    ]);
+    setQuestionList([
+      {
+        Answers: ['2', '5', '1'],
+        file: 'p12',
+        userAnswer: ['2'],
+        isCorrect: false,
+      },
+      {
+        Answers: ['1', '4', '1'],
+        file: 'p11',
+        userAnswer: ['1'],
+        isCorrect: false,
+      },
+    ]);
+  };
+
+  const debugResults1 = () => {
+    console.log('debugResults');
 
     dispatch({
       type: 'SET_INTERVAL_PROGRESS',
@@ -745,6 +782,12 @@ const ProgressionLevels = ({level, mode, props}) => {
       questions = shuffle(data.Progression.level3Questions);
     } else if (level == 4) {
       questions = shuffle(data.Progression.level4Questions);
+    } else if (level == 5) {
+      questions = shuffle(data.Progression.level5Questions);
+    } else if (level == 6) {
+      questions = shuffle(data.Progression.level6Questions);
+    } else if (level == 7) {
+      questions = shuffle(data.Progression.level7Questions);
     }
 
     //console.log('theAnswer: ' + answerInd);
@@ -1013,86 +1056,92 @@ const ProgressionLevels = ({level, mode, props}) => {
     setCurrentAnswerList([question.Answers[0], '', '', '', '', '', '', '', '']);
   };
 
-  // const debugAudio = () => {
-  //   console.log('debugAudio');
+  const debugAudio = () => {
+    console.log('debugAudio');
 
-  //   setisQuizTimerActive(true);
+    setisQuizTimerActive(true);
 
-  //   var questions = [];
+    var questions = [];
 
-  //   if (level == 1) {
-  //     questions = shuffle(data.Progression.level1Questions);
-  //   } else if (level == 2) {
-  //     questions = shuffle(data.Progression.level2Questions);
-  //   } else if (level == 3) {
-  //     questions = shuffle(data.Progression.level3Questions);
-  //   } else if (level == 4) {
-  //     questions = shuffle(data.Progression.level4Questions);
-  //   }
+    if (level == 1) {
+      questions = shuffle(data.Progression.level1Questions);
+    } else if (level == 2) {
+      questions = shuffle(data.Progression.level2Questions);
+    } else if (level == 3) {
+      questions = shuffle(data.Progression.level3Questions);
+    } else if (level == 4) {
+      questions = shuffle(data.Progression.level4Questions);
+    } else if (level == 5) {
+      questions = shuffle(data.Progression.level5Questions);
+    } else if (level == 6) {
+      questions = shuffle(data.Progression.level6Questions);
+    } else if (level == 7) {
+      questions = shuffle(data.Progression.level7Questions);
+    }
 
-  //   //console.log('theAnswer: ' + answerInd);
+    //console.log('theAnswer: ' + answerInd);
 
-  //   console.log('base questions: ' + JSON.stringify(questions));
+    console.log('base questions: ' + JSON.stringify(questions));
 
-  //   setCurrentQuestionInd(0);
-  //   setCurrentAnswer('');
-  //   setCorrectAnswers(0);
-  //   setQuestionList(questions);
-  //   setAnswerList([]);
-  //   //populateAnswers(questions, 0);
+    setCurrentQuestionInd(0);
+    setCurrentAnswer('');
+    setCorrectAnswers(0);
+    setQuestionList(questions);
+    setAnswerList([]);
+    //populateAnswers(questions, 0);
 
-  //   setQuizStarted(true);
-  //   setRestarted(false);
-  //   setQuizFinished(false);
+    setQuizStarted(true);
+    setRestarted(false);
+    setQuizFinished(false);
 
-  //   if (level > 0) {
-  //     var newTracks = [];
+    if (level > 0) {
+      var newTracks = [];
 
-  //     questions.map((question) => {
-  //       // var ob = {
-  //       //   file: question.file.toLowerCase() + '.mp3',
-  //       // };
+      questions.map((question) => {
+        // var ob = {
+        //   file: question.file.toLowerCase() + '.mp3',
+        // };
 
-  //       //newTracks.push(ob);
+        //newTracks.push(ob);
 
-  //       //setTrackFile(newTracks[0].file);
+        //setTrackFile(newTracks[0].file);
 
-  //       // console.log('file: ' + newTracks[0].file);
-  //       // console.log('newTracks length base: ' + newTracks.length);
+        // console.log('file: ' + newTracks[0].file);
+        // console.log('newTracks length base: ' + newTracks.length);
 
-  //       var filename = question.file.toLowerCase() + '.mp3';
-  //       console.log('filename: ' + filename);
+        var filename = question.file.toLowerCase() + '.mp3';
+        console.log('filename: ' + filename);
 
-  //       audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
-  //         if (error) {
-  //           console.log('failed to load the sound ' + filename, error);
-  //           return;
-  //         }
-  //         // loaded successfully
-  //         console.log('file ' + filename + ' loaded');
+        audioClip = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
+          if (error) {
+            console.log('failed to load the sound ' + filename, error);
+            return;
+          }
+          // loaded successfully
+          console.log('file ' + filename + ' loaded');
 
-  //         //audioClip.setCategory('Playback');
+          //audioClip.setCategory('Playback');
 
-  //         //setTrackInfo({position: 0, duration: audioClip.getDuration()});
-  //         //audioClip.play();
-  //       });
-  //     });
+          //setTrackInfo({position: 0, duration: audioClip.getDuration()});
+          //audioClip.play();
+        });
+      });
 
-  //     //setCanPlay(true);
-  //   }
+      //setCanPlay(true);
+    }
 
-  //   // setCurrentTrack({
-  //   //   name: questions[0].file,
-  //   // });
+    // setCurrentTrack({
+    //   name: questions[0].file,
+    // });
 
-  //   // //console.log('questions: ' + JSON.stringify(questions));
+    // //console.log('questions: ' + JSON.stringify(questions));
 
-  //   // var question = questions[0];
+    // var question = questions[0];
 
-  //   // console.log('question: ' + JSON.stringify(question));
-  //   // console.log('newTracks: ' + JSON.stringify(newTracks));
-  //   // console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
-  // };
+    // console.log('question: ' + JSON.stringify(question));
+    // console.log('newTracks: ' + JSON.stringify(newTracks));
+    // console.log('theAnswer: ' + JSON.stringify(questions[0].Answers));
+  };
 
   const hasLetter = (inputtxt) => {
     console.log('inputtxt: ' + inputtxt);
@@ -1244,8 +1293,9 @@ const ProgressionLevels = ({level, mode, props}) => {
                   marginBottom: 15,
                   fontFamily: 'Helvetica Neue',
                 }}>
-                Listen to the audio and write the progression below using the
-                number system; write one number per box.
+                {level < 4
+                  ? 'Listen to the chord progression below, then write the chord (using the number system) in the boxes.'
+                  : 'Listen to the chord progression below, then write the chord name and quality in the boxes.'}
               </Text>
 
               {level > 0 ? (
@@ -1320,7 +1370,8 @@ const ProgressionLevels = ({level, mode, props}) => {
                     //backgroundColor: 'yellow',
                   }}>
                   <TextInput
-                    maxLength={4}
+                    keyboardType={level < 4 ? 'number-pad' : 'ascii-capable'}
+                    maxLength={6}
                     ref={txt0}
                     onChangeText={(text) => changeVal(text, 0)}
                     style={[
@@ -1331,7 +1382,8 @@ const ProgressionLevels = ({level, mode, props}) => {
                     {questionList[currentQuestionInd].Answers[0]}
                   </TextInput>
                   <TextInput
-                    maxLength={4}
+                    keyboardType={level < 4 ? 'number-pad' : 'ascii-capable'}
+                    maxLength={6}
                     ref={txt1}
                     onChangeText={(text) => changeVal(text, 1)}
                     style={[
@@ -1345,7 +1397,8 @@ const ProgressionLevels = ({level, mode, props}) => {
                     {currentAnswerList[1]}
                   </TextInput>
                   <TextInput
-                    maxLength={4}
+                    keyboardType={level < 4 ? 'number-pad' : 'ascii-capable'}
+                    maxLength={6}
                     ref={txt2}
                     onChangeText={(text) => changeVal(text, 2)}
                     style={[
@@ -1360,7 +1413,8 @@ const ProgressionLevels = ({level, mode, props}) => {
                   </TextInput>
 
                   <TextInput
-                    maxLength={4}
+                    keyboardType={level < 4 ? 'number-pad' : 'ascii-capable'}
+                    maxLength={6}
                     ref={txt3}
                     onChangeText={(text) => changeVal(text, 3)}
                     style={[
@@ -1377,7 +1431,8 @@ const ProgressionLevels = ({level, mode, props}) => {
                     {currentAnswerList[3]}
                   </TextInput>
                   <TextInput
-                    maxLength={4}
+                    keyboardType={level < 4 ? 'number-pad' : 'ascii-capable'}
+                    maxLength={6}
                     ref={txt4}
                     onChangeText={(text) => changeVal(text, 4)}
                     style={[
@@ -1394,7 +1449,8 @@ const ProgressionLevels = ({level, mode, props}) => {
                     {currentAnswerList[4]}
                   </TextInput>
                   <TextInput
-                    maxLength={4}
+                    keyboardType={level < 4 ? 'number-pad' : 'ascii-capable'}
+                    maxLength={6}
                     ref={txt5}
                     onChangeText={(text) => changeVal(text, 5)}
                     style={[
@@ -1410,7 +1466,8 @@ const ProgressionLevels = ({level, mode, props}) => {
                     {currentAnswerList[5]}
                   </TextInput>
                   <TextInput
-                    maxLength={4}
+                    keyboardType={level < 4 ? 'number-pad' : 'ascii-capable'}
+                    maxLength={6}
                     ref={txt6}
                     onChangeText={(text) => changeVal(text, 6)}
                     style={[
@@ -1427,7 +1484,8 @@ const ProgressionLevels = ({level, mode, props}) => {
                     {currentAnswerList[6]}
                   </TextInput>
                   <TextInput
-                    maxLength={4}
+                    keyboardType={level < 4 ? 'number-pad' : 'ascii-capable'}
+                    maxLength={6}
                     ref={txt7}
                     onChangeText={(text) => changeVal(text, 7)}
                     style={[
@@ -1444,7 +1502,8 @@ const ProgressionLevels = ({level, mode, props}) => {
                     {currentAnswerList[7]}
                   </TextInput>
                   <TextInput
-                    maxLength={4}
+                    keyboardType={level < 4 ? 'number-pad' : 'ascii-capable'}
+                    maxLength={6}
                     ref={txt8}
                     onChangeText={(text) => changeVal(text, 8)}
                     style={[
@@ -1500,6 +1559,7 @@ const ProgressionLevels = ({level, mode, props}) => {
           mode={mode}
           passScore={passScore}
           postLeaderboard={postLeaderboard}
+          hasAudio={true}
         />
       ) : null}
     </>

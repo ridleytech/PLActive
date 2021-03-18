@@ -28,7 +28,8 @@ class Leaderboard2 extends Component<Props> {
       pitchLevels: ['1', '2', '3'],
       intervalLevels: ['1', '2', '3', '4', '5'],
       triadsLevels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-      baselineLevels: ['1', '2', '3', '4'],
+      basslineLevels: ['1', '2', '3', '4'],
+      progressioinLevels: ['1', '2', '3', '4', '5', '6', '7'],
       currentLevelDisplayLevels: ['1', '2', '3'],
     };
   }
@@ -60,12 +61,20 @@ class Leaderboard2 extends Component<Props> {
         lastMode: 3,
         //selectedIndex: event.nativeEvent.selectedSegmentIndex,
       });
+    } else if (this.props.leaderboardMode == 4) {
+      this.setState({
+        currentLevelDisplayLevels: this.state.basslineLevels,
+        currentMode: 'Bassline Training',
+        lastBasslineLevel: 0,
+        lastMode: 4,
+        //selectedIndex: event.nativeEvent.selectedSegmentIndex,
+      });
     } else {
       this.setState({
-        currentLevelDisplayLevels: this.state.baselineLevels,
-        currentMode: 'Bassline Training',
-        lastBaselineLevel: 0,
-        lastMode: 4,
+        currentLevelDisplayLevels: this.state.progressioinLevels,
+        currentMode: 'Progression Training',
+        lastProgressionLevel: 0,
+        lastMode: 5,
         //selectedIndex: event.nativeEvent.selectedSegmentIndex,
       });
     }
@@ -76,36 +85,6 @@ class Leaderboard2 extends Component<Props> {
 
   str_pad_left = (string, pad, length) => {
     return (new Array(length + 1).join(pad) + string).slice(-length);
-  };
-
-  setOption = (event) => {
-    console.log('update UI: ' + event.nativeEvent.selectedSegmentIndex);
-
-    if (event.nativeEvent.selectedSegmentIndex == 0) {
-      this.setState({
-        currentLevelDisplayLevels: this.state.pitchLevels,
-        currentMode: 'Pitch Recognition',
-        lastIntervalLevel: 0,
-        lastMode: event.nativeEvent.selectedSegmentIndex,
-        selectedIndex: event.nativeEvent.selectedSegmentIndex,
-      });
-    } else if (event.nativeEvent.selectedSegmentIndex == 1) {
-      this.setState({
-        currentLevelDisplayLevels: this.state.intervalLevels,
-        currentMode: 'Interval Training',
-        lastPitchLevel: 0,
-        lastMode: event.nativeEvent.selectedSegmentIndex,
-        selectedIndex: event.nativeEvent.selectedSegmentIndex,
-      });
-    } else {
-      this.setState({
-        currentLevelDisplayLevels: this.state.triadsLevels,
-        currentMode: 'Triads and Sevenths',
-        lastTriadsLevel: 0,
-        lastMode: event.nativeEvent.selectedSegmentIndex,
-        selectedIndex: event.nativeEvent.selectedSegmentIndex,
-      });
-    }
   };
 
   setLevelOption = (event) => {
@@ -130,13 +109,34 @@ class Leaderboard2 extends Component<Props> {
 
         selectedLevelIndex: event.nativeEvent.selectedSegmentIndex,
       });
-    } else {
+    } else if (this.state.currentMode == 'Triads and Sevenths') {
       console.log(
         'set triad last level to: ' + event.nativeEvent.selectedSegmentIndex,
       );
 
       this.setState({
         lastTriadsLevel: event.nativeEvent.selectedSegmentIndex,
+
+        selectedLevelIndex: event.nativeEvent.selectedSegmentIndex,
+      });
+    } else if (this.state.currentMode == 'Bassline Training') {
+      console.log(
+        'set bassline last level to: ' + event.nativeEvent.selectedSegmentIndex,
+      );
+
+      this.setState({
+        lastBasslineLevel: event.nativeEvent.selectedSegmentIndex,
+
+        selectedLevelIndex: event.nativeEvent.selectedSegmentIndex,
+      });
+    } else {
+      console.log(
+        'set progression last level to: ' +
+          event.nativeEvent.selectedSegmentIndex,
+      );
+
+      this.setState({
+        lastProgressionLevel: event.nativeEvent.selectedSegmentIndex,
 
         selectedLevelIndex: event.nativeEvent.selectedSegmentIndex,
       });
@@ -147,7 +147,9 @@ class Leaderboard2 extends Component<Props> {
     if (
       this.state.lastIntervalLevel != nextState.lastIntervalLevel ||
       this.state.lastPitchLevel != nextState.lastPitchLevel ||
-      this.state.lastTriadsLevel != nextState.lastTriadsLevel
+      this.state.lastTriadsLevel != nextState.lastTriadsLevel ||
+      this.state.lastBasslineLevel != nextState.lastBasslineLevel ||
+      this.state.lastProgressionLevel != nextState.lastProgressionLevel
     ) {
       console.log('get new data: ' + JSON.stringify(nextState));
       //console.log('index: ' + this.state.selectedLevelIndex);
@@ -158,8 +160,14 @@ class Leaderboard2 extends Component<Props> {
         level = parseInt(this.state.lastIntervalLevel) + 1;
       } else if (this.state.lastPitchLevel != nextState.lastPitchLevel) {
         level = parseInt(this.state.lastPitchLevel) + 1;
-      } else {
+      } else if (this.state.lastTriadsLevel != nextState.lastTriadsLevel) {
         level = parseInt(this.state.lastTriadsLevel) + 1;
+      } else if (this.state.lastBasslineLevel != nextState.lastBasslineLevel) {
+        level = parseInt(this.state.lastBasslineLevel) + 1;
+      } else if (
+        this.state.lastProgressionLevel != nextState.lastProgressionLevel
+      ) {
+        level = parseInt(this.state.lastProgressionLevel) + 1;
       }
       //var mode = parseInt(this.state.lastMode) + 1;
 

@@ -1232,7 +1232,8 @@
       }
     ],
     "level1Instructions": [
-      "Using only your ear, fill in the numbers for the progressions played in the audio. You will be given the first chord for reference.",
+      "Listen to the chord progressions played in the audio, then write the chord number in the boxes.",
+      "You're given the first chord as a reference.",
       "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
     ],
@@ -1289,7 +1290,8 @@
       }
     ],
     "level2Instructions": [
-      "Using only your ear, fill in the numbers for the progressions played in the audio. You will be given the first chord for reference.",
+      "Listen to the chord progressions played in the audio, then write the chord number in the boxes.",
+      "You're given the first chord as a reference.",
       "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
     ],
@@ -1346,7 +1348,8 @@
       }
     ],
     "level3Instructions": [
-      "Using only your ear, fill in the numbers for the progressions played in the audio. You will be given the first chord for reference.",
+      "Listen to the chord progressions played in the audio, then write the chord number in the boxes.",
+      "You're given the first chord as a reference.",
       "This level will consist of twelve 12 questions.",
       "You need to score a 11/12 to past the quiz."
     ],
@@ -1403,7 +1406,7 @@
       }
     ],
     "level4Instructions": [
-      "Listen to the chord progression below, then write the chord name and quality in the boxes.",
+      "Listen to the chord progressions played in the audio, then write the chord name and quality in the boxes.",
       "Here are examples of how the chords should be written ( C7, Cmaj7, Cm7, Cm7b5)",
       "You're given the first chord as a reference.",
       "This level will consist of twelve 12 questions.",
@@ -1462,7 +1465,7 @@
       }
     ],
     "level5Instructions": [
-      "Listen to the chord progression below, then write the chord name and quality in the boxes.",
+      "Listen to the chord progressions played in the audio, then write the chord name and quality in the boxes.",
       "Here are examples of how the chords should be written ( C7, Cmaj7, Cm7, Cm7b5)",
       "You're given the first chord as a reference.",
       "This level will consist of twelve 12 questions.",
@@ -1521,7 +1524,7 @@
       }
     ],
     "level6Instructions": [
-      "Listen to the chord progression below, then write the chord name and quality in the boxes.",
+      "Listen to the chord progressions played in the audio, then write the chord name and quality in the boxes.",
       "Here are examples of how the chords should be written ( C7, Cmaj7, Cm7, Cm7b5)",
       "You're given the first chord as a reference.",
       "This level will consist of twelve 12 questions.",
@@ -1580,7 +1583,7 @@
       }
     ],
     "level7Instructions": [
-      "Listen to the chord progression below, then write the chord name and quality in the boxes.",
+      "Listen to the chord progressions played in the audio, then write the chord name and quality in the boxes.",
       "Here are examples of how the chords should be written ( C7, Cmaj7, Cm7, Cm7b5)",
       "You're given the first chord as a reference.",
       "This level will consist of twelve 12 questions.",

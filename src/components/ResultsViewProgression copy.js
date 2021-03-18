@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef, createRef} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -10,7 +10,7 @@ import {
 import playImg from '../../images/play-btn2.png';
 import pauseImg from '../../images/pause-btn2.png';
 import Slider from '@react-native-community/slider';
-//import useDynamicRefs from 'use-dynamic-refs';
+import useDynamicRefs from 'use-dynamic-refs';
 import {useDispatch, useSelector} from 'react-redux';
 import {create} from 'react-test-renderer';
 var Sound = require('react-native-sound');
@@ -33,20 +33,98 @@ const ResultsViewProgression = ({
 
   const [sliderValue, setSliderValue] = useState(0);
   const [isSeeking, setIsSeeking] = useState(false);
+  const [canPlay, setCanPlay] = useState(false);
   const [currentFile, setCurrentFile] = useState(false);
+  const [currentSlider, setCurrentSlider] = useState(false);
+  const [currentButton, setCurrentButton] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [seconds, setSeconds] = useState(0);
-  const [currentButtonInd, setCurrentButtonInd] = useState(null);
-
   const [trackInfo, setTrackInfo] = useState({position: 0, duration: 0});
-  //const [getRef, setRef] = useDynamicRefs();
+  const [getRef, setRef] = useDynamicRefs();
+
+  // const txt0 = useRef(null);
+  // const txt1 = useRef(null);
+  // const txt2 = useRef(null);
+  // const txt3 = useRef(null);
+  // const txt4 = useRef(null);
+  // const txt5 = useRef(null);
+  // const txt6 = useRef(null);
+  // const txt7 = useRef(null);
+  // const txt8 = useRef(null);
+  // const txt9 = useRef(null);
+  // const txt10 = useRef(null);
+  // const txt11 = useRef(null);
+
+  const buttonRefs = [
+    'txt0',
+    'txt1',
+    'txt2',
+    'txt3',
+    'txt4',
+    'txt5',
+    'txt6',
+    'txt7',
+    'txt8',
+    'txt9',
+    'txt10',
+    'txt11',
+  ];
+
+  const sliderRefs = [
+    'slider0',
+    'slider1',
+    'slider2',
+    'slider3',
+    'slider4',
+    'slider5',
+    'slider6',
+    'slider7',
+    'slider8',
+    'slider9',
+    'slider10',
+    'slider11',
+  ];
+
+  // var refsArray = [];
+
+  // const aL = answerList.map((ob) => {
+  //   console.log('da file: ' + ob.file);
+
+  //   refsArray.push((ob.file = createRef()));
+  // });
+
+  // const aL = answerList.map((ob) => {
+  //   console.log('da file: ' + ob.file);
+
+  //   refsArray.push((ob.file = createRef()));
+
+  //   //ob.file = useRef(null);
+
+  //   //this['myRef' + ob.file] = createRef();
+  // });
+
+  const refsArray = buttonRefs.map(() => createRef());
+  // const refsArray2 = sliderRefs.map(() => createRef());
+
+  // console.log('refsArray: ' + JSON.stringify(refsArray));
 
   const onButtonPressed = (file, index) => {
-    //console.log('selectedFile: ' + file);
+    console.log('selectedFile: ' + file);
     //console.log('currentFile: ' + currentFile);
 
-    setCurrentButtonInd(index);
+    file.current.setNativeProps({
+      style: {
+        height: 10,
+      },
+    });
 
+    // const id1 = getRef(file + 'btn');
+    // console.log('id1: ' + id1);
+
+    //setCurrentButton(id1.current);
+    // setCurrentSlider(refsArray2[index].current);
+
+    //return;
     if (file != currentFile) {
       //stop current clip
 
@@ -57,7 +135,7 @@ const ResultsViewProgression = ({
 
       //load new clip
     } else {
-      //return;
+      return;
       if (!isPlaying) {
         audioClip.play((success) => {
           if (success) {
@@ -94,12 +172,17 @@ const ResultsViewProgression = ({
         // loaded successfully
         console.log('file ' + filename + ' loaded');
 
-        audioClip.play();
-        setIsActive(true);
+        //audioClip.play();
         setIsPlaying(true);
       });
     }
   }, [currentFile]);
+
+  useEffect(() => {
+    if (currentButton) {
+      console.log('currentButton: ' + currentButton);
+    }
+  }, [currentButton]);
 
   //audio playhead
 
@@ -149,6 +232,9 @@ const ResultsViewProgression = ({
   const stopAudio = () => {
     setIsActive(false);
     setIsPlaying(false);
+
+    // audioClip.pause();
+    // audioClip.stop();
 
     audioClip.stop(() => {
       // Note: If you want to play a sound after stopping and rewinding it,
@@ -439,10 +525,12 @@ const ResultsViewProgression = ({
                             height: 50,
                           }}>
                           <TouchableOpacity
+                            //ref={setRef(ob.file + 'btn')}
+                            ref={refsArray[index].current}
                             //disabled={!canPlay}
                             onPress={() => onButtonPressed(ob.file, index)}
                             style={{marginRight: 12}}>
-                            {currentButtonInd == index && isPlaying ? (
+                            {isPlaying ? (
                               <Image
                                 source={pauseImg}
                                 style={{width: 25, height: 25}}
@@ -456,13 +544,12 @@ const ResultsViewProgression = ({
                           </TouchableOpacity>
 
                           <Slider
-                            disabled={currentButtonInd != index}
+                            //ref={sliderRefs[index].current}
+                            ref={setRef(ob.file + 'slider')}
                             width="85%"
                             minimumValue={0}
                             maximumValue={1}
-                            value={
-                              currentButtonInd == index ? sliderValue : null
-                            }
+                            value={sliderValue}
                             minimumTrackTintColor="#16ADE5"
                             maximumTrackTintColor="#707070"
                             onSlidingStart={slidingStarted}
