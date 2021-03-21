@@ -412,61 +412,63 @@ const ResultsViewTriads = ({
                         </View>
                       </>
                     )}
+
+                    {hasAudio ? (
+                      <View
+                        style={{
+                          backgroundColor: '#222222',
+                          marginLeft: 'auto',
+                          marginRight: 'auto',
+                          paddingLeft: 12,
+                          paddingRight: 12,
+                          marginTop: 10,
+                          marginBottom: 10,
+                        }}>
+                        <View
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            height: 50,
+                          }}>
+                          <TouchableOpacity
+                            //disabled={!canPlay}
+                            onPress={() => onButtonPressed(ob.file, index)}
+                            style={{marginRight: 12}}>
+                            {currentButtonInd == index && isPlaying ? (
+                              <Image
+                                source={pauseImg}
+                                style={{width: 25, height: 25}}
+                              />
+                            ) : (
+                              <Image
+                                source={playImg}
+                                style={{width: 25, height: 25}}
+                              />
+                            )}
+                          </TouchableOpacity>
+
+                          <Slider
+                            disabled={currentButtonInd != index}
+                            width="85%"
+                            minimumValue={0}
+                            maximumValue={1}
+                            value={
+                              currentButtonInd == index ? sliderValue : null
+                            }
+                            minimumTrackTintColor="#16ADE5"
+                            maximumTrackTintColor="#707070"
+                            onSlidingStart={slidingStarted}
+                            onSlidingComplete={slidingCompleted}
+                            thumbTintColor="#00000000"
+                            //trackImage={track}
+                          />
+                        </View>
+                      </View>
+                    ) : null}
                   </View>
                 );
               })}
-
-              {hasAudio ? (
-                <View
-                  style={{
-                    backgroundColor: '#222222',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    paddingLeft: 12,
-                    paddingRight: 12,
-                    marginTop: 10,
-                    marginBottom: 10,
-                  }}>
-                  <View
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      height: 50,
-                    }}>
-                    <TouchableOpacity
-                      //disabled={!canPlay}
-                      onPress={() => onButtonPressed(ob.file, index)}
-                      style={{marginRight: 12}}>
-                      {currentButtonInd == index && isPlaying ? (
-                        <Image
-                          source={pauseImg}
-                          style={{width: 25, height: 25}}
-                        />
-                      ) : (
-                        <Image
-                          source={playImg}
-                          style={{width: 25, height: 25}}
-                        />
-                      )}
-                    </TouchableOpacity>
-
-                    <Slider
-                      disabled={currentButtonInd != index}
-                      width="85%"
-                      minimumValue={0}
-                      maximumValue={1}
-                      value={currentButtonInd == index ? sliderValue : null}
-                      minimumTrackTintColor="#16ADE5"
-                      maximumTrackTintColor="#707070"
-                      onSlidingStart={slidingStarted}
-                      onSlidingComplete={slidingCompleted}
-                      thumbTintColor="#00000000"
-                      //trackImage={track}
-                    />
-                  </View>
-                </View>
-              ) : null}
             </View>
           ) : null}
         </View>

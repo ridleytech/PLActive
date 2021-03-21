@@ -128,6 +128,8 @@ const ProgressionLevels = ({level, mode, props}) => {
   const txt7 = useRef(null);
   const txt8 = useRef(null);
 
+  const [displayAnswer, setDisplayAnswer] = useState(null);
+
   useEffect(() => {
     console.log('base level changed');
     populateInstructions();
@@ -569,6 +571,7 @@ const ProgressionLevels = ({level, mode, props}) => {
     } else {
       console.log('not');
       //sc[answerInd] = 'rgb(255,93,93)';
+      setDisplayAnswer(currentQuestion.Answers.join(', '));
     }
 
     setSelectionColors(sc);
@@ -579,18 +582,27 @@ const ProgressionLevels = ({level, mode, props}) => {
 
     //setCanAnswer(false);
     setCanCheck(false);
-    setCanPlay(false);
+    //setCanPlay(false);
 
     stopAudio();
 
-    setTimeout(() => {
-      setCurrentAnswer(null);
-      setCanCheck(true);
-      setCanPlay(true);
+    // setTimeout(() => {
+    //   setCurrentAnswer(null);
+    //   setCanCheck(true);
+    //   setCanPlay(true);
 
-      nextQuestion();
-      setAnswerState('#E2E7ED');
-    }, 2000);
+    //   nextQuestion();
+    //   setAnswerState('#E2E7ED');
+    // }, 2000);
+  };
+
+  const selectNextQuestion = () => {
+    setDisplayAnswer(null);
+    setCurrentAnswer(null);
+    setCanCheck(true);
+    setCanPlay(true);
+    nextQuestion();
+    setAnswerState('#E2E7ED');
   };
 
   const debugResults = () => {
@@ -1184,7 +1196,7 @@ const ProgressionLevels = ({level, mode, props}) => {
       //   return;
       // }
 
-      cal[index] = val;
+      cal[index] = val.trim();
       console.log('updated cal: ' + cal);
 
       //return if val contains letter and not "b" or "#"
@@ -1320,7 +1332,7 @@ const ProgressionLevels = ({level, mode, props}) => {
                     </TouchableOpacity>
 
                     <Slider
-                      disabled={!canPlay}
+                      //disabled={!canPlay}
                       width="85%"
                       minimumValue={0}
                       maximumValue={1}
@@ -1506,13 +1518,26 @@ const ProgressionLevels = ({level, mode, props}) => {
                     key={'8a'}>
                     {currentAnswerList[8]}
                   </TextInput>
+
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: 16,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      width: '100%',
+                    }}>
+                    {displayAnswer ? 'Correct Answer: ' + displayAnswer : null}
+                  </Text>
                   <View style={{height: 500, width: 20}} />
                 </View>
               </View>
             </ScrollView>
 
             <TouchableOpacity
-              onPress={() => selectAnswer2()}
+              onPress={() =>
+                !canCheck ? selectNextQuestion() : selectAnswer2()
+              }
               disabled={!canAnswer}
               style={{
                 height: 60,
@@ -1530,7 +1555,7 @@ const ProgressionLevels = ({level, mode, props}) => {
                   fontWeight: 'bold',
                   color: 'white',
                 }}>
-                SUBMIT
+                {!canCheck ? 'NEXT' : 'SUBMIT'}
               </Text>
             </TouchableOpacity>
           </View>

@@ -90,6 +90,7 @@ const BassLevels = ({level, mode, props}) => {
   const [currentAnswerList, setCurrentAnswerList] = useState([null]);
   const [storedData, setStoredData] = useState(null);
   const [passScore, setPassScore] = useState(0);
+  const [isDisplayingAnswer, setIsDisplayingAnswer] = useState(false);
 
   const [selectionColors, setSelectionColors] = useState([
     '#EFEFEF',
@@ -122,6 +123,8 @@ const BassLevels = ({level, mode, props}) => {
   const [isQuizTimerActive, setisQuizTimerActive] = useState(false);
   const [score, setScore] = useState(0);
   const [hasAudio, setHasAudio] = useState(false);
+
+  const [displayAnswer, setDisplayAnswer] = useState(null);
 
   const txt0 = useRef(null);
   const txt1 = useRef(null);
@@ -565,6 +568,7 @@ const BassLevels = ({level, mode, props}) => {
     } else {
       console.log('not');
       //sc[answerInd] = 'rgb(255,93,93)';
+      setDisplayAnswer(currentQuestion.Answers.join(', '));
     }
 
     setSelectionColors(sc);
@@ -575,18 +579,27 @@ const BassLevels = ({level, mode, props}) => {
 
     //setCanAnswer(false);
     setCanCheck(false);
-    setCanPlay(false);
+    //setCanPlay(false);
 
     stopAudio();
 
-    setTimeout(() => {
-      setCurrentAnswer(null);
-      setCanCheck(true);
-      setCanPlay(true);
+    // setTimeout(() => {
+    //   setCurrentAnswer(null);
+    //   setCanCheck(true);
+    //   setCanPlay(true);
 
-      nextQuestion();
-      setAnswerState('#E2E7ED');
-    }, 2000);
+    //   nextQuestion();
+    //   setAnswerState('#E2E7ED');
+    // }, 2000);
+  };
+
+  const selectNextQuestion = () => {
+    setDisplayAnswer(null);
+    setCurrentAnswer(null);
+    setCanCheck(true);
+    setCanPlay(true);
+    nextQuestion();
+    setAnswerState('#E2E7ED');
   };
 
   const debugResults = () => {
@@ -1323,7 +1336,7 @@ const BassLevels = ({level, mode, props}) => {
                     </TouchableOpacity>
 
                     <Slider
-                      disabled={!canPlay}
+                      //disabled={!canPlay}
                       width="85%"
                       minimumValue={0}
                       maximumValue={1}
@@ -1500,13 +1513,25 @@ const BassLevels = ({level, mode, props}) => {
                     key={8}>
                     {currentAnswerList[8]}
                   </TextInput>
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: 16,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      width: '100%',
+                    }}>
+                    {displayAnswer ? 'Correct Answer: ' + displayAnswer : null}
+                  </Text>
                   <View style={{height: 500, width: 20}} />
                 </View>
               </View>
             </ScrollView>
 
             <TouchableOpacity
-              onPress={() => selectAnswer2()}
+              onPress={() =>
+                !canCheck ? selectNextQuestion() : selectAnswer2()
+              }
               disabled={!canAnswer}
               style={{
                 height: 60,
@@ -1524,7 +1549,7 @@ const BassLevels = ({level, mode, props}) => {
                   fontWeight: 'bold',
                   color: 'white',
                 }}>
-                SUBMIT
+                {!canCheck ? 'NEXT' : 'SUBMIT'}
               </Text>
             </TouchableOpacity>
           </View>

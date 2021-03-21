@@ -823,7 +823,7 @@
   },
   "Triads": {
     "Chords": ["C", "D", "E", "F", "G", "A", "B", "Eb", "Gb", "Ab", "Bb", "Db"],
-    //"Chords": ["C"],
+    //"Chords": ["C", "D"],
     "level1Instructions": [
       "For this quiz, identify the quality of the chord.",
       "This level will consist of 12 multiple choice questions.",
@@ -1495,7 +1495,7 @@
         "file": "p65"
       },
       {
-        "Answers": ["Emaj7", "D#dim", "C#m7", "Amaj7", "F#m7"],
+        "Answers": ["Emaj7", "D#m7b5", "C#m7", "Amaj7", "F#m7"],
         "file": "p66"
       },
       {

@@ -775,7 +775,7 @@ const TraidsLevels = ({level, mode, props}) => {
 
     setCanAnswer(false);
     setCanCheck(false);
-    setCanPlay(false);
+    //setCanPlay(false);
 
     stopAudio();
 
@@ -1569,7 +1569,7 @@ const TraidsLevels = ({level, mode, props}) => {
                   </TouchableOpacity>
 
                   <Slider
-                    disabled={!canPlay}
+                    //disabled={!canPlay}
                     width="85%"
                     minimumValue={0}
                     maximumValue={1}

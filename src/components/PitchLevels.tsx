@@ -144,6 +144,9 @@ const PitchLevels = ({level, mode, props}) => {
   const [score, setScore] = useState(0);
   const [hasAudio, setHasAudio] = useState(false);
 
+  const [displayAnswer, setDisplayAnswer] = useState(null);
+  const [canCheck, setCanCheck] = useState(true);
+
   useEffect(() => {
     //console.log('pitch level changed');
     populateInstructions();
@@ -488,25 +491,38 @@ const PitchLevels = ({level, mode, props}) => {
     } else {
       console.log('not');
       setAnswerState('rgb(255,93,93)');
+      setDisplayAnswer(lcAnswers.join(', ').toUpperCase());
     }
 
     al.push(questionList[currentQuestionInd]);
 
+    //setCanAnswer(false);
     setAnswerList(al);
-    setCanAnswer(false);
-    setCanPlay(false);
+    //setCanAnswer(false);
+    //setCanPlay(false);
 
     Keyboard.dismiss();
+    setCanCheck(false);
 
     stopAudio();
 
-    setTimeout(() => {
-      setCurrentAnswer(null);
-      nextQuestion();
-      setCanPlay(true);
+    // setTimeout(() => {
+    //   setCurrentAnswer(null);
+    //   nextQuestion();
+    //   setCanPlay(true);
 
-      setAnswerState('#E2E7ED');
-    }, 2000);
+    //   setAnswerState('#E2E7ED');
+    // }, 2000);
+  };
+
+  const selectNextQuestion = () => {
+    setCanCheck(true);
+    setCanAnswer(false);
+    setDisplayAnswer(null);
+    setCurrentAnswer(null);
+    setCanPlay(true);
+    nextQuestion();
+    setAnswerState('#E2E7ED');
   };
 
   const debugResults = () => {
@@ -1231,7 +1247,7 @@ const PitchLevels = ({level, mode, props}) => {
                     </TouchableOpacity>
 
                     <Slider
-                      disabled={!canPlay}
+                      //disabled={!canPlay}
                       width="85%"
                       minimumValue={0}
                       maximumValue={1}
@@ -1263,6 +1279,17 @@ const PitchLevels = ({level, mode, props}) => {
                 }}
                 value={currentAnswer}
                 onChangeText={(text) => changeVal(text)}></TextInput>
+
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  width: '100%',
+                }}>
+                {displayAnswer ? 'Correct Answer: ' + displayAnswer : null}
+              </Text>
+
               <View style={{height: 250}} />
             </ScrollView>
             <View
@@ -1285,7 +1312,9 @@ const PitchLevels = ({level, mode, props}) => {
               {width > 450 ? <KeyboardView2 /> : <KeyboardView />}
 
               <TouchableOpacity
-                onPress={() => selectAnswer2()}
+                onPress={() =>
+                  !canCheck ? selectNextQuestion() : selectAnswer2()
+                }
                 disabled={!canAnswer}
                 style={{
                   position: 'absolute',
@@ -1303,7 +1332,7 @@ const PitchLevels = ({level, mode, props}) => {
                     fontWeight: 'bold',
                     color: 'white',
                   }}>
-                  SUBMIT
+                  {!canCheck ? 'NEXT' : 'SUBMIT'}
                 </Text>
               </TouchableOpacity>
             </View>

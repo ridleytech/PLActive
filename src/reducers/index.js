@@ -44,7 +44,7 @@ const inititalState = {
   leaderData: [],
   url: url,
   accessFeature: 0,
-  currentVersion: 1.14,
+  currentVersion: 1.15,
   latestVersion: null,
   hasProgress: null,
   loginErrorMsg: '',
@@ -282,7 +282,7 @@ export default (state = inititalState, action) => {
         highestCompletedIntervalBlockedLevel: parseInt(progressData.iblhi),
         highestCompletedPitchLevel: parseInt(progressData.phi),
         highestCompletedBassLevel: parseInt(progressData.bhi),
-
+        highestCompletedProgressLevel: parseInt(progressData.prhi),
         //highestCompletedTriadsLevel: parseInt(progressData.thi),
         highestCompletedTriadsBlockedLevel: parseInt(progressData.tblhi),
         highestCompletedTriadsBrokenLevel: parseInt(progressData.tbrhi),

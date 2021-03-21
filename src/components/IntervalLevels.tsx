@@ -116,6 +116,8 @@ const IntervalLevels = ({level, mode, props}) => {
   const [score, setScore] = useState(0);
   const [hasAudio, setHasAudio] = useState(false);
 
+  const [displayAnswer, setDisplayAnswer] = useState(null);
+
   useEffect(() => {
     console.log('interval level changed');
     populateInstructions();
@@ -484,6 +486,8 @@ const IntervalLevels = ({level, mode, props}) => {
       stopAudio();
     }
 
+    //setDisplayAnswer(currentQuestion.Answers.join(', '));
+
     setTimeout(() => {
       setCurrentAnswer(null);
       setCanCheck(true);
@@ -491,6 +495,15 @@ const IntervalLevels = ({level, mode, props}) => {
       nextQuestion();
       setAnswerState('#E2E7ED');
     }, 2000);
+  };
+
+  const selectNextQuestion = () => {
+    setDisplayAnswer(null);
+    setCurrentAnswer(null);
+    setCanCheck(true);
+    setCanPlay(true);
+    nextQuestion();
+    setAnswerState('#E2E7ED');
   };
 
   const debugResults = () => {
@@ -1256,7 +1269,7 @@ const IntervalLevels = ({level, mode, props}) => {
                     </TouchableOpacity>
 
                     <Slider
-                      disabled={!canPlay}
+                      //disabled={!canPlay}
                       width="85%"
                       minimumValue={0}
                       maximumValue={1}

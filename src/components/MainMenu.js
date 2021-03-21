@@ -205,7 +205,7 @@ const MainMenu = ({setMode}) => {
                   icon = checkIcon;
                 }
               } else if (index == 4) {
-                if (highestCompletedProgressionLevel < 4) {
+                if (highestCompletedProgressionLevel < 7) {
                   icon = null;
                 } else {
                   icon = checkIcon;
