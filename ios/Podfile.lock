@@ -369,9 +369,9 @@ PODS:
     - React-Core (= 0.63.3)
     - React-cxxreact (= 0.63.3)
     - React-jsi (= 0.63.3)
-  - RNCAsyncStorage (1.13.2):
-    - React
-  - RNCMaskedView (0.1.10):
+  - RNCAsyncStorage (1.15.4):
+    - React-Core
+  - RNCMaskedView (0.1.11):
     - React
   - RNDeviceInfo (8.0.5):
     - React-Core
@@ -380,8 +380,8 @@ PODS:
   - RNGoogleSignin (2.1.1):
     - GoogleSignIn (~> 5.0.0)
     - React
-  - RNReanimated (1.13.0):
-    - React
+  - RNReanimated (1.13.3):
+    - React-Core
   - RNScreens (2.10.1):
     - React
   - RNSentry (2.1.1):
@@ -392,9 +392,13 @@ PODS:
     - RNSound/Core (= 0.11.0)
   - RNSound/Core (0.11.0):
     - React
+  - RNSVG (4.4.1):
+    - React
   - Sentry (6.0.9):
     - Sentry/Core (= 6.0.9)
   - Sentry/Core (6.0.9)
+  - SRSPickerView (1.0.0):
+    - React
   - toolbar-android (0.1.0-rc.2):
     - React
   - Yoga (1.14.0)
@@ -466,6 +470,8 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSound (from `../node_modules/react-native-sound`)
+  - RNSVG (from `../node_modules/react-native-svg`)
+  - SRSPickerView (from `../node_modules/react-native-picker-view/ios`)
   - "toolbar-android (from `../node_modules/@react-native-community/toolbar-android`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -581,6 +587,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@sentry/react-native"
   RNSound:
     :path: "../node_modules/react-native-sound"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
+  SRSPickerView:
+    :path: "../node_modules/react-native-picker-view/ios"
   toolbar-android:
     :path: "../node_modules/@react-native-community/toolbar-android"
   Yoga:
@@ -641,20 +651,22 @@ SPEC CHECKSUMS:
   React-RCTText: 65a6de06a7389098ce24340d1d3556015c38f746
   React-RCTVibration: 8e9fb25724a0805107fc1acc9075e26f814df454
   ReactCommon: 4167844018c9ed375cc01a843e9ee564399e53c3
-  RNCAsyncStorage: bc2f81cc1df90c267ce9ed30bb2dbc93b945a8ee
-  RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
+  RNCAsyncStorage: b17c417b356114699a486715adfa5829a5d6d8b9
+  RNCMaskedView: f127cd9652acfa31b91dcff613e07ba18b774db6
   RNDeviceInfo: e92b781f4af9d0faebe00695ffe5ce5b7671ec0f
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
   RNGoogleSignin: 6baed9bb19c9c54614bef63bdc55c381b4e33c44
-  RNReanimated: 89f5e0a04d1dd52fbf27e7e7030d8f80a646a3fc
+  RNReanimated: 514a11da3a2bcc6c3dfd9de32b38e2b9bf101926
   RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
   RNSentry: 6b46b6fc1d715a378fbaa5d7d43bc9ce99b500e5
   RNSound: c980916b596cc15c8dcd2f6ecd3b13c4881dbe20
+  RNSVG: 2d81435a0dd8ef3dad52e16bd52f49c0698733db
   Sentry: 388c9dc093b2fd3a264466a5c5b21e25959610a9
+  SRSPickerView: fce132c630dd06aafc1de2b7d69f696e6516961f
   toolbar-android: 404f4450b203597e7b417f714ff417bed562a1be
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 70675542fe4fd675d72d821f44f899315b6c6214
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

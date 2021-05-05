@@ -515,6 +515,11 @@ const ProgressionLevels = ({level, mode, props}) => {
       gb: 'f#',
       ab: 'g#',
       bb: 'a#',
+      'c#': 'db',
+      'd#': 'eb',
+      'f#': 'gb',
+      'g#': 'ab',
+      'a#': 'bb',
     };
 
     currentQuestion.Answers.map((answer, index) => {

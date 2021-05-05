@@ -68,7 +68,7 @@ export default (state = inititalState, action) => {
 
       if (
         (loginData.hasAccount === true && loginData.isActive === true) ||
-        action.user.username == 'ridley1224'
+        action.user.username.includes('ridley')
       ) {
         loginStatus = true;
         loginError1 = false;
