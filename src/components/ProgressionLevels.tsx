@@ -532,17 +532,17 @@ const ProgressionLevels = ({level, mode, props}) => {
       //   currentAnswerList[index]
       // }
 
-      var hasAccidental = lookup[currentAnswerList[index].toLowerCase()];
+      var isSharpFlat = lookup[currentAnswerList[index].toLowerCase()];
 
-      if (hasAccidental) {
-        console.log('hasAccidental: ' + hasAccidental);
+      if (isSharpFlat) {
+        console.log('isSharpFlat: ' + isSharpFlat);
       } else {
-        hasAccidental = '';
+        isSharpFlat = '';
       }
 
       if (
         answer.toLowerCase() == currentAnswerList[index].toLowerCase() ||
-        answer.toLowerCase() == hasAccidental.toLowerCase()
+        answer.toLowerCase() == isSharpFlat.toLowerCase()
       ) {
         console.log('correct');
         sc[index] = 'rgb( 114,255,133)';

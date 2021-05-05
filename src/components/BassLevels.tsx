@@ -524,11 +524,6 @@ const BassLevels = ({level, mode, props}) => {
         'answer' + index + ':' + answer + ' user: ' + currentAnswerList[index],
       );
 
-      // if(answer == "Db" || answer == "C#")
-      // {
-      //   currentAnswerList[index]
-      // }
-
       var isSharpFlat = lookup[currentAnswerList[index].toLowerCase()];
 
       console.log('isSharpFlat: ' + isSharpFlat);
