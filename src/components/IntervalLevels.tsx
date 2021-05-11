@@ -61,6 +61,7 @@ const IntervalLevels = ({level, mode, props}) => {
   const dispatch = useDispatch();
   const accessFeature = useSelector((state) => state.accessFeature);
   const intervalmode = useSelector((state) => state.intervalmode);
+  const isAdmin = useSelector((state) => state.isAdmin);
 
   const highestCompletedIntervalBrokenLevel = useSelector(
     (state) => state.highestCompletedIntervalBrokenLevel,
@@ -1162,6 +1163,31 @@ const IntervalLevels = ({level, mode, props}) => {
         />
       ) : quizStarted ? (
         <>
+          {isAdmin ? (
+            <TouchableOpacity
+              onPress={() => selectNextQuestion()}
+              style={{
+                height: 60,
+                backgroundColor: '#3AB24A',
+                justifyContent: 'center',
+                alignItems: 'center',
+                top: 45,
+                right: 0,
+                width: 100,
+                position: 'absolute',
+                zIndex: 3,
+              }}>
+              <Text
+                style={{
+                  fontSize: 25,
+                  fontFamily: 'Helvetica Neue',
+                  fontWeight: 'bold',
+                  color: 'white',
+                }}>
+                {'SKIP'}
+              </Text>
+            </TouchableOpacity>
+          ) : null}
           <View style={styles.mainContainer}>
             <View
               style={{

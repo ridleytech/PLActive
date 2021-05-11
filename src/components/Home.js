@@ -699,7 +699,7 @@ class Home extends Component<Props> {
             null,
             `Complete level ${
               this.props.highestCompletedPitchLevel + 1
-            } to proceed`,
+            } to proceed.`,
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
           );
@@ -711,7 +711,7 @@ class Home extends Component<Props> {
             null,
             `Complete level ${
               this.props.highestCompletedIntervalBrokenLevel + 1
-            } to proceed`,
+            } to proceed.`,
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
           );
@@ -723,7 +723,7 @@ class Home extends Component<Props> {
             null,
             `Complete level ${
               this.props.highestCompletedTriadsLevel + 1
-            } to proceed`,
+            } to proceed.`,
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
           );
@@ -735,7 +735,7 @@ class Home extends Component<Props> {
             null,
             `Complete level ${
               this.props.highestCompletedBassLevel + 1
-            } to proceed`,
+            } to proceed.`,
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
           );
@@ -747,7 +747,7 @@ class Home extends Component<Props> {
             null,
             `Complete level ${
               this.props.highestCompletedProgressionLevel + 1
-            } to proceed`,
+            } to proceed.`,
             [{text: 'OK', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
           );

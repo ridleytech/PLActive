@@ -170,8 +170,11 @@ const MainMenu = ({setMode}) => {
             keyExtractor={(item, index) => index.toString()}
           /> */}
 
+          {console.log('hcbl: ' + highestCompletedBassLevel)}
+
           <ScrollView style={{height: '100%'}}>
             {levels.map((level, index) => {
+              console.log('ind: ' + level + ' ' + index);
               var icon;
 
               if (index == 0) {
@@ -235,7 +238,12 @@ const MainMenu = ({setMode}) => {
                     </Text>
                   </View>
 
-                  {loggedIn && accessFeature == 2 ? (
+                  <Image
+                    source={icon}
+                    style={{position: 'absolute', right: 12, top: 12}}
+                  />
+
+                  {/* {loggedIn && accessFeature == 2 ? (
                     <Image
                       source={icon}
                       style={{position: 'absolute', right: 12, top: 12}}
@@ -247,7 +255,7 @@ const MainMenu = ({setMode}) => {
                       }
                       style={{position: 'absolute', right: 12, top: 12}}
                     />
-                  )}
+                  )} */}
                 </TouchableOpacity>
               );
             })}

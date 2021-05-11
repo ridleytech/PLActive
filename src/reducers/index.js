@@ -14,6 +14,7 @@ if (local) {
 
 const inititalState = {
   a: 1,
+  isAdmin: null,
   level: 0,
   mode: 0,
   triadmode: 0,
@@ -44,7 +45,7 @@ const inititalState = {
   leaderData: [],
   url: url,
   accessFeature: 0,
-  currentVersion: 1.15,
+  currentVersion: 1.16,
   latestVersion: null,
   hasProgress: null,
   loginErrorMsg: '',
@@ -68,12 +69,22 @@ export default (state = inititalState, action) => {
 
       if (
         (loginData.hasAccount === true && loginData.isActive === true) ||
-        action.user.username == 'ridley1224'
+        action.user.username == 'ridley1224' ||
+        action.user.username == 'striker85'
       ) {
         loginStatus = true;
         loginError1 = false;
         mode1 = state.previousMode;
         msg = null;
+
+        var admin = false;
+
+        if (
+          action.user.username == 'ridley1224' ||
+          action.user.username == 'striker85'
+        ) {
+          admin = true;
+        }
       } else {
         loginError1 = true;
 
@@ -96,6 +107,7 @@ export default (state = inititalState, action) => {
         loginError: loginError1,
         mode: mode1,
         loginErrorMsg: msg,
+        isAdmin: admin,
       };
 
     case 'LOGIN_ERROR':
